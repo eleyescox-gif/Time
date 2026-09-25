@@ -522,23 +522,45 @@
     }
 
     /* CENTER CLOCK CONTAINER (Grand, Centered, Majestic) */
+    /* CENTER CLOCK CONTAINER (Grand, Centered, Majestic) */
     .clock-center-container {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: clamp(14px, 2.2vh, 32px);
+      gap: clamp(10px, 1.8vh, 22px);
       margin: auto 0;
+      width: 100%;
     }
 
-    /* GIANT DIGITAL CLOCK: 07:05:08 PM (ROCK-SOLID ZERO JITTER) */
-    .pro-clock-wrap {
+    /* ══ RED BOX: MAJESTIC CLOCK CARD / PANEL ══ */
+    .pro-clock-card {
+      width: clamp(380px, 58vw, 880px);
       display: flex;
-      align-items: baseline;
+      align-items: center;
       justify-content: center;
-      gap: clamp(8px, 1.2vw, 20px);
-      line-height: 0.9;
+      gap: clamp(10px, 1.6vw, 24px);
+      padding: clamp(10px, 1.8vh, 22px) clamp(20px, 3vw, 42px);
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.78) 0%, rgba(6, 20, 32, 0.88) 100%);
+      border: 1.5px solid rgba(255, 255, 255, 0.18);
+      border-radius: clamp(16px, 2.2vw, 28px);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 0 35px rgba(56, 189, 248, 0.08);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .pro-clock-card::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 15%;
+      right: 15%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(247, 200, 68, 0.65), transparent);
     }
 
     .pro-clock-digits {
@@ -546,13 +568,14 @@
       align-items: baseline;
       justify-content: center;
       font-family: 'Outfit', 'Cinzel', 'Hind Siliguri', sans-serif;
-      font-size: clamp(68px, 10.5vw, 150px);
+      font-size: clamp(54px, 8.2vw, 118px);
       font-weight: 800;
       color: #FFFFFF;
       letter-spacing: clamp(1px, 0.2vw, 3px);
-      text-shadow: 0 4px 30px rgba(0,0,0,0.8), 0 0 40px rgba(255,255,255,0.25);
+      text-shadow: 0 4px 28px rgba(0,0,0,0.85), 0 0 35px rgba(255,255,255,0.2);
       font-variant-numeric: tabular-nums;
       font-feature-settings: "tnum" 1;
+      line-height: 0.95;
     }
 
     .clk-segment {
@@ -574,40 +597,114 @@
 
     .pro-clock-ampm {
       font-family: 'Outfit', 'Hind Siliguri', sans-serif;
-      font-size: clamp(22px, 3.2vw, 48px);
+      font-size: clamp(20px, 2.8vw, 40px);
       font-weight: 800;
-      color: #f1f5f9;
+      color: #f7c844;
+      text-shadow: 0 0 15px rgba(247, 200, 68, 0.4);
       letter-spacing: 1px;
+      padding-bottom: clamp(4px, 0.8vh, 10px);
     }
 
-    /* ══ UNDER-CLOCK BANNER: CURRENT WAQT OR 5-MIN COUNTDOWN ══ */
+    /* ══ GREEN BOX: PRO NEXT JAMAAT COUNTDOWN PANEL ══ */
+    .pro-countdown-card,
     .under-clock-banner {
-      width: clamp(340px, 48vw, 740px);
+      width: clamp(380px, 58vw, 880px);
       position: relative;
-      border-radius: clamp(14px, 2vw, 24px);
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(6, 26, 36, 0.92) 100%);
-      border: 1.5px solid rgba(255, 255, 255, 0.16);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(14px);
-      padding: clamp(10px, 1.4vh, 18px) clamp(16px, 2vw, 32px);
+      border-radius: clamp(16px, 2.2vw, 26px);
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.84) 0%, rgba(6, 26, 36, 0.90) 100%);
+      border: 1.5px solid rgba(16, 185, 129, 0.4);
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.52), inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 0 28px rgba(16, 185, 129, 0.12);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: clamp(10px, 1.5vh, 18px) clamp(18px, 2.4vw, 36px);
       transition: all 0.35s ease;
       overflow: hidden;
       box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(6px, 1vh, 12px);
     }
 
-    /* Normal Waqt / Next Jamaat View */
-    .uc-normal-wrap {
+    .cd-card-main-row {
       display: flex;
       align-items: center;
-      justify-content: space-around;
-      gap: clamp(10px, 1.5vw, 24px);
+      justify-content: space-between;
+      gap: clamp(10px, 1.4vw, 24px);
       width: 100%;
     }
-    .uc-waqt-block, .uc-next-block {
-      display: flex;
+
+    .cd-prayer-badge {
+      display: inline-flex;
       align-items: center;
       gap: clamp(6px, 0.8vw, 12px);
+      background: rgba(247, 200, 68, 0.14);
+      border: 1.5px solid rgba(247, 200, 68, 0.45);
+      border-radius: clamp(10px, 1.4vw, 16px);
+      padding: clamp(6px, 0.9vh, 10px) clamp(12px, 1.6vw, 20px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      flex-shrink: 0;
     }
+
+    .cd-badge-icon {
+      font-size: clamp(18px, 2vw, 28px);
+      line-height: 1;
+    }
+
+    .cd-badge-name {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(18px, 2.4vw, 34px);
+      font-weight: 800;
+      color: #fde047;
+      text-shadow: 0 0 14px rgba(253, 224, 71, 0.5);
+      white-space: nowrap;
+      line-height: 1.1;
+    }
+
+    .cd-sep-dash {
+      font-size: clamp(22px, 3vw, 42px);
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.45);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .cd-timer-wrap {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .cd-timer-digits {
+      font-family: 'Outfit', 'Cinzel', 'Hind Siliguri', sans-serif;
+      font-size: clamp(26px, 3.6vw, 52px);
+      font-weight: 800;
+      color: #38bdf8;
+      letter-spacing: clamp(1px, 0.15vw, 2px);
+      text-shadow: 0 0 20px rgba(56, 189, 248, 0.65), 0 2px 10px rgba(0,0,0,0.8);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+      line-height: 1;
+    }
+
+    .cd-card-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding-top: clamp(4px, 0.7vh, 8px);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      gap: clamp(8px, 1.2vw, 16px);
+      font-family: 'Hind Siliguri', sans-serif;
+    }
+
+    .cd-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(4px, 0.6vw, 8px);
+      white-space: nowrap;
+    }
+
     .uc-pulse-dot {
       width: clamp(8px, 0.9vw, 12px);
       height: clamp(8px, 0.9vw, 12px);
@@ -621,138 +718,69 @@
       0%, 100% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.3); opacity: 0.7; }
     }
-    .uc-next-icon {
-      width: clamp(18px, 1.8vw, 26px);
-      height: clamp(18px, 1.8vw, 26px);
-      color: #38bdf8;
-      filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5));
+
+    .cd-clock-mini-icon {
+      width: clamp(14px, 1.4vw, 20px);
+      height: clamp(14px, 1.4vw, 20px);
+      color: #f7c844;
       flex-shrink: 0;
-    }
-    .uc-label-muted {
-      font-family: 'Hind Siliguri', sans-serif;
-      font-size: clamp(14px, 1.5vw, 22px);
-      color: #cbd5e1;
-      font-weight: 600;
-    }
-    .uc-val-highlight {
-      font-family: 'Hind Siliguri', sans-serif;
-      font-size: clamp(18px, 2.1vw, 32px);
-      font-weight: 800;
-      color: #fde047;
-      text-shadow: 0 0 12px rgba(253, 224, 71, 0.45);
-    }
-    .uc-sep-line {
-      width: 1.5px;
-      height: clamp(18px, 2.4vh, 28px);
-      background: rgba(255, 255, 255, 0.2);
-      flex-shrink: 0;
-    }
-    .uc-val-cyan {
-      font-family: 'Outfit', 'Cinzel', 'Hind Siliguri', sans-serif;
-      font-size: clamp(18px, 2.1vw, 32px);
-      font-weight: 800;
-      color: #38bdf8;
-      text-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
     }
 
-    /* Active 5-Minute Countdown View in Under-Clock Banner */
+    .cd-meta-label {
+      font-size: clamp(12px, 1.2vw, 16px);
+      color: #94a3b8;
+      font-weight: 600;
+    }
+
+    .cd-meta-val {
+      font-size: clamp(13px, 1.4vw, 19px);
+      color: #f1f5f9;
+      font-weight: 700;
+    }
+
+    .cd-meta-val-gold {
+      font-size: clamp(13px, 1.4vw, 19px);
+      color: #fde047;
+      font-weight: 700;
+      font-family: 'Outfit', 'Cinzel', 'Hind Siliguri', sans-serif;
+    }
+
+    .cd-status-badge {
+      font-size: clamp(11px, 1.1vw, 14px);
+      font-weight: 700;
+      color: #86efac;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.45);
+      border-radius: 999px;
+      padding: 2px 10px;
+    }
+
+    /* Active 5-Minute Countdown View in Countdown Card */
+    .pro-countdown-card.banner-active-cd,
     .under-clock-banner.banner-active-cd {
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.3) 0%, rgba(20, 10, 5, 0.95) 100%) !important;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.28) 0%, rgba(20, 10, 5, 0.94) 100%) !important;
       border: 2px solid #f59e0b !important;
       box-shadow: 0 0 35px rgba(245, 158, 11, 0.65), inset 0 0 18px rgba(245, 158, 11, 0.25) !important;
       animation: countdownPulse 2s infinite ease-in-out;
     }
+    .pro-countdown-card.banner-urgent-cd,
     .under-clock-banner.banner-urgent-cd {
-      background: linear-gradient(135deg, rgba(239, 68, 68, 0.38) 0%, rgba(25, 5, 5, 0.96) 100%) !important;
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.36) 0%, rgba(25, 5, 5, 0.96) 100%) !important;
       border: 2px solid #ef4444 !important;
       box-shadow: 0 0 45px rgba(239, 68, 68, 0.8), inset 0 0 20px rgba(239, 68, 68, 0.3) !important;
       animation: urgentPulse 1s infinite ease-in-out;
     }
 
-    .uc-countdown-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      gap: clamp(10px, 1.4vw, 20px);
-    }
-    .uc-cd-left {
-      display: flex;
-      align-items: center;
-      gap: clamp(10px, 1.2vw, 16px);
-      flex: 1;
-      min-width: 0;
-    }
-    .uc-cd-icon-box {
-      width: clamp(38px, 4.2vw, 54px);
-      height: clamp(38px, 4.2vw, 54px);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(245, 158, 11, 0.25);
-      border: 1px solid rgba(245, 158, 11, 0.5);
-      color: #fbbf24;
-      flex-shrink: 0;
-    }
-    .banner-urgent-cd .uc-cd-icon-box {
-      background: rgba(239, 68, 68, 0.35);
-      border-color: #ef4444;
-      color: #f87171;
-    }
-    .uc-cd-text {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 2px;
-      min-width: 0;
-    }
-    .uc-cd-title {
-      font-family: 'Hind Siliguri', sans-serif;
-      font-size: clamp(17px, 1.9vw, 28px);
-      font-weight: 800;
-      color: #fde047;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      text-shadow: 0 0 10px rgba(253, 224, 71, 0.5);
-    }
-    .banner-urgent-cd .uc-cd-title {
-      color: #fca5a5 !important;
-      text-shadow: 0 0 14px rgba(248, 113, 113, 0.8) !important;
-    }
-    .uc-cd-sub {
-      font-family: 'Hind Siliguri', sans-serif;
-      font-size: clamp(11px, 1.1vw, 15px);
-      font-weight: 600;
-      color: #cbd5e1;
-    }
-    .uc-cd-timer {
-      font-family: 'Outfit', 'Cinzel', 'Hind Siliguri', sans-serif;
-      font-size: clamp(32px, 4vw, 58px);
-      font-weight: 800;
-      color: #fde047;
-      letter-spacing: 1px;
-      text-shadow: 0 0 20px rgba(253, 224, 71, 0.8);
-      flex-shrink: 0;
-      font-variant-numeric: tabular-nums;
-      font-feature-settings: "tnum" 1;
-    }
-    .banner-urgent-cd .uc-cd-timer {
-      color: #fca5a5 !important;
-      text-shadow: 0 0 22px rgba(239, 68, 68, 0.95) !important;
-    }
-
-    /* Shrinking Progress Line in Under-Clock Banner */
+    /* Shrinking Progress Line in Countdown Card */
     .cd-line-track {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.15);
+      height: 5px;
+      background: rgba(255, 255, 255, 0.12);
       overflow: hidden;
-      border-radius: 0 0 clamp(14px, 2vw, 24px) clamp(14px, 2vw, 24px);
+      border-radius: 0 0 clamp(16px, 2.2vw, 26px) clamp(16px, 2.2vw, 26px);
     }
     .cd-line-bar {
       height: 100%;
@@ -1233,10 +1261,19 @@
       padding: 0 !important;
     }
 
+    .is-portrait .pro-clock-card,
+    body.rotate-90 .pro-clock-card,
+    body.rotate-270 .pro-clock-card {
+      width: 100% !important;
+      max-width: 440px !important;
+      padding: clamp(6px, 1vh, 10px) clamp(10px, 2vw, 16px) !important;
+      border-radius: 14px !important;
+    }
+
     .is-portrait .pro-clock-digits,
     body.rotate-90 .pro-clock-digits,
     body.rotate-270 .pro-clock-digits {
-      font-size: clamp(46px, 8vw, 76px) !important;
+      font-size: clamp(42px, 7.5vw, 68px) !important;
       letter-spacing: 1px !important;
       line-height: 0.95 !important;
     }
@@ -1253,13 +1290,51 @@
       font-size: clamp(14px, 2.2vw, 20px) !important;
     }
 
+    .is-portrait .pro-countdown-card,
     .is-portrait .under-clock-banner,
+    body.rotate-90 .pro-countdown-card,
     body.rotate-90 .under-clock-banner,
+    body.rotate-270 .pro-countdown-card,
     body.rotate-270 .under-clock-banner {
       width: 100% !important;
       max-width: 440px !important;
-      padding: clamp(4px, 0.6vh, 7px) clamp(10px, 1.6vw, 16px) !important;
+      padding: clamp(6px, 0.9vh, 10px) clamp(10px, 1.8vw, 16px) !important;
       border-radius: clamp(10px, 1.4vh, 14px) !important;
+      gap: 4px !important;
+    }
+
+    .is-portrait .cd-badge-name,
+    body.rotate-90 .cd-badge-name,
+    body.rotate-270 .cd-badge-name {
+      font-size: clamp(14px, 2vw, 18px) !important;
+    }
+
+    .is-portrait .cd-timer-digits,
+    body.rotate-90 .cd-timer-digits,
+    body.rotate-270 .cd-timer-digits {
+      font-size: clamp(18px, 2.6vw, 24px) !important;
+    }
+
+    .is-portrait .cd-meta-label,
+    body.rotate-90 .cd-meta-label,
+    body.rotate-270 .cd-meta-label {
+      font-size: clamp(9px, 1.2vw, 12px) !important;
+    }
+
+    .is-portrait .cd-meta-val,
+    .is-portrait .cd-meta-val-gold,
+    body.rotate-90 .cd-meta-val,
+    body.rotate-90 .cd-meta-val-gold,
+    body.rotate-270 .cd-meta-val,
+    body.rotate-270 .cd-meta-val-gold {
+      font-size: clamp(10px, 1.3vw, 13px) !important;
+    }
+
+    .is-portrait .cd-status-badge,
+    body.rotate-90 .cd-status-badge,
+    body.rotate-270 .cd-status-badge {
+      font-size: clamp(9px, 1.1vw, 12px) !important;
+      padding: 1px 6px !important;
     }
 
     .is-portrait .uc-label-muted,
@@ -2374,55 +2449,61 @@
           </div>
         </header>
 
-        <!-- Center: Giant Clock with breathing room -->
+        <!-- Center: Giant Clock & Next Jamaat Countdown Cards -->
         <div class="clock-center-container">
-          <!-- Giant Digital Clock: 07:05:08 PM (ROCK-SOLID ZERO JITTER) -->
-          <div class="pro-clock-wrap">
+          <!-- ══ RED BOX: MAJESTIC CLOCK CARD / PANEL ══ -->
+          <div class="pro-clock-card" id="proClockCard">
             <div class="pro-clock-digits" id="clk">
               <span class="clk-segment clk-hh" id="clkHH">07</span><span class="clk-colon">:</span><span class="clk-segment clk-mm" id="clkMM">05</span><span class="clk-colon">:</span><span class="clk-segment clk-ss" id="clkSS">08</span>
             </div>
             <span class="pro-clock-ampm" id="clkAmPm">PM</span>
           </div>
 
-          <!-- ══ UNDER-CLOCK BANNER: CURRENT WAQT OR 5-MIN COUNTDOWN ══ -->
-          <div class="under-clock-banner" id="underClockBanner">
-            <!-- Normal State: Current Waqt & Next Jamaat -->
-            <div class="uc-normal-wrap" id="ucNormalWrap">
-              <div class="uc-waqt-block">
-                <span class="uc-pulse-dot"></span>
-                <span class="uc-label-muted">চলমান ওয়াক্ত:</span>
-                <span class="uc-val-highlight" id="ucCurrentWaqt">ফজর</span>
+          <!-- ══ GREEN BOX: PRO NEXT JAMAAT COUNTDOWN PANEL ══ -->
+          <div class="pro-countdown-card under-clock-banner" id="underClockBanner">
+            <div class="cd-card-main-row">
+              <div class="cd-prayer-badge">
+                <span class="cd-badge-icon">🕌</span>
+                <span class="cd-badge-name" id="cdNextJamaatName">এশা জামাত</span>
               </div>
-              <div class="uc-sep-line"></div>
-              <div class="uc-next-block">
-                <svg viewBox="0 0 24 24" class="uc-next-icon" fill="none" stroke="currentColor">
+              <span class="cd-sep-dash">-</span>
+              <div class="cd-timer-wrap">
+                <span class="cd-timer-digits" id="cdMainTimer">00:04:59</span>
+              </div>
+            </div>
+            <div class="cd-card-meta-row">
+              <div class="cd-meta-item">
+                <span class="uc-pulse-dot"></span>
+                <span class="cd-meta-label">চলমান ওয়াক্ত:</span>
+                <span class="cd-meta-val" id="ucCurrentWaqt">এশা</span>
+              </div>
+              <div class="cd-meta-item">
+                <svg viewBox="0 0 24 24" class="cd-clock-mini-icon" fill="none" stroke="currentColor">
                   <circle cx="12" cy="12" r="9" stroke-width="2"/>
                   <polyline points="12 7 12 12 15 15" stroke-width="2" stroke-linecap="round"/>
                 </svg>
-                <span class="uc-label-muted">পরবর্তী জামাত:</span>
-                <span class="uc-val-cyan" id="ucNextJamaatText">যোহর ১:১৫</span>
+                <span class="cd-meta-label">জামাত সময়:</span>
+                <span class="cd-meta-val-gold" id="cdScheduledJamaatTime">08:30 PM</span>
+              </div>
+              <div class="cd-meta-item cd-status-badge-item">
+                <span class="cd-status-badge" id="cdStatusBadge">জামাত শুরু হতে বাকি</span>
               </div>
             </div>
+            <!-- The shrinking progress line -->
+            <div class="cd-line-track">
+              <div class="cd-line-bar" id="cdProgressBar"></div>
+            </div>
 
-            <!-- Countdown State: 5-Min Countdown with shrinking line -->
-            <div class="uc-countdown-wrap" id="boxCountdown" style="display:none;">
-              <div class="uc-cd-left">
-                <div class="uc-cd-icon-box">
-                  <svg viewBox="0 0 24 24" class="meta-svg countdown-svg" fill="none" stroke="currentColor">
-                    <circle cx="12" cy="12" r="9" stroke-width="2"/>
-                    <polyline points="12 7 12 12 15 15" stroke-width="2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <div class="uc-cd-text">
-                  <span class="uc-cd-title" id="cdPrayerLabel">পরবর্তী জামাত বাকি</span>
-                  <span class="uc-cd-sub" id="cdStatusBadge">৫ মিনিট কাউন্টডাউন</span>
-                </div>
-              </div>
-              <div class="uc-cd-timer cd-time" id="cdTimerDigits">05:00</div>
-              <!-- The shrinking progress line -->
-              <div class="cd-line-track">
-                <div class="cd-line-bar" id="cdProgressBar"></div>
-              </div>
+            <!-- Legacy fallback compatibility elements -->
+            <div style="display:none;">
+              <span id="ucNextJamaatText"></span>
+              <span id="cdPrayerLabel"></span>
+              <span id="cdTimerDigits"></span>
+              <span id="boxCountdown"></span>
+              <span id="ucNormalWrap"></span>
+              <span id="nextPrayerName"></span>
+              <span id="nextPrayerTime"></span>
+              <span id="nextCountdownText"></span>
             </div>
           </div>
         </div>
@@ -3108,24 +3189,31 @@
         }
 
         var cardFmt = CONFIG.cardTimeFormat || CONFIG.clockFormat || '12';
+
+        // ══ GREEN BOX: PRO NEXT JAMAAT COUNTDOWN PANEL UPDATE ══
+        var cdNextNameEl = document.getElementById('cdNextJamaatName');
+        var cdMainTimerEl = document.getElementById('cdMainTimer');
+        var cdSchedTimeEl = document.getElementById('cdScheduledJamaatTime');
+        var cdBadgeEl = document.getElementById('cdStatusBadge');
+        var cdBarEl = document.getElementById('cdProgressBar');
+        var ucBanner = document.getElementById('underClockBanner');
+
+        var prayerNameText = bestPrayer ? bestPrayer.bn : 'নামাজ';
+        if (cdNextNameEl) {
+          cdNextNameEl.textContent = prayerNameText + ' জামাত';
+        }
+
+        if (cdSchedTimeEl && bestTimeStr) {
+          cdSchedTimeEl.textContent = fmtTime(bestTimeStr, cardFmt);
+        }
+
         var ucNextJm = document.getElementById('ucNextJamaatText');
         if (ucNextJm && bestPrayer && bestTimeStr) {
           ucNextJm.textContent = bestPrayer.bn + ' ' + fmtTime(bestTimeStr, cardFmt);
         }
 
-        // ══ UNDER-CLOCK BANNER: CURRENT WAQT OR 5-MIN COUNTDOWN ══
-        var ucBanner = document.getElementById('underClockBanner');
-        var ucNormal = document.getElementById('ucNormalWrap');
-        var boxCd = document.getElementById('boxCountdown');
-        var cdLabel = document.getElementById('cdPrayerLabel');
-        var cdBadge = document.getElementById('cdStatusBadge');
-        var cdDigits = document.getElementById('cdTimerDigits');
-        var cdBar = document.getElementById('cdProgressBar');
-
         if (totalSec > 0 && totalSec <= 300) {
           // ACTIVE 5-MINUTE COUNTDOWN (300s down to 1s)
-          if (ucNormal) ucNormal.style.display = 'none';
-          if (boxCd) boxCd.style.display = 'flex';
           if (ucBanner) {
             ucBanner.classList.add('banner-active-cd');
             if (totalSec <= 60) ucBanner.classList.add('banner-urgent-cd');
@@ -3134,47 +3222,57 @@
 
           var cMin = Math.floor(totalSec / 60);
           var cSec = totalSec % 60;
-          if (cdDigits) {
-            cdDigits.textContent = String(cMin).padStart(2, '0') + ':' + String(cSec).padStart(2, '0');
-          }
+          var timeFormatted = String(cMin).padStart(2, '0') + ':' + String(cSec).padStart(2, '0');
+          if (cdMainTimerEl) cdMainTimerEl.textContent = timeFormatted;
 
-          if (cdLabel) {
-            cdLabel.textContent = (bestPrayer ? bestPrayer.bn : 'জামাত') + ' বাকি';
-          }
+          var cdDigitsLegacy = document.getElementById('cdTimerDigits');
+          if (cdDigitsLegacy) cdDigitsLegacy.textContent = timeFormatted;
+
+          var cdLabelLegacy = document.getElementById('cdPrayerLabel');
+          if (cdLabelLegacy) cdLabelLegacy.textContent = (bestPrayer ? bestPrayer.bn : 'জামাত') + ' বাকি';
 
           // Shrinking progress line from 100% to 0% over 300 seconds (5 minutes)
           var shrinkPct = (totalSec / 300) * 100;
-          if (cdBar) {
-            cdBar.style.width = Math.max(0, Math.min(100, shrinkPct)).toFixed(1) + '%';
+          if (cdBarEl) {
+            cdBarEl.style.width = Math.max(0, Math.min(100, shrinkPct)).toFixed(1) + '%';
           }
 
-          if (cdBadge) {
+          if (cdBadgeEl) {
             if (totalSec <= 60) {
-              cdBadge.textContent = '১ মিনিট বাকি — প্রস্তুত হোন';
+              cdBadgeEl.textContent = '১ মিনিট বাকি — প্রস্তুত হোন';
             } else {
-              cdBadge.textContent = '৫ মিনিট কাউন্টডাউন';
+              cdBadgeEl.textContent = '৫ মিনিট কাউন্টডাউন';
             }
           }
         } else if (totalSec <= 0 && totalSec >= -180) {
           // Jamaat has begun (0 to 3 minutes)
-          if (ucNormal) ucNormal.style.display = 'none';
-          if (boxCd) boxCd.style.display = 'flex';
           if (ucBanner) {
             ucBanner.classList.add('banner-active-cd');
             ucBanner.classList.remove('banner-urgent-cd');
           }
-          if (cdDigits) cdDigits.textContent = '00:00';
-          if (cdLabel) cdLabel.textContent = (bestPrayer ? bestPrayer.bn : '') + ' জামাত চলছে';
-          if (cdBadge) cdBadge.textContent = 'মোবাইল বন্ধ রাখুন';
-          if (cdBar) cdBar.style.width = '0%';
+          if (cdMainTimerEl) cdMainTimerEl.textContent = 'চলছে';
+          if (cdBadgeEl) cdBadgeEl.textContent = 'মোবাইল বন্ধ রাখুন';
+          if (cdBarEl) cdBarEl.style.width = '0%';
         } else {
-          // Standby Mode (> 5 minutes before Jamaat): Show normal Ongoing Waqt & Next Jamaat
-          if (ucNormal) ucNormal.style.display = 'flex';
-          if (boxCd) boxCd.style.display = 'none';
+          // Standby Mode (> 5 minutes before Jamaat): Real-time remaining countdown!
           if (ucBanner) {
             ucBanner.classList.remove('banner-active-cd', 'banner-urgent-cd');
           }
-          if (cdBar) cdBar.style.width = '100%';
+          if (totalSec > 0) {
+            var hrs = Math.floor(totalSec / 3600);
+            var remSec = totalSec % 3600;
+            var mins = Math.floor(remSec / 60);
+            var secs = remSec % 60;
+            if (hrs > 0) {
+              if (cdMainTimerEl) cdMainTimerEl.textContent = String(hrs).padStart(2, '0') + ':' + String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+            } else {
+              if (cdMainTimerEl) cdMainTimerEl.textContent = String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+            }
+          } else {
+            if (cdMainTimerEl) cdMainTimerEl.textContent = '--:--';
+          }
+          if (cdBadgeEl) cdBadgeEl.textContent = 'জামাত শুরু হতে বাকি';
+          if (cdBarEl) cdBarEl.style.width = '100%';
         }
 
         if (bestPrayer && bestTimeStr) {
