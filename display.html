@@ -1023,10 +1023,10 @@
     /* ═══════════════════════════════════════════════════════════
        ── ULTRA-PROFESSIONAL PORTRAIT MODE (খাড়া / উলম্ব ডিসপ্লে) ──
        হায়ারার্কি ও ক্রম:
-       ১. বিসমিল্লাহ (Bismillah) - শীর্ষ সেন্টারে
+       ১. বিসমিল্লাহ (Bismillah) - শীর্ষ সেন্টারে (কম্প্যাক্ট)
        ২. মসজিদের নাম, লোগো ও তারিখ (Mosque Brand, Logo & Dates)
        ৩. ঘড়ি ও ওয়াক্ত ব্যানার (Clock & Waqt Banner)
-       ৪. ৫ ওয়াক্ত নামাজের সময়সূচি (5 Prayer Times Pill Cards)
+       ৪. ৫ ওয়াক্ত নামাজের সময়সূচি (Compact & Centered Pill Cards - No extra void)
        ৫. সূর্যোদয় ও জুমা বক্স (Bottom Meta Row)
        ৬. স্ক্রলিং নোটিশ বার (Ticker Footer)
        ═══════════════════════════════════════════════════════════ */
@@ -1039,9 +1039,10 @@
     body.rotate-270 .pro-masjid-layout {
       flex-direction: column !important;
       justify-content: space-between !important;
-      gap: clamp(8px, 1.2vh, 16px) !important;
-      padding: clamp(10px, 1.4vh, 20px) clamp(14px, 2.4vw, 28px) !important;
-      height: calc(100% - clamp(36px, 4.2vh, 46px)) !important;
+      align-items: center !important;
+      gap: clamp(4px, 0.8vh, 10px) !important;
+      padding: clamp(6px, 1vh, 14px) clamp(10px, 1.8vw, 20px) !important;
+      height: calc(100% - clamp(34px, 4vh, 42px)) !important;
       box-sizing: border-box !important;
       overflow: hidden !important;
     }
@@ -1053,19 +1054,21 @@
       display: contents !important;
     }
 
-    /* ── ১. শীর্ষ হেডার: বিসমিল্লাহ + মসজিদের নাম + তারিখ ── */
+    /* ── ১. শীর্ষ হেডার: বিসমিল্লাহ + মসজিদের নাম + তারিখ (কম্প্যাক্ট) ── */
     .is-portrait .pro-header,
     body.rotate-90 .pro-header,
     body.rotate-270 .pro-header {
       order: 1 !important;
       width: 100% !important;
+      max-width: 520px !important;
+      margin: 0 auto !important;
       flex: 0 0 auto !important;
       display: flex !important;
       flex-direction: column !important;
       align-items: center !important;
       justify-content: center !important;
-      gap: clamp(4px, 0.7vh, 8px) !important;
-      padding-bottom: clamp(2px, 0.5vh, 6px) !important;
+      gap: 2px !important;
+      padding-bottom: 2px !important;
     }
 
     .is-portrait .header-top-bismillah,
@@ -1076,16 +1079,18 @@
       justify-content: center !important;
       align-items: center !important;
       text-align: center !important;
+      padding: 0 !important;
+      margin: 0 !important;
     }
 
     .is-portrait .header-bismillah,
     body.rotate-90 .header-bismillah,
     body.rotate-270 .header-bismillah {
-      font-size: clamp(20px, 3.4vw, 34px) !important;
-      letter-spacing: 1.5px !important;
-      line-height: 1.2 !important;
+      font-size: clamp(17px, 2.6vw, 26px) !important;
+      letter-spacing: 1.2px !important;
+      line-height: 1.15 !important;
       text-align: center !important;
-      text-shadow: 0 2px 14px rgba(0,0,0,0.9), 0 0 20px rgba(247, 200, 68, 0.5) !important;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.9), 0 0 16px rgba(247, 200, 68, 0.5) !important;
     }
 
     .is-portrait .header-main-row,
@@ -1095,7 +1100,7 @@
       flex-direction: column !important;
       align-items: center !important;
       justify-content: center !important;
-      gap: clamp(6px, 0.8vh, 10px) !important;
+      gap: 3px !important;
       width: 100% !important;
     }
 
@@ -1108,7 +1113,7 @@
       align-items: center !important;
       justify-content: center !important;
       text-align: center !important;
-      gap: clamp(10px, 1.8vw, 18px) !important;
+      gap: clamp(8px, 1.4vw, 14px) !important;
       width: 100% !important;
       padding-left: 0 !important;
     }
@@ -1116,8 +1121,8 @@
     .is-portrait .mosque-header-logo,
     body.rotate-90 .mosque-header-logo,
     body.rotate-270 .mosque-header-logo {
-      width: clamp(52px, 6.2vw, 76px) !important;
-      height: clamp(52px, 6.2vw, 76px) !important;
+      width: clamp(42px, 5.2vw, 62px) !important;
+      height: clamp(42px, 5.2vw, 62px) !important;
       border-width: 2px !important;
     }
 
@@ -1128,25 +1133,26 @@
       flex-direction: column !important;
       align-items: center !important;
       text-align: center !important;
-      gap: 2px !important;
+      gap: 1px !important;
     }
 
     .is-portrait .mosque-title-bn,
     body.rotate-90 .mosque-title-bn,
     body.rotate-270 .mosque-title-bn {
-      font-size: clamp(26px, 4.4vw, 42px) !important;
+      font-size: clamp(22px, 3.6vw, 34px) !important;
       line-height: 1.15 !important;
       text-align: center !important;
       white-space: normal !important;
-      text-shadow: 0 3px 18px rgba(0,0,0,0.95), 0 0 28px rgba(247, 200, 68, 0.5) !important;
+      text-shadow: 0 3px 16px rgba(0,0,0,0.95), 0 0 24px rgba(247, 200, 68, 0.45) !important;
     }
 
     .is-portrait .mosque-title-en,
     body.rotate-90 .mosque-title-en,
     body.rotate-270 .mosque-title-en {
-      font-size: clamp(13px, 1.6vw, 17px) !important;
+      font-size: clamp(12px, 1.4vw, 15px) !important;
       text-align: center !important;
       white-space: normal !important;
+      margin-top: 1px !important;
     }
 
     .is-portrait .header-right-block,
@@ -1167,8 +1173,8 @@
       flex-direction: row !important;
       align-items: center !important;
       justify-content: center !important;
-      gap: clamp(10px, 1.8vw, 18px) !important;
-      padding: clamp(5px, 0.7vh, 8px) clamp(16px, 2.4vw, 24px) !important;
+      gap: clamp(8px, 1.4vw, 14px) !important;
+      padding: clamp(3px, 0.5vh, 6px) clamp(12px, 2vw, 18px) !important;
       border-radius: 999px !important;
       background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(30, 41, 59, 0.85) 100%) !important;
       border: 1px solid rgba(247, 200, 68, 0.25) !important;
@@ -1184,7 +1190,7 @@
     body.rotate-90 .h-date-sep,
     body.rotate-270 .h-date-sep {
       width: 1px !important;
-      height: 16px !important;
+      height: 14px !important;
       margin: 0 !important;
       background: rgba(247, 200, 68, 0.5) !important;
     }
@@ -1198,36 +1204,37 @@
     .is-portrait .h-date-bn,
     body.rotate-90 .h-date-bn,
     body.rotate-270 .h-date-bn {
-      font-size: clamp(14px, 1.7vw, 19px) !important;
+      font-size: clamp(13px, 1.5vw, 17px) !important;
     }
 
     .is-portrait .h-date-hijri-val,
     body.rotate-90 .h-date-hijri-val,
     body.rotate-270 .h-date-hijri-val {
-      font-size: clamp(13px, 1.55vw, 17px) !important;
+      font-size: clamp(12px, 1.4vw, 15px) !important;
     }
 
-    /* ── ২. দ্বিতীয়: ঘড়ি ও ওয়াক্ত ব্যানার ── */
+    /* ── ২. দ্বিতীয়: ঘড়ি ও ওয়াক্ত ব্যানার (কম্প্যাক্ট) ── */
     .is-portrait .clock-center-container,
     body.rotate-90 .clock-center-container,
     body.rotate-270 .clock-center-container {
       order: 2 !important;
       width: 100% !important;
+      max-width: 480px !important;
+      margin: 0 auto !important;
       flex: 0 0 auto !important;
       display: flex !important;
       flex-direction: column !important;
       align-items: center !important;
       justify-content: center !important;
-      gap: clamp(6px, 0.9vh, 12px) !important;
-      margin: 0 !important;
-      padding: clamp(2px, 0.6vh, 8px) 0 !important;
+      gap: clamp(4px, 0.6vh, 8px) !important;
+      padding: 0 !important;
     }
 
     .is-portrait .pro-clock-digits,
     body.rotate-90 .pro-clock-digits,
     body.rotate-270 .pro-clock-digits {
-      font-size: clamp(54px, 9.8vw, 98px) !important;
-      letter-spacing: clamp(1px, 0.2vw, 2px) !important;
+      font-size: clamp(46px, 8vw, 76px) !important;
+      letter-spacing: 1px !important;
       line-height: 0.95 !important;
     }
 
@@ -1240,47 +1247,49 @@
     .is-portrait .pro-clock-ampm,
     body.rotate-90 .pro-clock-ampm,
     body.rotate-270 .pro-clock-ampm {
-      font-size: clamp(16px, 2.5vw, 24px) !important;
+      font-size: clamp(14px, 2.2vw, 20px) !important;
     }
 
     .is-portrait .under-clock-banner,
     body.rotate-90 .under-clock-banner,
     body.rotate-270 .under-clock-banner {
       width: 100% !important;
-      max-width: 580px !important;
-      padding: clamp(6px, 0.8vh, 10px) clamp(12px, 2vw, 20px) !important;
-      border-radius: clamp(12px, 1.6vh, 18px) !important;
+      max-width: 440px !important;
+      padding: clamp(4px, 0.6vh, 7px) clamp(10px, 1.6vw, 16px) !important;
+      border-radius: clamp(10px, 1.4vh, 14px) !important;
     }
 
     .is-portrait .uc-label-muted,
     body.rotate-90 .uc-label-muted,
     body.rotate-270 .uc-label-muted {
-      font-size: clamp(12px, 1.6vw, 16px) !important;
+      font-size: clamp(11px, 1.4vw, 14px) !important;
     }
 
     .is-portrait .uc-val-highlight,
     body.rotate-90 .uc-val-highlight,
     body.rotate-270 .uc-val-highlight {
-      font-size: clamp(16px, 2.2vw, 22px) !important;
+      font-size: clamp(15px, 1.8vw, 19px) !important;
     }
 
     .is-portrait .uc-val-cyan,
     body.rotate-90 .uc-val-cyan,
     body.rotate-270 .uc-val-cyan {
-      font-size: clamp(15px, 2vw, 20px) !important;
+      font-size: clamp(14px, 1.6vw, 17px) !important;
     }
 
-    /* ── ৩. তৃতীয়: ৫ ওয়াক্ত নামাজের সময়সূচি (VERTICAL PILL CARDS) ── */
+    /* ── ৩. তৃতীয়: ৫ ওয়াক্ত নামাজের সময়সূচি (নিখুঁত ও সুষম কার্ড, অতিরিক্ত ফাঁকা জায়গা বাদ) ── */
     .is-portrait .prayer-cards-column,
     body.rotate-90 .prayer-cards-column,
     body.rotate-270 .prayer-cards-column {
       order: 3 !important;
       width: 100% !important;
-      flex: 1 1 auto !important;
+      max-width: 440px !important;
+      margin: 0 auto !important;
+      align-self: center !important;
+      flex: 0 0 auto !important;
       display: flex !important;
       flex-direction: column !important;
-      justify-content: space-between !important;
-      gap: clamp(6px, 0.9vh, 12px) !important;
+      gap: clamp(5px, 0.8vh, 9px) !important;
       height: auto !important;
       min-height: 0 !important;
       grid-template-columns: none !important;
@@ -1289,66 +1298,104 @@
     .is-portrait .prayer-pill-card,
     body.rotate-90 .prayer-pill-card,
     body.rotate-270 .prayer-pill-card {
-      flex: 1 1 auto !important;
-      min-height: clamp(46px, 5.6vh, 68px) !important;
-      padding: 0 clamp(16px, 2.6vw, 28px) !important;
-      border-radius: clamp(12px, 1.5vh, 18px) !important;
-      gap: 12px !important;
+      flex: 0 0 auto !important;
+      height: clamp(46px, 5.8vh, 58px) !important;
+      min-height: clamp(46px, 5.8vh, 58px) !important;
+      width: 100% !important;
+      padding: 0 clamp(16px, 2.5vw, 24px) !important;
+      border-radius: clamp(10px, 1.4vh, 16px) !important;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3) !important;
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Hide the useless separating dash in portrait to eliminate the awkward void */
+    .is-portrait .p-sep,
+    body.rotate-90 .p-sep,
+    body.rotate-270 .p-sep {
+      display: none !important;
+    }
+
+    .is-portrait .p-card-left,
+    body.rotate-90 .p-card-left,
+    body.rotate-270 .p-card-left {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      justify-content: center !important;
+      gap: 1px !important;
     }
 
     .is-portrait .prayer-pill-card .p-name,
     body.rotate-90 .prayer-pill-card .p-name,
     body.rotate-270 .prayer-pill-card .p-name {
-      font-size: calc(clamp(20px, 3vw, 32px) * var(--font-scale, 1)) !important;
-    }
-
-    .is-portrait .prayer-pill-card .p-time,
-    body.rotate-90 .prayer-pill-card .p-time,
-    body.rotate-270 .prayer-pill-card .p-time {
-      font-size: calc(clamp(24px, 3.4vw, 38px) * var(--font-scale, 1)) !important;
+      font-size: calc(clamp(19px, 2.6vw, 28px) * var(--font-scale, 1)) !important;
+      line-height: 1.1 !important;
     }
 
     .is-portrait .p-card-left .p-azan-sub,
     body.rotate-90 .p-card-left .p-azan-sub,
     body.rotate-270 .p-card-left .p-azan-sub {
-      font-size: calc(clamp(11px, 1.35vw, 15px) * var(--font-scale, 1)) !important;
+      font-size: calc(clamp(11px, 1.3vw, 14px) * var(--font-scale, 1)) !important;
+      line-height: 1.1 !important;
     }
 
-    /* ── ৪. চতুর্থ: সূর্যোদয় ও জুমা বক্স (BOTTOM META ROW) ── */
+    .is-portrait .p-card-right,
+    body.rotate-90 .p-card-right,
+    body.rotate-270 .p-card-right {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-end !important;
+    }
+
+    .is-portrait .prayer-pill-card .p-time,
+    body.rotate-90 .prayer-pill-card .p-time,
+    body.rotate-270 .prayer-pill-card .p-time {
+      font-size: calc(clamp(22px, 3.2vw, 34px) * var(--font-scale, 1)) !important;
+      line-height: 1 !important;
+    }
+
+    /* ── ৪. চতুর্থ: সূর্যোদয় ও জুমা বক্স (কম্প্যাক্ট) ── */
     .is-portrait .bottom-meta-row,
     body.rotate-90 .bottom-meta-row,
     body.rotate-270 .bottom-meta-row {
       order: 4 !important;
       width: 100% !important;
+      max-width: 440px !important;
+      margin: 0 auto !important;
+      align-self: center !important;
       flex: 0 0 auto !important;
       display: flex !important;
       flex-direction: row !important;
       align-items: stretch !important;
       justify-content: space-between !important;
-      gap: clamp(8px, 1.2vw, 14px) !important;
-      height: clamp(48px, 6vh, 70px) !important;
-      min-height: clamp(48px, 6vh, 70px) !important;
+      gap: clamp(6px, 1vw, 10px) !important;
+      height: clamp(44px, 5.5vh, 56px) !important;
+      min-height: clamp(44px, 5.5vh, 56px) !important;
       margin-top: 0 !important;
     }
 
     .is-portrait .bottom-meta-card,
     body.rotate-90 .bottom-meta-card,
     body.rotate-270 .bottom-meta-card {
-      padding: clamp(6px, 0.7vh, 10px) clamp(10px, 1.4vw, 16px) !important;
-      border-radius: clamp(10px, 1.4vh, 16px) !important;
+      padding: clamp(4px, 0.6vh, 8px) clamp(8px, 1.2vw, 12px) !important;
+      border-radius: clamp(8px, 1.2vh, 12px) !important;
+      justify-content: center !important;
     }
 
     .is-portrait .meta-title-label,
     body.rotate-90 .meta-title-label,
     body.rotate-270 .meta-title-label {
-      font-size: clamp(13px, 1.7vw, 19px) !important;
+      font-size: clamp(12px, 1.5vw, 16px) !important;
     }
 
     .is-portrait .meta-main-digits,
     body.rotate-90 .meta-main-digits,
     body.rotate-270 .meta-main-digits {
-      font-size: clamp(18px, 2.5vw, 26px) !important;
+      font-size: clamp(16px, 2.2vw, 22px) !important;
     }
 
     /* ── ৫. পঞ্চম: স্ক্রলিং নোটিশ বার ── */
@@ -1358,7 +1405,7 @@
     body.rotate-90 #bot,
     body.rotate-270 .pro-footer,
     body.rotate-270 #bot {
-      height: clamp(34px, 4vh, 44px) !important;
+      height: clamp(32px, 3.8vh, 40px) !important;
       padding: 0 clamp(10px, 1.8vw, 18px) !important;
     }
 
@@ -1367,9 +1414,10 @@
       #mainLayout, .pro-masjid-layout {
         flex-direction: column !important;
         justify-content: space-between !important;
-        gap: clamp(8px, 1.2vh, 16px) !important;
-        padding: clamp(10px, 1.4vh, 20px) clamp(14px, 2.4vw, 28px) !important;
-        height: calc(100% - clamp(36px, 4.2vh, 46px)) !important;
+        align-items: center !important;
+        gap: clamp(4px, 0.8vh, 10px) !important;
+        padding: clamp(6px, 1vh, 14px) clamp(10px, 1.8vw, 20px) !important;
+        height: calc(100% - clamp(34px, 4vh, 42px)) !important;
         box-sizing: border-box !important;
         overflow: hidden !important;
       }
@@ -1379,13 +1427,15 @@
       .pro-header {
         order: 1 !important;
         width: 100% !important;
+        max-width: 520px !important;
+        margin: 0 auto !important;
         flex: 0 0 auto !important;
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
         justify-content: center !important;
-        gap: clamp(4px, 0.7vh, 8px) !important;
-        padding-bottom: clamp(2px, 0.5vh, 6px) !important;
+        gap: 2px !important;
+        padding-bottom: 2px !important;
       }
       .header-top-bismillah {
         width: 100% !important;
@@ -1393,20 +1443,22 @@
         justify-content: center !important;
         align-items: center !important;
         text-align: center !important;
+        padding: 0 !important;
+        margin: 0 !important;
       }
       .header-bismillah {
-        font-size: clamp(20px, 3.4vw, 34px) !important;
-        letter-spacing: 1.5px !important;
-        line-height: 1.2 !important;
+        font-size: clamp(17px, 2.6vw, 26px) !important;
+        letter-spacing: 1.2px !important;
+        line-height: 1.15 !important;
         text-align: center !important;
-        text-shadow: 0 2px 14px rgba(0,0,0,0.9), 0 0 20px rgba(247, 200, 68, 0.5) !important;
+        text-shadow: 0 2px 12px rgba(0,0,0,0.9), 0 0 16px rgba(247, 200, 68, 0.5) !important;
       }
       .header-main-row {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
         justify-content: center !important;
-        gap: clamp(6px, 0.8vh, 10px) !important;
+        gap: 3px !important;
         width: 100% !important;
       }
       .header-brand-container,
@@ -1416,13 +1468,13 @@
         align-items: center !important;
         justify-content: center !important;
         text-align: center !important;
-        gap: clamp(10px, 1.8vw, 18px) !important;
+        gap: clamp(8px, 1.4vw, 14px) !important;
         width: 100% !important;
         padding-left: 0 !important;
       }
       .mosque-header-logo {
-        width: clamp(52px, 6.2vw, 76px) !important;
-        height: clamp(52px, 6.2vw, 76px) !important;
+        width: clamp(42px, 5.2vw, 62px) !important;
+        height: clamp(42px, 5.2vw, 62px) !important;
         border-width: 2px !important;
       }
       .mosque-brand-titles {
@@ -1430,19 +1482,20 @@
         flex-direction: column !important;
         align-items: center !important;
         text-align: center !important;
-        gap: 2px !important;
+        gap: 1px !important;
       }
       .mosque-title-bn {
-        font-size: clamp(26px, 4.4vw, 42px) !important;
+        font-size: clamp(22px, 3.6vw, 34px) !important;
         line-height: 1.15 !important;
         text-align: center !important;
         white-space: normal !important;
-        text-shadow: 0 3px 18px rgba(0,0,0,0.95), 0 0 28px rgba(247, 200, 68, 0.5) !important;
+        text-shadow: 0 3px 16px rgba(0,0,0,0.95), 0 0 24px rgba(247, 200, 68, 0.45) !important;
       }
       .mosque-title-en {
-        font-size: clamp(13px, 1.6vw, 17px) !important;
+        font-size: clamp(12px, 1.4vw, 15px) !important;
         text-align: center !important;
         white-space: normal !important;
+        margin-top: 1px !important;
       }
       .header-right-block {
         margin-left: 0 !important;
@@ -1457,8 +1510,8 @@
         flex-direction: row !important;
         align-items: center !important;
         justify-content: center !important;
-        gap: clamp(10px, 1.8vw, 18px) !important;
-        padding: clamp(5px, 0.7vh, 8px) clamp(16px, 2.4vw, 24px) !important;
+        gap: clamp(8px, 1.4vw, 14px) !important;
+        padding: clamp(3px, 0.5vh, 6px) clamp(12px, 2vw, 18px) !important;
         border-radius: 999px !important;
         background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(30, 41, 59, 0.85) 100%) !important;
         border: 1px solid rgba(247, 200, 68, 0.25) !important;
@@ -1466,95 +1519,126 @@
       .h-date-greg { width: auto !important; }
       .h-date-sep {
         width: 1px !important;
-        height: 16px !important;
+        height: 14px !important;
         margin: 0 !important;
         background: rgba(247, 200, 68, 0.5) !important;
       }
       .h-date-hijri { width: auto !important; }
-      .h-date-bn { font-size: clamp(14px, 1.7vw, 19px) !important; }
-      .h-date-hijri-val { font-size: clamp(13px, 1.55vw, 17px) !important; }
+      .h-date-bn { font-size: clamp(13px, 1.5vw, 17px) !important; }
+      .h-date-hijri-val { font-size: clamp(12px, 1.4vw, 15px) !important; }
 
       .clock-center-container {
         order: 2 !important;
         width: 100% !important;
+        max-width: 480px !important;
+        margin: 0 auto !important;
         flex: 0 0 auto !important;
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
         justify-content: center !important;
-        gap: clamp(6px, 0.9vh, 12px) !important;
-        margin: 0 !important;
-        padding: clamp(2px, 0.6vh, 8px) 0 !important;
+        gap: clamp(4px, 0.6vh, 8px) !important;
+        padding: 0 !important;
       }
       .pro-clock-digits {
-        font-size: clamp(54px, 9.8vw, 98px) !important;
-        letter-spacing: clamp(1px, 0.2vw, 2px) !important;
+        font-size: clamp(46px, 8vw, 76px) !important;
+        letter-spacing: 1px !important;
         line-height: 0.95 !important;
       }
       .clk-segment { width: 2.15ch !important; }
-      .pro-clock-ampm { font-size: clamp(16px, 2.5vw, 24px) !important; }
+      .pro-clock-ampm { font-size: clamp(14px, 2.2vw, 20px) !important; }
       .under-clock-banner {
         width: 100% !important;
-        max-width: 580px !important;
-        padding: clamp(6px, 0.8vh, 10px) clamp(12px, 2vw, 20px) !important;
-        border-radius: clamp(12px, 1.6vh, 18px) !important;
+        max-width: 440px !important;
+        padding: clamp(4px, 0.6vh, 7px) clamp(10px, 1.6vw, 16px) !important;
+        border-radius: clamp(10px, 1.4vh, 14px) !important;
       }
-      .uc-label-muted { font-size: clamp(12px, 1.6vw, 16px) !important; }
-      .uc-val-highlight { font-size: clamp(16px, 2.2vw, 22px) !important; }
-      .uc-val-cyan { font-size: clamp(15px, 2vw, 20px) !important; }
+      .uc-label-muted { font-size: clamp(11px, 1.4vw, 14px) !important; }
+      .uc-val-highlight { font-size: clamp(15px, 1.8vw, 19px) !important; }
+      .uc-val-cyan { font-size: clamp(14px, 1.6vw, 17px) !important; }
 
       .prayer-cards-column {
         order: 3 !important;
         width: 100% !important;
-        flex: 1 1 auto !important;
+        max-width: 440px !important;
+        margin: 0 auto !important;
+        align-self: center !important;
+        flex: 0 0 auto !important;
         display: flex !important;
         flex-direction: column !important;
-        justify-content: space-between !important;
-        gap: clamp(6px, 0.9vh, 12px) !important;
+        gap: clamp(5px, 0.8vh, 9px) !important;
         height: auto !important;
         min-height: 0 !important;
         grid-template-columns: none !important;
       }
       .prayer-pill-card {
-        flex: 1 1 auto !important;
-        min-height: clamp(46px, 5.6vh, 68px) !important;
-        padding: 0 clamp(16px, 2.6vw, 28px) !important;
-        border-radius: clamp(12px, 1.5vh, 18px) !important;
-        gap: 12px !important;
+        flex: 0 0 auto !important;
+        height: clamp(46px, 5.8vh, 58px) !important;
+        min-height: clamp(46px, 5.8vh, 58px) !important;
+        width: 100% !important;
+        padding: 0 clamp(16px, 2.5vw, 24px) !important;
+        border-radius: clamp(10px, 1.4vh, 16px) !important;
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3) !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        box-sizing: border-box !important;
+      }
+      .p-sep {
+        display: none !important;
+      }
+      .p-card-left {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        justify-content: center !important;
+        gap: 1px !important;
       }
       .prayer-pill-card .p-name {
-        font-size: calc(clamp(20px, 3vw, 32px) * var(--font-scale, 1)) !important;
-      }
-      .prayer-pill-card .p-time {
-        font-size: calc(clamp(24px, 3.4vw, 38px) * var(--font-scale, 1)) !important;
+        font-size: calc(clamp(19px, 2.6vw, 28px) * var(--font-scale, 1)) !important;
+        line-height: 1.1 !important;
       }
       .p-card-left .p-azan-sub {
-        font-size: calc(clamp(11px, 1.35vw, 15px) * var(--font-scale, 1)) !important;
+        font-size: calc(clamp(11px, 1.3vw, 14px) * var(--font-scale, 1)) !important;
+        line-height: 1.1 !important;
+      }
+      .p-card-right {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+      }
+      .prayer-pill-card .p-time {
+        font-size: calc(clamp(22px, 3.2vw, 34px) * var(--font-scale, 1)) !important;
+        line-height: 1 !important;
       }
 
       .bottom-meta-row {
         order: 4 !important;
         width: 100% !important;
+        max-width: 440px !important;
+        margin: 0 auto !important;
+        align-self: center !important;
         flex: 0 0 auto !important;
         display: flex !important;
         flex-direction: row !important;
         align-items: stretch !important;
         justify-content: space-between !important;
-        gap: clamp(8px, 1.2vw, 14px) !important;
-        height: clamp(48px, 6vh, 70px) !important;
-        min-height: clamp(48px, 6vh, 70px) !important;
+        gap: clamp(6px, 1vw, 10px) !important;
+        height: clamp(44px, 5.5vh, 56px) !important;
+        min-height: clamp(44px, 5.5vh, 56px) !important;
         margin-top: 0 !important;
       }
       .bottom-meta-card {
-        padding: clamp(6px, 0.7vh, 10px) clamp(10px, 1.4vw, 16px) !important;
-        border-radius: clamp(10px, 1.4vh, 16px) !important;
+        padding: clamp(4px, 0.6vh, 8px) clamp(8px, 1.2vw, 12px) !important;
+        border-radius: clamp(8px, 1.2vh, 12px) !important;
+        justify-content: center !important;
       }
-      .meta-title-label { font-size: clamp(13px, 1.7vw, 19px) !important; }
-      .meta-main-digits { font-size: clamp(18px, 2.5vw, 26px) !important; }
+      .meta-title-label { font-size: clamp(12px, 1.5vw, 16px) !important; }
+      .meta-main-digits { font-size: clamp(16px, 2.2vw, 22px) !important; }
 
       .pro-footer, #bot {
-        height: clamp(34px, 4vh, 44px) !important;
+        height: clamp(32px, 3.8vh, 40px) !important;
         padding: 0 clamp(10px, 1.8vw, 18px) !important;
       }
     }
