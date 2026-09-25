@@ -1,0 +1,5 @@
+-keep class com.mymasjid.tv.** { *; }
+-keep class com.mymasjid.tv.receiver.** { *; }
+-keep class com.mymasjid.tv.service.** { *; }
+-keepattributes *Annotation*
+-dontwarn kotlin.**

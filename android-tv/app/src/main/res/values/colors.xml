@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary green palette (Islamic theme) -->
+    <color name="green_primary">#1B5E20</color>
+    <color name="green_dark">#0D3B17</color>
+    <color name="gold">#D4AF37</color>
+    <color name="accent_green">#4CAF50</color>
+
+    <!-- Backgrounds -->
+    <color name="bg_primary">#0F2D0F</color>
+    <color name="bg_dark">#080808</color>
+    <color name="bg_light">#F5F5F0</color>
+    <color name="bg_header">#1A3A1A</color>
+    <color name="bg_hint_bar">#0A1A0A</color>
+    <color name="bg_banner">#B71C1C</color>
+    <color name="bg_active_row">#1E4D1E</color>
+
+    <!-- Text -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#AAAAAA</color>
+    <color name="text_banner">#FFFFFF</color>
+</resources>

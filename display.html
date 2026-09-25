@@ -1,0 +1,2713 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>মসজিদ ডিজিটাল ডিসপ্লে</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@600;700;800;900&family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ── THEMES ── */
+    :root {
+      --bg1: #0a0a0a;
+      --bg2: #111111;
+      --arch-fill: #8B0000;
+      --arch-stroke: #D4AF37;
+      --gold: #D4AF37;
+      --gold2: #F3D77B;
+      --gold3: #AA771C;
+      --gold-grd: linear-gradient(135deg, #F3D77B 0%, #D4AF37 50%, #AA771C 100%);
+      --accent: #D4AF37;
+      --text-w: #FFFFFF;
+      --text-m: rgba(255,255,255,0.75);
+      --text-d: rgba(255,255,255,0.45);
+      --row-bg: rgba(255,255,255,0.04);
+      --row-border: rgba(212,175,55,0.18);
+      --active-bg: linear-gradient(135deg, rgba(180,0,0,0.35) 0%, rgba(212,175,55,0.15) 100%);
+      --active-border: #D4AF37;
+      --active-glow: 0 0 28px rgba(212,175,55,0.35);
+      --divider: rgba(212,175,55,0.25);
+      --hdr-bg: rgba(0,0,0,0.7);
+      --bar-bg: rgba(5,5,5,0.95);
+    }
+
+    body[data-theme="dark"] {
+      --arch-fill: #0d0d0d;
+      --arch-stroke: #D4AF37;
+      --accent: #D4AF37;
+      --active-bg: linear-gradient(135deg, rgba(212,175,55,0.2) 0%, rgba(10,10,10,0.9) 100%);
+      --active-border: #D4AF37;
+      --active-glow: 0 0 28px rgba(212,175,55,0.4);
+    }
+
+    body[data-theme="navy"] {
+      --bg1: #040c18;
+      --bg2: #071525;
+      --arch-fill: #071525;
+      --arch-stroke: #CBA135;
+      --gold: #CBA135;
+      --gold2: #F7E7B4;
+      --gold3: #946F15;
+      --gold-grd: linear-gradient(135deg, #F7E7B4 0%, #CBA135 50%, #946F15 100%);
+      --accent: #00D2FF;
+      --active-bg: linear-gradient(135deg, rgba(0,210,255,0.18) 0%, rgba(7,21,37,0.9) 100%);
+      --active-border: #00D2FF;
+      --active-glow: 0 0 28px rgba(0,210,255,0.35);
+    }
+
+    body[data-theme="emerald"] {
+      --bg1: #030f0a;
+      --bg2: #061c14;
+      --arch-fill: #061c14;
+      --arch-stroke: #D4AF37;
+      --accent: #00E676;
+      --active-bg: linear-gradient(135deg, rgba(0,230,118,0.2) 0%, rgba(6,28,20,0.9) 100%);
+      --active-border: #00E676;
+      --active-glow: 0 0 28px rgba(0,230,118,0.35);
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: var(--bg1);
+      font-family: 'Hind Siliguri', 'Segoe UI', Arial, sans-serif;
+      user-select: none;
+      color: var(--text-w);
+    }
+
+    /* ── SCREEN ROTATION & BURGUNDY ISLAMIC BACKGROUND ── */
+    /* ── BASE SCREEN WRAPPER & PRO THEMES (High Visibility) ── */
+    #screenWrapper {
+      width: 100vw; height: 100vh;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      user-select: none;
+      transition: background 0.4s ease, transform 0.4s ease;
+      font-family: 'Hind Siliguri', 'Outfit', sans-serif;
+    }
+
+    /* THEME 1: ROYAL NAVY & GOLD (IMAGE 2 - ULTRA VISIBILITY - DEFAULT) */
+    #screenWrapper,
+    #screenWrapper.theme-navy,
+    body[data-theme="navy"] #screenWrapper {
+      background-color: #061a24;
+      background-image:
+        radial-gradient(circle at 65% 45%, #0d2f3e 0%, #061923 55%, #020c12 100%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.035)' stroke-width='1'%3E%3Cpolygon points='40,5 50,25 70,15 60,35 80,45 60,55 70,75 50,65 40,85 30,65 10,75 20,55 0,45 20,35 10,15 30,25'/%3E%3Ccircle cx='40' cy='40' r='14'/%3E%3C/g%3E%3C/svg%3E");
+      color: #ffffff;
+    }
+
+    /* THEME 2: ROYAL BURGUNDY (IMAGE 1 & 4) */
+    #screenWrapper.theme-burgundy,
+    body[data-theme="burgundy"] #screenWrapper,
+    body[data-theme="dark"] #screenWrapper.theme-burgundy {
+      background-color: #4a060a;
+      background-image:
+        radial-gradient(ellipse at 55% 45%, rgba(135, 18, 28, 0.9) 0%, rgba(55, 6, 12, 0.98) 70%, #200205 100%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='rgba(255,215,0,0.04)' stroke-width='1'%3E%3Cpolygon points='40,5 50,25 70,15 60,35 80,45 60,55 70,75 50,65 40,85 30,65 10,75 20,55 0,45 20,35 10,15 30,25'/%3E%3Ccircle cx='40' cy='40' r='14'/%3E%3C/g%3E%3C/svg%3E");
+      color: #ffffff;
+    }
+
+    /* THEME 3: EMERALD ISLAMIC (IMAGE 4 TOP-LEFT) */
+    #screenWrapper.theme-emerald,
+    body[data-theme="emerald"] #screenWrapper {
+      background-color: #032014;
+      background-image:
+        radial-gradient(circle at 65% 45%, #08482d 0%, #032517 55%, #01120a 100%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='rgba(255,215,0,0.04)' stroke-width='1'%3E%3Cpolygon points='40,5 50,25 70,15 60,35 80,45 60,55 70,75 50,65 40,85 30,65 10,75 20,55 0,45 20,35 10,15 30,25'/%3E%3Ccircle cx='40' cy='40' r='14'/%3E%3C/g%3E%3C/svg%3E");
+      color: #ffffff;
+    }
+
+    /* THEME 4: MODERN SLATE / OBSIDIAN (IMAGE 4 BOTTOM-LEFT) */
+    #screenWrapper.theme-slate,
+    body[data-theme="slate"] #screenWrapper {
+      background-color: #090e17;
+      background-image:
+        radial-gradient(circle at 65% 45%, #1e293b 0%, #0f172a 60%, #020617 100%);
+      color: #ffffff;
+    }
+
+    body.rotate-90 #screenWrapper {
+      transform: rotate(90deg);
+      width: 100vh; height: 100vw;
+      position: absolute;
+      top: calc((100vh - 100vw) / 2);
+      left: calc((100vw - 100vh) / 2);
+    }
+    body.rotate-180 #screenWrapper { transform: rotate(180deg); }
+    body.rotate-270 #screenWrapper {
+      transform: rotate(270deg);
+      width: 100vh; height: 100vw;
+      position: absolute;
+      top: calc((100vh - 100vw) / 2);
+      left: calc((100vw - 100vh) / 2);
+    }
+
+    :root {
+      --font-scale: 1;
+      --bg-opacity: 0.45;
+      --pill-card-gap: clamp(10px, 1.8vh, 22px);
+      --pill-card-height: calc((100% - 4 * var(--pill-card-gap)) / 5);
+    }
+
+    /* ── FULL-SCREEN BACKGROUND WALLPAPER & ISLAMIC ARCH ── */
+    .bg-mosque-arch {
+      position: absolute;
+      inset: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 500'%3E%3Cpath d='M200,20 C240,90 340,150 340,280 L340,500 L60,500 L60,280 C60,150 160,90 200,20 Z' fill='none' stroke='%23ffffff' stroke-width='4'/%3E%3Cpath d='M200,60 C230,120 310,170 310,290 L310,500 L90,500 L90,290 C90,170 170,120 200,60 Z' fill='none' stroke='%23ffffff' stroke-width='2' stroke-dasharray='6,4'/%3E%3Cpath d='M200,5 C204,15 204,25 200,30 C196,25 196,15 200,5 Z' fill='%23ffffff'/%3E%3C/svg%3E") no-repeat center center;
+      background-size: contain;
+      z-index: 1;
+      opacity: 0.12;
+      transition: opacity 0.4s ease;
+    }
+
+    /* When a custom background photo / wallpaper is uploaded from admin */
+    .bg-mosque-arch.has-custom-bg {
+      background-size: cover !important;
+      background-position: center center !important;
+      background-repeat: no-repeat !important;
+      opacity: var(--bg-opacity, 0.45) !important;
+      filter: brightness(0.88) contrast(1.05);
+    }
+
+    /* Dark gradient overlay to keep text ultra-crisp & readable */
+    .bg-screen-overlay {
+      position: absolute;
+      inset: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      background: radial-gradient(circle at 60% 45%, rgba(6, 26, 36, 0.35) 0%, rgba(2, 10, 16, 0.75) 100%);
+    }
+
+    /* ── AZAN ALERT BANNER ── */
+    #alertBanner {
+      display: none;
+      width: 100%;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 999;
+      background: linear-gradient(90deg, #10b981, #d97706, #10b981);
+      background-size: 200% auto;
+      animation: shineBanner 2.5s linear infinite;
+      color: #0f172a;
+      text-align: center;
+      font-size: clamp(13px, 1.4vw, 19px);
+      font-weight: 800;
+      padding: 6px 14px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+    }
+    @keyframes shineBanner {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* ── PRO MASJID LAYOUT (IMAGE 2 - LEFT CARDS + RIGHT CLOCK/NEXT) ── */
+    .pro-masjid-layout, #mainLayout {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      min-height: 0;
+      position: relative;
+      z-index: 2;
+      padding: clamp(12px, 2vh, 22px) clamp(16px, 2.5vw, 36px);
+      gap: clamp(16px, 2.5vw, 42px);
+      box-sizing: border-box;
+    }
+
+    /* ── LEFT PRAYER PILLS COLUMN (5 FARZ PRAYERS) ── */
+    .prayer-cards-column {
+      flex: 0 0 clamp(280px, 30vw, 420px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--pill-card-gap, clamp(10px, 1.8vh, 22px));
+      height: 100%;
+    }
+
+    .prayer-pill-card {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(10px, 1.4vw, 20px);
+      background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+      color: #0f172a;
+      border-radius: clamp(12px, 1.8vh, 20px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      transition: all 0.3s ease;
+      padding: 0 clamp(16px, 2vw, 32px);
+      min-height: 0;
+    }
+
+    :root {
+      --font-scale: 1;
+    }
+
+    .prayer-pill-card .p-name {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: calc(clamp(25px, 3.1vw, 46px) * var(--font-scale, 1));
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      line-height: 1;
+    }
+
+    .prayer-pill-card .p-sep {
+      font-size: calc(clamp(23px, 2.8vw, 42px) * var(--font-scale, 1));
+      font-weight: 600;
+      opacity: 0.5;
+      line-height: 1;
+    }
+
+    .prayer-pill-card .p-time {
+      font-family: 'Outfit', 'Cinzel', 'Hind Siliguri', sans-serif;
+      font-size: calc(clamp(26px, 3.2vw, 48px) * var(--font-scale, 1));
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      line-height: 1;
+    }
+
+    /* ACTIVE WAQT PILL CARD (Glowing neon emerald/cyan border) */
+    .prayer-pill-card.active-card {
+      background: linear-gradient(180deg, #072231 0%, #03141e 100%) !important;
+      border: 2.5px solid #10b981 !important;
+      box-shadow: 0 0 28px rgba(16, 185, 129, 0.65), inset 0 0 16px rgba(16, 185, 129, 0.3) !important;
+      transform: scale(1.025);
+    }
+    .prayer-pill-card.active-card .p-name {
+      color: #fde047 !important;
+      text-shadow: 0 0 12px rgba(253, 224, 71, 0.45);
+    }
+    .prayer-pill-card.active-card .p-sep {
+      color: #fde047 !important;
+    }
+    .prayer-pill-card.active-card .p-time {
+      color: #fde047 !important;
+      text-shadow: 0 0 14px rgba(253, 224, 71, 0.55);
+    }
+
+    /* ── RIGHT MAIN DISPLAY SECTION ── */
+    .main-display-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 0;
+      height: 100%;
+    }
+
+    /* TOP HEADER: Mosque Title in Shimmering Gold & Clean Date */
+    .pro-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      flex-shrink: 0;
+      padding-bottom: 6px;
+    }
+
+    .header-left-spacer {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+
+    .header-center-block {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 2px;
+    }
+
+    .header-bismillah {
+      font-family: 'Amiri', serif;
+      font-size: clamp(14px, 1.6vw, 24px);
+      color: #f7c844;
+      opacity: 0.95;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.8), 0 0 16px rgba(247, 200, 68, 0.4);
+      line-height: 1.15;
+    }
+
+    .mosque-brand-block {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(8px, 1.2vw, 16px);
+    }
+
+    .mosque-header-logo {
+      width: clamp(38px, 4.2vw, 60px);
+      height: clamp(38px, 4.2vw, 60px);
+      border-radius: 12px;
+      object-fit: contain;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1.5px solid rgba(247, 200, 68, 0.5);
+      padding: 3px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+      flex-shrink: 0;
+    }
+
+    .mosque-brand-titles {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .mosque-title-bn {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(24px, 3.4vw, 46px);
+      font-weight: 800;
+      color: #f7c844;
+      line-height: 1.15;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.8), 0 0 25px rgba(247, 200, 68, 0.35);
+      margin: 0;
+    }
+
+    .mosque-title-en {
+      font-family: 'Hind Siliguri', 'Outfit', sans-serif;
+      font-size: clamp(12px, 1.25vw, 17px);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: #cbd5e1;
+      opacity: 0.92;
+      margin-top: 1px;
+    }
+
+    /* Header Right Block: Professional Box for Arabic and English Dates */
+    .header-right-block {
+      flex: 1 1 0;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .header-date-badge {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 41, 59, 0.78) 100%);
+      border: none;
+      border-radius: 12px;
+      padding: 6px 18px 7px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(14px);
+      flex-shrink: 0;
+    }
+
+    .h-date-greg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      white-space: nowrap;
+    }
+
+    .h-date-bn {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(16px, 1.7vw, 24px);
+      font-weight: 800;
+      color: #fde047;
+      text-shadow: 0 0 12px rgba(253, 224, 71, 0.45);
+      line-height: 1.2;
+      letter-spacing: 0.3px;
+    }
+
+    .h-date-sep {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(247, 200, 68, 0.45), transparent);
+      margin: 2px 0;
+    }
+
+    .h-date-hijri {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      white-space: nowrap;
+    }
+
+    .h-date-hijri-val {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(14px, 1.55vw, 21px);
+      font-weight: 800;
+      color: #38bdf8;
+      text-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+      line-height: 1.2;
+      letter-spacing: 0.3px;
+    }
+
+    /* CENTER CLOCK CONTAINER (Grand, Centered, Majestic) */
+    .clock-center-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(14px, 2.2vh, 32px);
+      margin: auto 0;
+    }
+
+    /* GIANT DIGITAL CLOCK: 07:05:08 PM (ROCK-SOLID ZERO JITTER) */
+    .pro-clock-wrap {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: clamp(8px, 1.2vw, 20px);
+      line-height: 0.9;
+    }
+
+    .pro-clock-digits {
+      display: inline-flex;
+      align-items: baseline;
+      justify-content: center;
+      font-family: 'Outfit', 'Cinzel', 'Hind Siliguri', sans-serif;
+      font-size: clamp(68px, 10.5vw, 150px);
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: clamp(1px, 0.2vw, 3px);
+      text-shadow: 0 4px 30px rgba(0,0,0,0.8), 0 0 40px rgba(255,255,255,0.25);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+    }
+
+    .clk-segment {
+      display: inline-block;
+      width: 2.15ch;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+      flex-shrink: 0;
+    }
+
+    .clk-colon {
+      display: inline-block;
+      width: 0.5ch;
+      text-align: center;
+      opacity: 0.85;
+      flex-shrink: 0;
+    }
+
+    .pro-clock-ampm {
+      font-family: 'Outfit', 'Hind Siliguri', sans-serif;
+      font-size: clamp(22px, 3.2vw, 48px);
+      font-weight: 800;
+      color: #f1f5f9;
+      letter-spacing: 1px;
+    }
+
+    /* ══ UNDER-CLOCK BANNER: CURRENT WAQT OR 5-MIN COUNTDOWN ══ */
+    .under-clock-banner {
+      width: clamp(340px, 48vw, 740px);
+      position: relative;
+      border-radius: clamp(14px, 2vw, 24px);
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(6, 26, 36, 0.92) 100%);
+      border: 1.5px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(14px);
+      padding: clamp(10px, 1.4vh, 18px) clamp(16px, 2vw, 32px);
+      transition: all 0.35s ease;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    /* Normal Waqt / Next Jamaat View */
+    .uc-normal-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: clamp(10px, 1.5vw, 24px);
+      width: 100%;
+    }
+    .uc-waqt-block, .uc-next-block {
+      display: flex;
+      align-items: center;
+      gap: clamp(6px, 0.8vw, 12px);
+    }
+    .uc-pulse-dot {
+      width: clamp(8px, 0.9vw, 12px);
+      height: clamp(8px, 0.9vw, 12px);
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 12px #10b981;
+      animation: pulseGreen 2s infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulseGreen {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.7; }
+    }
+    .uc-next-icon {
+      width: clamp(18px, 1.8vw, 26px);
+      height: clamp(18px, 1.8vw, 26px);
+      color: #38bdf8;
+      filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5));
+      flex-shrink: 0;
+    }
+    .uc-label-muted {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(14px, 1.5vw, 22px);
+      color: #cbd5e1;
+      font-weight: 600;
+    }
+    .uc-val-highlight {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(18px, 2.1vw, 32px);
+      font-weight: 800;
+      color: #fde047;
+      text-shadow: 0 0 12px rgba(253, 224, 71, 0.45);
+    }
+    .uc-sep-line {
+      width: 1.5px;
+      height: clamp(18px, 2.4vh, 28px);
+      background: rgba(255, 255, 255, 0.2);
+      flex-shrink: 0;
+    }
+    .uc-val-cyan {
+      font-family: 'Outfit', 'Cinzel', 'Hind Siliguri', sans-serif;
+      font-size: clamp(18px, 2.1vw, 32px);
+      font-weight: 800;
+      color: #38bdf8;
+      text-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
+    }
+
+    /* Active 5-Minute Countdown View in Under-Clock Banner */
+    .under-clock-banner.banner-active-cd {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.3) 0%, rgba(20, 10, 5, 0.95) 100%) !important;
+      border: 2px solid #f59e0b !important;
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.65), inset 0 0 18px rgba(245, 158, 11, 0.25) !important;
+      animation: countdownPulse 2s infinite ease-in-out;
+    }
+    .under-clock-banner.banner-urgent-cd {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.38) 0%, rgba(25, 5, 5, 0.96) 100%) !important;
+      border: 2px solid #ef4444 !important;
+      box-shadow: 0 0 45px rgba(239, 68, 68, 0.8), inset 0 0 20px rgba(239, 68, 68, 0.3) !important;
+      animation: urgentPulse 1s infinite ease-in-out;
+    }
+
+    .uc-countdown-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: clamp(10px, 1.4vw, 20px);
+    }
+    .uc-cd-left {
+      display: flex;
+      align-items: center;
+      gap: clamp(10px, 1.2vw, 16px);
+      flex: 1;
+      min-width: 0;
+    }
+    .uc-cd-icon-box {
+      width: clamp(38px, 4.2vw, 54px);
+      height: clamp(38px, 4.2vw, 54px);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(245, 158, 11, 0.25);
+      border: 1px solid rgba(245, 158, 11, 0.5);
+      color: #fbbf24;
+      flex-shrink: 0;
+    }
+    .banner-urgent-cd .uc-cd-icon-box {
+      background: rgba(239, 68, 68, 0.35);
+      border-color: #ef4444;
+      color: #f87171;
+    }
+    .uc-cd-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      min-width: 0;
+    }
+    .uc-cd-title {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(17px, 1.9vw, 28px);
+      font-weight: 800;
+      color: #fde047;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-shadow: 0 0 10px rgba(253, 224, 71, 0.5);
+    }
+    .banner-urgent-cd .uc-cd-title {
+      color: #fca5a5 !important;
+      text-shadow: 0 0 14px rgba(248, 113, 113, 0.8) !important;
+    }
+    .uc-cd-sub {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(11px, 1.1vw, 15px);
+      font-weight: 600;
+      color: #cbd5e1;
+    }
+    .uc-cd-timer {
+      font-family: 'Outfit', 'Cinzel', 'Hind Siliguri', sans-serif;
+      font-size: clamp(32px, 4vw, 58px);
+      font-weight: 800;
+      color: #fde047;
+      letter-spacing: 1px;
+      text-shadow: 0 0 20px rgba(253, 224, 71, 0.8);
+      flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+    }
+    .banner-urgent-cd .uc-cd-timer {
+      color: #fca5a5 !important;
+      text-shadow: 0 0 22px rgba(239, 68, 68, 0.95) !important;
+    }
+
+    /* Shrinking Progress Line in Under-Clock Banner */
+    .cd-line-track {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.15);
+      overflow: hidden;
+      border-radius: 0 0 clamp(14px, 2vw, 24px) clamp(14px, 2vw, 24px);
+    }
+    .cd-line-bar {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #10b981, #f59e0b);
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.85);
+      transition: width 1s linear;
+    }
+    .banner-urgent-cd .cd-line-bar {
+      background: linear-gradient(90deg, #f59e0b, #ef4444) !important;
+      box-shadow: 0 0 16px rgba(239, 68, 68, 0.95) !important;
+    }
+
+    /* ══ BOTTOM 3 BOXES: SUNRISE, JUMMAH & HIJRI DATE (CLEAN, ICON-FREE, HIGH-CONTRAST) ══ */
+    .bottom-meta-row {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: clamp(10px, 1.4vw, 24px);
+      width: 100%;
+      flex: 0 0 var(--pill-card-height, calc((100% - 4 * var(--pill-card-gap)) / 5));
+      height: var(--pill-card-height, calc((100% - 4 * var(--pill-card-gap)) / 5));
+      min-height: var(--pill-card-height, calc((100% - 4 * var(--pill-card-gap)) / 5));
+      margin-top: auto;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .bottom-meta-card {
+      flex: 1 1 0;
+      min-width: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: stretch;
+      padding: clamp(14px, 1.8vh, 22px) clamp(18px, 2.2vw, 32px);
+      border-radius: clamp(14px, 2vh, 22px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(14px);
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    /* BOX 1: SUNRISE (সূর্যোদয়) */
+    .card-sunrise {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border: 1.5px solid rgba(245, 158, 11, 0.45);
+    }
+    .card-sunrise:hover, .card-sunrise.active-sunrise {
+      border-color: #f59e0b !important;
+      box-shadow: 0 0 30px rgba(245, 158, 11, 0.5) !important;
+    }
+
+    /* BOX 2: JUMMAH (জুমা ১:৩০) */
+    .card-jummah {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border: 1.5px solid rgba(16, 185, 129, 0.45);
+    }
+    .card-jummah:hover, .card-jummah.active-jummah {
+      border-color: #10b981 !important;
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.5) !important;
+    }
+
+    /* BOX 3: HIJRI DATE (হিজরি ক্যালেন্ডার বক্স) */
+    .card-date {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border: 1.5px solid rgba(56, 189, 248, 0.45);
+    }
+    .card-date:hover {
+      border-color: #38bdf8 !important;
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.5) !important;
+    }
+
+    /* CARD INTERIOR CONTENT - PERFECT SINGLE ROW CENTERED */
+    .meta-card-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .meta-primary-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(10px, 1.4vw, 22px);
+      width: 100%;
+      min-width: 0;
+      white-space: nowrap;
+    }
+
+    .meta-title-label {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: calc(clamp(24px, 2.9vw, 46px) * var(--font-scale, 1));
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+    .card-sunrise .meta-title-label {
+      color: #fde047;
+      text-shadow: 0 0 12px rgba(253, 224, 71, 0.45);
+    }
+    .card-jummah .meta-title-label {
+      color: #6ee7b7;
+      text-shadow: 0 0 12px rgba(110, 231, 183, 0.45);
+    }
+    .card-date .meta-title-label {
+      color: #38bdf8;
+      text-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
+    }
+
+    .meta-dash {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: calc(clamp(24px, 2.8vw, 44px) * var(--font-scale, 1));
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.4);
+      line-height: 1;
+    }
+
+    .meta-main-digits {
+      font-family: 'Outfit', 'Cinzel', 'Hind Siliguri', sans-serif;
+      font-size: calc(clamp(30px, 4vw, 60px) * var(--font-scale, 1));
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+      line-height: 1;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.3);
+      flex-shrink: 0;
+    }
+
+    .date-hijri-val {
+      font-family: 'Hind Siliguri', 'Outfit', sans-serif !important;
+      font-size: calc(clamp(22px, 2.6vw, 42px) * var(--font-scale, 1)) !important;
+      font-weight: 800 !important;
+      color: #ffffff;
+      line-height: 1;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
+      white-space: nowrap;
+    }
+
+    .date-day-solo {
+      font-family: 'Hind Siliguri', sans-serif !important;
+      font-size: calc(clamp(32px, 4.4vw, 64px) * var(--font-scale, 1)) !important;
+      font-weight: 900 !important;
+      color: #fde047 !important;
+      letter-spacing: 1px;
+      line-height: 1;
+      text-shadow: 0 0 16px rgba(253, 224, 71, 0.45), 0 2px 14px rgba(0, 0, 0, 0.8) !important;
+      text-align: center;
+    }
+
+    .meta-secondary-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin-top: 4px;
+    }
+
+    .meta-sub-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: clamp(3px, 0.5vh, 6px) clamp(12px, 1.3vw, 20px);
+      border-radius: 999px;
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: calc(clamp(13px, 1.35vw, 19px) * var(--font-scale, 1));
+      font-weight: 600;
+      white-space: nowrap;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-sunrise .meta-sub-pill {
+      background: rgba(245, 158, 11, 0.16);
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      color: #fde047;
+    }
+    .card-jummah .meta-sub-pill {
+      background: rgba(16, 185, 129, 0.16);
+      border: 1px solid rgba(16, 185, 129, 0.45);
+      color: #a7f3d0;
+    }
+    .card-date .meta-sub-pill {
+      background: rgba(56, 189, 248, 0.16);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      color: #bae6fd;
+    }
+
+    /* THEME SPECIFIC ADAPTATIONS FOR BOTTOM BOXES */
+    .theme-burgundy .card-sunrise {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.22) 0%, rgba(55, 6, 12, 0.92) 100%);
+      border-color: rgba(245, 158, 11, 0.45);
+    }
+    .theme-burgundy .card-jummah {
+      background: linear-gradient(135deg, rgba(225, 29, 72, 0.22) 0%, rgba(55, 6, 12, 0.92) 100%);
+      border-color: rgba(244, 63, 94, 0.45);
+    }
+    .theme-burgundy .card-date {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(55, 6, 12, 0.92) 100%);
+      border-color: rgba(245, 158, 11, 0.45);
+    }
+
+    .theme-emerald .card-sunrise {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(3, 37, 23, 0.94) 100%);
+      border-color: rgba(245, 158, 11, 0.45);
+    }
+    .theme-emerald .card-jummah {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(3, 37, 23, 0.94) 100%);
+      border-color: rgba(16, 185, 129, 0.55);
+    }
+    .theme-emerald .card-date {
+      background: linear-gradient(135deg, rgba(52, 211, 153, 0.2) 0%, rgba(3, 37, 23, 0.94) 100%);
+      border-color: rgba(52, 211, 153, 0.45);
+    }
+
+    .theme-slate .card-sunrise {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.16) 0%, rgba(15, 23, 42, 0.94) 100%);
+      border-color: rgba(245, 158, 11, 0.4);
+    }
+    .theme-slate .card-jummah {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(15, 23, 42, 0.94) 100%);
+      border-color: rgba(56, 189, 248, 0.5);
+    }
+    .theme-slate .card-date {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.18) 0%, rgba(15, 23, 42, 0.94) 100%);
+      border-color: rgba(56, 189, 248, 0.45);
+    }
+
+    /* ── FOOTER BAR ── */
+    .pro-footer, #bot {
+      width: 100%;
+      height: clamp(34px, 5vh, 46px);
+      background: rgba(2, 8, 14, 0.95);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(12px, 2vw, 24px);
+      z-index: 10;
+      flex-shrink: 0;
+    }
+
+    .pro-footer .twrp {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1;
+      padding-right: 18px;
+      font-size: clamp(12px, 1.25vw, 17px);
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+    .ttxt-left { color: #f8fafc; }
+    .ttxt-center { color: #f3d77b; opacity: 0.9; }
+    .ttxt-right { color: #f8fafc; }
+
+    /* ── PORTRAIT MODE RESPONSIVENESS ── */
+    .is-portrait .pro-masjid-layout {
+      flex-direction: column !important;
+      gap: 14px;
+    }
+    .is-portrait .prayer-cards-column {
+      flex: 0 0 auto !important;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px !important;
+      height: auto !important;
+    }
+    .is-portrait .main-display-section {
+      height: auto !important;
+    }
+    .is-portrait .bottom-meta-row {
+      flex: 0 0 auto !important;
+      height: auto !important;
+      min-height: 80px !important;
+    }
+
+    /* ── LEFT PANEL: PORTRAIT-STYLE CLOCK BOARD ── */
+    #leftPanel {
+      flex: 0 0 38%;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      border-right: 1px solid var(--divider);
+      background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── ISLAMIC ARCH IMAGE HEADER ── */
+    .arch-header {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .arch-img-wrap {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .arch-bg-img {
+      width: 100%;
+      height: clamp(160px, 22vh, 260px);
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      filter: brightness(0.75) saturate(1.1);
+    }
+
+    /* Dark overlay to make text readable */
+    .arch-overlay-dark {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.25) 0%,
+        rgba(0,0,0,0.15) 50%,
+        rgba(0,0,0,0.6) 100%
+      );
+      pointer-events: none;
+    }
+
+    .arch-mosque-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 3px;
+      padding: 10px 20px 14px;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%);
+    }
+
+    .arch-logo {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      object-fit: contain;
+      background: rgba(0,0,0,0.5);
+      padding: 4px;
+      display: none;
+    }
+
+    .arch-mosque-ar {
+      font-family: 'Amiri', serif;
+      font-size: clamp(14px, 2.5vw, 22px);
+      color: var(--gold2);
+      text-align: center;
+      line-height: 1.2;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    }
+
+    .arch-mosque-bn {
+      font-size: clamp(10px, 1.6vw, 14px);
+      color: rgba(255,255,255,0.85);
+      text-align: center;
+      font-weight: 600;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+    }
+
+    .arch-mosque-loc {
+      font-size: clamp(9px, 1.2vw, 11px);
+      color: rgba(255,255,255,0.55);
+      text-align: center;
+    }
+
+    /* ── HIJRI DATE BAR ── */
+    .hijri-bar {
+      text-align: center;
+      padding: 8px 12px 6px;
+      border-bottom: 1px solid var(--divider);
+      flex-shrink: 0;
+    }
+
+    .hijri-day-ar {
+      font-family: 'Amiri', serif;
+      font-size: clamp(13px, 2vw, 18px);
+      color: var(--gold2);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: 0.5px;
+    }
+
+    .date-line {
+      font-size: clamp(10px, 1.4vw, 12px);
+      color: var(--text-m);
+      margin-top: 2px;
+    }
+
+    /* ── INFO ROW (Next Prayer + Temp + Date) ── */
+    .info-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--divider);
+      flex-shrink: 0;
+      background: rgba(0,0,0,0.3);
+    }
+
+    .next-prayer-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1px;
+    }
+
+    .next-pr-label {
+      font-size: clamp(9px, 1.2vw, 11px);
+      color: var(--text-d);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .next-pr-name {
+      font-size: clamp(13px, 1.8vw, 17px);
+      color: var(--gold2);
+      font-weight: 700;
+    }
+
+    .next-pr-cd {
+      font-family: 'Outfit', monospace;
+      font-size: clamp(10px, 1.4vw, 13px);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .mosque-icon-center {
+      width: clamp(40px, 7vw, 60px);
+      height: clamp(40px, 7vw, 60px);
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
+      box-shadow: 0 0 18px rgba(212,175,55,0.3), inset 0 0 12px rgba(0,0,0,0.5);
+      flex-shrink: 0;
+    }
+
+    .mosque-icon-center svg {
+      width: 55%;
+      height: 55%;
+      fill: var(--gold);
+      filter: drop-shadow(0 0 4px rgba(212,175,55,0.5));
+    }
+
+    .weather-date {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1px;
+    }
+
+    .weather-text {
+      font-size: clamp(10px, 1.5vw, 14px);
+      color: var(--text-m);
+      font-weight: 600;
+    }
+
+    .greg-date-small {
+      font-size: clamp(9px, 1.2vw, 11px);
+      color: var(--text-d);
+    }
+
+    /* ── BIG DIGITAL CLOCK ── */
+    .big-clock-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 10px 6px;
+      flex-shrink: 0;
+    }
+
+    .big-clock-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .big-clock-hm {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(48px, 8vw, 78px);
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #FFFFFF;
+      line-height: 1;
+      text-shadow: 0 0 30px rgba(255,255,255,0.2);
+    }
+
+    .big-clock-sec {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(20px, 3vw, 32px);
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .big-clock-ampm {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(12px, 1.8vw, 18px);
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      align-self: flex-end;
+      padding-bottom: 8px;
+    }
+
+    /* ── ARABIC VERSE ── */
+    .verse-box {
+      text-align: center;
+      padding: 6px 14px 8px;
+      border-top: 1px solid var(--divider);
+      border-bottom: 1px solid var(--divider);
+      flex-shrink: 0;
+    }
+
+    .verse-ornament {
+      font-size: clamp(12px, 1.6vw, 15px);
+      color: var(--gold3);
+      letter-spacing: 2px;
+    }
+
+    .verse-text {
+      font-family: 'Amiri', serif;
+      font-size: clamp(14px, 2vw, 20px);
+      color: var(--gold2);
+      font-style: italic;
+      line-height: 1.4;
+      direction: rtl;
+    }
+
+    /* ── SEHRI / IFTAR ── */
+    .fasting-row {
+      display: flex;
+      gap: 8px;
+      padding: 6px 12px;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .fast-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.25);
+      border-radius: 10px;
+      padding: 5px 14px;
+      gap: 1px;
+      flex: 1;
+    }
+
+    .fast-label {
+      font-size: clamp(9px, 1.1vw, 11px);
+      color: var(--text-d);
+      font-weight: 600;
+    }
+
+    .fast-time {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(14px, 1.8vw, 18px);
+      font-weight: 800;
+      color: var(--gold2);
+    }
+
+    /* ── RIGHT PANEL: PRAYER TIMETABLE ── */
+    #rightPanel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .tbl-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 10px 24px 8px;
+      border-bottom: 2px solid var(--gold);
+      flex-shrink: 0;
+      background: rgba(0,0,0,0.4);
+    }
+
+    .tbl-header span {
+      font-size: clamp(13px, 1.8vw, 18px);
+      font-weight: 800;
+      color: var(--gold2);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .tbl-header span:first-child { text-align: left; }
+    .tbl-header span:last-child { text-align: right; }
+
+    /* Prayer rows */
+    .prayer-rows {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .prayer-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      flex: 1;
+      padding: 0 24px;
+      border-bottom: 1px solid var(--row-border);
+      background: var(--row-bg);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      min-height: 0;
+    }
+
+    .prayer-row::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--active-bg);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .prayer-row.active-row::before { opacity: 1; }
+
+    /* Active row: prominent 2-column side-by-side layout, tight borders close to text */
+    .prayer-row.active-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      border-bottom-color: transparent;
+      border-left: 6px solid var(--active-border);
+      box-shadow: var(--active-glow);
+      flex: 1.35;
+      padding: 0 24px;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* Active row: name and badge on left */
+    .active-row .p-name-col {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: nowrap;
+    }
+
+    /* Active row: jamaat time on right */
+    .active-row .p-jamaat {
+      text-align: right;
+    }
+
+    .prayer-row:last-child { border-bottom: none; }
+
+    /* Right col: Jamaat time */
+    .p-jamaat {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(22px, 3.2vw, 36px);
+      font-weight: 800;
+      color: var(--gold);
+      position: relative;
+      z-index: 1;
+      text-align: right;
+      letter-spacing: 1px;
+    }
+
+    .active-row .p-jamaat {
+      font-size: clamp(32px, 5vw, 64px);
+      font-weight: 900;
+      color: var(--gold2);
+      text-shadow: 0 0 24px rgba(212,175,55,0.6);
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+
+    .sunrise-row .p-jamaat {
+      font-size: clamp(20px, 3vw, 34px);
+      color: var(--gold3);
+    }
+
+    /* Left col: prayer name */
+    .p-name-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+      z-index: 1;
+    }
+
+    .p-name-ar {
+      font-family: 'Amiri', serif;
+      font-size: clamp(24px, 3.5vw, 40px);
+      font-weight: 700;
+      color: var(--text-w);
+      direction: rtl;
+      line-height: 1.1;
+    }
+
+    .active-row .p-name-ar {
+      font-size: clamp(32px, 4.8vw, 56px);
+      color: var(--gold2);
+      text-shadow: 0 0 14px rgba(212,175,55,0.45);
+    }
+
+    .p-name-bn {
+      font-size: clamp(11px, 1.5vw, 16px);
+      color: var(--text-d);
+      font-weight: 600;
+    }
+
+    .active-row .p-name-bn {
+      color: var(--text-m);
+      font-size: clamp(13px, 1.8vw, 18px);
+    }
+
+    /* Active badge */
+    .active-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--active-border);
+      color: #000;
+      font-size: clamp(9px, 1.1vw, 13px);
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      animation: badgePulse 1.5s ease infinite;
+      white-space: nowrap;
+      align-self: center;
+      flex-shrink: 0;
+    }
+
+    @keyframes badgePulse {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    /* Sunrise row special */
+    .prayer-row.sunrise-row .p-name-ar {
+      color: var(--gold3);
+    }
+
+    /* Bengali-only large prayer name */
+    .p-name-bn-big {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(24px, 3.8vw, 46px);
+      font-weight: 800;
+      color: var(--text-w);
+      line-height: 1.1;
+      letter-spacing: 0.5px;
+    }
+
+    .active-row .p-name-bn-big {
+      font-size: clamp(30px, 4.6vw, 58px);
+      font-weight: 900;
+      color: var(--gold2);
+      text-shadow: 0 0 20px rgba(212,175,55,0.55);
+      letter-spacing: 1px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .sunrise-row .p-name-bn-big {
+      color: var(--gold3);
+    }
+
+    /* ── BOTTOM BAR ── */
+    #bot {
+      height: 38px;
+      background: var(--bar-bg);
+      border-top: 1px solid var(--divider);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .tico {
+      padding: 0 12px;
+      background: var(--gold);
+      color: #000;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+      gap: 5px;
+    }
+
+    .twrp {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ttxt {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scr 40s linear infinite;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-m);
+      padding-left: 100%;
+    }
+
+    @keyframes scr {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .bot-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 10px;
+      flex-shrink: 0;
+    }
+
+    .btn-sm {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(212,175,55,0.3);
+      color: var(--gold2);
+      padding: 3px 9px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-sm:hover { background: var(--gold); color: #000; }
+    .btn-sm svg { width: 11px; height: 11px; fill: currentColor; }
+
+    /* Portrait adaptations */
+    body.is-portrait #mainLayout { flex-direction: column; }
+    body.is-portrait #leftPanel { flex: 0 0 auto; border-right: none; border-bottom: 1px solid var(--divider); }
+    body.is-portrait .arch-header { flex-direction: row; align-items: center; padding: 8px 16px; gap: 12px; }
+    body.is-portrait .arch-svg-wrap { width: 80px; flex-shrink: 0; }
+
+    /* Forbidden time indicator */
+    .forbidden-pill {
+      display: none;
+      background: rgba(220,50,50,0.9);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-left: 8px;
+      animation: badgePulse 1.2s infinite;
+    }
+
+    /* ── LIVE BADGE ── */
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border: 1.5px solid var(--accent);
+      border-radius: 20px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      animation: badgePulse 1.5s infinite;
+    }
+
+    .live-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    /* Golden divider ornament */
+    .gold-divider {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 14px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .gold-divider::before, .gold-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .gold-divider-icon {
+      font-size: 12px;
+      color: var(--gold);
+    }
+
+    /* Right panel header */
+    .right-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      border-bottom: 1px solid var(--divider);
+      flex-shrink: 0;
+      background: rgba(0,0,0,0.3);
+    }
+
+    .right-title {
+      font-size: clamp(11px, 1.5vw, 14px);
+      font-weight: 700;
+      color: var(--gold2);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .right-title svg {
+      width: 14px; height: 14px; fill: var(--gold);
+    }
+
+    /* Jummah banner */
+    .jummah-banner {
+      display: none;
+      background: linear-gradient(90deg, rgba(180,0,0,0.6), rgba(212,175,55,0.4));
+      text-align: center;
+      padding: 4px 12px;
+      font-size: clamp(10px, 1.3vw, 13px);
+      color: var(--gold2);
+      font-weight: 700;
+      font-family: 'Amiri', serif;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <div id="screenWrapper" class="theme-navy">
+    <!-- Azan Alert Banner (inside screenWrapper to prevent header overlap) -->
+    <div id="alertBanner"></div>
+    <div class="bg-stars"></div>
+    <div class="bg-mosque-arch"></div>
+    <div class="bg-screen-overlay"></div>
+
+    <!-- MAIN PRO LAYOUT: IMAGE 2 ULTRA-HIGH VISIBILITY -->
+    <main id="mainLayout" class="pro-masjid-layout">
+
+      <!-- ══ LEFT PANEL: 5 HIGH-CONTRAST FARZ PRAYER PILL CARDS ══ -->
+      <aside class="prayer-cards-column" id="prayerCardsCol">
+        <div class="prayer-pill-card" id="card-fajr"><span class="p-name">ফজর</span><span class="p-sep">-</span><span class="p-time">4:26</span></div>
+        <div class="prayer-pill-card" id="card-dhuhr"><span class="p-name">যোহর</span><span class="p-sep">-</span><span class="p-time">11:45</span></div>
+        <div class="prayer-pill-card" id="card-asr"><span class="p-name">আসর</span><span class="p-sep">-</span><span class="p-time">4:05</span></div>
+        <div class="prayer-pill-card" id="card-maghrib"><span class="p-name">মাগরিব</span><span class="p-sep">-</span><span class="p-time">5:46</span></div>
+        <div class="prayer-pill-card active-card" id="card-isha"><span class="p-name">এশা</span><span class="p-sep">-</span><span class="p-time">7:00</span></div>
+      </aside>
+
+      <!-- ══ RIGHT MAIN DISPLAY: BRAND HEADER + GIANT CLOCK + 3 BOTTOM BOXES ══ -->
+      <section class="main-display-section">
+        
+        <!-- Header: Centered Mosque Brand + Bismillah & Right Professional Arabic/English Date Box -->
+        <header class="pro-header">
+          <!-- Left spacer for perfect centering balance -->
+          <div class="header-left-spacer"></div>
+
+          <!-- Center: Bismillah + Mosque Name & Address -->
+          <div class="header-center-block">
+            <div class="header-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+            <div class="mosque-brand-block">
+              <img id="mCustomLogo" src="" alt="Mosque Logo" class="mosque-header-logo" style="display:none;" />
+              <div class="mosque-brand-titles">
+                <h1 class="mosque-title-bn" id="mBn">পূর্ব মোহাজের পাড়া জামে মসজিদ</h1>
+                <span class="mosque-title-en" id="mEn">বরইতলী, চকরিয়া, কক্সবাজার।</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Professional Box for Arabic (Hijri) and English (Gregorian) Dates -->
+          <div class="header-right-block">
+            <div class="header-date-badge">
+              <div class="h-date-greg">
+                <span class="h-date-bn" id="dGreg">২৫ সেপ্টেম্বর ২০২৬</span>
+              </div>
+              <div class="h-date-sep"></div>
+              <div class="h-date-hijri">
+                <span class="h-date-hijri-val" id="dHijri">১৪ রবিউস সানি ১৪৪৮ হিজরি</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hidden compatibility elements for existing JS references -->
+          <div style="display:none;">
+            <span id="mLocHeader">চকরিয়া, কক্সবাজার</span>
+            <span id="dGregEn"></span>
+          </div>
+        </header>
+
+        <!-- Center: Giant Clock with breathing room -->
+        <div class="clock-center-container">
+          <!-- Giant Digital Clock: 07:05:08 PM (ROCK-SOLID ZERO JITTER) -->
+          <div class="pro-clock-wrap">
+            <div class="pro-clock-digits" id="clk">
+              <span class="clk-segment clk-hh" id="clkHH">07</span><span class="clk-colon">:</span><span class="clk-segment clk-mm" id="clkMM">05</span><span class="clk-colon">:</span><span class="clk-segment clk-ss" id="clkSS">08</span>
+            </div>
+            <span class="pro-clock-ampm" id="clkAmPm">PM</span>
+          </div>
+
+          <!-- ══ UNDER-CLOCK BANNER: CURRENT WAQT OR 5-MIN COUNTDOWN ══ -->
+          <div class="under-clock-banner" id="underClockBanner">
+            <!-- Normal State: Current Waqt & Next Jamaat -->
+            <div class="uc-normal-wrap" id="ucNormalWrap">
+              <div class="uc-waqt-block">
+                <span class="uc-pulse-dot"></span>
+                <span class="uc-label-muted">চলমান ওয়াক্ত:</span>
+                <span class="uc-val-highlight" id="ucCurrentWaqt">ফজর</span>
+              </div>
+              <div class="uc-sep-line"></div>
+              <div class="uc-next-block">
+                <svg viewBox="0 0 24 24" class="uc-next-icon" fill="none" stroke="currentColor">
+                  <circle cx="12" cy="12" r="9" stroke-width="2"/>
+                  <polyline points="12 7 12 12 15 15" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span class="uc-label-muted">পরবর্তী জামাত:</span>
+                <span class="uc-val-cyan" id="ucNextJamaatText">যোহর ১:১৫</span>
+              </div>
+            </div>
+
+            <!-- Countdown State: 5-Min Countdown with shrinking line -->
+            <div class="uc-countdown-wrap" id="boxCountdown" style="display:none;">
+              <div class="uc-cd-left">
+                <div class="uc-cd-icon-box">
+                  <svg viewBox="0 0 24 24" class="meta-svg countdown-svg" fill="none" stroke="currentColor">
+                    <circle cx="12" cy="12" r="9" stroke-width="2"/>
+                    <polyline points="12 7 12 12 15 15" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="uc-cd-text">
+                  <span class="uc-cd-title" id="cdPrayerLabel">পরবর্তী জামাত বাকি</span>
+                  <span class="uc-cd-sub" id="cdStatusBadge">৫ মিনিট কাউন্টডাউন</span>
+                </div>
+              </div>
+              <div class="uc-cd-timer cd-time" id="cdTimerDigits">05:00</div>
+              <!-- The shrinking progress line -->
+              <div class="cd-line-track">
+                <div class="cd-line-bar" id="cdProgressBar"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ BOTTOM 3 BOXES: SUNRISE, JUMMAH & FRIDAY (CLEAN, ICON-FREE, SYMMETRIC) ══ -->
+        <div class="bottom-meta-row" id="bottomMetaBoxes">
+          
+          <!-- Box 1: সূর্যোদয় (Sunrise) -->
+          <div class="bottom-meta-card card-sunrise" id="boxSunrise">
+            <div class="meta-card-body">
+              <div class="meta-primary-row">
+                <span class="meta-title-label">সূর্যোদয়</span>
+                <span class="meta-dash">-</span>
+                <span class="meta-main-digits" id="sunriseTime">5:41</span>
+              </div>
+            </div>
+            <!-- Hidden compatibility element for ishraqTime -->
+            <span id="ishraqTime" style="display:none;"></span>
+          </div>
+
+          <!-- Box 2: জুমা (Jummah) -->
+          <div class="bottom-meta-card card-jummah" id="boxJummah">
+            <div class="meta-card-body">
+              <div class="meta-primary-row">
+                <span class="meta-title-label">জুমা</span>
+                <span class="meta-dash">-</span>
+                <span class="meta-main-digits" id="jummahTime">1:30</span>
+              </div>
+            </div>
+            <!-- Hidden compatibility element for khutbahTime -->
+            <span id="khutbahTime" style="display:none;"></span>
+          </div>
+
+          <!-- Box 3: শুধু শুক্রবার (Friday Solo) -->
+          <div class="bottom-meta-card card-date" id="boxDate">
+            <div class="meta-card-body">
+              <div class="meta-primary-row">
+                <span class="meta-main-digits date-day-solo" id="boxDayName">শুক্রবার</span>
+              </div>
+            </div>
+            <!-- Hidden compatibility elements for existing JS references -->
+            <span id="boxHijriShort" style="display:none;"></span>
+            <span id="boxHijriDate" style="display:none;"></span>
+            <span id="boxGregDate" style="display:none;"></span>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- Hidden compatibility elements for existing JS references -->
+      <div id="prayerRows" style="display:none;"></div>
+      <div id="leftPanel" style="display:none;"></div>
+      <div id="rightPanel" style="display:none;"></div>
+      <div id="fastingSection" style="display:none;"><span id="sehriVal">--:--</span><span id="iftarVal">--:--</span></div>
+      <div style="display:none;">
+        <div id="nextBanner">
+          <span id="nextPrayerName"></span>
+          <span id="nextPrayerTime"></span>
+          <span id="nextCountdownText"></span>
+        </div>
+        <span id="clkSec"></span>
+        <span id="cd"></span>
+        <span id="nextLabel"></span>
+        <span id="mLocText"></span>
+        <div id="mLoc"></div>
+        <span id="gregShort"></span>
+        <span id="dBangla"></span>
+        <span id="np"></span>
+        <span id="forbiddenAlert"></span>
+        <div id="jummahBanner"></div>
+        <img id="archBgImg" src="" alt="" />
+        <span id="verseText"></span>
+        <div id="tkTxt"></div>
+        <div id="rotateBtnLabel"></div>
+        <span id="mAr"></span>
+        <span id="weatherTemp"></span>
+      </div>
+
+    </main>
+
+    <!-- ══ BOTTOM TICKER / FOOTER ══ -->
+    <footer id="bot" class="pro-footer">
+      <div class="twrp">
+        <span class="ttxt-left">নামাজের সময় মোবাইল ফোন বন্ধ বা সাইলেন্ট রাখুন।</span>
+        <span class="ttxt-right">মসজিদে শান্ত থাকুন</span>
+      </div>
+      <div class="bot-right">
+        <button class="btn-sm" onclick="cycleTheme()" id="themeBtn" title="থিম পরিবর্তন">
+          🎨 থিম
+        </button>
+        <button class="btn-sm" onclick="cycleRotation()" id="rotateBtn" title="স্ক্রিন ঘোরান">
+          🔄 <span id="rotateBtnLabel">০°</span>
+        </button>
+        <button class="btn-sm" onclick="toggleFullscreen()" title="F11">
+          ⛶ Full
+        </button>
+        <a href="admin.html" target="_blank" class="btn-sm">
+          ⚙ Admin
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // ── CONFIG ──
+    var CONFIG = {
+      lat: 21.8355, lng: 92.0780, utc: 6,
+      nameAr: 'مسجد النور', nameBn: 'নূর জামে মসজিদ', nameEn: 'Noor Jame Masjid',
+      location: 'চকরিয়া, কক্সবাজার', logoUrl: '',
+      theme: 'navy', clockFormat: '12', ampmMode: 'bn_natural',
+      cardTimeFormat: '12', screenRotate: '0', layoutMode: 'auto',
+      showAzanTime: true, showAzanAlert: true, asrMadhab: 'hanafi',
+      hijriOffset: 0, showFasting: true,
+      jummahKhutbah: '13:00', jummahJamaat: '13:30',
+      ticker: 'নামাজের সময় মোবাইল ফোন বন্ধ বা সাইলেন্ট রাখুন। মসজিদে শান্ত থাকুন।',
+      fajrJm: '05:30', dhuhrJm: '13:30', asrJm: '16:30',
+      maghribJm: 'auto', ishaJm: '21:00',
+      quranVerse: '﴿ أَلَيْسَ اللَّهُ بِكَافٍ عَبْدَهُ ﴾'
+    };
+
+    var PRAYERS_DEF = [
+      { id: 'fajr',    ar: 'الفجر',   bn: 'ফজর',      arFull: 'الفجر' },
+      { id: 'sunrise', ar: 'الشروق',  bn: 'সূর্যোদয়', arFull: 'الشروق', noIqama: true },
+      { id: 'dhuhr',   ar: 'الظهر',   bn: 'যোহর',     arFull: 'الظهر' },
+      { id: 'asr',     ar: 'العصر',   bn: 'আসর',      arFull: 'العصر' },
+      { id: 'maghrib', ar: 'المغرب',  bn: 'মাগরিব',   arFull: 'المغرب' },
+      { id: 'isha',    ar: 'العشاء',  bn: 'এশা',      arFull: 'العشاء' },
+      { id: 'jummah',  ar: 'الجمعة',  bn: 'জুমা',      arFull: 'الجمعة', fixedTime: '13:30' }
+    ];
+
+    // ── Prayer Time Calculation ──
+    function prayerCalc(lat, lng, date, utc, asrMadhab) {
+      var R = Math.PI / 180;
+      var y = date.getFullYear(), m = date.getMonth() + 1, d = date.getDate();
+      var a = Math.floor((14 - m) / 12), yr = y + 4800 - a, mo = m + 12 * a - 3;
+      var jd = d + Math.floor((153 * mo + 2) / 5) + 365 * yr + Math.floor(yr / 4) - Math.floor(yr / 100) + Math.floor(yr / 400) - 32045 - 0.5;
+      var D = jd - 2451545;
+      var g = ((357.529 + 0.98560028 * D) % 360) * R;
+      var q = (280.459 + 0.98564736 * D) % 360;
+      var L = ((q + 1.915 * Math.sin(g) + 0.020 * Math.sin(2 * g)) % 360) * R;
+      var e = (23.439 - 0.00000036 * D) * R;
+      var RA = ((Math.atan2(Math.cos(e) * Math.sin(L), Math.cos(L)) / R / 15) + 24) % 24;
+      var dec = Math.asin(Math.sin(e) * Math.sin(L)) / R;
+      var EqT = q / 15 - RA;
+      var noon = 12 - EqT - lng / 15 + utc;
+
+      function ha(alt) {
+        var c = (Math.sin(alt * R) - Math.sin(lat * R) * Math.sin(dec * R)) / (Math.cos(lat * R) * Math.cos(dec * R));
+        return Math.abs(c) > 1 ? 6 : Math.acos(c) / R / 15;
+      }
+
+      var nAlt = 90 - Math.abs(lat - dec);
+      var asrFactor = (asrMadhab === 'shafii') ? 1 : 2;
+      var asrAlt = Math.atan(1 / (asrFactor + 1 / Math.tan(nAlt * R))) / R;
+
+      function fmt(h) {
+        h = ((h % 24) + 24) % 24;
+        var hr = Math.floor(h), mn = Math.floor((h - hr) * 60);
+        return String(hr).padStart(2, '0') + ':' + String(mn).padStart(2, '0');
+      }
+      function addMins(ts, mins) {
+        var p = ts.split(':').map(Number), tot = p[0] * 60 + p[1] + mins;
+        var nh = Math.floor(((tot % 1440) + 1440) % 1440 / 60);
+        var nm = Math.floor(((tot % 1440) + 1440) % 1440 % 60);
+        return String(nh).padStart(2, '0') + ':' + String(nm).padStart(2, '0');
+      }
+
+      var fajr = fmt(noon - ha(-18));
+      var sunrise = fmt(noon - ha(-0.833));
+      var dhuhr = fmt(noon + 0.033);
+      var asr = fmt(noon + ha(asrAlt));
+      var maghrib = fmt(noon + ha(-0.833));
+      var isha = fmt(noon + ha(-18));
+
+      return {
+        fajr, sunrise, dhuhr, asr, maghrib, isha,
+        noon: fmt(noon),
+        sehriEnd: addMins(fajr, -3),
+        iftar: maghrib,
+        ishraq: addMins(sunrise, 18),
+        zawalStart: addMins(fmt(noon), -10), zawalEnd: fmt(noon),
+        sunriseForbiddenEnd: addMins(sunrise, 15),
+        sunsetForbiddenStart: addMins(maghrib, -15)
+      };
+    }
+
+    function getHijriDate(date, offset) {
+      var d = new Date(date); d.setDate(d.getDate() + (offset || 0));
+      var day = d.getDate(), month = d.getMonth() + 1, year = d.getFullYear();
+      if (month < 3) { year--; month += 12; }
+      var a = Math.floor(year / 100), b = 2 - a + Math.floor(a / 4);
+      var jd = Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 1)) + day + b - 1524.5;
+      var z = jd - 1948438.5, cyc = Math.floor(z / 10631);
+      var rem = z - 10631 * cyc, j = Math.floor((rem + 0.5) / 354.366);
+      var hYear = 30 * cyc + j + 1, remDays = rem - Math.floor(j * 354.366);
+      var hMonth = Math.min(11, Math.floor((remDays + 0.5) / 29.5));
+      var hDay = Math.floor(remDays - Math.floor(hMonth * 29.5)) + 1;
+      var hMonthsAr = ['محرم','صفر','ربيع الأول','ربيع الثاني','جمادى الأولى','جمادى الثانية','رجب','شعبان','রমضان','শوال','ذو القعدة','ذو الحجة'];
+      var hMonthsBn = ['মহররম','সফর','রবিউল আউয়াল','রবিউস সানি','জমাদিউল আউয়াল','জমাদিউস সানি','রজব','শাবান','রমজান','শাওয়াল','জিলকদ','জিলহজ'];
+      return {
+        ar: hDay + ' ' + hMonthsAr[hMonth] + ' ' + hYear,
+        bn: toBnNum(hDay) + ' ' + hMonthsBn[hMonth] + ' ' + toBnNum(hYear) + ' হিজরি',
+        day: hDay,
+        monthBn: hMonthsBn[hMonth],
+        year: hYear
+      };
+    }
+
+    function getBanglaDate(date) {
+      var bMonths = ['বৈশাখ','জ্যৈষ্ঠ','আষাঢ়','শ্রাবণ','ভাদ্র','আশ্বিন','কার্তিক','অগ্রহায়ণ','পৌষ','মাঘ','ফাল্গুন','চৈত্র'];
+      var isLeap = (date.getFullYear() % 4 === 0 && date.getFullYear() % 100 !== 0) || (date.getFullYear() % 400 === 0);
+      var daysInMonths = [31,31,31,31,31,31,30,30,30,30,isLeap ? 30 : 29,30];
+      var year = date.getFullYear(), month = date.getMonth() + 1, day = date.getDate();
+      var bYear = (month < 4 || (month === 4 && day < 14)) ? year - 594 : year - 593;
+      var april14 = new Date(year, 3, 14);
+      var diff = Math.floor((date - april14) / 864e5);
+      if (diff < 0) diff = Math.floor((date - new Date(year - 1, 3, 14)) / 864e5);
+      var rem = diff, bMonthIndex = 0;
+      for (var i = 0; i < 12; i++) { if (rem < daysInMonths[i]) { bMonthIndex = i; break; } rem -= daysInMonths[i]; }
+      return toBnNum(rem + 1) + ' ' + bMonths[bMonthIndex] + ' ' + toBnNum(bYear) + ' বঙ্গাব্দ';
+    }
+
+    var BN_DAYS_FULL = ['রবিবার','সোমবার','মঙ্গলবার','বুধবার','বৃহস্পতিবার','শুক্রবার','শনিবার'];
+    var AR_DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+
+    function toBnNum(num) {
+      return String(num).replace(/[0-9]/g, function(w){ return '০১২৩৪৫৬৭৮৯'[+w]; });
+    }
+
+    function fmtTime(t, fmt) {
+      if (!t || t === '--:--' || t === '') return '--:--';
+      var str = String(t).trim().replace(/am|pm/gi, '').trim();
+      if (str.indexOf(':') === -1 && str.indexOf('.') !== -1) {
+        str = str.replace('.', ':');
+      } else if (str.indexOf(':') === -1 && str.indexOf('.') === -1 && str.length >= 3) {
+        str = str.slice(0, -2) + ':' + str.slice(-2);
+      }
+      var p = str.split(':');
+      var h = +p[0], m = p[1] || '00';
+      if (isNaN(h)) return '--:--';
+      if (fmt === '24') return String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0');
+      return (h % 12 || 12) + ':' + String(m).padStart(2, '0');
+    }
+
+    function parseTimeTo24(str, defaultAmpm) {
+      if (!str || str === '--:--' || str === '' || str.toLowerCase() === 'auto') return str;
+      var s = String(str).trim();
+      var isPm = /pm/i.test(s);
+      var isAm = /am/i.test(s);
+      s = s.replace(/am|pm/gi, '').trim();
+      if (s.indexOf(':') === -1 && s.indexOf('.') !== -1) s = s.replace('.', ':');
+      else if (s.indexOf(':') === -1 && s.indexOf('.') === -1 && s.length >= 3) {
+        s = s.slice(0, -2) + ':' + s.slice(-2);
+      }
+      var parts = s.split(':');
+      if (parts.length < 2) return str;
+      var h = parseInt(parts[0], 10);
+      var m = parseInt(parts[1], 10);
+      if (isNaN(h) || isNaN(m)) return str;
+
+      if (isPm) {
+        if (h < 12) h += 12;
+      } else if (isAm) {
+        if (h === 12) h = 0;
+      } else if (h < 12 && defaultAmpm) {
+        if (defaultAmpm === 'PM' && h < 12) h += 12;
+        else if (defaultAmpm === 'AM' && h === 12) h = 0;
+      }
+      return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+    }
+
+    function getNow() {
+      var n = new Date();
+      var utc = n.getTime() + (n.getTimezoneOffset() * 60000);
+      return new Date(utc + (3600000 * (+CONFIG.utc || 6)));
+    }
+
+    var PT = null;
+
+    var THEMES = ['navy', 'burgundy', 'emerald', 'slate'];
+
+    function setTheme(t) {
+      if (!t || THEMES.indexOf(t) === -1) t = 'navy';
+      CONFIG.theme = t;
+      var wrapper = document.getElementById('screenWrapper');
+      if (wrapper) {
+        THEMES.forEach(function(th) {
+          wrapper.classList.remove('theme-' + th);
+        });
+        wrapper.classList.add('theme-' + t);
+      }
+      document.body.setAttribute('data-theme', t);
+      try {
+        var saved = JSON.parse(localStorage.getItem('mosqueSettings') || '{}');
+        saved.theme = t;
+        localStorage.setItem('mosqueSettings', JSON.stringify(saved));
+      } catch(e) {}
+    }
+
+    function cycleTheme() {
+      var curTheme = CONFIG.theme || 'navy';
+      if (curTheme === 'dark') curTheme = 'navy';
+      var idx = THEMES.indexOf(curTheme);
+      var nextTheme = THEMES[(idx + 1) % THEMES.length];
+      setTheme(nextTheme);
+    }
+
+    function applyScreenRotation() {
+      var rot = CONFIG.screenRotate || '0';
+      document.body.classList.remove('rotate-90', 'rotate-180', 'rotate-270');
+      if (rot === '90') document.body.classList.add('rotate-90');
+      else if (rot === '180') document.body.classList.add('rotate-180');
+      else if (rot === '270') document.body.classList.add('rotate-270');
+      var isPortrait = false;
+      if (CONFIG.layoutMode === 'portrait') isPortrait = true;
+      else if (CONFIG.layoutMode === 'landscape') isPortrait = false;
+      else if (rot === '90' || rot === '270') isPortrait = (window.innerWidth > window.innerHeight);
+      else isPortrait = (window.innerHeight > window.innerWidth);
+      if (isPortrait) document.body.classList.add('is-portrait');
+      else document.body.classList.remove('is-portrait');
+    }
+
+    function loadSettings() {
+      try {
+        var s = JSON.parse(localStorage.getItem('mosqueSettings') || '{}');
+        for (var k in s) { if (s[k] !== undefined && s[k] !== '') CONFIG[k] = s[k]; }
+
+        // Permanently enforce user's location coordinates (Lat: 21.8355, Lng: 92.0780, চকরিয়া, কক্সবাজার)
+        CONFIG.lat = 21.8355;
+        CONFIG.lng = 92.0780;
+        CONFIG.location = 'চকরিয়া, কক্সবাজার';
+
+        // Apply dynamic font scale (default 1)
+        var fontScale = CONFIG.fontSizeScale || '1';
+        var numScale = parseFloat(fontScale);
+        if (numScale > 10) numScale = numScale / 100;
+        if (isNaN(numScale) || numScale <= 0) numScale = 1;
+        document.documentElement.style.setProperty('--font-scale', numScale);
+
+        // Apply theme (default to navy high visibility)
+        var theme = CONFIG.theme || 'navy';
+        if (theme === 'dark') theme = 'navy';
+        setTheme(theme);
+
+        // Mosque name
+        var mBn = document.getElementById('mBn');
+        if (mBn) mBn.textContent = CONFIG.nameBn || 'নূর জামে মসজিদ';
+        var mEn = document.getElementById('mEn');
+        if (mEn) mEn.textContent = CONFIG.nameEn || CONFIG.location || 'বরইতলী, চকরিয়া, কক্সবাজার।';
+
+        // Custom Mosque Logo
+        var logoEl = document.getElementById('mCustomLogo');
+        if (logoEl) {
+          if (CONFIG.logoUrl && CONFIG.logoUrl.trim() !== '') {
+            logoEl.src = CONFIG.logoUrl;
+            logoEl.style.display = 'block';
+          } else {
+            logoEl.style.display = 'none';
+          }
+        }
+
+        // Custom Arch / Background Image (Full-screen wallpaper)
+        var bgArch = document.querySelector('.bg-mosque-arch');
+        if (bgArch) {
+          if (CONFIG.bgArchUrl && CONFIG.bgArchUrl.trim() !== '') {
+            bgArch.style.backgroundImage = 'url("' + CONFIG.bgArchUrl + '")';
+            bgArch.classList.add('has-custom-bg');
+            var rawOp = CONFIG.bgOpacity !== undefined ? CONFIG.bgOpacity : 45;
+            var op = parseFloat(rawOp);
+            if (op > 1) op = op / 100;
+            if (isNaN(op) || op <= 0) op = 0.45;
+            document.documentElement.style.setProperty('--bg-opacity', op);
+          } else {
+            bgArch.classList.remove('has-custom-bg');
+            bgArch.style.backgroundImage = '';
+          }
+        }
+
+        var mAr = document.getElementById('mAr');
+        if (mAr) mAr.innerHTML = '';
+        var mLoc = document.getElementById('mLoc');
+        if (mLoc) mLoc.textContent = CONFIG.location;
+        var mLocText = document.getElementById('mLocText');
+        if (mLocText) mLocText.textContent = '📍 ' + CONFIG.location;
+
+        // Ticker
+        var tk = document.getElementById('tkTxt');
+        if (tk && CONFIG.ticker) tk.textContent = CONFIG.ticker;
+
+        applyScreenRotation();
+      } catch(e) {
+        console.error('loadSettings error:', e);
+      }
+    }
+
+    function calc() {
+      PT = prayerCalc(+CONFIG.lat, +CONFIG.lng, new Date(), +CONFIG.utc, CONFIG.asrMadhab);
+      if (PT) {
+        var fmt = CONFIG.cardTimeFormat || CONFIG.clockFormat || '12';
+        var sEnd = document.getElementById('sehriVal');
+        if (sEnd) sEnd.textContent = fmtTime(PT.sehriEnd, fmt);
+        var ift = document.getElementById('iftarVal');
+        if (ift) ift.textContent = fmtTime(PT.iftar, fmt);
+      }
+    }
+
+    function activePrayer(now) {
+      if (!PT) return 'isha';
+      var ts = now.getTime();
+      var order = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
+      var times = order.map(function(id) {
+        if (!PT[id]) return null;
+        var p = PT[id].split(':'), d = new Date(now);
+        d.setHours(+p[0], +p[1], 0, 0); return d.getTime();
+      });
+      var cur = 'isha';
+      for (var i = 0; i < order.length; i++) {
+        if (times[i] && ts >= times[i]) cur = order[i];
+      }
+      return cur;
+    }
+
+    function isForbiddenTime(now) {
+      if (!PT) return false;
+      var ct = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+      return (ct >= PT.sunrise && ct <= PT.sunriseForbiddenEnd) ||
+             (ct >= PT.zawalStart && ct <= PT.zawalEnd) ||
+             (ct >= PT.sunsetForbiddenStart && ct <= PT.maghrib);
+    }
+
+    function build() {
+      if (!PT) return;
+      var bd = getNow();
+      var cur = activePrayer(bd);
+      var cardFmt = CONFIG.cardTimeFormat || CONFIG.clockFormat || '12';
+
+      var container = document.getElementById('prayerCardsCol');
+      if (!container) return;
+      container.innerHTML = '';
+
+      // The 5 Farz Prayers on the Left Column (High Contrast)
+      var farzPrayers = [
+        { id: 'fajr',    bn: 'ফজর',    time: PT.fajr },
+        { id: 'dhuhr',   bn: 'যোহর',   time: PT.dhuhr },
+        { id: 'asr',     bn: 'আসর',    time: PT.asr },
+        { id: 'maghrib', bn: 'মাগরিব', time: PT.maghrib },
+        { id: 'isha',    bn: 'এশা',    time: PT.isha }
+      ];
+
+      farzPrayers.forEach(function(item) {
+        var card = document.createElement('div');
+        var isActive = (item.id === cur);
+        card.className = 'prayer-pill-card' + (isActive ? ' active-card' : '');
+        card.id = 'card-' + item.id;
+
+        var displayTime = fmtTime(item.time, cardFmt);
+
+        card.innerHTML = '<span class="p-name">' + item.bn + '</span><span class="p-sep">-</span><span class="p-time">' + displayTime + '</span>';
+        container.appendChild(card);
+      });
+
+      // Update Bottom Box 1: সূর্যোদয় (Sunrise with icon)
+      var sunriseEl = document.getElementById('sunriseTime');
+      if (sunriseEl && PT.sunrise) {
+        sunriseEl.textContent = fmtTime(PT.sunrise, cardFmt);
+      }
+      var ishraqEl = document.getElementById('ishraqTime');
+      if (ishraqEl && PT.ishraq) {
+        ishraqEl.textContent = fmtTime(PT.ishraq, cardFmt);
+      }
+
+      // Update Bottom Box 2: জুমা (Jummah 1:30)
+      var jmTimeEl = document.getElementById('jummahTime');
+      if (jmTimeEl) {
+        var jmVal = parseTimeTo24(CONFIG.jummahJamaat || '13:30', 'PM');
+        jmTimeEl.textContent = fmtTime(jmVal, cardFmt);
+      }
+      var khutbahEl = document.getElementById('khutbahTime');
+      if (khutbahEl) {
+        var khVal = parseTimeTo24(CONFIG.jummahKhutbah || '13:00', 'PM');
+        khutbahEl.textContent = fmtTime(khVal, cardFmt);
+      }
+
+      // Friday highlight for Box 2
+      var isFri = (bd.getDay() === 5);
+      var boxJm = document.getElementById('boxJummah');
+      if (boxJm) {
+        if (isFri) boxJm.classList.add('active-jummah');
+        else boxJm.classList.remove('active-jummah');
+      }
+    }
+
+    function fmtC(ms) {
+      if (ms <= 0) return '০০:০০:০০';
+      var h = Math.floor(ms / 36e5), m = Math.floor((ms % 36e5) / 6e4), s = Math.floor((ms % 6e4) / 1e3);
+      return toBnNum(String(h).padStart(2,'0')) + ':' + toBnNum(String(m).padStart(2,'0')) + ':' + toBnNum(String(s).padStart(2,'0'));
+    }
+
+    function tick() {
+      var bd = getNow();
+
+      // Giant Real-Time Digital Clock (HH:MM:SS PM)
+      var rawH = bd.getHours(), mins = String(bd.getMinutes()).padStart(2,'0');
+      var secs = String(bd.getSeconds()).padStart(2,'0');
+      var dispH = rawH, ampm = rawH >= 12 ? 'PM' : 'AM';
+      if (CONFIG.clockFormat === '12') {
+        dispH = rawH % 12 || 12;
+      }
+      var dispHStr = String(dispH).padStart(2, '0');
+      var hhEl = document.getElementById('clkHH');
+      var mmEl = document.getElementById('clkMM');
+      var ssEl = document.getElementById('clkSS');
+      if (hhEl && mmEl && ssEl) {
+        hhEl.textContent = dispHStr;
+        mmEl.textContent = mins;
+        ssEl.textContent = secs;
+      } else {
+        var clkEl = document.getElementById('clk');
+        if (clkEl) clkEl.textContent = dispHStr + ':' + mins + ':' + secs;
+      }
+      var ampmEl = document.getElementById('clkAmPm');
+      if (ampmEl) ampmEl.textContent = ampm;
+
+      // Full Header Date in Top-Right Box:
+      // Gregorian Bengali: "২৫ সেপ্টেম্বর ২০২৬"
+      // Gregorian English: "25 September 2026"
+      // Hijri Date: "১৪ রবিউস সানি ১৪৪৮ হিজরি"
+      var hijri = getHijriDate(bd, +CONFIG.hijriOffset || 0);
+      var bnMonths = ['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
+      var dayName = BN_DAYS_FULL[bd.getDay()];
+      var gregBn = toBnNum(bd.getDate()) + ' ' + bnMonths[bd.getMonth()] + ' ' + toBnNum(bd.getFullYear());
+      
+      var dg = document.getElementById('dGreg');
+      if (dg) dg.textContent = gregBn;
+
+      var enMonths = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      var gregEn = bd.getDate() + ' ' + enMonths[bd.getMonth()] + ' ' + bd.getFullYear();
+      var dgen = document.getElementById('dGregEn');
+      if (dgen) dgen.textContent = gregEn;
+
+      var dh = document.getElementById('dHijri');
+      if (dh) dh.textContent = hijri.bn;
+
+      // Update Bottom Box 3: Friday / Current Day of Week
+      var boxDay = document.getElementById('boxDayName');
+      if (boxDay) boxDay.textContent = dayName;
+      var boxHShort = document.getElementById('boxHijriShort');
+      if (boxHShort) boxHShort.textContent = toBnNum(hijri.day) + ' ' + (hijri.monthBn || '');
+      var boxDh = document.getElementById('boxHijriDate');
+      if (boxDh) boxDh.textContent = toBnNum(hijri.year) + ' হিজরি';
+      var boxDg = document.getElementById('boxGregDate');
+      if (boxDg) boxDg.textContent = gregBn;
+
+      // Forbidden time alert
+      var forbidEl = document.getElementById('forbiddenAlert');
+      if (forbidEl) forbidEl.style.display = isForbiddenTime(bd) ? 'inline-block' : 'none';
+
+      // Next Prayer & Jamaat Countdown
+      if (PT) {
+        var isFri = (bd.getDay() === 5);
+        var prayerSchedule = [
+          { id: 'fajr', bn: 'ফজর', waqt: PT.fajr, jm: parseTimeTo24(CONFIG.fajrJm, 'AM') },
+          { id: 'dhuhr', bn: (isFri ? 'জুমা' : 'যোহর'), waqt: (isFri ? parseTimeTo24(CONFIG.jummahJamaat || '13:30', 'PM') : PT.dhuhr), jm: (isFri ? parseTimeTo24(CONFIG.jummahJamaat || '13:30', 'PM') : parseTimeTo24(CONFIG.dhuhrJm, 'PM')) },
+          { id: 'asr', bn: 'আসর', waqt: PT.asr, jm: parseTimeTo24(CONFIG.asrJm, 'PM') },
+          { id: 'maghrib', bn: 'মাগরিব', waqt: PT.maghrib, jm: (CONFIG.maghribJm === 'auto' ? PT.maghrib : parseTimeTo24(CONFIG.maghribJm, 'PM')) },
+          { id: 'isha', bn: 'এশা', waqt: PT.isha, jm: parseTimeTo24(CONFIG.ishaJm, 'PM') }
+        ];
+
+        var bestMs = Infinity;
+        var bestPrayer = null;
+        var bestTimeStr = null;
+
+        prayerSchedule.forEach(function(item) {
+          var tStr = (item.jm && item.jm !== 'auto' && item.jm.trim() !== '') ? item.jm : item.waqt;
+          if (!tStr || tStr === '--:--') return;
+          var parts = tStr.split(':').map(Number);
+          var pDate = new Date(bd);
+          pDate.setHours(parts[0], parts[1], 0, 0);
+          var diff = pDate.getTime() - bd.getTime();
+          // If within 3 minutes after Jamaat started, keep it as current
+          if (diff <= 0 && diff > -180000) {
+            if (diff < bestMs) {
+              bestMs = diff;
+              bestPrayer = item;
+              bestTimeStr = tStr;
+            }
+          } else {
+            if (diff <= 0) {
+              pDate.setDate(pDate.getDate() + 1);
+              diff = pDate.getTime() - bd.getTime();
+            }
+            if (diff > 0 && diff < bestMs) {
+              bestMs = diff;
+              bestPrayer = item;
+              bestTimeStr = tStr;
+            }
+          }
+        });
+
+        var totalSec = Math.floor(bestMs / 1000);
+
+        // Check if admin triggered a live test countdown
+        if (window.TEST_COUNTDOWN_SEC !== undefined && window.TEST_COUNTDOWN_SEC !== null) {
+          totalSec = window.TEST_COUNTDOWN_SEC;
+          if (window.TEST_COUNTDOWN_SEC > 0) {
+            window.TEST_COUNTDOWN_SEC--;
+          } else {
+            window.TEST_COUNTDOWN_SEC = null;
+          }
+        }
+
+        // Current Waqt & Next Jamaat for Under-Clock Banner
+        var cur = activePrayer(bd);
+        var bnWaqtMap = {
+          fajr: 'ফজর',
+          dhuhr: (isFri ? 'জুমা' : 'যোহর'),
+          asr: 'আসর',
+          maghrib: 'মাগরিব',
+          isha: 'এশা'
+        };
+        var ucCurWaqt = document.getElementById('ucCurrentWaqt');
+        if (ucCurWaqt) {
+          ucCurWaqt.textContent = bnWaqtMap[cur] || 'ফজর';
+        }
+
+        var cardFmt = CONFIG.cardTimeFormat || CONFIG.clockFormat || '12';
+        var ucNextJm = document.getElementById('ucNextJamaatText');
+        if (ucNextJm && bestPrayer && bestTimeStr) {
+          ucNextJm.textContent = bestPrayer.bn + ' ' + fmtTime(bestTimeStr, cardFmt);
+        }
+
+        // ══ UNDER-CLOCK BANNER: CURRENT WAQT OR 5-MIN COUNTDOWN ══
+        var ucBanner = document.getElementById('underClockBanner');
+        var ucNormal = document.getElementById('ucNormalWrap');
+        var boxCd = document.getElementById('boxCountdown');
+        var cdLabel = document.getElementById('cdPrayerLabel');
+        var cdBadge = document.getElementById('cdStatusBadge');
+        var cdDigits = document.getElementById('cdTimerDigits');
+        var cdBar = document.getElementById('cdProgressBar');
+
+        if (totalSec > 0 && totalSec <= 300) {
+          // ACTIVE 5-MINUTE COUNTDOWN (300s down to 1s)
+          if (ucNormal) ucNormal.style.display = 'none';
+          if (boxCd) boxCd.style.display = 'flex';
+          if (ucBanner) {
+            ucBanner.classList.add('banner-active-cd');
+            if (totalSec <= 60) ucBanner.classList.add('banner-urgent-cd');
+            else ucBanner.classList.remove('banner-urgent-cd');
+          }
+
+          var cMin = Math.floor(totalSec / 60);
+          var cSec = totalSec % 60;
+          if (cdDigits) {
+            cdDigits.textContent = String(cMin).padStart(2, '0') + ':' + String(cSec).padStart(2, '0');
+          }
+
+          if (cdLabel) {
+            cdLabel.textContent = (bestPrayer ? bestPrayer.bn : 'জামাত') + ' বাকি';
+          }
+
+          // Shrinking progress line from 100% to 0% over 300 seconds (5 minutes)
+          var shrinkPct = (totalSec / 300) * 100;
+          if (cdBar) {
+            cdBar.style.width = Math.max(0, Math.min(100, shrinkPct)).toFixed(1) + '%';
+          }
+
+          if (cdBadge) {
+            if (totalSec <= 60) {
+              cdBadge.textContent = '১ মিনিট বাকি — প্রস্তুত হোন';
+            } else {
+              cdBadge.textContent = '৫ মিনিট কাউন্টডাউন';
+            }
+          }
+        } else if (totalSec <= 0 && totalSec >= -180) {
+          // Jamaat has begun (0 to 3 minutes)
+          if (ucNormal) ucNormal.style.display = 'none';
+          if (boxCd) boxCd.style.display = 'flex';
+          if (ucBanner) {
+            ucBanner.classList.add('banner-active-cd');
+            ucBanner.classList.remove('banner-urgent-cd');
+          }
+          if (cdDigits) cdDigits.textContent = '00:00';
+          if (cdLabel) cdLabel.textContent = (bestPrayer ? bestPrayer.bn : '') + ' জামাত চলছে';
+          if (cdBadge) cdBadge.textContent = 'মোবাইল বন্ধ রাখুন';
+          if (cdBar) cdBar.style.width = '0%';
+        } else {
+          // Standby Mode (> 5 minutes before Jamaat): Show normal Ongoing Waqt & Next Jamaat
+          if (ucNormal) ucNormal.style.display = 'flex';
+          if (boxCd) boxCd.style.display = 'none';
+          if (ucBanner) {
+            ucBanner.classList.remove('banner-active-cd', 'banner-urgent-cd');
+          }
+          if (cdBar) cdBar.style.width = '100%';
+        }
+
+        if (bestPrayer && bestTimeStr) {
+          var nameEl = document.getElementById('nextPrayerName');
+          if (nameEl) nameEl.textContent = bestPrayer.bn;
+
+          var timeEl = document.getElementById('nextPrayerTime');
+          if (timeEl) {
+            var tp = bestTimeStr.split(':').map(Number);
+            var h12 = tp[0] % 12 || 12;
+            var ampmStr = tp[0] >= 12 ? 'PM' : 'AM';
+            var formattedTime = toBnNum(String(h12).padStart(2, '0') + ':' + String(tp[1]).padStart(2, '0')) + ' ' + ampmStr;
+            timeEl.textContent = formattedTime;
+          }
+
+          var cdEl = document.getElementById('nextCountdownText');
+          if (cdEl) {
+            var hrs = Math.floor(totalSec / 3600);
+            var remSec = totalSec % 3600;
+            var m = Math.floor(remSec / 60);
+            var s = remSec % 60;
+
+            var countdownBn = '';
+            if (hrs > 0) {
+              countdownBn = toBnNum(hrs) + ' ঘণ্টা ' + toBnNum(m) + ' মিনিট ' + toBnNum(s) + ' সেকেন্ড';
+            } else if (m > 0) {
+              countdownBn = toBnNum(m) + ' মিনিট ' + toBnNum(s) + ' সেকেন্ড';
+            } else {
+              countdownBn = toBnNum(s) + ' সেকেন্ড';
+            }
+
+            cdEl.textContent = 'জামাত শুরু হতে বাকি: ' + countdownBn;
+          }
+        }
+
+        // Azan Alert Banner
+        var isAzanNow = false, azanPrayerName = '';
+        if (CONFIG.showAzanAlert !== false && CONFIG.showAzanAlert !== 'false') {
+          var curTot = bd.getHours() * 60 + bd.getMinutes();
+          ['fajr','dhuhr','asr','maghrib','isha'].forEach(function(pId) {
+            if (!PT[pId]) return;
+            var p = PT[pId].split(':').map(Number);
+            var aTot = p[0] * 60 + p[1];
+            if (curTot >= aTot && curTot < aTot + 3) {
+              isAzanNow = true;
+              var def = PRAYERS_DEF.find(function(d){ return d.id === pId; });
+              azanPrayerName = (isFri && pId === 'dhuhr') ? 'জুমু\'আ' : (def ? def.bn : '');
+            }
+          });
+        }
+
+        var banner = document.getElementById('alertBanner');
+        if (banner) {
+          if (isAzanNow) {
+            banner.style.display = 'block';
+            banner.innerHTML = '📢 ' + azanPrayerName + ' আজানের সময় হয়েছে — আজানের উত্তর দিন ও নামাজের প্রস্তুতি নিন।';
+          } else if (bestPrayer) {
+            var minsLeft = Math.floor(bestMs / 60000);
+            if (minsLeft <= 3 && bestMs > 0) {
+              banner.style.display = 'block';
+              banner.innerHTML = '📴 ' + bestPrayer.bn + ' জামাতের সময় আসন্ন! মোবাইল সাইলেন্ট করুন ও কাতার সোজা করুন।';
+            } else if (minsLeft <= 10 && bestMs > 0) {
+              banner.style.display = 'block';
+              banner.innerHTML = '🕌 ' + bestPrayer.bn + ' নামাজ আর মাত্র ' + toBnNum(minsLeft) + ' মিনিট পর। নামাজের জন্য প্রস্তুত হোন।';
+            } else {
+              banner.style.display = 'none';
+            }
+          }
+        }
+        var boxSun = document.getElementById('boxSunrise');
+        if (boxSun) {
+          var ct = String(bd.getHours()).padStart(2,'0') + ':' + String(bd.getMinutes()).padStart(2,'0');
+          if (ct >= PT.sunrise && ct <= PT.sunriseForbiddenEnd) {
+            boxSun.classList.add('active-sunrise');
+          } else {
+            boxSun.classList.remove('active-sunrise');
+          }
+        }
+      } // close if (PT)
+
+      if (bd.getSeconds() === 0) {
+        if (bd.getMinutes() === 0) calc();
+        build();
+      }
+    } // close tick()
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(function(){});
+      else if (document.exitFullscreen) document.exitFullscreen();
+    }
+
+    var ROTATE_STEPS = ['0', '90', '180', '270'];
+    var ROTATE_LABELS = ['০°', '৯০°', '১৮০°', '২৭০°'];
+
+    function cycleRotation() {
+      var cur = CONFIG.screenRotate || '0';
+      var idx = ROTATE_STEPS.indexOf(cur);
+      var next = ROTATE_STEPS[(idx + 1) % ROTATE_STEPS.length];
+      CONFIG.screenRotate = next;
+      // Save to localStorage so admin stays in sync
+      try {
+        var saved = JSON.parse(localStorage.getItem('mosqueSettings') || '{}');
+        saved.screenRotate = next;
+        localStorage.setItem('mosqueSettings', JSON.stringify(saved));
+      } catch(e) {}
+      applyScreenRotation();
+      updateRotateLabel();
+    }
+
+    function updateRotateLabel() {
+      var lbl = document.getElementById('rotateBtnLabel');
+      if (!lbl) return;
+      var idx = ROTATE_STEPS.indexOf(CONFIG.screenRotate || '0');
+      lbl.textContent = ROTATE_LABELS[idx >= 0 ? idx : 0];
+    }
+
+    // Real-time sync
+    try {
+      var bc = new BroadcastChannel('mosque_channel');
+      bc.onmessage = function(ev) {
+        if (ev && ev.data) {
+          if (ev.data.type === 'FONT_SCALE') {
+            var rawScale = ev.data.scale || '1';
+            var numScale = parseFloat(rawScale);
+            if (numScale > 10) numScale = numScale / 100;
+            if (isNaN(numScale) || numScale <= 0) numScale = 1;
+            CONFIG.fontSizeScale = numScale;
+            document.documentElement.style.setProperty('--font-scale', numScale);
+            return;
+          }
+          if (ev.data.type === 'START_TEST_COUNTDOWN') {
+            window.TEST_COUNTDOWN_SEC = ev.data.seconds || 300;
+            tick();
+            return;
+          }
+          if (ev.data.type === 'STOP_TEST_COUNTDOWN') {
+            window.TEST_COUNTDOWN_SEC = null;
+            tick();
+            return;
+          }
+          if (ev.data.type === 'BG_OPACITY') {
+            var rawOp = ev.data.opacity || 45;
+            var op = parseFloat(rawOp);
+            if (op > 1) op = op / 100;
+            if (isNaN(op) || op <= 0) op = 0.45;
+            CONFIG.bgOpacity = op;
+            document.documentElement.style.setProperty('--bg-opacity', op);
+            return;
+          }
+          if (ev.data.type === 'UPDATE_SETTINGS' && ev.data.settings) {
+            for (var k in ev.data.settings) {
+              if (ev.data.settings[k] !== undefined && ev.data.settings[k] !== '') {
+                CONFIG[k] = ev.data.settings[k];
+              }
+            }
+          }
+        }
+        try { loadSettings(); calc(); build(); tick(); } catch(e){}
+      };
+    // Real-Time Server-Sent Events (SSE) Stream for Instant Multi-Device Sync
+    try {
+      if (window.EventSource) {
+        var sse = new EventSource('/api/events');
+        sse.onmessage = function(ev) {
+          try {
+            var data = JSON.parse(ev.data);
+            if (data && data.settings) {
+              for (var k in data.settings) {
+                if (data.settings[k] !== undefined && data.settings[k] !== '') {
+                  CONFIG[k] = data.settings[k];
+                }
+              }
+              try { localStorage.setItem('mosqueSettings', JSON.stringify(CONFIG)); } catch(e) {}
+              loadSettings(); calc(); build(); tick(); syncBottomCardsHeight();
+            }
+          } catch(err) {}
+        };
+      }
+    } catch(e) {}
+
+    function fetchServerSettings() {
+      fetch('/api/settings')
+        .then(function(res) {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          return res.json();
+        })
+        .then(function(serverSettings) {
+          if (serverSettings && typeof serverSettings === 'object') {
+            for (var k in serverSettings) {
+              if (serverSettings[k] !== undefined && serverSettings[k] !== '') {
+                CONFIG[k] = serverSettings[k];
+              }
+            }
+            try {
+              localStorage.setItem('mosqueSettings', JSON.stringify(CONFIG));
+            } catch(e) {}
+            loadSettings();
+            calc();
+            build();
+            tick();
+          }
+        })
+        .catch(function() {
+          // If offline or file:// mode, fallback silently
+        });
+    }
+
+    function syncBottomCardsHeight() {
+      try {
+        var ishaCard = document.getElementById('card-isha') || document.querySelector('.prayer-pill-card');
+        if (ishaCard && ishaCard.offsetHeight > 0) {
+          document.documentElement.style.setProperty('--pill-card-height', ishaCard.offsetHeight + 'px');
+        }
+      } catch(e) {}
+    }
+
+    window.addEventListener('storage', function() {
+      try { loadSettings(); calc(); build(); tick(); syncBottomCardsHeight(); } catch(e){}
+    });
+    window.addEventListener('resize', function() {
+      applyScreenRotation();
+      syncBottomCardsHeight();
+    });
+
+    try {
+      if (window.ResizeObserver) {
+        var pCol = document.getElementById('prayerCardsCol');
+        if (pCol) {
+          new ResizeObserver(function() {
+            syncBottomCardsHeight();
+          }).observe(pCol);
+        }
+      }
+    } catch(e) {}
+
+    // Init with try-catch guards
+    try { loadSettings(); } catch(e) { console.error('loadSettings error:', e); }
+    try { fetchServerSettings(); } catch(e) {}
+    try { updateRotateLabel(); } catch(e) {}
+    try { calc(); } catch(e) { console.error('calc error:', e); }
+    try { build(); } catch(e) { console.error('build error:', e); }
+    try { tick(); } catch(e) { console.error('tick error:', e); }
+    try { syncBottomCardsHeight(); } catch(e) {}
+    setTimeout(syncBottomCardsHeight, 150);
+    setTimeout(syncBottomCardsHeight, 500);
+    setInterval(function() {
+      try { tick(); } catch(e) { console.error('tick error:', e); }
+    }, 1000);
+    setInterval(function() {
+      try { fetchServerSettings(); } catch(e) {}
+    }, 4000);
+  </script>
+</body>
+</html>

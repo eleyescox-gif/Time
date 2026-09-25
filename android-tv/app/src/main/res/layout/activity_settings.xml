@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  activity_settings.xml — All feature toggles in one place.
+  Feature 2: D-pad focusable with nextFocus chain.
+  Features 3,4,5,7 toggles + location + jamaat offsets.
+-->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="32dp">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⚙ সেটিংস"
+            android:textColor="@color/gold"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Status line -->
+        <TextView
+            android:id="@+id/tvSettingsStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/accent_green"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- ═══ FEATURE 3: Boot Auto-Start ═══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🔄 Feature 3: বুট অটো-স্টার্ট"
+            android:textColor="@color/gold"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TV বন্ধ করে চালু করলে অ্যাপ স্বয়ংক্রিয়ভাবে শুরু হবে"
+                android:textColor="@color/text_secondary"
+                android:textSize="15sp" />
+
+            <Switch
+                android:id="@+id/switchBootAutoStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:nextFocusDown="@id/switchPreJamaatNotif" />
+        </LinearLayout>
+
+        <!-- ═══ FEATURE 4: Pre-Jamaat Notification ═══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📵 Feature 4: জামাতের আগে মোবাইল-সাইলেন্ট নোটিশ"
+            android:textColor="@color/gold"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="জামাতের ১ মিনিট আগে স্ক্রিনে সাইলেন্ট রিমাইন্ডার দেখাবে"
+                android:textColor="@color/text_secondary"
+                android:textSize="15sp" />
+
+            <Switch
+                android:id="@+id/switchPreJamaatNotif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:nextFocusUp="@id/switchBootAutoStart"
+                android:nextFocusDown="@id/switchAutoDarkTheme" />
+        </LinearLayout>
+
+        <!-- ═══ FEATURE 5: Auto Dark Theme ═══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🌙 Feature 5: মাগরিবে অটো ডার্ক থিম"
+            android:textColor="@color/gold"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="মাগরিবের পর ডার্ক, ফজরে লাইট থিম স্বয়ংক্রিয়ভাবে পরিবর্তন হবে"
+                android:textColor="@color/text_secondary"
+                android:textSize="15sp" />
+
+            <Switch
+                android:id="@+id/switchAutoDarkTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:nextFocusUp="@id/switchPreJamaatNotif"
+                android:nextFocusDown="@id/switchKeepScreenOn" />
+        </LinearLayout>
+
+        <!-- ═══ FEATURE 7: Keep Screen On ═══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="☀️ Feature 7: স্ক্রিন সবসময় জ্বলন্ত রাখুন"
+            android:textColor="@color/gold"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TV sleep/timeout বন্ধ থাকবে — ২৪/৭ অ্যাপ চলবে"
+                android:textColor="@color/text_secondary"
+                android:textSize="15sp" />
+
+            <Switch
+                android:id="@+id/switchKeepScreenOn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:nextFocusUp="@id/switchAutoDarkTheme" />
+        </LinearLayout>
+
+        <!-- ═══ LOCATION ═══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📍 অবস্থান (Latitude / Longitude)"
+            android:textColor="@color/gold"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="28dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/etLatitude"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Latitude (21.8355)"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:inputType="numberDecimal|numberSigned"
+                android:background="@drawable/btn_focus_selector"
+                android:focusable="true"
+                android:padding="10dp"
+                android:layout_marginEnd="12dp" />
+
+            <EditText
+                android:id="@+id/etLongitude"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Longitude (92.0780)"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:inputType="numberDecimal|numberSigned"
+                android:background="@drawable/btn_focus_selector"
+                android:focusable="true"
+                android:padding="10dp"
+                android:layout_marginEnd="12dp" />
+
+            <TextView
+                android:id="@+id/btnSaveLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="সংরক্ষণ"
+                android:textColor="@color/bg_primary"
+                android:background="@color/gold"
+                android:padding="10dp"
+                android:focusable="true"
+                android:clickable="true" />
+        </LinearLayout>
+
+        <!-- ═══ ASR METHOD ═══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🕌 আসর গণনা পদ্ধতি"
+            android:textColor="@color/gold"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="28dp" />
+
+        <TextView
+            android:id="@+id/tvCurrentAsrMethod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="হানাফি (বর্তমান)"
+            android:textColor="@color/accent_green"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:id="@+id/btnHanafi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="হানাফি"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:background="@drawable/btn_focus_selector"
+                android:padding="12dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:layout_marginEnd="12dp" />
+
+            <TextView
+                android:id="@+id/btnShafii"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="শাফেয়ী"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:background="@drawable/btn_focus_selector"
+                android:padding="12dp"
+                android:focusable="true"
+                android:clickable="true" />
+        </LinearLayout>
+
+        <!-- ═══ JAMAAT OFFSETS ═══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⏱ জামাত (আজানের কত মিনিট পর)"
+            android:textColor="@color/gold"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="28dp" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginTop="8dp">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:text="ফজর" android:textColor="@color/text_secondary"
+                android:textSize="14sp" android:gravity="center" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:text="যোহর" android:textColor="@color/text_secondary"
+                android:textSize="14sp" android:gravity="center" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:text="আসর" android:textColor="@color/text_secondary"
+                android:textSize="14sp" android:gravity="center" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:text="মাগরিব" android:textColor="@color/text_secondary"
+                android:textSize="14sp" android:gravity="center" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:text="এশা" android:textColor="@color/text_secondary"
+                android:textSize="14sp" android:gravity="center" />
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginTop="4dp">
+            <EditText android:id="@+id/etFajrOffset" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:text="20" android:textColor="@color/text_primary" android:gravity="center"
+                android:inputType="number" android:background="@drawable/btn_focus_selector"
+                android:padding="8dp" android:layout_marginEnd="4dp" />
+            <EditText android:id="@+id/etDhuhrOffset" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:text="15" android:textColor="@color/text_primary" android:gravity="center"
+                android:inputType="number" android:background="@drawable/btn_focus_selector"
+                android:padding="8dp" android:layout_marginEnd="4dp" />
+            <EditText android:id="@+id/etAsrOffset" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:text="15" android:textColor="@color/text_primary" android:gravity="center"
+                android:inputType="number" android:background="@drawable/btn_focus_selector"
+                android:padding="8dp" android:layout_marginEnd="4dp" />
+            <EditText android:id="@+id/etMaghribOffset" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:text="5" android:textColor="@color/text_primary" android:gravity="center"
+                android:inputType="number" android:background="@drawable/btn_focus_selector"
+                android:padding="8dp" android:layout_marginEnd="4dp" />
+            <EditText android:id="@+id/etIshaOffset" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:text="20" android:textColor="@color/text_primary" android:gravity="center"
+                android:inputType="number" android:background="@drawable/btn_focus_selector"
+                android:padding="8dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/btnSaveOffsets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="জামাতের সময় সংরক্ষণ করুন"
+            android:textColor="@color/bg_primary"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:background="@color/gold"
+            android:padding="12dp"
+            android:focusable="true"
+            android:clickable="true"
+            android:layout_marginTop="10dp" />
+
+        <!-- ═══ SCREENSAVER HELP ═══ -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🌙 Feature 9: স্ক্রিনসেভার সেটআপ"
+            android:textColor="@color/gold"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="28dp" />
+
+        <TextView
+            android:id="@+id/btnScreensaverHelp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ℹ স্ক্রিনসেভার হিসেবে সেট করার নির্দেশনা দেখুন"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:background="@drawable/btn_focus_selector"
+            android:padding="12dp"
+            android:focusable="true"
+            android:clickable="true"
+            android:layout_marginTop="8dp" />
+
+        <!-- Back button -->
+        <TextView
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="← প্রধান স্ক্রিনে ফিরুন"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:background="@drawable/btn_focus_selector"
+            android:padding="14dp"
+            android:focusable="true"
+            android:clickable="true"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="32dp" />
+
+    </LinearLayout>
+
+</ScrollView>

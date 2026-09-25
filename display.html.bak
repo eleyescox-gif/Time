@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>মসজিদ ডিজিটাল ডিসপ্লে</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ── THEMES ── */
+    :root {
+      --bg1: #0a0a0a;
+      --bg2: #111111;
+      --arch-fill: #8B0000;
+      --arch-stroke: #D4AF37;
+      --gold: #D4AF37;
+      --gold2: #F3D77B;
+      --gold3: #AA771C;
+      --gold-grd: linear-gradient(135deg, #F3D77B 0%, #D4AF37 50%, #AA771C 100%);
+      --accent: #D4AF37;
+      --text-w: #FFFFFF;
+      --text-m: rgba(255,255,255,0.75);
+      --text-d: rgba(255,255,255,0.45);
+      --row-bg: rgba(255,255,255,0.04);
+      --row-border: rgba(212,175,55,0.18);
+      --active-bg: linear-gradient(135deg, rgba(180,0,0,0.35) 0%, rgba(212,175,55,0.15) 100%);
+      --active-border: #D4AF37;
+      --active-glow: 0 0 28px rgba(212,175,55,0.35);
+      --divider: rgba(212,175,55,0.25);
+      --hdr-bg: rgba(0,0,0,0.7);
+      --bar-bg: rgba(5,5,5,0.95);
+    }
+
+    body[data-theme="dark"] {
+      --arch-fill: #0d0d0d;
+      --arch-stroke: #D4AF37;
+      --accent: #D4AF37;
+      --active-bg: linear-gradient(135deg, rgba(212,175,55,0.2) 0%, rgba(10,10,10,0.9) 100%);
+      --active-border: #D4AF37;
+      --active-glow: 0 0 28px rgba(212,175,55,0.4);
+    }
+
+    body[data-theme="navy"] {
+      --bg1: #040c18;
+      --bg2: #071525;
+      --arch-fill: #071525;
+      --arch-stroke: #CBA135;
+      --gold: #CBA135;
+      --gold2: #F7E7B4;
+      --gold3: #946F15;
+      --gold-grd: linear-gradient(135deg, #F7E7B4 0%, #CBA135 50%, #946F15 100%);
+      --accent: #00D2FF;
+      --active-bg: linear-gradient(135deg, rgba(0,210,255,0.18) 0%, rgba(7,21,37,0.9) 100%);
+      --active-border: #00D2FF;
+      --active-glow: 0 0 28px rgba(0,210,255,0.35);
+    }
+
+    body[data-theme="emerald"] {
+      --bg1: #030f0a;
+      --bg2: #061c14;
+      --arch-fill: #061c14;
+      --arch-stroke: #D4AF37;
+      --accent: #00E676;
+      --active-bg: linear-gradient(135deg, rgba(0,230,118,0.2) 0%, rgba(6,28,20,0.9) 100%);
+      --active-border: #00E676;
+      --active-glow: 0 0 28px rgba(0,230,118,0.35);
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: var(--bg1);
+      font-family: 'Hind Siliguri', 'Segoe UI', Arial, sans-serif;
+      user-select: none;
+      color: var(--text-w);
+    }
+
+    /* ── SCREEN ROTATION ── */
+    #screenWrapper {
+      width: 100vw; height: 100vh;
+      background: linear-gradient(160deg, var(--bg2) 0%, var(--bg1) 60%, #000 100%);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.4s ease;
+      transform-origin: center center;
+    }
+
+    body.rotate-90 #screenWrapper {
+      transform: rotate(90deg);
+      width: 100vh; height: 100vw;
+      position: absolute;
+      top: calc((100vh - 100vw) / 2);
+      left: calc((100vw - 100vh) / 2);
+    }
+    body.rotate-180 #screenWrapper { transform: rotate(180deg); }
+    body.rotate-270 #screenWrapper {
+      transform: rotate(270deg);
+      width: 100vh; height: 100vw;
+      position: absolute;
+      top: calc((100vh - 100vw) / 2);
+      left: calc((100vw - 100vh) / 2);
+    }
+
+    /* ── GEOMETRIC BG PATTERN ── */
+    .bg-stars {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        radial-gradient(circle, rgba(212,175,55,0.07) 1px, transparent 1px),
+        radial-gradient(circle, rgba(212,175,55,0.04) 1px, transparent 1px);
+      background-size: 40px 40px, 20px 20px;
+      background-position: 0 0, 10px 10px;
+    }
+
+    /* ── AZAN ALERT BANNER ── */
+    #alertBanner {
+      display: none;
+      position: absolute; top: 0; left: 0; right: 0;
+      z-index: 999;
+      background: linear-gradient(90deg, #8B0000, #D4AF37, #8B0000);
+      background-size: 200% auto;
+      animation: shineBanner 2.5s linear infinite;
+      color: #fff;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 8px 12px;
+      letter-spacing: 0.5px;
+    }
+    @keyframes shineBanner {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* ── MAIN SPLIT LAYOUT ── */
+    #mainLayout {
+      flex: 1;
+      display: flex;
+      gap: 0;
+      min-height: 0;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    /* ── LEFT PANEL: PORTRAIT-STYLE CLOCK BOARD ── */
+    #leftPanel {
+      flex: 0 0 38%;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      border-right: 1px solid var(--divider);
+      background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── ISLAMIC ARCH IMAGE HEADER ── */
+    .arch-header {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .arch-img-wrap {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .arch-bg-img {
+      width: 100%;
+      height: clamp(160px, 22vh, 260px);
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      filter: brightness(0.75) saturate(1.1);
+    }
+
+    /* Dark overlay to make text readable */
+    .arch-overlay-dark {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.25) 0%,
+        rgba(0,0,0,0.15) 50%,
+        rgba(0,0,0,0.6) 100%
+      );
+      pointer-events: none;
+    }
+
+    .arch-mosque-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 3px;
+      padding: 10px 20px 14px;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%);
+    }
+
+    .arch-logo {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      object-fit: contain;
+      background: rgba(0,0,0,0.5);
+      padding: 4px;
+      display: none;
+    }
+
+    .arch-mosque-ar {
+      font-family: 'Amiri', serif;
+      font-size: clamp(14px, 2.5vw, 22px);
+      color: var(--gold2);
+      text-align: center;
+      line-height: 1.2;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    }
+
+    .arch-mosque-bn {
+      font-size: clamp(10px, 1.6vw, 14px);
+      color: rgba(255,255,255,0.85);
+      text-align: center;
+      font-weight: 600;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+    }
+
+    .arch-mosque-loc {
+      font-size: clamp(9px, 1.2vw, 11px);
+      color: rgba(255,255,255,0.55);
+      text-align: center;
+    }
+
+    /* ── HIJRI DATE BAR ── */
+    .hijri-bar {
+      text-align: center;
+      padding: 8px 12px 6px;
+      border-bottom: 1px solid var(--divider);
+      flex-shrink: 0;
+    }
+
+    .hijri-day-ar {
+      font-family: 'Amiri', serif;
+      font-size: clamp(13px, 2vw, 18px);
+      color: var(--gold2);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: 0.5px;
+    }
+
+    .date-line {
+      font-size: clamp(10px, 1.4vw, 12px);
+      color: var(--text-m);
+      margin-top: 2px;
+    }
+
+    /* ── INFO ROW (Next Prayer + Temp + Date) ── */
+    .info-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--divider);
+      flex-shrink: 0;
+      background: rgba(0,0,0,0.3);
+    }
+
+    .next-prayer-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1px;
+    }
+
+    .next-pr-label {
+      font-size: clamp(9px, 1.2vw, 11px);
+      color: var(--text-d);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .next-pr-name {
+      font-size: clamp(13px, 1.8vw, 17px);
+      color: var(--gold2);
+      font-weight: 700;
+    }
+
+    .next-pr-cd {
+      font-family: 'Outfit', monospace;
+      font-size: clamp(10px, 1.4vw, 13px);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .mosque-icon-center {
+      width: clamp(40px, 7vw, 60px);
+      height: clamp(40px, 7vw, 60px);
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
+      box-shadow: 0 0 18px rgba(212,175,55,0.3), inset 0 0 12px rgba(0,0,0,0.5);
+      flex-shrink: 0;
+    }
+
+    .mosque-icon-center svg {
+      width: 55%;
+      height: 55%;
+      fill: var(--gold);
+      filter: drop-shadow(0 0 4px rgba(212,175,55,0.5));
+    }
+
+    .weather-date {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1px;
+    }
+
+    .weather-text {
+      font-size: clamp(10px, 1.5vw, 14px);
+      color: var(--text-m);
+      font-weight: 600;
+    }
+
+    .greg-date-small {
+      font-size: clamp(9px, 1.2vw, 11px);
+      color: var(--text-d);
+    }
+
+    /* ── BIG DIGITAL CLOCK ── */
+    .big-clock-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 10px 6px;
+      flex-shrink: 0;
+    }
+
+    .big-clock-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .big-clock-hm {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(48px, 8vw, 78px);
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #FFFFFF;
+      line-height: 1;
+      text-shadow: 0 0 30px rgba(255,255,255,0.2);
+    }
+
+    .big-clock-sec {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(20px, 3vw, 32px);
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .big-clock-ampm {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(12px, 1.8vw, 18px);
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      align-self: flex-end;
+      padding-bottom: 8px;
+    }
+
+    /* ── ARABIC VERSE ── */
+    .verse-box {
+      text-align: center;
+      padding: 6px 14px 8px;
+      border-top: 1px solid var(--divider);
+      border-bottom: 1px solid var(--divider);
+      flex-shrink: 0;
+    }
+
+    .verse-ornament {
+      font-size: clamp(12px, 1.6vw, 15px);
+      color: var(--gold3);
+      letter-spacing: 2px;
+    }
+
+    .verse-text {
+      font-family: 'Amiri', serif;
+      font-size: clamp(14px, 2vw, 20px);
+      color: var(--gold2);
+      font-style: italic;
+      line-height: 1.4;
+      direction: rtl;
+    }
+
+    /* ── SEHRI / IFTAR ── */
+    .fasting-row {
+      display: flex;
+      gap: 8px;
+      padding: 6px 12px;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .fast-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.25);
+      border-radius: 10px;
+      padding: 5px 14px;
+      gap: 1px;
+      flex: 1;
+    }
+
+    .fast-label {
+      font-size: clamp(9px, 1.1vw, 11px);
+      color: var(--text-d);
+      font-weight: 600;
+    }
+
+    .fast-time {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(14px, 1.8vw, 18px);
+      font-weight: 800;
+      color: var(--gold2);
+    }
+
+    /* ── RIGHT PANEL: PRAYER TIMETABLE ── */
+    #rightPanel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .tbl-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 10px 24px 8px;
+      border-bottom: 2px solid var(--gold);
+      flex-shrink: 0;
+      background: rgba(0,0,0,0.4);
+    }
+
+    .tbl-header span {
+      font-size: clamp(13px, 1.8vw, 18px);
+      font-weight: 800;
+      color: var(--gold2);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .tbl-header span:first-child { text-align: left; }
+    .tbl-header span:last-child { text-align: right; }
+
+    /* Prayer rows */
+    .prayer-rows {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .prayer-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      flex: 1;
+      padding: 0 24px;
+      border-bottom: 1px solid var(--row-border);
+      background: var(--row-bg);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      min-height: 0;
+    }
+
+    .prayer-row::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--active-bg);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .prayer-row.active-row::before { opacity: 1; }
+
+    /* Active row: prominent 2-column side-by-side layout, tight borders close to text */
+    .prayer-row.active-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      border-bottom-color: transparent;
+      border-left: 6px solid var(--active-border);
+      box-shadow: var(--active-glow);
+      flex: 1.35;
+      padding: 0 24px;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* Active row: name and badge on left */
+    .active-row .p-name-col {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: nowrap;
+    }
+
+    /* Active row: jamaat time on right */
+    .active-row .p-jamaat {
+      text-align: right;
+    }
+
+    .prayer-row:last-child { border-bottom: none; }
+
+    /* Right col: Jamaat time */
+    .p-jamaat {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(22px, 3.2vw, 36px);
+      font-weight: 800;
+      color: var(--gold);
+      position: relative;
+      z-index: 1;
+      text-align: right;
+      letter-spacing: 1px;
+    }
+
+    .active-row .p-jamaat {
+      font-size: clamp(48px, 8vw, 92px);
+      font-weight: 900;
+      color: var(--gold2);
+      text-shadow: 0 0 24px rgba(212,175,55,0.6);
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+
+    .sunrise-row .p-jamaat {
+      font-size: clamp(20px, 3vw, 34px);
+      color: var(--gold3);
+    }
+
+    /* Left col: prayer name */
+    .p-name-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+      z-index: 1;
+    }
+
+    .p-name-ar {
+      font-family: 'Amiri', serif;
+      font-size: clamp(24px, 3.5vw, 40px);
+      font-weight: 700;
+      color: var(--text-w);
+      direction: rtl;
+      line-height: 1.1;
+    }
+
+    .active-row .p-name-ar {
+      font-size: clamp(32px, 4.8vw, 56px);
+      color: var(--gold2);
+      text-shadow: 0 0 14px rgba(212,175,55,0.45);
+    }
+
+    .p-name-bn {
+      font-size: clamp(11px, 1.5vw, 16px);
+      color: var(--text-d);
+      font-weight: 600;
+    }
+
+    .active-row .p-name-bn {
+      color: var(--text-m);
+      font-size: clamp(13px, 1.8vw, 18px);
+    }
+
+    /* Active badge */
+    .active-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--active-border);
+      color: #000;
+      font-size: clamp(9px, 1.1vw, 13px);
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      animation: badgePulse 1.5s ease infinite;
+      white-space: nowrap;
+      align-self: center;
+      flex-shrink: 0;
+    }
+
+    @keyframes badgePulse {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    /* Sunrise row special */
+    .prayer-row.sunrise-row .p-name-ar {
+      color: var(--gold3);
+    }
+
+    /* Bengali-only large prayer name */
+    .p-name-bn-big {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(24px, 3.8vw, 46px);
+      font-weight: 800;
+      color: var(--text-w);
+      line-height: 1.1;
+      letter-spacing: 0.5px;
+    }
+
+    .active-row .p-name-bn-big {
+      font-size: clamp(44px, 7.5vw, 86px);
+      font-weight: 900;
+      color: var(--gold2);
+      text-shadow: 0 0 20px rgba(212,175,55,0.55);
+      letter-spacing: 1px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .sunrise-row .p-name-bn-big {
+      color: var(--gold3);
+    }
+
+    /* ── BOTTOM BAR ── */
+    #bot {
+      height: 38px;
+      background: var(--bar-bg);
+      border-top: 1px solid var(--divider);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .tico {
+      padding: 0 12px;
+      background: var(--gold);
+      color: #000;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+      gap: 5px;
+    }
+
+    .twrp {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ttxt {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scr 40s linear infinite;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-m);
+      padding-left: 100%;
+    }
+
+    @keyframes scr {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .bot-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 10px;
+      flex-shrink: 0;
+    }
+
+    .btn-sm {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(212,175,55,0.3);
+      color: var(--gold2);
+      padding: 3px 9px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-sm:hover { background: var(--gold); color: #000; }
+    .btn-sm svg { width: 11px; height: 11px; fill: currentColor; }
+
+    /* Portrait adaptations */
+    body.is-portrait #mainLayout { flex-direction: column; }
+    body.is-portrait #leftPanel { flex: 0 0 auto; border-right: none; border-bottom: 1px solid var(--divider); }
+    body.is-portrait .arch-header { flex-direction: row; align-items: center; padding: 8px 16px; gap: 12px; }
+    body.is-portrait .arch-svg-wrap { width: 80px; flex-shrink: 0; }
+
+    /* Forbidden time indicator */
+    .forbidden-pill {
+      display: none;
+      background: rgba(220,50,50,0.9);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-left: 8px;
+      animation: badgePulse 1.2s infinite;
+    }
+
+    /* ── LIVE BADGE ── */
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border: 1.5px solid var(--accent);
+      border-radius: 20px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      animation: badgePulse 1.5s infinite;
+    }
+
+    .live-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    /* Golden divider ornament */
+    .gold-divider {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 14px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .gold-divider::before, .gold-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .gold-divider-icon {
+      font-size: 12px;
+      color: var(--gold);
+    }
+
+    /* Right panel header */
+    .right-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      border-bottom: 1px solid var(--divider);
+      flex-shrink: 0;
+      background: rgba(0,0,0,0.3);
+    }
+
+    .right-title {
+      font-size: clamp(11px, 1.5vw, 14px);
+      font-weight: 700;
+      color: var(--gold2);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .right-title svg {
+      width: 14px; height: 14px; fill: var(--gold);
+    }
+
+    /* Jummah banner */
+    .jummah-banner {
+      display: none;
+      background: linear-gradient(90deg, rgba(180,0,0,0.6), rgba(212,175,55,0.4));
+      text-align: center;
+      padding: 4px 12px;
+      font-size: clamp(10px, 1.3vw, 13px);
+      color: var(--gold2);
+      font-weight: 700;
+      font-family: 'Amiri', serif;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <!-- Azan Alert Banner -->
+  <div id="alertBanner"></div>
+
+  <div id="screenWrapper">
+    <div class="bg-stars"></div>
+
+    <!-- MAIN LAYOUT: LEFT (Clock Board) + RIGHT (Prayer Table) -->
+    <main id="mainLayout">
+
+      <!-- ══ LEFT PANEL ══ -->
+      <section id="leftPanel">
+
+        <!-- Islamic Arch with Mosque Name -->
+        <div class="arch-header">
+          <!-- Arch background image with mosque name overlay -->
+          <div class="arch-img-wrap">
+            <img id="archBgImg" class="arch-bg-img" src="arch.jpg" alt="">
+            <div class="arch-overlay-dark"></div>
+            <div class="arch-mosque-info">
+              <img id="mCustomLogo" class="arch-logo" alt="Logo">
+              <div class="arch-mosque-ar" id="mAr">مسجد النور</div>
+              <div class="arch-mosque-bn" id="mBn">নূর মসজিদ</div>
+              <div class="arch-mosque-loc" id="mLoc">ঢাকা, বাংলাদেশ</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hijri / Bangla Date -->
+        <div class="hijri-bar">
+          <div class="hijri-day-ar" id="dHijri">— হিজরি —</div>
+          <div class="date-line" id="dGreg">লোড হচ্ছে...</div>
+        </div>
+
+        <!-- Info Row -->
+        <div class="info-row">
+          <div class="next-prayer-pill">
+            <span class="next-pr-label">পরবর্তী জামাত</span>
+            <span class="next-pr-name" id="np">লোড...</span>
+            <span class="next-pr-cd" id="cd">০০:০০:০০</span>
+          </div>
+
+          <div class="weather-date">
+            <span class="weather-text" id="gregShort">—</span>
+            <span class="greg-date-small" id="dBangla">—</span>
+            <span class="forbidden-pill" id="forbiddenAlert">⛔ নামাজ নিষিদ্ধ সময়</span>
+          </div>
+        </div>
+
+        <!-- Big Digital Clock -->
+        <div class="big-clock-box">
+          <div class="big-clock-row">
+            <span class="big-clock-hm" id="clk">--:--</span>
+            <span class="big-clock-sec" id="clkSec">:--</span>
+          </div>
+          <span class="big-clock-ampm" id="clkAmPm"></span>
+        </div>
+
+        <!-- Sehri / Iftar -->
+        <div class="fasting-row" id="fastingSection">
+          <div class="fast-pill">
+            <span class="fast-label">🌙 সেহরি শেষ</span>
+            <span class="fast-time" id="sehriVal">--:--</span>
+          </div>
+          <div class="fast-pill">
+            <span class="fast-label">☀️ ইফতার</span>
+            <span class="fast-time" id="iftarVal">--:--</span>
+          </div>
+        </div>
+
+        <!-- Live badge + bangla date -->
+        <div style="display:flex;align-items:center;justify-content:center;padding:6px 12px;gap:10px;flex-shrink:0;">
+          <div class="live-badge">
+            <div class="live-dot"></div>
+            <span>LIVE</span>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ══ RIGHT PANEL: PRAYER TIMETABLE ══ -->
+      <section id="rightPanel">
+
+        <div class="right-header">
+          <div class="right-title">
+            <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12C2 17.52 6.47 22 11.99 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 11.99 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20ZM12.5 7H11V13L16.25 16.15L17 14.92L12.5 12.25V7Z"/></svg>
+            নামাজের সময়সূচী
+          </div>
+          <div style="font-family:'Amiri',serif;font-size:clamp(12px,1.6vw,16px);color:var(--gold2);direction:rtl;">
+            مواقيت الصلاة
+          </div>
+        </div>
+
+        <!-- Jummah banner -->
+        <div class="jummah-banner" id="jummahBanner">
+          🕌 আজ জুমু'আর নামাজ — الجمعة المبارك
+        </div>
+
+        <!-- Table header -->
+        <div class="tbl-header">
+          <span>নামাজ</span>
+          <span>জামায়ত</span>
+        </div>
+
+        <!-- Prayer rows container -->
+        <div class="prayer-rows" id="prayerRows"></div>
+
+      </section>
+    </main>
+
+    <!-- BOTTOM TICKER -->
+    <footer id="bot">
+      <div class="tico">
+        <svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:#000;"><path d="M3 9V15H7L12 20V4L7 9H3ZM16.5 12C16.5 10.23 15.48 8.71 14 7.97V16.02C15.48 15.29 16.5 13.77 16.5 12ZM14 3.23V5.29C16.89 6.15 19 8.83 19 12C19 15.17 16.89 17.85 14 18.71V20.77C18.01 19.86 21 16.28 21 12C21 7.72 18.01 4.14 14 3.23Z"/></svg>
+        ঘোষণা
+      </div>
+      <div class="twrp">
+        <span class="ttxt" id="tkTxt">স্বাগতম — নামাজ পড়ুন, সুন্দর জীবন গড়ুন ✶ الصَّلَاةُ عِمَادُ الدِّينِ ✶ মসজিদে মোবাইল ফোন সাইলেন্ট রাখুন</span>
+      </div>
+      <div class="bot-right">
+        <button class="btn-sm" onclick="cycleRotation()" id="rotateBtn" title="স্ক্রিন ঘোরান">
+          <svg viewBox="0 0 24 24"><path d="M7.11 8.53L5.7 7.11C4.8 8.27 4.24 9.61 4.07 11H6.09C6.24 10.1 6.6 9.23 7.11 8.53ZM6.09 13H4.07C4.24 14.39 4.8 15.73 5.7 16.89L7.11 15.47C6.6 14.77 6.24 13.9 6.09 13ZM7.1 18.32C8.26 19.22 9.61 19.76 11 19.93V17.9C10.1 17.75 9.22 17.39 8.53 16.88L7.1 18.32ZM13 4.07V1L8.45 5.55L13 10V6.09C15.84 6.57 18 9.03 18 12C18 14.97 15.84 17.43 13 17.91V19.93C16.95 19.44 20 16.08 20 12C20 7.92 16.95 4.56 13 4.07Z"/></svg>
+          <span id="rotateBtnLabel">০°</span>
+        </button>
+        <button class="btn-sm" onclick="toggleFullscreen()" title="F11">
+          <svg viewBox="0 0 24 24"><path d="M7 14H5V19H10V17H7V14ZM5 10H7V7H10V5H5V10ZM17 17H14V19H19V14H17V17ZM14 5V7H17V10H19V5H14Z"/></svg>
+          Full
+        </button>
+        <a href="admin.html" target="_blank" class="btn-sm">
+          <svg viewBox="0 0 24 24"><path d="M12 15.5C10.07 15.5 8.5 13.93 8.5 12C8.5 10.07 10.07 8.5 12 8.5C13.93 8.5 15.5 10.07 15.5 12C15.5 13.93 13.93 15.5 12 15.5ZM19.43 12.97C19.47 12.65 19.5 12.33 19.5 12C19.5 11.67 19.47 11.34 19.43 11L21.54 9.37C21.73 9.22 21.78 8.95 21.66 8.73L19.66 5.27C19.54 5.05 19.27 4.96 19.05 5.05L16.56 6.05C16.04 5.66 15.5 5.32 14.87 5.07L14.5 2.42C14.46 2.18 14.25 2 14 2H10C9.75 2 9.54 2.18 9.5 2.42L9.13 5.07C8.5 5.32 7.96 5.66 7.44 6.05L4.95 5.05C4.73 4.96 4.46 5.05 4.34 5.27L2.34 8.73C2.21 8.95 2.27 9.22 2.46 9.37L4.57 11C4.53 11.34 4.5 11.67 4.5 12C4.5 12.33 4.53 12.65 4.57 12.97L2.46 14.63C2.27 14.78 2.22 15.05 2.34 15.27L4.34 18.73C4.46 18.95 4.73 19.03 4.95 18.95L7.44 17.94C7.96 18.34 8.5 18.68 9.13 18.93L9.5 21.58C9.54 21.82 9.75 22 10 22H14C14.25 22 14.46 21.82 14.5 21.58L14.87 18.93C15.5 18.68 16.04 18.34 16.56 17.94L19.05 18.95C19.27 19.03 19.54 18.95 19.66 18.73L21.66 15.27C21.78 15.05 21.73 14.78 21.54 14.63L19.43 12.97Z"/></svg>
+          Admin
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // ── CONFIG ──
+    var CONFIG = {
+      lat: 21.8355, lng: 92.0780, utc: 6,
+      nameAr: 'مسجد النور', nameBn: 'নূর মসজিদ', nameEn: 'Nur Jame Masjid',
+      location: 'ঢাকা, বাংলাদেশ', logoUrl: '',
+      theme: 'dark', clockFormat: '12', ampmMode: 'bn_natural',
+      cardTimeFormat: '12', screenRotate: '0', layoutMode: 'auto',
+      showAzanTime: true, showAzanAlert: true, asrMadhab: 'hanafi',
+      hijriOffset: 0, showFasting: true,
+      jummahKhutbah: '13:00', jummahJamaat: '13:30',
+      ticker: 'স্বাগতম — নামাজ পড়ুন, সুন্দর জীবন গড়ুন ✶ الصَّلَاةُ عِمَادُ الدِّينِ ✶ মসজিদে মোবাইল ফোন সাইলেন্ট রাখুন',
+      fajrJm: '05:30', dhuhrJm: '13:30', asrJm: '16:30',
+      maghribJm: 'auto', ishaJm: '21:00',
+      quranVerse: '﴿ أَلَيْسَ اللَّهُ بِكَافٍ عَبْدَهُ ﴾'
+    };
+
+    var PRAYERS_DEF = [
+      { id: 'fajr',    ar: 'الفجر',   bn: 'ফজর',      arFull: 'الفجر' },
+      { id: 'sunrise', ar: 'الشروق',  bn: 'সূর্যোদয়', arFull: 'الشروق', noIqama: true },
+      { id: 'dhuhr',   ar: 'الظهر',   bn: 'যোহর',     arFull: 'الظهر' },
+      { id: 'asr',     ar: 'العصر',   bn: 'আসর',      arFull: 'العصر' },
+      { id: 'maghrib', ar: 'المغرب',  bn: 'মাগরিব',   arFull: 'المغرب' },
+      { id: 'isha',    ar: 'العشاء',  bn: 'এশা',      arFull: 'العشاء' }
+    ];
+
+    // ── Prayer Time Calculation ──
+    function prayerCalc(lat, lng, date, utc, asrMadhab) {
+      var R = Math.PI / 180;
+      var y = date.getFullYear(), m = date.getMonth() + 1, d = date.getDate();
+      var a = Math.floor((14 - m) / 12), yr = y + 4800 - a, mo = m + 12 * a - 3;
+      var jd = d + Math.floor((153 * mo + 2) / 5) + 365 * yr + Math.floor(yr / 4) - Math.floor(yr / 100) + Math.floor(yr / 400) - 32045 - 0.5;
+      var D = jd - 2451545;
+      var g = ((357.529 + 0.98560028 * D) % 360) * R;
+      var q = (280.459 + 0.98564736 * D) % 360;
+      var L = ((q + 1.915 * Math.sin(g) + 0.020 * Math.sin(2 * g)) % 360) * R;
+      var e = (23.439 - 0.00000036 * D) * R;
+      var RA = ((Math.atan2(Math.cos(e) * Math.sin(L), Math.cos(L)) / R / 15) + 24) % 24;
+      var dec = Math.asin(Math.sin(e) * Math.sin(L)) / R;
+      var EqT = q / 15 - RA;
+      var noon = 12 - EqT - lng / 15 + utc;
+
+      function ha(alt) {
+        var c = (Math.sin(alt * R) - Math.sin(lat * R) * Math.sin(dec * R)) / (Math.cos(lat * R) * Math.cos(dec * R));
+        return Math.abs(c) > 1 ? 6 : Math.acos(c) / R / 15;
+      }
+
+      var nAlt = 90 - Math.abs(lat - dec);
+      var asrFactor = (asrMadhab === 'shafii') ? 1 : 2;
+      var asrAlt = Math.atan(1 / (asrFactor + 1 / Math.tan(nAlt * R))) / R;
+
+      function fmt(h) {
+        h = ((h % 24) + 24) % 24;
+        var hr = Math.floor(h), mn = Math.floor((h - hr) * 60);
+        return String(hr).padStart(2, '0') + ':' + String(mn).padStart(2, '0');
+      }
+      function addMins(ts, mins) {
+        var p = ts.split(':').map(Number), tot = p[0] * 60 + p[1] + mins;
+        var nh = Math.floor(((tot % 1440) + 1440) % 1440 / 60);
+        var nm = Math.floor(((tot % 1440) + 1440) % 1440 % 60);
+        return String(nh).padStart(2, '0') + ':' + String(nm).padStart(2, '0');
+      }
+
+      var fajr = fmt(noon - ha(-18));
+      var sunrise = fmt(noon - ha(-0.833));
+      var dhuhr = fmt(noon + 0.033);
+      var asr = fmt(noon + ha(asrAlt));
+      var maghrib = fmt(noon + ha(-0.833));
+      var isha = fmt(noon + ha(-18));
+
+      return {
+        fajr, sunrise, dhuhr, asr, maghrib, isha,
+        noon: fmt(noon),
+        sehriEnd: addMins(fajr, -3),
+        iftar: maghrib,
+        ishraq: addMins(sunrise, 18),
+        zawalStart: addMins(fmt(noon), -10), zawalEnd: fmt(noon),
+        sunriseForbiddenEnd: addMins(sunrise, 15),
+        sunsetForbiddenStart: addMins(maghrib, -15)
+      };
+    }
+
+    function getHijriDate(date, offset) {
+      var d = new Date(date); d.setDate(d.getDate() + (offset || 0));
+      var day = d.getDate(), month = d.getMonth() + 1, year = d.getFullYear();
+      if (month < 3) { year--; month += 12; }
+      var a = Math.floor(year / 100), b = 2 - a + Math.floor(a / 4);
+      var jd = Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 1)) + day + b - 1524.5;
+      var z = jd - 1948438.5, cyc = Math.floor(z / 10631);
+      var rem = z - 10631 * cyc, j = Math.floor((rem + 0.5) / 354.366);
+      var hYear = 30 * cyc + j + 1, remDays = rem - Math.floor(j * 354.366);
+      var hMonth = Math.min(11, Math.floor((remDays + 0.5) / 29.5));
+      var hDay = Math.floor(remDays - Math.floor(hMonth * 29.5)) + 1;
+      var hMonthsAr = ['محرم','صفر','ربيع الأول','ربيع الثاني','جمادى الأولى','جمادى الثانية','رجب','شعبان','رمضان','شوال','ذو القعدة','ذو الحجة'];
+      var hMonthsBn = ['মহররম','সফর','রবিউল আউয়াল','রবিউস সানি','জমাদিউল আউয়াল','জমাদিউস সানি','রজব','শাবান','রমজান','শাওয়াল','জিলকদ','জিলহজ'];
+      return {
+        ar: hDay + ' ' + hMonthsAr[hMonth] + ' ' + hYear,
+        bn: toBnNum(hDay) + ' ' + hMonthsBn[hMonth] + ' ' + toBnNum(hYear) + ' হিজরি'
+      };
+    }
+
+    function getBanglaDate(date) {
+      var bMonths = ['বৈশাখ','জ্যৈষ্ঠ','আষাঢ়','শ্রাবণ','ভাদ্র','আশ্বিন','কার্তিক','অগ্রহায়ণ','পৌষ','মাঘ','ফাল্গুন','চৈত্র'];
+      var isLeap = (date.getFullYear() % 4 === 0 && date.getFullYear() % 100 !== 0) || (date.getFullYear() % 400 === 0);
+      var daysInMonths = [31,31,31,31,31,31,30,30,30,30,isLeap ? 30 : 29,30];
+      var year = date.getFullYear(), month = date.getMonth() + 1, day = date.getDate();
+      var bYear = (month < 4 || (month === 4 && day < 14)) ? year - 594 : year - 593;
+      var april14 = new Date(year, 3, 14);
+      var diff = Math.floor((date - april14) / 864e5);
+      if (diff < 0) diff = Math.floor((date - new Date(year - 1, 3, 14)) / 864e5);
+      var rem = diff, bMonthIndex = 0;
+      for (var i = 0; i < 12; i++) { if (rem < daysInMonths[i]) { bMonthIndex = i; break; } rem -= daysInMonths[i]; }
+      return toBnNum(rem + 1) + ' ' + bMonths[bMonthIndex] + ' ' + toBnNum(bYear) + ' বঙ্গাব্দ';
+    }
+
+    var BN_DAYS_FULL = ['রবিবার','সোমবার','মঙ্গলবার','বুধবার','বৃহস্পতিবার','শুক্রবার','শনিবার'];
+    var AR_DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+
+    function toBnNum(num) {
+      return String(num).replace(/[0-9]/g, function(w){ return '০১২৩৪৫৬৭৮৯'[+w]; });
+    }
+
+    function getAmPmText(hours24, mode) {
+      if (mode === 'hide') return '';
+      if (mode === 'en') return hours24 >= 12 ? 'PM' : 'AM';
+      if (mode === 'bn_formal') return hours24 >= 12 ? 'অপরাহ্ন' : 'পূর্বাহ্ণ';
+      if (mode === 'bn_natural') {
+        if (hours24 >= 4 && hours24 < 12) return 'সকাল';
+        if (hours24 >= 12 && hours24 < 15) return 'দুপুর';
+        if (hours24 >= 15 && hours24 < 18) return 'বিকাল';
+        if (hours24 >= 18 && hours24 < 20) return 'সন্ধ্যা';
+        return 'রাত';
+      }
+      return hours24 >= 12 ? 'PM' : 'AM';
+    }
+
+    function fmtTime(t, fmt) {
+      if (!t || t === '--:--' || t === '') return '--:--';
+      // Normalize: replace dot separator with colon, handle "530" style
+      var str = String(t).trim();
+      if (str.indexOf(':') === -1 && str.indexOf('.') !== -1) {
+        str = str.replace('.', ':'); // "5.30" → "5:30"
+      } else if (str.indexOf(':') === -1 && str.indexOf('.') === -1 && str.length >= 3) {
+        // "530" → "5:30", "1230" → "12:30"
+        str = str.slice(0, -2) + ':' + str.slice(-2);
+      }
+      var p = str.split(':');
+      var h = +p[0], m = p[1] || '00';
+      if (isNaN(h)) return '--:--';
+      if (fmt === '24') return String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0');
+      return String(h % 12 || 12).padStart(2, '0') + ':' + String(m).padStart(2,'0');
+    }
+
+    var PT = null;
+
+    function applyScreenRotation() {
+      var rot = CONFIG.screenRotate || '0';
+      document.body.classList.remove('rotate-90', 'rotate-180', 'rotate-270');
+      if (rot === '90') document.body.classList.add('rotate-90');
+      else if (rot === '180') document.body.classList.add('rotate-180');
+      else if (rot === '270') document.body.classList.add('rotate-270');
+      var isPortrait = false;
+      if (CONFIG.layoutMode === 'portrait') isPortrait = true;
+      else if (CONFIG.layoutMode === 'landscape') isPortrait = false;
+      else if (rot === '90' || rot === '270') isPortrait = (window.innerWidth > window.innerHeight);
+      else isPortrait = (window.innerHeight > window.innerWidth);
+      if (isPortrait) document.body.classList.add('is-portrait');
+      else document.body.classList.remove('is-portrait');
+    }
+
+    function loadSettings() {
+      var s = JSON.parse(localStorage.getItem('mosqueSettings') || '{}');
+      for (var k in s) { if (s[k] !== undefined && s[k] !== '') CONFIG[k] = s[k]; }
+
+      document.body.setAttribute('data-theme', CONFIG.theme || 'dark');
+
+      // Mosque name
+      document.getElementById('mAr').innerHTML = CONFIG.nameAr || 'مسجد النور';
+      document.getElementById('mBn').textContent = CONFIG.nameBn || 'নূর মসজিদ';
+      document.getElementById('mLoc').textContent = CONFIG.location || 'ঢাকা, বাংলাদেশ';
+
+      // Mosque logo
+      var logo = document.getElementById('mCustomLogo');
+      if (CONFIG.logoUrl && CONFIG.logoUrl.trim()) {
+        logo.src = CONFIG.logoUrl; logo.style.display = 'block';
+      } else {
+        logo.style.display = 'none';
+      }
+
+      // Arch background image
+      var archImg = document.getElementById('archBgImg');
+      if (archImg && CONFIG.bgArchUrl && CONFIG.bgArchUrl.trim()) {
+        archImg.src = CONFIG.bgArchUrl;
+      } else if (archImg && !archImg.src) {
+        archImg.src = 'arch.jpg';
+      }
+
+      // Ticker
+      if (CONFIG.ticker) document.getElementById('tkTxt').textContent = CONFIG.ticker;
+
+      // Verse (if element exists)
+      var vt = document.getElementById('verseText');
+      if (vt && CONFIG.quranVerse) vt.textContent = CONFIG.quranVerse;
+
+      // Fasting section
+      var fsec = document.getElementById('fastingSection');
+      if (fsec) fsec.style.display = (CONFIG.showFasting === false || CONFIG.showFasting === 'false') ? 'none' : 'flex';
+
+      applyScreenRotation();
+    }
+
+    function calc() {
+      PT = prayerCalc(+CONFIG.lat, +CONFIG.lng, new Date(), +CONFIG.utc, CONFIG.asrMadhab);
+      if (PT) {
+        var fmt = CONFIG.cardTimeFormat || CONFIG.clockFormat || '12';
+        document.getElementById('sehriVal').textContent = fmtTime(PT.sehriEnd, fmt);
+        document.getElementById('iftarVal').textContent = fmtTime(PT.iftar, fmt);
+      }
+    }
+
+    function activePrayer(now) {
+      var ts = now.getTime();
+      var order = ['fajr','sunrise','dhuhr','asr','maghrib','isha'];
+      var times = order.map(function(id) {
+        if (!PT[id]) return null;
+        var p = PT[id].split(':'), d = new Date(now);
+        d.setHours(+p[0], +p[1], 0, 0); return d.getTime();
+      });
+      var cur = 'isha';
+      for (var i = 0; i < order.length; i++) { if (times[i] && ts >= times[i]) cur = order[i]; }
+      return cur;
+    }
+
+    function isForbiddenTime(now) {
+      if (!PT) return false;
+      var ct = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+      return (ct >= PT.sunrise && ct <= PT.sunriseForbiddenEnd) ||
+             (ct >= PT.zawalStart && ct <= PT.zawalEnd) ||
+             (ct >= PT.sunsetForbiddenStart && ct <= PT.maghrib);
+    }
+
+    function build() {
+      if (!PT) return;
+      var now = new Date();
+      var bd = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Dhaka' }));
+      var cur = activePrayer(bd);
+      var isFri = (bd.getDay() === 5);
+      var cardFmt = CONFIG.cardTimeFormat || CONFIG.clockFormat || '12';
+      var showAzan = (CONFIG.showAzanTime !== false && CONFIG.showAzanTime !== 'false');
+
+      // Jummah banner
+      var jBanner = document.getElementById('jummahBanner');
+      if (jBanner) jBanner.style.display = isFri ? 'block' : 'none';
+
+      var container = document.getElementById('prayerRows');
+      container.innerHTML = '';
+
+      PRAYERS_DEF.forEach(function(p) {
+        var az = PT[p.id] || '--:--';
+        var isActive = (p.id === cur);
+        var isSunrise = (p.id === 'sunrise');
+
+        // Jamaat time
+        var jt = null;
+        if (p.id === 'fajr') jt = CONFIG.fajrJm;
+        else if (p.id === 'dhuhr') jt = isFri ? (CONFIG.jummahJamaat || '13:30') : CONFIG.dhuhrJm;
+        else if (p.id === 'asr') jt = CONFIG.asrJm;
+        else if (p.id === 'maghrib') jt = (CONFIG.maghribJm === 'auto' ? az : CONFIG.maghribJm);
+        else if (p.id === 'isha') jt = CONFIG.ishaJm;
+
+        var arName = (isFri && p.id === 'dhuhr') ? 'الجمعة' : p.ar;
+        var bnName = (isFri && p.id === 'dhuhr') ? 'জুমু\'আ' : p.bn;
+        var displayJamaat = jt ? fmtTime(jt, cardFmt) : '';
+
+        var row = document.createElement('div');
+        row.className = 'prayer-row' + (isActive ? ' active-row' : '') + (isSunrise ? ' sunrise-row' : '');
+
+        // Left: Jamaat time (for sunrise: auto show calculated sunrise time)
+        var jamaatHtml = '';
+        if (isSunrise) {
+          jamaatHtml = '<div class="p-jamaat">' + fmtTime(az, cardFmt) + '</div>';
+        } else if (displayJamaat) {
+          jamaatHtml = '<div class="p-jamaat">' + displayJamaat + '</div>';
+        } else {
+          jamaatHtml = '<div class="p-jamaat" style="opacity:0.4;">—</div>';
+        }
+
+        // Right: Prayer name — Bengali only
+        var badgeHtml = isActive ? '<span class="active-badge">চলমান ওয়াক্ত</span>' : '';
+        var nameHtml = '<div class="p-name-col"><div class="p-name-bn-big">' + bnName + '</div>' + badgeHtml + '</div>';
+
+        row.innerHTML = nameHtml + jamaatHtml;
+        container.appendChild(row);
+      });
+    }
+
+    function fmtC(ms) {
+      if (ms <= 0) return '০০:০০:০০';
+      var h = Math.floor(ms / 36e5), m = Math.floor((ms % 36e5) / 6e4), s = Math.floor((ms % 6e4) / 1e3);
+      return toBnNum(String(h).padStart(2,'0')) + ':' + toBnNum(String(m).padStart(2,'0')) + ':' + toBnNum(String(s).padStart(2,'0'));
+    }
+
+    function tick() {
+      var n = new Date();
+      var bd = new Date(n.toLocaleString('en-US', { timeZone: 'Asia/Dhaka' }));
+
+      // Digital clock
+      var rawH = bd.getHours(), mins = String(bd.getMinutes()).padStart(2,'0');
+      var secs = String(bd.getSeconds()).padStart(2,'0');
+      var dispH = rawH, ampm = '';
+      if (CONFIG.clockFormat === '12') {
+        ampm = getAmPmText(rawH, CONFIG.ampmMode || 'bn_natural');
+        dispH = rawH % 12 || 12;
+      }
+      document.getElementById('clk').textContent = String(dispH).padStart(2,'0') + ':' + mins;
+      document.getElementById('clkSec').textContent = ':' + secs;
+      document.getElementById('clkAmPm').textContent = ampm;
+
+      // Dates
+      var hijri = getHijriDate(bd, +CONFIG.hijriOffset || 0);
+      var dayName = BN_DAYS_FULL[bd.getDay()];
+      document.getElementById('dHijri').innerHTML =
+        '<span style="direction:rtl;font-family:\'Amiri\',serif;">' + AR_DAYS[bd.getDay()] + '  ' + hijri.ar + '</span>';
+      document.getElementById('gregShort').textContent =
+        bd.toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' });
+      document.getElementById('dGreg').textContent = dayName + ' — ' + hijri.bn;
+      document.getElementById('dBangla').textContent = getBanglaDate(bd);
+
+      // Forbidden time
+      var forbidEl = document.getElementById('forbiddenAlert');
+      if (forbidEl) forbidEl.style.display = isForbiddenTime(bd) ? 'inline-block' : 'none';
+
+      // Azan alert + countdown
+      var isAzanNow = false, azanPrayerName = '';
+      if (PT && CONFIG.showAzanAlert !== false && CONFIG.showAzanAlert !== 'false') {
+        var curTot = bd.getHours() * 60 + bd.getMinutes();
+        var isFri = (bd.getDay() === 5);
+        ['fajr','dhuhr','asr','maghrib','isha'].forEach(function(pId) {
+          if (!PT[pId]) return;
+          var p = PT[pId].split(':').map(Number);
+          var aTot = p[0] * 60 + p[1];
+          if (curTot >= aTot && curTot < aTot + 3) {
+            isAzanNow = true;
+            var def = PRAYERS_DEF.find(function(d){ return d.id === pId; });
+            azanPrayerName = (isFri && pId === 'dhuhr') ? 'জুমু\'আ' : (def ? def.bn : '');
+          }
+        });
+      }
+
+      // Next Jamaat countdown
+      if (PT) {
+        var isFri = (bd.getDay() === 5);
+        var bestMs = Infinity, bestP = null, bestTimeStr = null;
+        var cardFmt = CONFIG.cardTimeFormat || CONFIG.clockFormat || '12';
+        PRAYERS_DEF.filter(function(p){ return p.id !== 'sunrise'; }).forEach(function(p) {
+          var jmStr = null;
+          if (p.id === 'fajr') jmStr = CONFIG.fajrJm;
+          else if (p.id === 'dhuhr') jmStr = isFri ? (CONFIG.jummahJamaat || '13:30') : CONFIG.dhuhrJm;
+          else if (p.id === 'asr') jmStr = CONFIG.asrJm;
+          else if (p.id === 'maghrib') jmStr = (CONFIG.maghribJm === 'auto' ? PT.maghrib : CONFIG.maghribJm);
+          else if (p.id === 'isha') jmStr = CONFIG.ishaJm;
+          if (!jmStr || jmStr === '--:--') return;
+          var parts = jmStr.split(':');
+          var jmDate = new Date(bd); jmDate.setHours(+parts[0], +parts[1], 0, 0);
+          if (jmDate < bd) jmDate.setDate(jmDate.getDate() + 1);
+          var ms = jmDate - bd;
+          if (ms > 0 && ms < bestMs) { bestMs = ms; bestP = p; bestTimeStr = jmStr; }
+        });
+
+        var banner = document.getElementById('alertBanner');
+        if (isAzanNow) {
+          banner.style.display = 'block';
+          banner.innerHTML = '📢 ' + azanPrayerName + ' আজানের সময় হয়েছে — আজানের উত্তর দিন ও নামাজের প্রস্তুতি নিন।';
+        } else if (bestP) {
+          var pName = (isFri && bestP.id === 'dhuhr') ? 'জুমু\'আ' : bestP.bn;
+          document.getElementById('np').textContent = pName + ' (' + fmtTime(bestTimeStr, cardFmt) + ')';
+          document.getElementById('cd').textContent = fmtC(bestMs);
+          var minsLeft = Math.floor(bestMs / 60000);
+          if (minsLeft <= 3 && bestMs > 0) {
+            banner.style.display = 'block';
+            banner.innerHTML = '📴 ' + pName + ' জামাতের সময় আসন্ন! মোবাইল সাইলেন্ট করুন ও কাতার সোজা করুন।';
+          } else if (minsLeft <= 10 && bestMs > 0) {
+            banner.style.display = 'block';
+            banner.innerHTML = '🕌 ' + pName + ' জামাত আর মাত্র ' + toBnNum(minsLeft) + ' মিনিট পর। নামাজের জন্য প্রস্তুত হোন।';
+          } else {
+            banner.style.display = 'none';
+          }
+        }
+      }
+
+      if (bd.getSeconds() === 0) {
+        if (bd.getMinutes() === 0) calc();
+        build();
+      }
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(function(){});
+      else if (document.exitFullscreen) document.exitFullscreen();
+    }
+
+    var ROTATE_STEPS = ['0', '90', '180', '270'];
+    var ROTATE_LABELS = ['০°', '৯০°', '১৮০°', '২৭০°'];
+
+    function cycleRotation() {
+      var cur = CONFIG.screenRotate || '0';
+      var idx = ROTATE_STEPS.indexOf(cur);
+      var next = ROTATE_STEPS[(idx + 1) % ROTATE_STEPS.length];
+      CONFIG.screenRotate = next;
+      // Save to localStorage so admin stays in sync
+      try {
+        var saved = JSON.parse(localStorage.getItem('mosqueSettings') || '{}');
+        saved.screenRotate = next;
+        localStorage.setItem('mosqueSettings', JSON.stringify(saved));
+      } catch(e) {}
+      applyScreenRotation();
+      updateRotateLabel();
+    }
+
+    function updateRotateLabel() {
+      var lbl = document.getElementById('rotateBtnLabel');
+      if (!lbl) return;
+      var idx = ROTATE_STEPS.indexOf(CONFIG.screenRotate || '0');
+      lbl.textContent = ROTATE_LABELS[idx >= 0 ? idx : 0];
+    }
+
+    // Real-time sync
+    try {
+      var bc = new BroadcastChannel('mosque_channel');
+      bc.onmessage = function() { loadSettings(); calc(); build(); tick(); };
+    } catch(e) {}
+
+    window.addEventListener('storage', function() { loadSettings(); calc(); build(); tick(); });
+    window.addEventListener('resize', applyScreenRotation);
+
+    // Init
+    loadSettings();
+    updateRotateLabel();
+    calc();
+    build();
+    tick();
+    setInterval(tick, 1000);
+  </script>
+</body>
+</html>

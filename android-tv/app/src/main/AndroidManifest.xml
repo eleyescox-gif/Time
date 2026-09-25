@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- ═══════════════════════════════════════════════
+         PERMISSIONS
+         ═══════════════════════════════════════════════ -->
+
+    <!-- Feature 1: NTP time sync over network -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Feature 3: Boot auto-start — TV restart হলে app launch -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- Feature 4: Pre-Jamaat overlay notification (system alert window) -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <!-- Feature 7: Keep screen on -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Foreground service for time-keeper (Android 9+) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- TV: অ্যাপ যেন TV home-screen-এ দেখা যায় -->
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+
+    <!-- Touch optional (TV remote control প্রাথমিক input) -->
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
+    <application
+        android:allowBackup="false"
+        android:banner="@drawable/banner"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/ic_launcher"
+        android:supportsRtl="false"
+        android:theme="@style/Theme.MyMasjid.Light"
+        android:usesCleartextTraffic="true">
+
+        <!-- ═══════════════ MAIN ACTIVITY ═══════════════ -->
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|layoutDirection"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape">
+
+            <!-- TV launcher intent -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <!-- Also show in regular launcher -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- ═══════════════ SETTINGS ACTIVITY ═══════════════ -->
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:label="@string/settings_title"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="landscape" />
+
+        <!-- ═══════════════ FEATURE 3: BOOT RECEIVER ═══════════════ -->
+        <!-- BOOT_COMPLETED: TV restart হলে auto-launch করে -->
+        <receiver
+            android:name=".receiver.BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <!-- China TV brands এর জন্য extra boot action -->
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+
+        <!-- ═══════════════ FEATURE 1: TIME KEEPER SERVICE ═══════════════ -->
+        <!-- Foreground service: offline RTC tracking + NTP sync -->
+        <service
+            android:name=".service.TimeKeeperService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <!-- ═══════════════ FEATURE 4: NOTIFICATION RECEIVER ═══════════════ -->
+        <!-- AlarmManager-এর pre-jamaat notification receive করে -->
+        <receiver
+            android:name=".notification.NotificationBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.mymasjid.tv.SHOW_PRE_JAMAAT_BANNER" />
+            </intent-filter>
+        </receiver>
+
+        <!-- ═══════════════ FEATURE 9: SCREENSAVER (DreamService) ═══════════════ -->
+        <!-- Android TV screensaver — Settings > Screen saver থেকে set করা যাবে -->
+        <service
+            android:name=".service.MasjidScreensaver"
+            android:exported="true"
+            android:label="@string/screensaver_label"
+            android:permission="android.permission.BIND_DREAM_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.dreams.DreamService" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.dream"
+                android:resource="@xml/screensaver" />
+        </service>
+
+    </application>
+
+</manifest>
