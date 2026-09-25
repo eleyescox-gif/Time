@@ -13,7 +13,7 @@
   "clockFormat": "12",
   "ampmMode": "bn_natural",
   "cardTimeFormat": "12",
-  "screenRotate": "90",
+  "screenRotate": "0",
   "layoutMode": "auto",
   "showAzanTime": "true",
   "showAzanAlert": "true",
