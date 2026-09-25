@@ -867,28 +867,48 @@
               <input id="nameAr" style="font-family:'Amiri',serif; direction:rtl;" placeholder="مسجد النور">
             </div>
             <div class="form-group">
-              <label>মসজিদের লোগো ছবি</label>
+              <label>মসজিদের লোগো ছবি (Mosque Logo)</label>
               <div style="display:flex; gap:10px; align-items:center;">
-                <label class="btn btn-outline" style="cursor:pointer; font-size:12px; padding:8px 12px;">
+                <label class="btn btn-outline" style="cursor:pointer; font-size:13px; padding:8px 14px; background:rgba(212,175,55,0.1); border-color:var(--gold);">
                   <span>📁 লোগো নির্বাচন করুন</span>
                   <input type="file" id="logoInput" accept="image/*" onchange="handleLogoUpload(event)" style="display:none;">
                 </label>
-                <button type="button" onclick="removeLogo()" class="btn btn-danger" id="removeLogoBtn" style="display:none; font-size:11px; padding:6px 10px;">🗑️ লোগো মুছুন</button>
+                <button type="button" onclick="removeLogo()" class="btn btn-danger" id="removeLogoBtn" style="display:none; font-size:12px; padding:7px 12px;">🗑️ লোগো মুছুন</button>
               </div>
-              <div id="logoPreviewContainer" style="margin-top:8px;">
-                <img id="logoPreviewImg" style="display:none; max-width:60px; max-height:60px; border-radius:6px; object-fit:contain;" alt="Logo">
+              <div id="logoPreviewContainer" style="margin-top:10px; display:flex; align-items:center; gap:12px;">
+                <img id="logoPreviewImg" style="display:none; width:70px; height:70px; border-radius:50%; object-fit:contain; background:#ffffff; border:2px solid var(--gold); padding:2px; box-shadow:0 3px 10px rgba(0,0,0,0.5);" alt="Logo">
                 <svg id="logoDefaultSvg" style="display:none;"></svg>
+                <span style="font-size:12px; color:var(--text-muted);">স্ক্রিনের শীর্ষে নামের পাশে গোল লোগো হিসেবে প্রদর্শিত হবে।</span>
               </div>
             </div>
-          </div>
-          <!-- Hidden arch upload elements for backward compatibility -->
-          <div style="display:none;">
-            <input type="file" id="archInput">
-            <img id="archPreviewImg">
-            <svg id="archDefaultIcon"></svg>
-            <button id="removeArchBtn"></button>
-            <input id="bgOpacity" value="45">
-            <span id="bgOpacityLabel"></span>
+
+            <!-- ডিসপ্লে ব্যাকগ্রাউন্ড ছবি / ওয়ালপেপার আপলোড অপশন -->
+            <div class="form-group" style="grid-column: 1 / -1; margin-top: 10px; padding-top: 14px; border-top: 1px dashed rgba(255,255,255,0.15);">
+              <label style="font-size:14px; color:var(--gold); font-weight:700;">🖼️ ডিসপ্লে ব্যাকগ্রাউন্ড ছবি / ওয়ালপেপার (Display Background Picture)</label>
+              <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">টিভি বা মনিটরের ব্যাকগ্রাউন্ডে পুরো স্ক্রিন জুড়ে মসজিদ বা যেকোনো কাস্টম ছবি প্রদর্শনের জন্য আপলোড করুন।</p>
+              
+              <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+                <label class="btn btn-outline" style="cursor:pointer; font-size:13px; padding:8px 14px; background:rgba(16,185,129,0.12); border-color:#10b981; color:#10b981;">
+                  <span>📁 ব্যাকগ্রাউন্ড ছবি নির্বাচন করুন</span>
+                  <input type="file" id="archInput" accept="image/*" onchange="handleArchUpload(event)" style="display:none;">
+                </label>
+                <button type="button" onclick="removeArch()" class="btn btn-danger" id="removeArchBtn" style="display:none; font-size:12px; padding:7px 12px;">🗑️ ছবি মুছুন</button>
+              </div>
+
+              <div id="archPreviewContainer" style="margin-top:12px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+                <img id="archPreviewImg" style="display:none; max-width:200px; max-height:110px; border-radius:8px; object-fit:cover; border:2px solid var(--gold); box-shadow:0 4px 14px rgba(0,0,0,0.6);" alt="Background Preview">
+                <svg id="archDefaultIcon" style="display:none;"></svg>
+                
+                <div style="flex:1; min-width:220px;">
+                  <label style="font-size:12px; color:var(--text-secondary); display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span>ছবি দৃশ্যমানতা / স্বচ্ছতা (Opacity):</span>
+                    <strong id="bgOpacityLabel" style="color:var(--gold); font-size:13px;">৪৫%</strong>
+                  </label>
+                  <input type="range" id="bgOpacity" min="10" max="95" value="45" style="width:100%; accent-color:var(--gold);" oninput="onBgOpacityChange(this.value)">
+                  <span style="font-size:11px; color:var(--text-muted);">লেখা সহজে পড়ার সুবিধার্থে ৩০% - ৫০% রাখা সবচেয়ে ভালো।</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1347,7 +1367,8 @@
           var compressed = canvas.toDataURL('image/jpeg', 0.80);
           currentArchUrl = compressed;
           displayArchPreview(compressed);
-          showToast('✅ সম্পূর্ণ স্ক্রিন ব্যাকগ্রাউন্ড ছবি লোড হয়েছে! "সেভ করুন" চাপুন।');
+          broadcastLiveUpdate();
+          showToast('✅ সম্পূর্ণ স্ক্রিন ব্যাকগ্রাউন্ড ছবি লোড হয়েছে!');
         };
         img.src = e.target.result;
       };
@@ -1383,7 +1404,8 @@
       currentArchUrl = '';
       displayArchPreview('');
       document.getElementById('archInput').value = '';
-      showToast('🗑️ আর্চ ছবি মুছে ডিফল্ট ফিরিয়ে আনা হয়েছে।');
+      broadcastLiveUpdate();
+      showToast('🗑️ ব্যাকগ্রাউন্ড ছবি মুছে ডিফল্ট ফিরিয়ে আনা হয়েছে।');
     }
 
     function setCity(lat, lng, loc) {

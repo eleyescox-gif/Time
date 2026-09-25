@@ -330,17 +330,18 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      gap: 2px;
+      gap: 3px;
     }
 
     .header-bismillah {
       font-family: 'Amiri', serif;
-      font-size: clamp(14px, 1.6vw, 24px);
+      font-size: clamp(16px, 1.8vw, 26px);
       color: #f7c844;
       opacity: 0.95;
       letter-spacing: 1px;
       text-shadow: 0 2px 10px rgba(0,0,0,0.8), 0 0 16px rgba(247, 200, 68, 0.4);
       line-height: 1.15;
+      margin-bottom: 2px;
     }
 
     .mosque-brand-block {
@@ -348,19 +349,21 @@
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      gap: clamp(8px, 1.2vw, 16px);
+      gap: clamp(12px, 1.6vw, 24px);
     }
 
     .mosque-header-logo {
-      width: clamp(38px, 4.2vw, 60px);
-      height: clamp(38px, 4.2vw, 60px);
-      border-radius: 12px;
+      width: clamp(54px, 5.8vw, 86px);
+      height: clamp(54px, 5.8vw, 86px);
+      border-radius: 50%;
       object-fit: contain;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1.5px solid rgba(247, 200, 68, 0.5);
-      padding: 3px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+      background: #ffffff;
+      border: 2.5px solid #f7c844;
+      padding: 2px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 20px rgba(247, 200, 68, 0.4);
       flex-shrink: 0;
+      display: block;
+      transition: all 0.3s ease;
     }
 
     .mosque-brand-titles {
@@ -372,23 +375,25 @@
 
     .mosque-title-bn {
       font-family: 'Hind Siliguri', sans-serif;
-      font-size: clamp(24px, 3.4vw, 46px);
-      font-weight: 800;
+      font-size: clamp(34px, 4.8vw, 64px);
+      font-weight: 900;
       color: #f7c844;
-      line-height: 1.15;
-      letter-spacing: 0.5px;
-      text-shadow: 0 2px 14px rgba(0,0,0,0.8), 0 0 25px rgba(247, 200, 68, 0.35);
+      line-height: 1.12;
+      letter-spacing: 0.8px;
+      text-shadow: 0 3px 18px rgba(0,0,0,0.95), 0 0 32px rgba(247, 200, 68, 0.45);
       margin: 0;
+      white-space: nowrap;
     }
 
     .mosque-title-en {
       font-family: 'Hind Siliguri', 'Outfit', sans-serif;
-      font-size: clamp(12px, 1.25vw, 17px);
+      font-size: clamp(14px, 1.5vw, 20px);
       font-weight: 600;
-      letter-spacing: 0.5px;
-      color: #cbd5e1;
-      opacity: 0.92;
-      margin-top: 1px;
+      letter-spacing: 0.8px;
+      color: #e2e8f0;
+      opacity: 0.95;
+      margin-top: 2px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
     }
 
     /* Header Right Block: Professional Box for Arabic and English Dates */
@@ -1686,7 +1691,7 @@
           <div class="header-center-block">
             <div class="header-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
             <div class="mosque-brand-block">
-              <img id="mCustomLogo" src="" alt="Mosque Logo" class="mosque-header-logo" style="display:none;" />
+              <img id="mCustomLogo" src="logo.png" alt="Mosque Logo" class="mosque-header-logo" onerror="if(this.src.indexOf('logo.png')===-1)this.src='logo.png';" />
               <div class="mosque-brand-titles">
                 <h1 class="mosque-title-bn" id="mBn">পূর্ব মোহাজের পাড়া জামে মসজিদ</h1>
                 <span class="mosque-title-en" id="mEn">বরইতলী, চকরিয়া, কক্সবাজার।</span>
@@ -1871,8 +1876,8 @@
     // ── CONFIG ──
     var CONFIG = {
       lat: 21.8355, lng: 92.0780, utc: 6,
-      nameAr: 'مسجد النور', nameBn: 'নূর জামে মসজিদ', nameEn: 'Noor Jame Masjid',
-      location: 'চকরিয়া, কক্সবাজার', logoUrl: '',
+      nameAr: 'مسجد النور', nameBn: 'পূর্ব মোহাজের পাড়া জামে মসজিদ', nameEn: 'বরইতলী, চকরিয়া, কক্সবাজার।',
+      location: 'চকরিয়া, কক্সবাজার', logoUrl: 'logo.png', bgArchUrl: 'bg_display.jpg',
       theme: 'navy', clockFormat: '12', ampmMode: 'bn_natural',
       cardTimeFormat: '12', screenRotate: '0', layoutMode: 'auto',
       showAzanTime: true, showAzanAlert: true, asrMadhab: 'hanafi',
@@ -2117,29 +2122,29 @@
         // Custom Mosque Logo
         var logoEl = document.getElementById('mCustomLogo');
         if (logoEl) {
-          if (CONFIG.logoUrl && CONFIG.logoUrl.trim() !== '') {
-            logoEl.src = CONFIG.logoUrl;
-            logoEl.style.display = 'block';
-          } else {
-            logoEl.style.display = 'none';
-          }
+          var targetLogo = (CONFIG.logoUrl && CONFIG.logoUrl.trim() !== '') ? CONFIG.logoUrl : 'logo.png';
+          logoEl.src = targetLogo;
+          logoEl.style.display = 'block';
+          logoEl.onerror = function() {
+            if (this.src.indexOf('logo.png') === -1) {
+              this.src = 'logo.png';
+            } else {
+              this.style.display = 'none';
+            }
+          };
         }
 
         // Custom Arch / Background Image (Full-screen wallpaper)
         var bgArch = document.querySelector('.bg-mosque-arch');
         if (bgArch) {
-          if (CONFIG.bgArchUrl && CONFIG.bgArchUrl.trim() !== '') {
-            bgArch.style.backgroundImage = 'url("' + CONFIG.bgArchUrl + '")';
-            bgArch.classList.add('has-custom-bg');
-            var rawOp = CONFIG.bgOpacity !== undefined ? CONFIG.bgOpacity : 45;
-            var op = parseFloat(rawOp);
-            if (op > 1) op = op / 100;
-            if (isNaN(op) || op <= 0) op = 0.45;
-            document.documentElement.style.setProperty('--bg-opacity', op);
-          } else {
-            bgArch.classList.remove('has-custom-bg');
-            bgArch.style.backgroundImage = '';
-          }
+          var bgSrc = (CONFIG.bgArchUrl && CONFIG.bgArchUrl.trim() !== '') ? CONFIG.bgArchUrl : 'bg_display.jpg';
+          bgArch.style.backgroundImage = 'url("' + bgSrc + '")';
+          bgArch.classList.add('has-custom-bg');
+          var rawOp = CONFIG.bgOpacity !== undefined ? CONFIG.bgOpacity : 45;
+          var op = parseFloat(rawOp);
+          if (op > 1) op = op / 100;
+          if (isNaN(op) || op <= 0) op = 0.45;
+          document.documentElement.style.setProperty('--bg-opacity', op);
         }
 
         var mAr = document.getElementById('mAr');

@@ -120,4 +120,20 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(port, () => console.log('Server running on http://localhost:' + port));
+let currentPort = parseInt(process.env.PORT, 10) || 8080;
+
+function startServer(p) {
+  const s = server.listen(p, () => {
+    console.log('Server running on http://localhost:' + p);
+  });
+  s.once('error', (err) => {
+    if ((err.code === 'EACCES' || err.code === 'EADDRINUSE') && p === 8080) {
+      console.log(`Port 8080 is unavailable (${err.code}), switching to port 8081...`);
+      startServer(8081);
+    } else {
+      console.error('Server error:', err);
+    }
+  });
+}
+
+startServer(currentPort);
