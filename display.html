@@ -240,15 +240,15 @@
       flex: 1;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: clamp(10px, 1.4vw, 20px);
+      justify-content: space-between;
+      gap: clamp(8px, 1.2vw, 16px);
       background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
       color: #0f172a;
       border-radius: clamp(12px, 1.8vh, 20px);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
       border: 1px solid rgba(255, 255, 255, 0.7);
-      transition: all 0.3s ease;
-      padding: 0 clamp(16px, 2vw, 32px);
+      transition: all 0.25s ease;
+      padding: 0 clamp(14px, 1.8vw, 28px);
       min-height: 0;
     }
 
@@ -256,25 +256,54 @@
       --font-scale: 1;
     }
 
+    .p-card-left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      min-width: 0;
+    }
+
     .prayer-pill-card .p-name {
       font-family: 'Hind Siliguri', sans-serif;
-      font-size: calc(clamp(25px, 3.1vw, 46px) * var(--font-scale, 1));
+      font-size: calc(clamp(24px, 2.9vw, 42px) * var(--font-scale, 1));
       font-weight: 800;
       letter-spacing: 0.5px;
-      line-height: 1;
+      line-height: 1.1;
+    }
+
+    .p-card-left .p-azan-sub {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: calc(clamp(11px, 1.15vw, 16px) * var(--font-scale, 1));
+      font-weight: 600;
+      opacity: 0.78;
+      color: #334155;
+      line-height: 1.2;
+      margin-top: 1px;
+    }
+
+    .prayer-pill-card.active-card .p-card-left .p-azan-sub {
+      color: #86efac !important;
+      opacity: 0.95;
     }
 
     .prayer-pill-card .p-sep {
-      font-size: calc(clamp(23px, 2.8vw, 42px) * var(--font-scale, 1));
+      font-size: calc(clamp(18px, 2.2vw, 34px) * var(--font-scale, 1));
       font-weight: 600;
-      opacity: 0.5;
+      opacity: 0.45;
       line-height: 1;
+    }
+
+    .p-card-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
     }
 
     .prayer-pill-card .p-time {
       font-family: 'Outfit', 'Cinzel', 'Hind Siliguri', sans-serif;
       font-size: calc(clamp(26px, 3.2vw, 48px) * var(--font-scale, 1));
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: 0.5px;
       line-height: 1;
     }
@@ -2091,10 +2120,18 @@
       else document.body.classList.remove('is-portrait');
     }
 
-    function loadSettings() {
+    function loadSettings(overrideSettings) {
       try {
-        var s = JSON.parse(localStorage.getItem('mosqueSettings') || '{}');
-        for (var k in s) { if (s[k] !== undefined && s[k] !== '') CONFIG[k] = s[k]; }
+        if (overrideSettings && typeof overrideSettings === 'object') {
+          for (var k in overrideSettings) {
+            if (overrideSettings[k] !== undefined && overrideSettings[k] !== '') {
+              CONFIG[k] = overrideSettings[k];
+            }
+          }
+        } else {
+          var s = JSON.parse(localStorage.getItem('mosqueSettings') || '{}');
+          for (var k in s) { if (s[k] !== undefined && s[k] !== '') CONFIG[k] = s[k]; }
+        }
 
         // Permanently enforce user's location coordinates (Lat: 21.8355, Lng: 92.0780, চকরিয়া, কক্সবাজার)
         CONFIG.lat = 21.8355;
@@ -2204,18 +2241,46 @@
       var bd = getNow();
       var cur = activePrayer(bd);
       var cardFmt = CONFIG.cardTimeFormat || CONFIG.clockFormat || '12';
+      var showAzan = (CONFIG.showAzanTime !== false && CONFIG.showAzanTime !== 'false');
 
       var container = document.getElementById('prayerCardsCol');
       if (!container) return;
       container.innerHTML = '';
 
-      // The 5 Farz Prayers on the Left Column (High Contrast)
+      var isFri = (bd.getDay() === 5);
+
+      // The 5 Farz Prayers on the Left Column (Using Jamaat time from Admin with Azan time subtitle)
       var farzPrayers = [
-        { id: 'fajr',    bn: 'ফজর',    time: PT.fajr },
-        { id: 'dhuhr',   bn: 'যোহর',   time: PT.dhuhr },
-        { id: 'asr',     bn: 'আসর',    time: PT.asr },
-        { id: 'maghrib', bn: 'মাগরিব', time: PT.maghrib },
-        { id: 'isha',    bn: 'এশা',    time: PT.isha }
+        { 
+          id: 'fajr', 
+          bn: 'ফজর', 
+          azan: PT.fajr, 
+          jm: parseTimeTo24(CONFIG.fajrJm || '05:30', 'AM') 
+        },
+        { 
+          id: 'dhuhr', 
+          bn: (isFri ? 'জুমা' : 'যোহর'), 
+          azan: (isFri ? parseTimeTo24(CONFIG.jummahKhutbah || '13:00', 'PM') : PT.dhuhr), 
+          jm: (isFri ? parseTimeTo24(CONFIG.jummahJamaat || '13:30', 'PM') : parseTimeTo24(CONFIG.dhuhrJm || '13:30', 'PM')) 
+        },
+        { 
+          id: 'asr', 
+          bn: 'আসর', 
+          azan: PT.asr, 
+          jm: parseTimeTo24(CONFIG.asrJm || '16:30', 'PM') 
+        },
+        { 
+          id: 'maghrib', 
+          bn: 'মাগরিব', 
+          azan: PT.maghrib, 
+          jm: (CONFIG.maghribJm === 'auto' || !CONFIG.maghribJm || CONFIG.maghribJm === '' ? PT.maghrib : parseTimeTo24(CONFIG.maghribJm, 'PM')) 
+        },
+        { 
+          id: 'isha', 
+          bn: 'এশা', 
+          azan: PT.isha, 
+          jm: parseTimeTo24(CONFIG.ishaJm || '21:00', 'PM') 
+        }
       ];
 
       farzPrayers.forEach(function(item) {
@@ -2224,9 +2289,19 @@
         card.className = 'prayer-pill-card' + (isActive ? ' active-card' : '');
         card.id = 'card-' + item.id;
 
-        var displayTime = fmtTime(item.time, cardFmt);
+        var displayJamaat = fmtTime(item.jm, cardFmt);
+        var displayAzan = item.azan ? fmtTime(item.azan, cardFmt) : '';
 
-        card.innerHTML = '<span class="p-name">' + item.bn + '</span><span class="p-sep">-</span><span class="p-time">' + displayTime + '</span>';
+        var html = '<div class="p-card-left">' +
+                   '  <span class="p-name">' + item.bn + '</span>' +
+                   (showAzan && displayAzan ? '  <span class="p-azan-sub">আজান ' + displayAzan + '</span>' : '') +
+                   '</div>' +
+                   '<span class="p-sep">-</span>' +
+                   '<div class="p-card-right">' +
+                   '  <span class="p-time">' + displayJamaat + '</span>' +
+                   '</div>';
+
+        card.innerHTML = html;
         container.appendChild(card);
       });
 
@@ -2612,15 +2687,19 @@
             return;
           }
           if (ev.data.type === 'UPDATE_SETTINGS' && ev.data.settings) {
-            for (var k in ev.data.settings) {
-              if (ev.data.settings[k] !== undefined && ev.data.settings[k] !== '') {
-                CONFIG[k] = ev.data.settings[k];
-              }
-            }
+            loadSettings(ev.data.settings);
+            calc();
+            build();
+            tick();
+            syncBottomCardsHeight();
+            try { localStorage.setItem('mosqueSettings', JSON.stringify(CONFIG)); } catch(e) {}
+            return;
           }
         }
         try { loadSettings(); calc(); build(); tick(); } catch(e){}
       };
+    } catch(e) {}
+
     // Real-Time Server-Sent Events (SSE) Stream for Instant Multi-Device Sync
     try {
       if (window.EventSource) {
@@ -2629,13 +2708,12 @@
           try {
             var data = JSON.parse(ev.data);
             if (data && data.settings) {
-              for (var k in data.settings) {
-                if (data.settings[k] !== undefined && data.settings[k] !== '') {
-                  CONFIG[k] = data.settings[k];
-                }
-              }
+              loadSettings(data.settings);
+              calc();
+              build();
+              tick();
+              syncBottomCardsHeight();
               try { localStorage.setItem('mosqueSettings', JSON.stringify(CONFIG)); } catch(e) {}
-              loadSettings(); calc(); build(); tick(); syncBottomCardsHeight();
             }
           } catch(err) {}
         };
@@ -2650,24 +2728,23 @@
         })
         .then(function(serverSettings) {
           if (serverSettings && typeof serverSettings === 'object') {
-            for (var k in serverSettings) {
-              if (serverSettings[k] !== undefined && serverSettings[k] !== '') {
-                CONFIG[k] = serverSettings[k];
-              }
-            }
-            try {
-              localStorage.setItem('mosqueSettings', JSON.stringify(CONFIG));
-            } catch(e) {}
-            loadSettings();
+            loadSettings(serverSettings);
             calc();
             build();
             tick();
+            syncBottomCardsHeight();
+            try {
+              localStorage.setItem('mosqueSettings', JSON.stringify(CONFIG));
+            } catch(e) {}
           }
         })
         .catch(function() {
           // If offline or file:// mode, fallback silently
         });
     }
+
+    // Auto-polling heartbeat every 3 seconds to guarantee background sync
+    setInterval(fetchServerSettings, 3000);
 
     function syncBottomCardsHeight() {
       try {

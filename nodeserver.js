@@ -41,7 +41,7 @@ const server = http.createServer((req, res) => {
       'Connection': 'keep-alive',
       'Access-Control-Allow-Origin': '*'
     });
-    res.write('retry: 3000\n\n');
+    res.write('retry: 1500\n\n');
     sseClients.add(res);
     req.on('close', () => sseClients.delete(res));
     return;
