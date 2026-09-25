@@ -355,6 +355,7 @@
       align-items: center;
       text-align: center;
       padding-top: 1px;
+      margin-bottom: 8px;
     }
 
     .header-bismillah {
@@ -374,6 +375,7 @@
       justify-content: space-between;
       width: 100%;
       gap: 16px;
+      margin-top: 4px;
     }
 
     .header-left-spacer {
@@ -421,7 +423,8 @@
       align-items: flex-start;
       text-align: left;
       min-width: 0;
-      gap: 1px;
+      gap: 2px;
+      padding-top: 4px;
     }
 
     .mosque-title-bn {
@@ -2536,6 +2539,7 @@
       hijriOffset: 0, showFasting: true,
       jummahKhutbah: '13:00', jummahJamaat: '13:30',
       ticker: 'নামাজের সময় মোবাইল ফোন বন্ধ বা সাইলেন্ট রাখুন। মসজিদে শান্ত থাকুন।',
+      fajrAzan: 'auto', dhuhrAzan: 'auto', asrAzan: 'auto', maghribAzan: 'auto', ishaAzan: 'auto',
       fajrJm: '05:30', dhuhrJm: '13:30', asrJm: '16:30',
       maghribJm: 'auto', ishaJm: '21:00',
       quranVerse: '﴿ أَلَيْسَ اللَّهُ بِكَافٍ عَبْدَهُ ﴾'
@@ -2692,6 +2696,15 @@
       return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
     }
 
+    function getAzanTime(prayerId, defaultSolarTime) {
+      var custom = CONFIG[prayerId + 'Azan'];
+      if (custom && custom.trim() !== '' && custom.toLowerCase() !== 'auto') {
+        var ampm = (prayerId === 'fajr' ? 'AM' : 'PM');
+        return parseTimeTo24(custom, ampm);
+      }
+      return defaultSolarTime;
+    }
+
     function getNow() {
       var n = new Date();
       var utc = n.getTime() + (n.getTimezoneOffset() * 60000);
@@ -2840,8 +2853,9 @@
       var ts = now.getTime();
       var order = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
       var times = order.map(function(id) {
-        if (!PT[id]) return null;
-        var p = PT[id].split(':'), d = new Date(now);
+        var az = getAzanTime(id, PT[id]);
+        if (!az) return null;
+        var p = az.split(':'), d = new Date(now);
         d.setHours(+p[0], +p[1], 0, 0); return d.getTime();
       });
       var cur = 'isha';
@@ -2873,35 +2887,36 @@
       var isFri = (bd.getDay() === 5);
 
       // The 5 Farz Prayers on the Left Column (Using Jamaat time from Admin with Azan time subtitle)
+      // Card 2 is ALWAYS যোহর (Dhuhr), while Box 2 at the bottom is dedicated to জুমা (Jummah)
       var farzPrayers = [
         { 
           id: 'fajr', 
           bn: 'ফজর', 
-          azan: PT.fajr, 
+          azan: getAzanTime('fajr', PT.fajr), 
           jm: parseTimeTo24(CONFIG.fajrJm || '05:30', 'AM') 
         },
         { 
           id: 'dhuhr', 
-          bn: (isFri ? 'জুমা' : 'যোহর'), 
-          azan: (isFri ? parseTimeTo24(CONFIG.jummahKhutbah || '13:00', 'PM') : PT.dhuhr), 
-          jm: (isFri ? parseTimeTo24(CONFIG.jummahJamaat || '13:30', 'PM') : parseTimeTo24(CONFIG.dhuhrJm || '13:30', 'PM')) 
+          bn: 'যোহর', 
+          azan: getAzanTime('dhuhr', PT.dhuhr), 
+          jm: parseTimeTo24(CONFIG.dhuhrJm || '13:30', 'PM') 
         },
         { 
           id: 'asr', 
           bn: 'আসর', 
-          azan: PT.asr, 
+          azan: getAzanTime('asr', PT.asr), 
           jm: parseTimeTo24(CONFIG.asrJm || '16:30', 'PM') 
         },
         { 
           id: 'maghrib', 
           bn: 'মাগরিব', 
-          azan: PT.maghrib, 
+          azan: getAzanTime('maghrib', PT.maghrib), 
           jm: (CONFIG.maghribJm === 'auto' || !CONFIG.maghribJm || CONFIG.maghribJm === '' ? PT.maghrib : parseTimeTo24(CONFIG.maghribJm, 'PM')) 
         },
         { 
           id: 'isha', 
           bn: 'এশা', 
-          azan: PT.isha, 
+          azan: getAzanTime('isha', PT.isha), 
           jm: parseTimeTo24(CONFIG.ishaJm || '21:00', 'PM') 
         }
       ];
@@ -3028,11 +3043,11 @@
       if (PT) {
         var isFri = (bd.getDay() === 5);
         var prayerSchedule = [
-          { id: 'fajr', bn: 'ফজর', waqt: PT.fajr, jm: parseTimeTo24(CONFIG.fajrJm, 'AM') },
-          { id: 'dhuhr', bn: (isFri ? 'জুমা' : 'যোহর'), waqt: (isFri ? parseTimeTo24(CONFIG.jummahJamaat || '13:30', 'PM') : PT.dhuhr), jm: (isFri ? parseTimeTo24(CONFIG.jummahJamaat || '13:30', 'PM') : parseTimeTo24(CONFIG.dhuhrJm, 'PM')) },
-          { id: 'asr', bn: 'আসর', waqt: PT.asr, jm: parseTimeTo24(CONFIG.asrJm, 'PM') },
-          { id: 'maghrib', bn: 'মাগরিব', waqt: PT.maghrib, jm: (CONFIG.maghribJm === 'auto' ? PT.maghrib : parseTimeTo24(CONFIG.maghribJm, 'PM')) },
-          { id: 'isha', bn: 'এশা', waqt: PT.isha, jm: parseTimeTo24(CONFIG.ishaJm, 'PM') }
+          { id: 'fajr', bn: 'ফজর', waqt: getAzanTime('fajr', PT.fajr), jm: parseTimeTo24(CONFIG.fajrJm, 'AM') },
+          { id: 'dhuhr', bn: (isFri ? 'জুমা' : 'যোহর'), waqt: (isFri ? parseTimeTo24(CONFIG.jummahJamaat || '13:30', 'PM') : getAzanTime('dhuhr', PT.dhuhr)), jm: (isFri ? parseTimeTo24(CONFIG.jummahJamaat || '13:30', 'PM') : parseTimeTo24(CONFIG.dhuhrJm, 'PM')) },
+          { id: 'asr', bn: 'আসর', waqt: getAzanTime('asr', PT.asr), jm: parseTimeTo24(CONFIG.asrJm, 'PM') },
+          { id: 'maghrib', bn: 'মাগরিব', waqt: getAzanTime('maghrib', PT.maghrib), jm: (CONFIG.maghribJm === 'auto' ? PT.maghrib : parseTimeTo24(CONFIG.maghribJm, 'PM')) },
+          { id: 'isha', bn: 'এশা', waqt: getAzanTime('isha', PT.isha), jm: parseTimeTo24(CONFIG.ishaJm, 'PM') }
         ];
 
         var bestMs = Infinity;

@@ -29,5 +29,10 @@
   "maghribJm": "auto",
   "ishaJm": "20:30",
   "quranVerse": "﴿ أَلَيْسَ اللَّهُ بِكَافٍ عَبْدَهُ ﴾",
-  "bgOpacity": "45"
+  "bgOpacity": "45",
+  "fajrAzan": "auto",
+  "dhuhrAzan": "auto",
+  "asrAzan": "auto",
+  "maghribAzan": "auto",
+  "ishaAzan": "auto"
 }
