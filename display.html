@@ -2262,6 +2262,316 @@
       }
     }
 
+    /* ══════════════════════════════════════════════════════════════
+       📱 MOBILE PHONE SPECIFIC — max-width: 600px
+       স্মার্টফোনের জন্য সর্বোচ্চ অপ্টিমাইজড লেআউট
+    ══════════════════════════════════════════════════════════════ */
+    @media (max-width: 600px), (max-width: 768px) and (orientation: portrait) {
+      html, body {
+        font-size: 14px !important;
+        overflow: hidden !important;
+      }
+      /* ── Main layout ── */
+      #mainLayout, .pro-masjid-layout {
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        gap: 6px !important;
+        padding: 6px 10px 4px !important;
+        height: calc(100% - 36px) !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+      }
+      .main-display-section { display: contents !important; }
+
+      /* ── Header ── */
+      .pro-header {
+        order: 1 !important;
+        width: 100% !important;
+        flex: 0 0 auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 2px !important;
+        padding: 0 !important;
+      }
+      .header-top-bismillah {
+        width: 100% !important;
+        text-align: center !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .header-bismillah {
+        font-size: 16px !important;
+        letter-spacing: 1px !important;
+        text-align: center !important;
+        color: #f7c844 !important;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.9) !important;
+      }
+      .header-main-row {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 3px !important;
+        width: 100% !important;
+      }
+      .header-brand-container, .header-center-block {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        gap: 4px !important;
+        width: 100% !important;
+      }
+      .mosque-header-logo {
+        width: 48px !important;
+        height: 48px !important;
+        border: 2px solid #f7c844 !important;
+        border-radius: 50% !important;
+        flex-shrink: 0 !important;
+      }
+      .mosque-brand-titles {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        gap: 1px !important;
+      }
+      .mosque-title-bn {
+        font-size: 16px !important;
+        font-weight: 900 !important;
+        color: #f7c844 !important;
+        line-height: 1.2 !important;
+        text-align: center !important;
+      }
+      .mosque-title-en {
+        font-size: 11px !important;
+        color: #e2e8f0 !important;
+        text-align: center !important;
+      }
+      .header-right-block {
+        position: static !important;
+        transform: none !important;
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+      }
+      .header-date-badge {
+        display: inline-flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        padding: 3px 14px !important;
+        border-radius: 999px !important;
+        background: rgba(15, 23, 42, 0.88) !important;
+        border: 1px solid rgba(247, 200, 68, 0.3) !important;
+      }
+      .h-date-bn { font-size: 12px !important; color: #fde047 !important; font-weight: 800 !important; }
+      .h-date-greg { font-size: 11px !important; }
+      .h-date-hijri-val { font-size: 11px !important; color: #38bdf8 !important; }
+      .h-date-sep { width: 1px !important; height: 14px !important; background: rgba(247,200,68,0.5) !important; }
+
+      /* ── Clock ── */
+      .clock-center-container {
+        order: 2 !important;
+        width: 100% !important;
+        flex: 0 0 auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 4px !important;
+        padding: 0 !important;
+      }
+      .pro-clock-card {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .pro-clock-digits {
+        font-size: clamp(54px, 18vw, 88px) !important;
+        letter-spacing: 1px !important;
+        line-height: 0.95 !important;
+        color: #ffffff !important;
+        text-shadow: 0 4px 24px rgba(0,0,0,0.95) !important;
+      }
+      .clk-segment { width: 2.1ch !important; }
+      .pro-clock-ampm {
+        font-size: 16px !important;
+        color: #f7c844 !important;
+        align-self: flex-end !important;
+        padding-bottom: 6px !important;
+        margin-left: 4px !important;
+      }
+
+      /* ── Countdown Panel ── */
+      .pro-countdown-card, .under-clock-banner {
+        width: 100% !important;
+        padding: 8px 12px !important;
+        border-radius: 14px !important;
+        background: rgba(10, 18, 30, 0.75) !important;
+        border: none !important;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.5) !important;
+      }
+      .cd-content-grid {
+        flex-direction: row !important;
+        gap: 8px !important;
+      }
+      .cd-prayer-name-display, .cd-badge-name {
+        font-size: 15px !important;
+        font-weight: 800 !important;
+        color: #fde047 !important;
+      }
+      .cd-mosque-icon { font-size: 16px !important; }
+      .cd-info-meta-chips { gap: 5px !important; }
+      .cd-meta-chip { font-size: 11px !important; }
+      .cd-chip-label { font-size: 10px !important; color: #94a3b8 !important; }
+      .cd-chip-val { font-size: 11px !important; }
+      .cd-chip-dot { font-size: 10px !important; }
+      .cd-timer-digits {
+        font-size: clamp(20px, 6vw, 30px) !important;
+        letter-spacing: 1px !important;
+        color: #38bdf8 !important;
+        text-shadow: 0 0 16px rgba(56,189,248,0.65) !important;
+      }
+      .cd-status-badge { font-size: 10px !important; }
+
+      /* ── Prayer Schedule Badge ── */
+      .prayer-schedule-badge {
+        order: 3 !important;
+        width: 100% !important;
+        flex: 0 0 auto !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        padding: 2px 0 !important;
+      }
+      .psb-text { font-size: 13px !important; font-weight: 800 !important; color: #fde047 !important; }
+      .psb-icon { font-size: 13px !important; }
+
+      /* ── Prayer Cards ── */
+      .prayer-cards-column {
+        order: 4 !important;
+        width: 100% !important;
+        flex: 1 1 0 !important;
+        min-height: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 5px !important;
+        height: auto !important;
+      }
+      .prayer-pill-card {
+        flex: 1 1 0 !important;
+        min-height: 44px !important;
+        height: auto !important;
+        width: 100% !important;
+        padding: 0 12px !important;
+        border-radius: 12px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        background: linear-gradient(135deg, rgba(15,23,42,0.90) 0%, rgba(30,41,59,0.82) 100%) !important;
+        border: 1px solid rgba(255,255,255,0.12) !important;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.4) !important;
+      }
+      .prayer-pill-card .p-name {
+        font-size: 16px !important;
+        font-weight: 800 !important;
+        color: #fff !important;
+        line-height: 1 !important;
+      }
+      .p-card-left .p-azan-sub {
+        font-size: 10px !important;
+        color: #94a3b8 !important;
+      }
+      .prayer-pill-card .p-time {
+        font-size: 18px !important;
+        font-weight: 900 !important;
+        color: #fde047 !important;
+        letter-spacing: 0.5px !important;
+      }
+      .p-name-ar { font-size: 13px !important; }
+      .p-sep { display: none !important; }
+
+      /* ── Sunrise / Jummah / Day boxes ── */
+      .bottom-meta-row {
+        order: 5 !important;
+        width: 100% !important;
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 5px !important;
+        height: clamp(52px, 9vh, 72px) !important;
+        flex: 0 0 auto !important;
+        margin: 0 !important;
+      }
+      .bottom-meta-card {
+        height: 100% !important;
+        border-radius: 10px !important;
+        padding: 0 8px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        border: none !important;
+        backdrop-filter: blur(10px) !important;
+      }
+      .meta-card-body, .meta-primary-row {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 4px !important;
+      }
+      .meta-title-label { font-size: 11px !important; font-weight: 800 !important; }
+      .meta-dash { display: none !important; }
+      .meta-main-digits { font-size: 14px !important; font-weight: 900 !important; color: #fde047 !important; }
+      .date-day-solo {
+        font-size: clamp(11px, 3.5vw, 16px) !important;
+        font-weight: 900 !important;
+        color: #fde047 !important;
+        text-align: center !important;
+        width: 100% !important;
+      }
+      .meta-sub-pill { display: none !important; }
+
+      /* ── Salat Screen ── */
+      #salatScreen { padding: 12px !important; }
+      #salatScreen .salat-title {
+        font-size: clamp(36px, 12vw, 60px) !important;
+        line-height: 1.1 !important;
+      }
+
+      /* ── Footer ── */
+      .pro-footer, #bot {
+        height: 32px !important;
+        font-size: 12px !important;
+        padding: 0 10px !important;
+      }
+      .bot-bangla-date-badge { font-size: 11px !important; }
+      .tick-text { font-size: 12px !important; }
+      .bot-logo { width: 22px !important; height: 22px !important; }
+
+      /* ── PWA Install Button ── */
+      #pwaInstallBtn {
+        bottom: 40px !important;
+        right: 12px !important;
+        padding: 10px 16px !important;
+        font-size: 13px !important;
+      }
+    }
+
+    /* ══ Extra small phones (< 380px width) ══ */
+    @media (max-width: 380px) {
+      .pro-clock-digits { font-size: 50px !important; }
+      .mosque-title-bn { font-size: 13px !important; }
+      .prayer-pill-card .p-name { font-size: 14px !important; }
+      .prayer-pill-card .p-time { font-size: 15px !important; }
+      .cd-prayer-name-display, .cd-badge-name { font-size: 13px !important; }
+      .cd-timer-digits { font-size: 18px !important; }
+    }
+
     /* ── LEFT PANEL: PORTRAIT-STYLE CLOCK BOARD ── */
     #leftPanel {
       flex: 0 0 38%;
