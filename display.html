@@ -3045,7 +3045,7 @@
               <div class="meta-primary-row">
                 <span class="meta-title-label">বার</span>
                 <span class="meta-dash">-</span>
-                <span class="meta-main-digits date-day-solo" id="boxDayName">শনিবার, ১১ আশ্বিন</span>
+                <span class="meta-main-digits date-day-solo" id="boxDayName">শনিবার</span>
               </div>
             </div>
             <!-- Hidden compatibility elements for existing JS references -->
@@ -3618,9 +3618,9 @@
       var banglaFull = bangla.full || (bangla.day + ' ' + bangla.month + ' ' + bangla.year + ' বঙ্গাব্দ');
       var banglaMonthDate = bangla.day + ' ' + bangla.month;
 
-      // Update Bottom Box 3: Bar & Bangla Date (e.g. "শনিবার, ১১ আশ্বিন")
+      // Update Bottom Box 3: Bar (e.g. "শনিবার")
       var boxDay = document.getElementById('boxDayName');
-      if (boxDay) boxDay.textContent = dayName + ', ' + banglaMonthDate;
+      if (boxDay) boxDay.textContent = dayName;
       var boxHShort = document.getElementById('boxHijriShort');
       if (boxHShort) boxHShort.textContent = toBnNum(hijri.day) + ' ' + (hijri.monthBn || '');
       var boxDh = document.getElementById('boxHijriDate');
