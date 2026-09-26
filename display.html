@@ -1079,9 +1079,9 @@
     body.rotate-270 #mainLayout,
     body.rotate-270 .pro-masjid-layout {
       flex-direction: column !important;
-      justify-content: space-between !important;
+      justify-content: flex-start !important;
       align-items: center !important;
-      gap: clamp(6px, 1vh, 12px) !important;
+      gap: clamp(8px, 1.2vh, 16px) !important;
       padding: clamp(8px, 1.2vh, 16px) clamp(12px, 2vw, 28px) !important;
       height: calc(100% - clamp(36px, 4vh, 46px)) !important;
       box-sizing: border-box !important;
@@ -1108,8 +1108,8 @@
       flex-direction: column !important;
       align-items: center !important;
       justify-content: center !important;
-      gap: clamp(3px, 0.5vh, 6px) !important;
-      padding-bottom: 2px !important;
+      gap: clamp(2px, 0.4vh, 5px) !important;
+      padding-bottom: 0 !important;
     }
 
     .is-portrait .header-top-bismillah,
@@ -1142,7 +1142,7 @@
       flex-direction: column !important;
       align-items: center !important;
       justify-content: center !important;
-      gap: clamp(4px, 0.6vh, 8px) !important;
+      gap: clamp(3px, 0.5vh, 6px) !important;
       width: 100% !important;
     }
 
@@ -1163,8 +1163,8 @@
     .is-portrait .mosque-header-logo,
     body.rotate-90 .mosque-header-logo,
     body.rotate-270 .mosque-header-logo {
-      width: clamp(52px, 7vw, 76px) !important;
-      height: clamp(52px, 7vw, 76px) !important;
+      width: clamp(50px, 6.8vw, 74px) !important;
+      height: clamp(50px, 6.8vw, 74px) !important;
       border: 2.5px solid #f7c844 !important;
       border-radius: 50% !important;
       background: #ffffff !important;
@@ -1221,7 +1221,7 @@
       align-items: center !important;
       justify-content: center !important;
       gap: clamp(10px, 1.8vw, 20px) !important;
-      padding: clamp(5px, 0.7vh, 8px) clamp(16px, 2.5vw, 30px) !important;
+      padding: clamp(4px, 0.6vh, 7px) clamp(16px, 2.5vw, 30px) !important;
       border-radius: 999px !important;
       background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 41, 59, 0.80) 100%) !important;
       border: 1px solid rgba(247, 200, 68, 0.3) !important;
@@ -1278,7 +1278,7 @@
       flex-direction: column !important;
       align-items: center !important;
       justify-content: center !important;
-      gap: clamp(6px, 1vh, 12px) !important;
+      gap: clamp(4px, 0.6vh, 8px) !important;
       padding: 0 !important;
     }
 
@@ -1293,13 +1293,13 @@
       box-shadow: none !important;
       backdrop-filter: none !important;
       -webkit-backdrop-filter: none !important;
-      margin-bottom: 2px !important;
+      margin-bottom: 0 !important;
     }
 
     .is-portrait .pro-clock-digits,
     body.rotate-90 .pro-clock-digits,
     body.rotate-270 .pro-clock-digits {
-      font-size: clamp(68px, 12vw, 118px) !important;
+      font-size: clamp(70px, 11vh, 122px) !important;
       letter-spacing: clamp(1.5px, 0.3vw, 4px) !important;
       line-height: 0.92 !important;
       color: #ffffff !important;
@@ -1317,7 +1317,7 @@
     body.rotate-270 .pro-clock-ampm {
       font-size: clamp(22px, 3.4vw, 36px) !important;
       color: #f7c844 !important;
-      padding-bottom: clamp(6px, 1vh, 12px) !important;
+      padding-bottom: clamp(4px, 0.8vh, 10px) !important;
       margin-left: clamp(4px, 0.8vw, 10px) !important;
     }
 
@@ -1329,12 +1329,12 @@
     body.rotate-270 .under-clock-banner {
       width: 100% !important;
       max-width: clamp(520px, 94vw, 880px) !important;
-      padding: clamp(10px, 1.4vh, 16px) clamp(16px, 2.5vw, 28px) !important;
+      padding: clamp(8px, 1.2vh, 14px) clamp(16px, 2.4vw, 28px) !important;
       border-radius: clamp(14px, 1.8vh, 22px) !important;
       background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(6, 26, 36, 0.92) 100%) !important;
       border: 1.5px solid rgba(16, 185, 129, 0.45) !important;
       box-shadow: 0 10px 32px rgba(0,0,0,0.55), 0 0 28px rgba(16, 185, 129, 0.15) !important;
-      gap: clamp(6px, 0.9vh, 10px) !important;
+      gap: clamp(5px, 0.8vh, 9px) !important;
     }
 
     .is-portrait .cd-badge-name,
@@ -1400,24 +1400,26 @@
       max-width: clamp(520px, 94vw, 880px) !important;
       margin: 0 auto !important;
       align-self: center !important;
-      flex: 0 0 auto !important;
+      flex: 1 1 0 !important;
+      min-height: 0 !important;
       display: flex !important;
       flex-direction: column !important;
-      gap: clamp(6px, 1vh, 12px) !important;
+      justify-content: space-between !important;
+      gap: clamp(6px, 1vh, 14px) !important;
       height: auto !important;
-      min-height: 0 !important;
       grid-template-columns: none !important;
     }
 
     .is-portrait .prayer-pill-card,
     body.rotate-90 .prayer-pill-card,
     body.rotate-270 .prayer-pill-card {
-      flex: 0 0 auto !important;
-      height: clamp(54px, 6.8vh, 76px) !important;
-      min-height: clamp(54px, 6.8vh, 76px) !important;
+      flex: 1 1 0 !important;
+      height: auto !important;
+      min-height: clamp(56px, 6.8vh, 88px) !important;
+      max-height: clamp(84px, 10.5vh, 120px) !important;
       width: 100% !important;
-      padding: 0 clamp(18px, 3vw, 36px) !important;
-      border-radius: clamp(12px, 1.8vh, 20px) !important;
+      padding: 0 clamp(20px, 3.2vw, 40px) !important;
+      border-radius: clamp(14px, 1.8vh, 22px) !important;
       background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 41, 59, 0.80) 100%) !important;
       border: 1.5px solid rgba(255, 255, 255, 0.14) !important;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
@@ -1449,7 +1451,7 @@
     .is-portrait .prayer-pill-card .p-name,
     body.rotate-90 .prayer-pill-card .p-name,
     body.rotate-270 .prayer-pill-card .p-name {
-      font-size: calc(clamp(24px, 3.6vw, 36px) * var(--font-scale, 1)) !important;
+      font-size: calc(clamp(26px, 4vw, 42px) * var(--font-scale, 1)) !important;
       font-weight: 800 !important;
       color: #ffffff !important;
       line-height: 1.1 !important;
@@ -1459,7 +1461,7 @@
     .is-portrait .p-card-left .p-azan-sub,
     body.rotate-90 .p-card-left .p-azan-sub,
     body.rotate-270 .p-card-left .p-azan-sub {
-      font-size: calc(clamp(12px, 1.6vw, 17px) * var(--font-scale, 1)) !important;
+      font-size: calc(clamp(13px, 1.8vw, 19px) * var(--font-scale, 1)) !important;
       color: #94a3b8 !important;
       font-weight: 600 !important;
       line-height: 1.1 !important;
@@ -1476,7 +1478,7 @@
     .is-portrait .prayer-pill-card .p-time,
     body.rotate-90 .prayer-pill-card .p-time,
     body.rotate-270 .prayer-pill-card .p-time {
-      font-size: calc(clamp(28px, 4.4vw, 46px) * var(--font-scale, 1)) !important;
+      font-size: calc(clamp(32px, 5vw, 52px) * var(--font-scale, 1)) !important;
       font-weight: 900 !important;
       color: #fde047 !important;
       line-height: 1 !important;
@@ -1514,7 +1516,7 @@
       text-shadow: 0 0 24px rgba(250, 204, 21, 0.7), 0 3px 14px rgba(0,0,0,0.95) !important;
     }
 
-    /* ── ৪. চতুর্থ: সূর্যোদয় ও জুমা বক্স ── */
+    /* ── ৪. চতুর্থ: সূর্যোদয়, জুমা ও বার বক্স (সালাত কার্ডের অনুরূপ লাক্সারি গ্লাস কার্ড) ── */
     .is-portrait .bottom-meta-row,
     body.rotate-90 .bottom-meta-row,
     body.rotate-270 .bottom-meta-row {
@@ -1524,47 +1526,100 @@
       margin: 0 auto !important;
       align-self: center !important;
       flex: 0 0 auto !important;
-      display: flex !important;
-      flex-direction: row !important;
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
       align-items: stretch !important;
-      justify-content: space-between !important;
       gap: clamp(8px, 1.4vw, 16px) !important;
-      height: clamp(46px, 5.8vh, 62px) !important;
-      min-height: clamp(46px, 5.8vh, 62px) !important;
+      height: clamp(56px, 7.2vh, 84px) !important;
+      min-height: clamp(56px, 7.2vh, 84px) !important;
       margin-top: 0 !important;
     }
 
     .is-portrait .bottom-meta-card,
     body.rotate-90 .bottom-meta-card,
     body.rotate-270 .bottom-meta-card {
-      flex: 1 !important;
-      height: clamp(46px, 5.8vh, 62px) !important;
-      border-radius: clamp(10px, 1.4vh, 16px) !important;
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 41, 59, 0.78) 100%) !important;
-      border: 1px solid rgba(255, 255, 255, 0.14) !important;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.35) !important;
-      padding: 0 clamp(10px, 1.6vw, 18px) !important;
+      height: 100% !important;
+      border-radius: clamp(12px, 1.6vh, 20px) !important;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 41, 59, 0.80) 100%) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.14) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+      backdrop-filter: blur(14px) !important;
+      -webkit-backdrop-filter: blur(14px) !important;
+      padding: 0 clamp(12px, 1.8vw, 22px) !important;
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      box-sizing: border-box !important;
+    }
+
+    .is-portrait .bottom-meta-card .meta-card-body,
+    body.rotate-90 .bottom-meta-card .meta-card-body,
+    body.rotate-270 .bottom-meta-card .meta-card-body {
+      width: 100% !important;
+      height: 100% !important;
       display: flex !important;
       flex-direction: row !important;
       align-items: center !important;
       justify-content: space-between !important;
     }
 
+    .is-portrait .bottom-meta-card .meta-primary-row,
+    body.rotate-90 .bottom-meta-card .meta-primary-row,
+    body.rotate-270 .bottom-meta-card .meta-primary-row {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      width: 100% !important;
+      gap: clamp(6px, 1vw, 12px) !important;
+    }
+
     .is-portrait .meta-title-label,
     body.rotate-90 .meta-title-label,
     body.rotate-270 .meta-title-label {
-      font-size: clamp(12px, 1.6vw, 17px) !important;
-      color: #e2e8f0 !important;
-      font-weight: 700 !important;
+      font-size: calc(clamp(15px, 2.1vw, 23px) * var(--font-scale, 1)) !important;
+      color: #ffffff !important;
+      font-weight: 800 !important;
+      line-height: 1 !important;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8) !important;
+    }
+
+    .is-portrait .meta-dash,
+    body.rotate-90 .meta-dash,
+    body.rotate-270 .meta-dash {
+      display: none !important;
     }
 
     .is-portrait .meta-main-digits,
     body.rotate-90 .meta-main-digits,
     body.rotate-270 .meta-main-digits {
-      font-size: clamp(16px, 2.4vw, 24px) !important;
+      font-size: calc(clamp(20px, 3vw, 34px) * var(--font-scale, 1)) !important;
       color: #fde047 !important;
-      font-weight: 800 !important;
-      text-shadow: 0 0 14px rgba(253, 224, 71, 0.4) !important;
+      font-weight: 900 !important;
+      line-height: 1 !important;
+      letter-spacing: 0.5px !important;
+      text-shadow: 0 0 16px rgba(253, 224, 71, 0.45), 0 2px 10px rgba(0,0,0,0.9) !important;
+    }
+
+    .is-portrait .bottom-meta-card.active-jummah,
+    body.rotate-90 .bottom-meta-card.active-jummah,
+    body.rotate-270 .bottom-meta-card.active-jummah {
+      background: linear-gradient(90deg, rgba(16, 185, 129, 0.38) 0%, rgba(15, 23, 42, 0.95) 100%) !important;
+      border: 2px solid #10b981 !important;
+      box-shadow: 0 0 28px rgba(16, 185, 129, 0.5) !important;
+    }
+
+    .is-portrait .bottom-meta-card.active-jummah .meta-title-label,
+    body.rotate-90 .bottom-meta-card.active-jummah .meta-title-label,
+    body.rotate-270 .bottom-meta-card.active-jummah .meta-title-label {
+      color: #86efac !important;
+    }
+
+    .is-portrait .bottom-meta-card.active-jummah .meta-main-digits,
+    body.rotate-90 .bottom-meta-card.active-jummah .meta-main-digits,
+    body.rotate-270 .bottom-meta-card.active-jummah .meta-main-digits {
+      color: #facc15 !important;
     }
 
     /* ── ৫. পঞ্চম: স্ক্রলিং নোটিশ বার ── */
@@ -1582,9 +1637,9 @@
     @media (max-aspect-ratio: 1/1), (orientation: portrait) {
       #mainLayout, .pro-masjid-layout {
         flex-direction: column !important;
-        justify-content: space-between !important;
+        justify-content: flex-start !important;
         align-items: center !important;
-        gap: clamp(6px, 1vh, 12px) !important;
+        gap: clamp(8px, 1.2vh, 16px) !important;
         padding: clamp(8px, 1.2vh, 16px) clamp(12px, 2vw, 28px) !important;
         height: calc(100% - clamp(36px, 4vh, 46px)) !important;
         box-sizing: border-box !important;
@@ -1603,8 +1658,8 @@
         flex-direction: column !important;
         align-items: center !important;
         justify-content: center !important;
-        gap: clamp(3px, 0.5vh, 6px) !important;
-        padding-bottom: 2px !important;
+        gap: clamp(2px, 0.4vh, 5px) !important;
+        padding-bottom: 0 !important;
       }
       .header-top-bismillah {
         width: 100% !important;
@@ -1686,7 +1741,7 @@
         align-items: center !important;
         justify-content: center !important;
         gap: clamp(10px, 1.8vw, 20px) !important;
-        padding: clamp(5px, 0.7vh, 8px) clamp(16px, 2.5vw, 30px) !important;
+        padding: clamp(4px, 0.6vh, 7px) clamp(16px, 2.5vw, 30px) !important;
         border-radius: 999px !important;
         background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 41, 59, 0.80) 100%) !important;
         border: 1px solid rgba(247, 200, 68, 0.3) !important;
@@ -1720,7 +1775,7 @@
         flex-direction: column !important;
         align-items: center !important;
         justify-content: center !important;
-        gap: clamp(6px, 1vh, 12px) !important;
+        gap: clamp(4px, 0.6vh, 8px) !important;
         padding: 0 !important;
       }
       .pro-clock-card {
@@ -1732,10 +1787,10 @@
         box-shadow: none !important;
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
-        margin-bottom: 2px !important;
+        margin-bottom: 0 !important;
       }
       .pro-clock-digits {
-        font-size: clamp(68px, 12vw, 118px) !important;
+        font-size: clamp(70px, 11vh, 122px) !important;
         letter-spacing: clamp(1.5px, 0.3vw, 4px) !important;
         line-height: 0.92 !important;
         color: #ffffff !important;
@@ -1745,19 +1800,19 @@
       .pro-clock-ampm {
         font-size: clamp(22px, 3.4vw, 36px) !important;
         color: #f7c844 !important;
-        padding-bottom: clamp(6px, 1vh, 12px) !important;
+        padding-bottom: clamp(4px, 0.8vh, 10px) !important;
         margin-left: clamp(4px, 0.8vw, 10px) !important;
       }
       .pro-countdown-card,
       .under-clock-banner {
         width: 100% !important;
         max-width: clamp(520px, 94vw, 880px) !important;
-        padding: clamp(10px, 1.4vh, 16px) clamp(16px, 2.5vw, 28px) !important;
+        padding: clamp(8px, 1.2vh, 14px) clamp(16px, 2.4vw, 28px) !important;
         border-radius: clamp(14px, 1.8vh, 22px) !important;
         background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(6, 26, 36, 0.92) 100%) !important;
         border: 1.5px solid rgba(16, 185, 129, 0.45) !important;
         box-shadow: 0 10px 32px rgba(0,0,0,0.55), 0 0 28px rgba(16, 185, 129, 0.15) !important;
-        gap: clamp(6px, 0.9vh, 10px) !important;
+        gap: clamp(5px, 0.8vh, 9px) !important;
       }
       .cd-badge-name {
         font-size: clamp(18px, 2.6vw, 26px) !important;
@@ -1799,21 +1854,23 @@
         max-width: clamp(520px, 94vw, 880px) !important;
         margin: 0 auto !important;
         align-self: center !important;
-        flex: 0 0 auto !important;
+        flex: 1 1 0 !important;
+        min-height: 0 !important;
         display: flex !important;
         flex-direction: column !important;
-        gap: clamp(6px, 1vh, 12px) !important;
+        justify-content: space-between !important;
+        gap: clamp(6px, 1vh, 14px) !important;
         height: auto !important;
-        min-height: 0 !important;
         grid-template-columns: none !important;
       }
       .prayer-pill-card {
-        flex: 0 0 auto !important;
-        height: clamp(54px, 6.8vh, 76px) !important;
-        min-height: clamp(54px, 6.8vh, 76px) !important;
+        flex: 1 1 0 !important;
+        height: auto !important;
+        min-height: clamp(56px, 6.8vh, 88px) !important;
+        max-height: clamp(84px, 10.5vh, 120px) !important;
         width: 100% !important;
-        padding: 0 clamp(18px, 3vw, 36px) !important;
-        border-radius: clamp(12px, 1.8vh, 20px) !important;
+        padding: 0 clamp(20px, 3.2vw, 40px) !important;
+        border-radius: clamp(14px, 1.8vh, 22px) !important;
         background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 41, 59, 0.80) 100%) !important;
         border: 1.5px solid rgba(255, 255, 255, 0.14) !important;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
@@ -1836,14 +1893,14 @@
         gap: 2px !important;
       }
       .prayer-pill-card .p-name {
-        font-size: calc(clamp(24px, 3.6vw, 36px) * var(--font-scale, 1)) !important;
+        font-size: calc(clamp(26px, 4vw, 42px) * var(--font-scale, 1)) !important;
         font-weight: 800 !important;
         color: #ffffff !important;
         line-height: 1.1 !important;
         text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8) !important;
       }
       .p-card-left .p-azan-sub {
-        font-size: calc(clamp(12px, 1.6vw, 17px) * var(--font-scale, 1)) !important;
+        font-size: calc(clamp(13px, 1.8vw, 19px) * var(--font-scale, 1)) !important;
         color: #94a3b8 !important;
         font-weight: 600 !important;
         line-height: 1.1 !important;
@@ -1854,7 +1911,7 @@
         justify-content: flex-end !important;
       }
       .prayer-pill-card .p-time {
-        font-size: calc(clamp(28px, 4.4vw, 46px) * var(--font-scale, 1)) !important;
+        font-size: calc(clamp(32px, 5vw, 52px) * var(--font-scale, 1)) !important;
         font-weight: 900 !important;
         color: #fde047 !important;
         line-height: 1 !important;
@@ -1885,38 +1942,73 @@
         margin: 0 auto !important;
         align-self: center !important;
         flex: 0 0 auto !important;
-        display: flex !important;
-        flex-direction: row !important;
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
         align-items: stretch !important;
-        justify-content: space-between !important;
         gap: clamp(8px, 1.4vw, 16px) !important;
-        height: clamp(46px, 5.8vh, 62px) !important;
-        min-height: clamp(46px, 5.8vh, 62px) !important;
+        height: clamp(56px, 7.2vh, 84px) !important;
+        min-height: clamp(56px, 7.2vh, 84px) !important;
         margin-top: 0 !important;
       }
       .bottom-meta-card {
-        flex: 1 !important;
-        height: clamp(46px, 5.8vh, 62px) !important;
-        border-radius: clamp(10px, 1.4vh, 16px) !important;
-        background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 41, 59, 0.78) 100%) !important;
-        border: 1px solid rgba(255, 255, 255, 0.14) !important;
-        box-shadow: 0 6px 18px rgba(0,0,0,0.35) !important;
-        padding: 0 clamp(10px, 1.6vw, 18px) !important;
+        height: 100% !important;
+        border-radius: clamp(12px, 1.6vh, 20px) !important;
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 41, 59, 0.80) 100%) !important;
+        border: 1.5px solid rgba(255, 255, 255, 0.14) !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+        backdrop-filter: blur(14px) !important;
+        -webkit-backdrop-filter: blur(14px) !important;
+        padding: 0 clamp(12px, 1.8vw, 22px) !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        box-sizing: border-box !important;
+      }
+      .bottom-meta-card .meta-card-body {
+        width: 100% !important;
+        height: 100% !important;
         display: flex !important;
         flex-direction: row !important;
         align-items: center !important;
         justify-content: space-between !important;
       }
+      .bottom-meta-card .meta-primary-row {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+        gap: clamp(6px, 1vw, 12px) !important;
+      }
       .meta-title-label {
-        font-size: clamp(12px, 1.6vw, 17px) !important;
-        color: #e2e8f0 !important;
-        font-weight: 700 !important;
+        font-size: calc(clamp(15px, 2.1vw, 23px) * var(--font-scale, 1)) !important;
+        color: #ffffff !important;
+        font-weight: 800 !important;
+        line-height: 1 !important;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8) !important;
+      }
+      .meta-dash {
+        display: none !important;
       }
       .meta-main-digits {
-        font-size: clamp(16px, 2.4vw, 24px) !important;
+        font-size: calc(clamp(20px, 3vw, 34px) * var(--font-scale, 1)) !important;
         color: #fde047 !important;
-        font-weight: 800 !important;
-        text-shadow: 0 0 14px rgba(253, 224, 71, 0.4) !important;
+        font-weight: 900 !important;
+        line-height: 1 !important;
+        letter-spacing: 0.5px !important;
+        text-shadow: 0 0 16px rgba(253, 224, 71, 0.45), 0 2px 10px rgba(0,0,0,0.9) !important;
+      }
+      .bottom-meta-card.active-jummah {
+        background: linear-gradient(90deg, rgba(16, 185, 129, 0.38) 0%, rgba(15, 23, 42, 0.95) 100%) !important;
+        border: 2px solid #10b981 !important;
+        box-shadow: 0 0 28px rgba(16, 185, 129, 0.5) !important;
+      }
+      .bottom-meta-card.active-jummah .meta-title-label {
+        color: #86efac !important;
+      }
+      .bottom-meta-card.active-jummah .meta-main-digits {
+        color: #facc15 !important;
       }
       .pro-footer, #bot {
         height: clamp(34px, 4vh, 44px) !important;
@@ -2812,10 +2904,12 @@
             <span id="khutbahTime" style="display:none;"></span>
           </div>
 
-          <!-- Box 3: শুধু শুক্রবার (Friday Solo) -->
+          <!-- Box 3: বার / দিন (Day) -->
           <div class="bottom-meta-card card-date" id="boxDate">
             <div class="meta-card-body">
               <div class="meta-primary-row">
+                <span class="meta-title-label">বার</span>
+                <span class="meta-dash">-</span>
                 <span class="meta-main-digits date-day-solo" id="boxDayName">শুক্রবার</span>
               </div>
             </div>
