@@ -23,6 +23,15 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!-- ★ FIX: Android 12+ SecurityException: SCHEDULE_EXACT_ALARM crash fix ★ -->
+    <!-- Android 13+ (API 33+): নামাজের সময় notification-এর জন্য exact alarm -->
+    <!-- USE_EXACT_ALARM: clock/calendar/prayer app-এ user grant লাগে না -->
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <!-- Android 12 (API 31-32): user grant দরকার, না থাকলে setWindow() fallback -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"
+        android:maxSdkVersion="32" />
+
+
     <!-- TV: অ্যাপ যেন TV home-screen-এ দেখা যায় -->
     <uses-feature
         android:name="android.software.leanback"
