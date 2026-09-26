@@ -2383,11 +2383,83 @@
       color: var(--gold2);
       font-weight: 700;
       font-family: 'Amiri', serif;
-      flex-shrink: 0;
+    /* ══ SALAT MODE OVERLAY: জামাত চলাকালীন ৫ মিনিট ফুল স্ক্রিন সালাত মোড ══ */
+    .salat-mode-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000000 !important;
+      z-index: 9999999 !important;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      overflow: hidden;
+      user-select: none;
+      cursor: default;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .salat-mode-overlay.active {
+      display: flex !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
+    .salat-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+    .salat-text {
+      font-family: 'Hind Siliguri', 'Noto Sans Bengali', -apple-system, sans-serif;
+      font-size: clamp(84px, 16vw, 260px);
+      font-weight: 800;
+      color: #fce085;
+      letter-spacing: clamp(6px, 1.5vw, 18px);
+      text-align: center;
+      line-height: 1.1;
+      text-shadow: 
+        0 0 35px rgba(252, 224, 133, 0.5),
+        0 0 70px rgba(234, 179, 8, 0.35),
+        0 0 120px rgba(234, 179, 8, 0.2);
+      animation: salatSoftBreathe 4s ease-in-out infinite alternate;
+    }
+    @keyframes salatSoftBreathe {
+      0% {
+        opacity: 0.90;
+        transform: scale(0.99);
+        text-shadow: 0 0 25px rgba(252, 224, 133, 0.35), 0 0 50px rgba(234, 179, 8, 0.2);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1.01);
+        text-shadow: 0 0 50px rgba(252, 224, 133, 0.7), 0 0 95px rgba(234, 179, 8, 0.45);
+      }
+    }
+    .is-portrait .salat-text,
+    body.rotate-90 .salat-text,
+    body.rotate-270 .salat-text {
+      font-size: clamp(70px, 18vw, 190px) !important;
+      letter-spacing: clamp(4px, 1.2vw, 12px) !important;
     }
   </style>
 </head>
 <body data-theme="dark">
+  <!-- ══ SALAT MODE OVERLAY: জামাত চলাকালীন ৫ মিনিট ফুল স্ক্রিন সালাত মোড ══ -->
+  <div id="salatModeOverlay" class="salat-mode-overlay" style="display: none;" title="ক্লিক করলে বন্ধ হবে">
+    <div class="salat-content">
+      <div class="salat-text">সালাত</div>
+    </div>
+  </div>
   <div id="screenWrapper" class="theme-navy">
     <!-- Azan Alert Banner (inside screenWrapper to prevent header overlap) -->
     <div id="alertBanner"></div>
@@ -3142,8 +3214,9 @@
           var pDate = new Date(bd);
           pDate.setHours(parts[0], parts[1], 0, 0);
           var diff = pDate.getTime() - bd.getTime();
-          // If within 3 minutes after Jamaat started, keep it as current
-          if (diff <= 0 && diff > -180000) {
+          // If within 5 minutes after Jamaat started, keep it as current
+          var salatDurationMs = (parseInt(CONFIG.salatScreenDuration, 10) || 5) * 60 * 1000;
+          if (diff <= 0 && diff > -salatDurationMs) {
             if (diff < bestMs) {
               bestMs = diff;
               bestPrayer = item;
@@ -3163,6 +3236,7 @@
         });
 
         var totalSec = Math.floor(bestMs / 1000);
+        var salatDurationSec = (parseInt(CONFIG.salatScreenDuration, 10) || 5) * 60;
 
         // Check if admin triggered a live test countdown
         if (window.TEST_COUNTDOWN_SEC !== undefined && window.TEST_COUNTDOWN_SEC !== null) {
@@ -3171,7 +3245,18 @@
             window.TEST_COUNTDOWN_SEC--;
           } else {
             window.TEST_COUNTDOWN_SEC = null;
+            // Transition directly into Salat screen test on 0
+            window.TEST_SALAT_MODE_SEC = salatDurationSec;
           }
+        }
+
+        // Determine if Salat Mode is active (during real prayer or test)
+        var isSalatTime = false;
+        if (window.TEST_SALAT_MODE_SEC !== undefined && window.TEST_SALAT_MODE_SEC !== null && window.TEST_SALAT_MODE_SEC > 0) {
+          isSalatTime = true;
+          window.TEST_SALAT_MODE_SEC--;
+        } else if (totalSec <= 0 && totalSec >= -salatDurationSec) {
+          isSalatTime = true;
         }
 
         // Current Waqt & Next Jamaat for Under-Clock Banner
@@ -3244,14 +3329,14 @@
               cdBadgeEl.textContent = '৫ মিনিট কাউন্টডাউন';
             }
           }
-        } else if (totalSec <= 0 && totalSec >= -180) {
-          // Jamaat has begun (0 to 3 minutes)
+        } else if (totalSec <= 0 && totalSec >= -salatDurationSec) {
+          // Jamaat has begun (0 to 5 minutes)
           if (ucBanner) {
             ucBanner.classList.add('banner-active-cd');
             ucBanner.classList.remove('banner-urgent-cd');
           }
           if (cdMainTimerEl) cdMainTimerEl.textContent = 'চলছে';
-          if (cdBadgeEl) cdBadgeEl.textContent = 'মোবাইল বন্ধ রাখুন';
+          if (cdBadgeEl) cdBadgeEl.textContent = 'সালাত চলছে — মোবাইল বন্ধ রাখুন';
           if (cdBarEl) cdBarEl.style.width = '0%';
         } else {
           // Standby Mode (> 5 minutes before Jamaat): Real-time remaining countdown!
@@ -3351,6 +3436,29 @@
             boxSun.classList.remove('active-sunrise');
           }
         }
+
+        // ══ SALAT MODE OVERLAY (জামাত চলাকালীন ৫ মিনিট ফুল স্ক্রিন সালাত মোড) ══
+        var salatOverlay = document.getElementById('salatModeOverlay');
+        if (salatOverlay) {
+          if (isSalatTime) {
+            if (!salatOverlay.classList.contains('active')) {
+              salatOverlay.style.display = 'flex';
+              void salatOverlay.offsetWidth;
+              salatOverlay.classList.add('active');
+            }
+          } else {
+            if (salatOverlay.classList.contains('active')) {
+              salatOverlay.classList.remove('active');
+              setTimeout(function() {
+                if (!salatOverlay.classList.contains('active')) {
+                  salatOverlay.style.display = 'none';
+                }
+              }, 500);
+            } else {
+              salatOverlay.style.display = 'none';
+            }
+          }
+        }
       } // close if (PT)
 
       if (bd.getSeconds() === 0) {
@@ -3413,6 +3521,21 @@
             tick();
             return;
           }
+          if (ev.data.type === 'START_SALAT_MODE') {
+            window.TEST_SALAT_MODE_SEC = ev.data.seconds || 300;
+            tick();
+            return;
+          }
+          if (ev.data.type === 'STOP_SALAT_MODE') {
+            window.TEST_SALAT_MODE_SEC = null;
+            var so = document.getElementById('salatModeOverlay');
+            if (so) {
+              so.classList.remove('active');
+              so.style.display = 'none';
+            }
+            tick();
+            return;
+          }
           if (ev.data.type === 'BG_OPACITY') {
             var rawOp = ev.data.opacity || 45;
             var op = parseFloat(rawOp);
@@ -3451,10 +3574,55 @@
               syncBottomCardsHeight();
               try { localStorage.setItem('mosqueSettings', JSON.stringify(CONFIG)); } catch(e) {}
             }
+            if (data && data.type === 'START_SALAT_MODE') {
+              window.TEST_SALAT_MODE_SEC = data.seconds || 300;
+              tick();
+            }
+            if (data && data.type === 'STOP_SALAT_MODE') {
+              window.TEST_SALAT_MODE_SEC = null;
+              var so = document.getElementById('salatModeOverlay');
+              if (so) {
+                so.classList.remove('active');
+                so.style.display = 'none';
+              }
+              tick();
+            }
+            if (data && data.type === 'START_TEST_COUNTDOWN') {
+              window.TEST_COUNTDOWN_SEC = data.seconds || 300;
+              tick();
+            }
+            if (data && data.type === 'STOP_TEST_COUNTDOWN') {
+              window.TEST_COUNTDOWN_SEC = null;
+              tick();
+            }
           } catch(err) {}
         };
       }
     } catch(e) {}
+
+    // Dismiss test salat mode on click or keyboard
+    var salatOverlayEl = document.getElementById('salatModeOverlay');
+    if (salatOverlayEl) {
+      salatOverlayEl.addEventListener('click', function() {
+        if (window.TEST_SALAT_MODE_SEC) {
+          window.TEST_SALAT_MODE_SEC = null;
+          salatOverlayEl.classList.remove('active');
+          salatOverlayEl.style.display = 'none';
+        }
+      });
+    }
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') {
+        if (window.TEST_SALAT_MODE_SEC) {
+          window.TEST_SALAT_MODE_SEC = null;
+          var so = document.getElementById('salatModeOverlay');
+          if (so) {
+            so.classList.remove('active');
+            so.style.display = 'none';
+          }
+        }
+      }
+    });
 
     function fetchServerSettings() {
       fetch('/api/settings')

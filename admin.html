@@ -744,6 +744,36 @@
             </div>
           </div>
         </div>
+
+        <!-- Live Salat Screen Mode Controller (জামাত চলাকালীন ৫ মিনিট ফুল স্ক্রিন সালাত মোড) -->
+        <div class="settings-card" style="margin-top: 24px;">
+          <div class="card-header">
+            <div class="card-icon">🕌</div>
+            <div>
+              <h3>জামাত চলাকালীন ৫ মিনিট "সালাত" স্ক্রিন</h3>
+              <p>জামাত শুরু হলে টানা ৫ মিনিট ডিসপ্লেতে অন্য কিছু থাকবে না, শুধু বড় করে "সালাত" লিখা থাকবে। ৫ মিনিট পর স্বয়ংক্রিয়ভাবে স্বাভাবিক ডিসপ্লে ফিরে আসবে।</p>
+            </div>
+          </div>
+          <div style="background: rgba(0,0,0,0.25); border-radius: 12px; padding: 18px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+              <div>
+                <strong style="color:var(--gold); font-size:15px;">🕌 ৫ মিনিট "সালাত" স্ক্রিন টেস্ট করুন</strong>
+                <p style="font-size:12px; color:var(--text-muted); margin-top:2px;">জামাত চলাকালীন ডিসপ্লেতে বড় অক্ষরে "সালাত" স্ক্রিনটি কেমন দেখাবে তা এখনই পরীক্ষা করতে পারেন।</p>
+              </div>
+              <div style="display:flex; gap:10px;">
+                <button type="button" class="btn btn-gold" onclick="triggerSalatModeTest(300)">
+                  <span>▶️ সালাত স্ক্রিন টেস্ট চালু</span>
+                </button>
+                <button type="button" class="btn btn-outline" onclick="stopSalatModeTest()">
+                  <span>⏹️ সালাত স্ক্রিন বন্ধ করুন</span>
+                </button>
+              </div>
+            </div>
+            <div style="font-size:12px; color:#93c5fd; background:rgba(59,130,246,0.1); border-left:3px solid #3b82f6; padding:8px 12px; border-radius:4px;">
+              💡 <strong>স্বয়ংক্রিয় নিয়ম:</strong> প্রতিদিন ফজর, যোহর/জুমা, আসর, মাগরিব ও এশার জামাত শুরু হওয়ার সাথে সাথে স্ক্রিন সম্পূর্ণ ব্ল্যাকআউট হয়ে শুধু বড় করে "সালাত" ভেসে উঠবে এবং ৫ মিনিট পর নিজে থেকেই স্বাভাবিক হয়ে যাবে।
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1672,8 +1702,14 @@
 
     function triggerTestCountdown(sec) {
       try {
+        var seconds = sec || 300;
         var bc = new BroadcastChannel('mosque_channel');
-        bc.postMessage({ type: 'START_TEST_COUNTDOWN', seconds: sec || 300 });
+        bc.postMessage({ type: 'START_TEST_COUNTDOWN', seconds: seconds });
+        fetch('/api/broadcast', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'START_TEST_COUNTDOWN', seconds: seconds })
+        }).catch(function(){});
         showToast('▶️ ডিসপ্লে স্ক্রিনে ৫ মিনিট কাউন্টডাউন টেস্ট শুরু হয়েছে!');
       } catch(e) {}
     }
@@ -1682,7 +1718,39 @@
       try {
         var bc = new BroadcastChannel('mosque_channel');
         bc.postMessage({ type: 'STOP_TEST_COUNTDOWN' });
+        fetch('/api/broadcast', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'STOP_TEST_COUNTDOWN' })
+        }).catch(function(){});
         showToast('⏹️ টেস্ট কাউন্টডাউন বন্ধ করা হয়েছে।');
+      } catch(e) {}
+    }
+
+    function triggerSalatModeTest(sec) {
+      try {
+        var seconds = sec || 300;
+        var bc = new BroadcastChannel('mosque_channel');
+        bc.postMessage({ type: 'START_SALAT_MODE', seconds: seconds });
+        fetch('/api/broadcast', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'START_SALAT_MODE', seconds: seconds })
+        }).catch(function(){});
+        showToast('🕌 ডিসপ্লেতে ৫ মিনিট "সালাত" স্ক্রিন টেস্ট চালু হয়েছে!');
+      } catch(e) {}
+    }
+
+    function stopSalatModeTest() {
+      try {
+        var bc = new BroadcastChannel('mosque_channel');
+        bc.postMessage({ type: 'STOP_SALAT_MODE' });
+        fetch('/api/broadcast', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'STOP_SALAT_MODE' })
+        }).catch(function(){});
+        showToast('⏹️ সালাত স্ক্রিন বন্ধ করে স্বাভাবিক ডিসপ্লেতে ফিরিয়ে আনা হয়েছে।');
       } catch(e) {}
     }
 

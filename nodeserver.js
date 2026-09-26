@@ -47,6 +47,27 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // Real-time broadcast endpoint for instant display commands (Salat mode, test countdown, etc.)
+  if (urlPath === '/api/broadcast' && req.method === 'POST') {
+    let body = '';
+    req.on('data', chunk => body += chunk);
+    req.on('end', () => {
+      try {
+        const parsed = JSON.parse(body);
+        const msg = `data: ${JSON.stringify(parsed)}\n\n`;
+        sseClients.forEach(client => {
+          try { client.write(msg); } catch(e) { sseClients.delete(client); }
+        });
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true }));
+      } catch(e) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Invalid JSON' }));
+      }
+    });
+    return;
+  }
+
   // API endpoint for persistent settings
   if (urlPath === '/api/settings') {
     const settingsFile = path.join(dir, 'settings.json');
