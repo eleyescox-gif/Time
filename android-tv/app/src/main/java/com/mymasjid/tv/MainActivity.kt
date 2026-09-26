@@ -105,11 +105,24 @@ class MainActivity : AppCompatActivity() {
         // ক্যাশিং স্ট্র্যাটেজি: অফলাইন অগ্রাধিকার
         settings.cacheMode = WebSettings.LOAD_DEFAULT
 
+        settings.setSupportMultipleWindows(true)
+        settings.javaScriptCanOpenWindowsAutomatically = true
+
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 val url = request?.url?.toString() ?: return false
                 if (url.startsWith("file://") || url.contains("localhost")) {
-                    return false
+                    view?.loadUrl(url)
+                    return true
+                }
+                return false
+            }
+
+            @Suppress("DEPRECATION")
+            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                if (url != null && (url.startsWith("file://") || url.contains("localhost"))) {
+                    view?.loadUrl(url)
+                    return true
                 }
                 return false
             }
@@ -130,6 +143,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         webView.webChromeClient = object : WebChromeClient() {
+            override fun onCreateWindow(
+                view: WebView?,
+                isDialog: Boolean,
+                isUserGesture: Boolean,
+                resultMsg: android.os.Message?
+            ): Boolean {
+                val transport = resultMsg?.obj as? WebView.WebViewTransport
+                if (transport != null) {
+                    transport.webView = view
+                    resultMsg.sendToTarget()
+                    return true
+                }
+                return false
+            }
+
             override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
                 return true
             }
@@ -192,6 +220,10 @@ class MainActivity : AppCompatActivity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         when (keyCode) {
             KeyEvent.KEYCODE_BACK -> {
+                if (webView.canGoBack()) {
+                    webView.goBack()
+                    return true
+                }
                 val now = System.currentTimeMillis()
                 if (now - lastBackPressTime < BACK_PRESS_THRESHOLD) {
                     finish()

@@ -1,4 +1,0 @@
-#Thu Sep 24 20:14:19 BDT 2026
-base.0=C\:\\Users\\QC\\Desktop\\mosque\\android-tv\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
-renamed.0=classes.dex
-path.0=classes.dex

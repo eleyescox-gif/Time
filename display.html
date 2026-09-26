@@ -1212,18 +1212,23 @@
       flex-direction: column !important;
       justify-content: flex-start !important;
       align-items: center !important;
-      gap: clamp(8px, 1.2vh, 16px) !important;
-      padding: clamp(8px, 1.2vh, 16px) clamp(12px, 2vw, 28px) !important;
-      height: calc(100% - clamp(36px, 4vh, 46px)) !important;
+      gap: clamp(6px, 1vh, 12px) !important;
+      padding: clamp(6px, 1vh, 12px) clamp(10px, 1.8vw, 24px) !important;
+      height: calc(100% - clamp(34px, 4vh, 44px)) !important;
       box-sizing: border-box !important;
-      overflow: hidden !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      -webkit-overflow-scrolling: touch;
     }
 
-    /* Promote children of .main-display-section to direct flex items of #mainLayout */
     .is-portrait .main-display-section,
     body.rotate-90 .main-display-section,
     body.rotate-270 .main-display-section {
-      display: contents !important;
+      width: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: clamp(6px, 1vh, 12px) !important;
     }
 
     /* ── ১. শীর্ষ হেডার: বিসমিল্লাহ + মসজিদের নাম + তারিখ ── */
@@ -1442,26 +1447,33 @@
     .is-portrait .pro-clock-digits,
     body.rotate-90 .pro-clock-digits,
     body.rotate-270 .pro-clock-digits {
-      font-size: clamp(80px, 12.5vh, 142px) !important;
-      letter-spacing: clamp(2px, 0.4vw, 5px) !important;
-      line-height: 0.9 !important;
+      font-size: clamp(34px, 8.5vw, 68px) !important;
+      letter-spacing: clamp(1px, 0.2vw, 3px) !important;
+      line-height: 1 !important;
       color: #ffffff !important;
+      white-space: nowrap !important;
+      display: inline-flex !important;
+      align-items: baseline !important;
+      justify-content: center !important;
       text-shadow: 0 4px 28px rgba(0,0,0,0.95), 0 8px 50px rgba(0,0,0,0.85), 0 0 40px rgba(255,255,255,0.3) !important;
     }
 
     .is-portrait .clk-segment,
     body.rotate-90 .clk-segment,
     body.rotate-270 .clk-segment {
-      width: 2.12ch !important;
+      width: auto !important;
+      min-width: 1.8ch !important;
+      text-align: center !important;
     }
 
     .is-portrait .pro-clock-ampm,
     body.rotate-90 .pro-clock-ampm,
     body.rotate-270 .pro-clock-ampm {
-      font-size: clamp(24px, 3.8vw, 42px) !important;
+      font-size: clamp(15px, 3.2vw, 24px) !important;
       color: #f7c844 !important;
-      padding-bottom: clamp(6px, 1vh, 12px) !important;
-      margin-left: clamp(6px, 1vw, 12px) !important;
+      padding-bottom: 2px !important;
+      margin-left: clamp(4px, 0.8vw, 8px) !important;
+      align-self: baseline !important;
     }
 
     .is-portrait .pro-countdown-card,
@@ -1601,11 +1613,9 @@
       max-width: clamp(520px, 94vw, 880px) !important;
       margin: 0 auto !important;
       align-self: center !important;
-      flex: 1 1 0 !important;
-      min-height: 0 !important;
+      flex: 0 0 auto !important;
       display: flex !important;
       flex-direction: column !important;
-      justify-content: stretch !important;
       gap: clamp(6px, 1vh, 12px) !important;
       height: auto !important;
       grid-template-columns: none !important;
@@ -1614,13 +1624,13 @@
     .is-portrait .prayer-pill-card,
     body.rotate-90 .prayer-pill-card,
     body.rotate-270 .prayer-pill-card {
-      flex: 1 1 0 !important;
+      flex: 0 0 auto !important;
       height: auto !important;
-      min-height: clamp(60px, 7.5vh, 96px) !important;
+      min-height: clamp(52px, 6.5vh, 80px) !important;
       max-height: none !important;
       width: 100% !important;
-      padding: 0 clamp(22px, 3.4vw, 42px) !important;
-      border-radius: clamp(14px, 1.8vh, 22px) !important;
+      padding: 0 clamp(18px, 3vw, 36px) !important;
+      border-radius: clamp(12px, 1.6vh, 20px) !important;
       background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 41, 59, 0.80) 100%) !important;
       border: 1.5px solid rgba(255, 255, 255, 0.15) !important;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
@@ -1724,15 +1734,15 @@
       order: 5 !important;
       width: 100% !important;
       max-width: clamp(520px, 94vw, 880px) !important;
-      margin: 0 auto !important;
+      margin: 0 auto 8px auto !important;
       align-self: center !important;
       flex: 0 0 auto !important;
       display: grid !important;
       grid-template-columns: repeat(3, 1fr) !important;
       align-items: stretch !important;
-      gap: clamp(8px, 1.4vw, 16px) !important;
-      height: clamp(62px, 8vh, 96px) !important;
-      min-height: clamp(62px, 8vh, 96px) !important;
+      gap: clamp(6px, 1.2vw, 14px) !important;
+      height: clamp(52px, 7vh, 84px) !important;
+      min-height: clamp(52px, 7vh, 84px) !important;
       margin-top: 0 !important;
     }
 
@@ -1840,14 +1850,20 @@
         flex-direction: column !important;
         justify-content: flex-start !important;
         align-items: center !important;
-        gap: clamp(8px, 1.2vh, 16px) !important;
-        padding: clamp(8px, 1.2vh, 16px) clamp(12px, 2vw, 28px) !important;
-        height: calc(100% - clamp(36px, 4vh, 46px)) !important;
+        gap: clamp(6px, 1vh, 12px) !important;
+        padding: clamp(6px, 1vh, 12px) clamp(10px, 1.8vw, 24px) !important;
+        height: calc(100% - clamp(34px, 4vh, 44px)) !important;
         box-sizing: border-box !important;
-        overflow: hidden !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch;
       }
       .main-display-section {
-        display: contents !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: clamp(6px, 1vh, 12px) !important;
       }
       .pro-header {
         order: 1 !important;
@@ -1998,18 +2014,27 @@
         margin-bottom: 0 !important;
       }
       .pro-clock-digits {
-        font-size: clamp(80px, 12.5vh, 142px) !important;
-        letter-spacing: clamp(1.5px, 0.3vw, 4px) !important;
-        line-height: 0.92 !important;
+        font-size: clamp(34px, 8.5vw, 68px) !important;
+        letter-spacing: clamp(1px, 0.2vw, 3px) !important;
+        line-height: 1 !important;
         color: #ffffff !important;
+        white-space: nowrap !important;
+        display: inline-flex !important;
+        align-items: baseline !important;
+        justify-content: center !important;
         text-shadow: 0 4px 28px rgba(0,0,0,0.95), 0 8px 50px rgba(0,0,0,0.85), 0 0 40px rgba(255,255,255,0.25) !important;
       }
-      .clk-segment { width: 2.12ch !important; }
+      .clk-segment {
+        width: auto !important;
+        min-width: 1.8ch !important;
+        text-align: center !important;
+      }
       .pro-clock-ampm {
-        font-size: clamp(22px, 3.4vw, 36px) !important;
+        font-size: clamp(15px, 3.2vw, 24px) !important;
         color: #f7c844 !important;
-        padding-bottom: clamp(4px, 0.8vh, 10px) !important;
-        margin-left: clamp(4px, 0.8vw, 10px) !important;
+        padding-bottom: 2px !important;
+        margin-left: clamp(4px, 0.8vw, 8px) !important;
+        align-self: baseline !important;
       }
       .pro-countdown-card,
       .under-clock-banner {
@@ -2100,23 +2125,21 @@
         max-width: clamp(520px, 94vw, 880px) !important;
         margin: 0 auto !important;
         align-self: center !important;
-        flex: 1 1 0 !important;
-        min-height: 0 !important;
+        flex: 0 0 auto !important;
         display: flex !important;
         flex-direction: column !important;
-        justify-content: stretch !important;
         gap: clamp(6px, 1vh, 12px) !important;
         height: auto !important;
         grid-template-columns: none !important;
       }
       .prayer-pill-card {
-        flex: 1 1 0 !important;
+        flex: 0 0 auto !important;
         height: auto !important;
-        min-height: clamp(60px, 7.5vh, 96px) !important;
+        min-height: clamp(52px, 6.5vh, 80px) !important;
         max-height: none !important;
         width: 100% !important;
-        padding: 0 clamp(20px, 3.2vw, 40px) !important;
-        border-radius: clamp(14px, 1.8vh, 22px) !important;
+        padding: 0 clamp(18px, 3vw, 36px) !important;
+        border-radius: clamp(12px, 1.6vh, 20px) !important;
         background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 41, 59, 0.80) 100%) !important;
         border: 1.5px solid rgba(255, 255, 255, 0.14) !important;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
@@ -2185,15 +2208,15 @@
         order: 5 !important;
         width: 100% !important;
         max-width: clamp(520px, 94vw, 880px) !important;
-        margin: 0 auto !important;
+        margin: 0 auto 8px auto !important;
         align-self: center !important;
         flex: 0 0 auto !important;
         display: grid !important;
         grid-template-columns: repeat(3, 1fr) !important;
         align-items: stretch !important;
-        gap: clamp(8px, 1.4vw, 16px) !important;
-        height: clamp(62px, 8vh, 96px) !important;
-        min-height: clamp(62px, 8vh, 96px) !important;
+        gap: clamp(6px, 1.2vw, 14px) !important;
+        height: clamp(52px, 7vh, 84px) !important;
+        min-height: clamp(52px, 7vh, 84px) !important;
         margin-top: 0 !important;
       }
       .bottom-meta-card {
@@ -2277,12 +2300,20 @@
         justify-content: flex-start !important;
         align-items: center !important;
         gap: 6px !important;
-        padding: 6px 10px 4px !important;
+        padding: 6px 10px 8px !important;
         height: calc(100% - 36px) !important;
-        overflow: hidden !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
         box-sizing: border-box !important;
+        -webkit-overflow-scrolling: touch;
       }
-      .main-display-section { display: contents !important; }
+      .main-display-section {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 6px !important;
+      }
 
       /* ── Header ── */
       .pro-header {
@@ -2389,18 +2420,26 @@
         margin: 0 !important;
       }
       .pro-clock-digits {
-        font-size: clamp(54px, 18vw, 88px) !important;
+        font-size: clamp(32px, 8vw, 46px) !important;
         letter-spacing: 1px !important;
-        line-height: 0.95 !important;
+        line-height: 1 !important;
         color: #ffffff !important;
+        white-space: nowrap !important;
+        display: inline-flex !important;
+        align-items: baseline !important;
+        justify-content: center !important;
         text-shadow: 0 4px 24px rgba(0,0,0,0.95) !important;
       }
-      .clk-segment { width: 2.1ch !important; }
+      .clk-segment {
+        width: auto !important;
+        min-width: 1.8ch !important;
+        text-align: center !important;
+      }
       .pro-clock-ampm {
-        font-size: 16px !important;
+        font-size: 13px !important;
         color: #f7c844 !important;
-        align-self: flex-end !important;
-        padding-bottom: 6px !important;
+        align-self: baseline !important;
+        padding-bottom: 2px !important;
         margin-left: 4px !important;
       }
 
@@ -2453,15 +2492,14 @@
       .prayer-cards-column {
         order: 4 !important;
         width: 100% !important;
-        flex: 1 1 0 !important;
-        min-height: 0 !important;
+        flex: 0 0 auto !important;
         display: flex !important;
         flex-direction: column !important;
         gap: 5px !important;
         height: auto !important;
       }
       .prayer-pill-card {
-        flex: 1 1 0 !important;
+        flex: 0 0 auto !important;
         min-height: 44px !important;
         height: auto !important;
         width: 100% !important;
@@ -2501,9 +2539,9 @@
         display: grid !important;
         grid-template-columns: repeat(3, 1fr) !important;
         gap: 5px !important;
-        height: clamp(52px, 9vh, 72px) !important;
+        height: clamp(48px, 8vh, 64px) !important;
         flex: 0 0 auto !important;
-        margin: 0 !important;
+        margin: 0 0 8px 0 !important;
       }
       .bottom-meta-card {
         height: 100% !important;
@@ -3544,7 +3582,7 @@
         <button class="btn-sm" onclick="toggleFullscreen()" title="F11">
           ⛶ Full
         </button>
-        <a href="admin.html" target="_blank" class="btn-sm">
+        <a href="admin.html" class="btn-sm" id="btnAdminLink">
           ⚙ Admin
         </a>
       </div>
@@ -3564,8 +3602,8 @@
       jummahKhutbah: '13:00', jummahJamaat: '13:30',
       ticker: 'নামাজের সময় মোবাইল ফোন বন্ধ বা সাইলেন্ট রাখুন। মসজিদে শান্ত থাকুন।',
       fajrAzan: 'auto', dhuhrAzan: 'auto', asrAzan: 'auto', maghribAzan: 'auto', ishaAzan: 'auto',
-      fajrJm: '05:30', dhuhrJm: '13:30', asrJm: '16:30',
-      maghribJm: 'auto', ishaJm: '21:00',
+      fajrJm: '05:30', dhuhrJm: '13:30', asrJm: '16:45',
+      maghribJm: 'auto', ishaJm: '20:30',
       quranVerse: '﴿ أَلَيْسَ اللَّهُ بِكَافٍ عَبْدَهُ ﴾'
     };
 
@@ -3774,6 +3812,89 @@
       setTheme(nextTheme);
     }
 
+    function addMins(ts, mins) {
+      if (!ts || ts === '--:--') return ts;
+      var p = ts.split(':').map(Number);
+      if (p.length < 2 || isNaN(p[0]) || isNaN(p[1])) return ts;
+      var tot = p[0] * 60 + p[1] + (mins || 0);
+      var nh = Math.floor(((tot % 1440) + 1440) % 1440 / 60);
+      var nm = Math.floor(((tot % 1440) + 1440) % 1440 % 60);
+      return String(nh).padStart(2, '0') + ':' + String(nm).padStart(2, '0');
+    }
+
+    function applyDOMOrientation(isPortrait) {
+      try {
+        var layout = document.getElementById('mainLayout');
+        var mainSec = document.querySelector('.main-display-section');
+        var hdr = document.querySelector('.pro-header');
+        var clk = document.querySelector('.clock-center-container');
+        var badge = document.getElementById('prayerScheduleBadge');
+        var cards = document.getElementById('prayerCardsCol');
+        var btm = document.getElementById('bottomMetaBoxes');
+
+        if (!layout || !hdr || !clk || !cards || !btm) return;
+
+        if (isPortrait) {
+          // Re-order direct children: Header -> Clock -> Badge -> Cards -> BottomBoxes
+          layout.appendChild(hdr);
+          layout.appendChild(clk);
+          if (badge) layout.appendChild(badge);
+          layout.appendChild(cards);
+          layout.appendChild(btm);
+          if (mainSec) mainSec.style.display = 'none';
+        } else {
+          // Landscape TV: Cards on left, Header/Clock/Bottom inside mainSec on right
+          if (mainSec) {
+            mainSec.style.display = '';
+            mainSec.appendChild(hdr);
+            mainSec.appendChild(clk);
+            mainSec.appendChild(btm);
+          }
+          if (badge) layout.appendChild(badge);
+          layout.appendChild(cards);
+          if (mainSec) layout.appendChild(mainSec);
+        }
+      } catch(e) {}
+    }
+
+    function getFarzPrayers(bd) {
+      if (!PT) return [];
+      var isFri = (bd.getDay() === 5);
+
+      var fajrAzan = getAzanTime('fajr', PT.fajr);
+      var fajrJm = (CONFIG.fajrJm && CONFIG.fajrJm !== 'auto' && CONFIG.fajrJm.trim() !== '') 
+        ? parseTimeTo24(CONFIG.fajrJm, 'AM') 
+        : '05:30';
+
+      var dhuhrAzan = getAzanTime('dhuhr', PT.dhuhr);
+      var dhuhrJm = isFri
+        ? parseTimeTo24(CONFIG.jummahJamaat || '13:30', 'PM')
+        : ((CONFIG.dhuhrJm && CONFIG.dhuhrJm !== 'auto' && CONFIG.dhuhrJm.trim() !== '') ? parseTimeTo24(CONFIG.dhuhrJm, 'PM') : '13:30');
+
+      var asrAzan = getAzanTime('asr', PT.asr);
+      var asrJm = (CONFIG.asrJm && CONFIG.asrJm !== 'auto' && CONFIG.asrJm.trim() !== '') 
+        ? parseTimeTo24(CONFIG.asrJm, 'PM') 
+        : '16:45';
+
+      var maghribAzan = getAzanTime('maghrib', PT.maghrib);
+      var maghribJm = (CONFIG.maghribJm && CONFIG.maghribJm !== 'auto' && CONFIG.maghribJm.trim() !== '')
+        ? parseTimeTo24(CONFIG.maghribJm, 'PM')
+        : addMins(maghribAzan, parseInt(CONFIG.maghribOffset || 5, 10));
+
+      var ishaAzan = getAzanTime('isha', PT.isha);
+      var ishaJm = (CONFIG.ishaJm && CONFIG.ishaJm !== 'auto' && CONFIG.ishaJm.trim() !== '') 
+        ? parseTimeTo24(CONFIG.ishaJm, 'PM') 
+        : '20:30';
+
+      return [
+        { id: 'fajr', bn: 'ফজর', azan: fajrAzan, jm: fajrJm },
+        { id: 'dhuhr', bn: (isFri ? 'জুমা' : 'যোহর'), azan: dhuhrAzan, jm: dhuhrJm },
+        { id: 'asr', bn: 'আসর', azan: asrAzan, jm: asrJm },
+        { id: 'maghrib', bn: 'মাগরিব', azan: maghribAzan, jm: maghribJm },
+        { id: 'isha', bn: 'এশা', azan: ishaAzan, jm: ishaJm }
+      ];
+    }
+
     function applyScreenRotation() {
       // Rotation transforms removed: natural layout based on screen aspect ratio
       document.body.classList.remove('rotate-90', 'rotate-180', 'rotate-270');
@@ -3783,6 +3904,7 @@
       else isPortrait = (window.innerHeight > window.innerWidth);
       if (isPortrait) document.body.classList.add('is-portrait');
       else document.body.classList.remove('is-portrait');
+      applyDOMOrientation(isPortrait);
     }
 
     function loadSettings(overrideSettings) {
@@ -3915,42 +4037,7 @@
       if (!container) return;
       container.innerHTML = '';
 
-      var isFri = (bd.getDay() === 5);
-
-      // The 5 Farz Prayers on the Left Column (Using Jamaat time from Admin with Azan time subtitle)
-      // Card 2 is ALWAYS যোহর (Dhuhr), while Box 2 at the bottom is dedicated to জুমা (Jummah)
-      var farzPrayers = [
-        { 
-          id: 'fajr', 
-          bn: 'ফজর', 
-          azan: getAzanTime('fajr', PT.fajr), 
-          jm: parseTimeTo24(CONFIG.fajrJm || '05:30', 'AM') 
-        },
-        { 
-          id: 'dhuhr', 
-          bn: 'যোহর', 
-          azan: getAzanTime('dhuhr', PT.dhuhr), 
-          jm: parseTimeTo24(CONFIG.dhuhrJm || '13:30', 'PM') 
-        },
-        { 
-          id: 'asr', 
-          bn: 'আসর', 
-          azan: getAzanTime('asr', PT.asr), 
-          jm: parseTimeTo24(CONFIG.asrJm || '16:30', 'PM') 
-        },
-        { 
-          id: 'maghrib', 
-          bn: 'মাগরিব', 
-          azan: getAzanTime('maghrib', PT.maghrib), 
-          jm: (CONFIG.maghribJm === 'auto' || !CONFIG.maghribJm || CONFIG.maghribJm === '' ? PT.maghrib : parseTimeTo24(CONFIG.maghribJm, 'PM')) 
-        },
-        { 
-          id: 'isha', 
-          bn: 'এশা', 
-          azan: getAzanTime('isha', PT.isha), 
-          jm: parseTimeTo24(CONFIG.ishaJm || '21:00', 'PM') 
-        }
-      ];
+      var farzPrayers = getFarzPrayers(bd);
 
       farzPrayers.forEach(function(item) {
         var card = document.createElement('div');
@@ -4082,21 +4169,14 @@
 
       // Next Prayer & Jamaat Countdown
       if (PT) {
-        var isFri = (bd.getDay() === 5);
-        var prayerSchedule = [
-          { id: 'fajr', bn: 'ফজর', waqt: getAzanTime('fajr', PT.fajr), jm: parseTimeTo24(CONFIG.fajrJm, 'AM') },
-          { id: 'dhuhr', bn: (isFri ? 'জুমা' : 'যোহর'), waqt: (isFri ? parseTimeTo24(CONFIG.jummahJamaat || '13:30', 'PM') : getAzanTime('dhuhr', PT.dhuhr)), jm: (isFri ? parseTimeTo24(CONFIG.jummahJamaat || '13:30', 'PM') : parseTimeTo24(CONFIG.dhuhrJm, 'PM')) },
-          { id: 'asr', bn: 'আসর', waqt: getAzanTime('asr', PT.asr), jm: parseTimeTo24(CONFIG.asrJm, 'PM') },
-          { id: 'maghrib', bn: 'মাগরিব', waqt: getAzanTime('maghrib', PT.maghrib), jm: (CONFIG.maghribJm === 'auto' ? PT.maghrib : parseTimeTo24(CONFIG.maghribJm, 'PM')) },
-          { id: 'isha', bn: 'এশা', waqt: getAzanTime('isha', PT.isha), jm: parseTimeTo24(CONFIG.ishaJm, 'PM') }
-        ];
+        var prayerSchedule = getFarzPrayers(bd);
 
         var bestMs = Infinity;
         var bestPrayer = null;
         var bestTimeStr = null;
 
         prayerSchedule.forEach(function(item) {
-          var tStr = (item.jm && item.jm !== 'auto' && item.jm.trim() !== '') ? item.jm : item.waqt;
+          var tStr = item.jm;
           if (!tStr || tStr === '--:--') return;
           var parts = tStr.split(':').map(Number);
           var pDate = new Date(bd);
@@ -4491,7 +4571,8 @@
     });
 
     function fetchServerSettings() {
-      fetch('/api/settings')
+      var endpoint = (window.location.protocol === 'file:') ? 'settings.json' : '/api/settings';
+      fetch(endpoint)
         .then(function(res) {
           if (!res.ok) throw new Error('HTTP ' + res.status);
           return res.json();
@@ -4509,7 +4590,20 @@
           }
         })
         .catch(function() {
-          // If offline or file:// mode, fallback silently
+          if (endpoint !== 'settings.json') {
+            fetch('settings.json')
+              .then(function(r) { return r.json(); })
+              .then(function(fallbackSettings) {
+                if (fallbackSettings && typeof fallbackSettings === 'object') {
+                  loadSettings(fallbackSettings);
+                  calc();
+                  build();
+                  tick();
+                  syncBottomCardsHeight();
+                }
+              })
+              .catch(function() {});
+          }
         });
     }
 
