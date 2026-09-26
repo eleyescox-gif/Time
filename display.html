@@ -2,10 +2,78 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>মসজিদ ডিজিটাল ডিসপ্লে</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>পূর্ব মোহাজের পাড়া জামে মসজিদ — নামাজের সময়সূচী</title>
+
+  <!-- ══ PWA Manifest ══ -->
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- ══ PWA Meta Tags ══ -->
+  <meta name="theme-color" content="#D4AF37">
+  <meta name="application-name" content="মসজিদ ডিসপ্লে">
+  <meta name="description" content="পূর্ব মোহাজের পাড়া জামে মসজিদ — নামাজের সময়সূচী ও লাইভ কাউন্টডাউন">
+
+  <!-- ══ Apple / iOS PWA Support ══ -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="মসজিদ ডিসপ্লে">
+  <link rel="apple-touch-icon" href="/logo.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/logo.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="/logo.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/logo.png">
+
+  <!-- ══ Android / Chrome PWA ══ -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" type="image/png" sizes="192x192" href="/logo.png">
+  <link rel="shortcut icon" href="/logo.png">
+
+  <!-- ══ Microsoft Tiles ══ -->
+  <meta name="msapplication-TileColor" content="#0a0a0a">
+  <meta name="msapplication-TileImage" content="/logo.png">
+
+  <!-- ══ Google Fonts ══ -->
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@600;700;800;900&family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- ══ Service Worker Registration ══ -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js')
+          .then(function(reg) {
+            console.log('[PWA] Service Worker registered:', reg.scope);
+            // Check for updates
+            reg.addEventListener('updatefound', function() {
+              var newWorker = reg.installing;
+              newWorker.addEventListener('statechange', function() {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  newWorker.postMessage({ type: 'SKIP_WAITING' });
+                }
+              });
+            });
+          })
+          .catch(function(err) {
+            console.warn('[PWA] Service Worker registration failed:', err);
+          });
+      });
+    }
+    // PWA Install Prompt (Android/Chrome)
+    var deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', function(e) {
+      e.preventDefault();
+      deferredPrompt = e;
+      // Show install button if it exists
+      var btn = document.getElementById('pwaInstallBtn');
+      if (btn) btn.style.display = 'flex';
+    });
+    window.addEventListener('appinstalled', function() {
+      console.log('[PWA] App installed successfully!');
+      deferredPrompt = null;
+      var btn = document.getElementById('pwaInstallBtn');
+      if (btn) btn.style.display = 'none';
+    });
+  </script>
   <style>
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     /* ── THEMES ── */
@@ -4183,5 +4251,46 @@
       try { fetchServerSettings(); } catch(e) {}
     }, 4000);
   </script>
+
+  <!-- ══ PWA INSTALL BUTTON (Auto-hidden, shows only on Android/Chrome when installable) ══ -->
+  <div id="pwaInstallBtn" style="
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #D4AF37, #AA771C);
+    color: #000;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 22px;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 6px 28px rgba(212,175,55,0.65);
+    animation: pwaGlow 2.5s infinite ease-in-out;
+  " onclick="
+    if (window.deferredPrompt) {
+      window.deferredPrompt.prompt();
+      window.deferredPrompt.userChoice.then(function(res) {
+        if (res.outcome === 'accepted') console.log('[PWA] User accepted install');
+        window.deferredPrompt = null;
+        document.getElementById('pwaInstallBtn').style.display = 'none';
+      });
+    }
+  ">
+    <span style="font-size:20px;">📲</span>
+    <span>অ্যাপ ইনস্টল করুন</span>
+  </div>
+  <style>
+    @keyframes pwaGlow {
+      0%, 100% { box-shadow: 0 6px 28px rgba(212,175,55,0.55); }
+      50% { box-shadow: 0 8px 40px rgba(212,175,55,0.85); }
+    }
+  </style>
+
 </body>
 </html>

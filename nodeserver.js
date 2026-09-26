@@ -136,7 +136,18 @@ const server = http.createServer((req, res) => {
       res.end('Not Found');
       return;
     }
-    res.writeHead(200, { 'Content-Type': mime[path.extname(fp)] || 'text/plain' });
+    const ct = mime[path.extname(fp)] || 'text/plain';
+    const headers = { 'Content-Type': ct };
+    // Required header for Service Worker to control full scope
+    if (urlPath === '/sw.js') {
+      headers['Service-Worker-Allowed'] = '/';
+      headers['Cache-Control'] = 'no-cache';
+    }
+    // Manifest must not be cached aggressively
+    if (urlPath === '/manifest.json') {
+      headers['Cache-Control'] = 'no-cache';
+    }
+    res.writeHead(200, headers);
     res.end(d);
   });
 });
