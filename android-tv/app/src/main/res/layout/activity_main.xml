@@ -1,133 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  activity_main.xml — Main Display Layout
-  Features: Fragment container + Mode indicator bar + Settings button
-  D-pad friendly: focusable elements, nextFocus attributes
+  activity_main.xml — Professional Mosque Digital Display
+  Hardware-accelerated Fullscreen Container for TV & Mobile
 -->
-<androidx.constraintlayout.widget.ConstraintLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_primary"
+    android:background="#0a0a0a"
     android:keepScreenOn="true">
 
-    <!-- Top: Mosque name header -->
-    <LinearLayout
-        android:id="@+id/headerBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/bg_header"
-        android:paddingHorizontal="24dp"
-        android:paddingVertical="8dp"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+    <WebView
+        android:id="@+id/mainWebView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0a0a0a"
+        android:scrollbars="none"
+        android:overScrollMode="never" />
 
-        <TextView
-            android:id="@+id/tvMosqueName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/mosque_name_default"
-            android:textColor="@color/gold"
-            android:textSize="22sp"
-            android:fontFamily="serif"
-            android:textStyle="bold"
-            android:visibility="gone" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <!-- Feature 8: Mode indicators -->
-        <TextView
-            android:id="@+id/tvModeSchedule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="📋 সময়সূচি"
-            android:textColor="@color/text_primary"
-            android:textSize="13sp"
-            android:paddingHorizontal="10dp" />
-
-        <TextView
-            android:id="@+id/tvModeClock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="🕐 ঘড়ি"
-            android:textColor="@color/text_primary"
-            android:textSize="13sp"
-            android:paddingHorizontal="10dp" />
-
-        <TextView
-            android:id="@+id/tvModeCalendar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="📅 ক্যালেন্ডার"
-            android:textColor="@color/text_primary"
-            android:textSize="13sp"
-            android:paddingHorizontal="10dp" />
-
-        <TextView
-            android:id="@+id/tvModeHadith"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="📖 হাদিস"
-            android:textColor="@color/text_primary"
-            android:textSize="13sp"
-            android:paddingHorizontal="10dp" />
-
-        <!-- Feature 2: Settings button (D-pad focusable) -->
-        <TextView
-            android:id="@+id/btnSettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="⚙ সেটিংস"
-            android:textColor="@color/gold"
-            android:textSize="14sp"
-            android:paddingHorizontal="14dp"
-            android:paddingVertical="6dp"
-            android:background="@drawable/btn_focus_selector"
-            android:focusable="true"
-            android:clickable="true"
-            android:nextFocusDown="@id/fragmentContainer" />
-
-    </LinearLayout>
-
-    <!-- Main content: Fragment container (Feature 8: switchable) -->
-    <FrameLayout
-        android:id="@+id/fragmentContainer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:focusable="true"
-        app:layout_constraintTop_toBottomOf="@id/headerBar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Feature 8: Hint bar (bottom) -->
-    <LinearLayout
-        android:id="@+id/hintBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/bg_hint_bar"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="6dp"
-        android:gravity="center_vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="OK = পরবর্তী ভিউ   |   MENU = সেটিংস"
-            android:textColor="@color/text_secondary"
-            android:textSize="12sp" />
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

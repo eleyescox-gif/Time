@@ -19,13 +19,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <!-- Feature 3: Boot auto-start — TV restart হলে app launch -->
+    <!-- Feature 3: Boot auto-start — TV restart হলে app auto launch -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <!-- Feature 4: Pre-Jamaat overlay notification (system alert window) -->
+    <!-- Feature 4: Pre-Jamaat overlay notification -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
-    <!-- Feature 7: Keep screen on -->
+    <!-- Feature 7: Keep screen on (Screen never sleeps) -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <!-- Foreground service for time-keeper (Android 9+) -->
@@ -33,21 +33,16 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
-    <!-- ★ FIX: Android 12+ SecurityException: SCHEDULE_EXACT_ALARM crash fix ★ -->
-    <!-- Android 13+ (API 33+): নামাজের সময় notification-এর জন্য exact alarm -->
-    <!-- USE_EXACT_ALARM: clock/calendar/prayer app-এ user grant লাগে না -->
+    <!-- Android 12+ Exact Alarm Permissions (Zero-Crash Guard) -->
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
-    <!-- Android 12 (API 31-32): user grant দরকার, না থাকলে setWindow() fallback -->
     <uses-permission
         android:name="android.permission.SCHEDULE_EXACT_ALARM"
         android:maxSdkVersion="32" />
 
-    <!-- TV: অ্যাপ যেন TV home-screen-এ দেখা যায় -->
+    <!-- TV & Mobile Compatibility: Leanback and Touchscreen optional -->
     <uses-feature
         android:name="android.software.leanback"
         android:required="false" />
-
-    <!-- Touch optional (TV remote control প্রাথমিক input) -->
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
@@ -63,29 +58,33 @@
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:banner="@drawable/banner"
         android:extractNativeLibs="true"
+        android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="false"
         android:theme="@style/Theme.MyMasjid.Light"
         android:usesCleartextTraffic="true" >
 
         <!-- ═══════════════ MAIN ACTIVITY ═══════════════ -->
+        <!-- Responsive on Mobile (Portrait) & TV (Landscape) without force-rotation -->
         <activity
             android:name="com.mymasjid.tv.MainActivity"
-            android:configChanges="orientation|screenSize|layoutDirection"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|uiMode"
             android:exported="true"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="unspecified" >
 
-            <!-- TV launcher intent -->
+            <!-- TV launcher intent (Android TV / Google TV home screen) -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
-            <!-- Also show in regular launcher -->
+
+            <!-- Mobile phone launcher intent (App drawer on Android phones) -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -98,11 +97,10 @@
             android:name="com.mymasjid.tv.SettingsActivity"
             android:exported="false"
             android:label="@string/settings_title"
-            android:parentActivityName="com.mymasjid.tv.MainActivity"
-            android:screenOrientation="landscape" />
+            android:parentActivityName="com.mymasjid.tv.MainActivity" />
 
         <!-- ═══════════════ FEATURE 3: BOOT RECEIVER ═══════════════ -->
-        <!-- BOOT_COMPLETED: TV restart হলে auto-launch করে -->
+        <!-- TV restart বা পাওয়ার অন হলে অটো-স্টার্ট -->
         <receiver
             android:name="com.mymasjid.tv.receiver.BootReceiver"
             android:enabled="true"
@@ -116,7 +114,6 @@
         </receiver>
 
         <!-- ═══════════════ FEATURE 1: TIME KEEPER SERVICE ═══════════════ -->
-        <!-- Foreground service: offline RTC tracking + NTP sync -->
         <service
             android:name="com.mymasjid.tv.service.TimeKeeperService"
             android:enabled="true"
@@ -124,7 +121,6 @@
             android:foregroundServiceType="dataSync" />
 
         <!-- ═══════════════ FEATURE 4: NOTIFICATION RECEIVER ═══════════════ -->
-        <!-- AlarmManager-এর pre-jamaat notification receive করে -->
         <receiver
             android:name="com.mymasjid.tv.notification.NotificationBroadcastReceiver"
             android:enabled="true"
@@ -135,7 +131,6 @@
         </receiver>
 
         <!-- ═══════════════ FEATURE 9: SCREENSAVER (DreamService) ═══════════════ -->
-        <!-- Android TV screensaver — Settings > Screen saver থেকে set করা যাবে -->
         <service
             android:name="com.mymasjid.tv.service.MasjidScreensaver"
             android:exported="true"

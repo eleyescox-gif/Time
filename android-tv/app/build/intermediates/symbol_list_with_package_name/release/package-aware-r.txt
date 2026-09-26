@@ -1752,7 +1752,6 @@ id btnHanafi
 id btnSaveLocation
 id btnSaveOffsets
 id btnScreensaverHelp
-id btnSettings
 id btnShafii
 id button
 id buttonPanel
@@ -1863,7 +1862,6 @@ id fill_vertical
 id flip
 id foreground_container
 id forever
-id fragmentContainer
 id fragment_container_view_tag
 id frost
 id ghost_view
@@ -1900,9 +1898,7 @@ id guidedactions_sub_list_background
 id guidedstep_background
 id guidedstep_background_view_root
 id guidedstep_root
-id headerBar
 id hide_ime_id
-id hintBar
 id home
 id homeAsUp
 id honorRequest
@@ -1974,6 +1970,7 @@ id logo
 id ltr
 id main
 id mainOnly
+id mainWebView
 id main_icon
 id main_image
 id match_constraint
@@ -2184,11 +2181,6 @@ id tvIshaName
 id tvMaghribAzan
 id tvMaghribJamaat
 id tvMaghribName
-id tvModeCalendar
-id tvModeClock
-id tvModeHadith
-id tvModeSchedule
-id tvMosqueName
 id tvScheduleDate
 id tvScheduleMosqueName
 id tvSettingsStatus

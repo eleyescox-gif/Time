@@ -4,12 +4,10 @@ package com.mymasjid.tv.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.mymasjid.tv.R;
@@ -19,55 +17,19 @@ import java.lang.String;
 
 public final class ActivityMainBinding implements ViewBinding {
   @NonNull
-  private final ConstraintLayout rootView;
+  private final FrameLayout rootView;
 
   @NonNull
-  public final TextView btnSettings;
+  public final WebView mainWebView;
 
-  @NonNull
-  public final FrameLayout fragmentContainer;
-
-  @NonNull
-  public final LinearLayout headerBar;
-
-  @NonNull
-  public final LinearLayout hintBar;
-
-  @NonNull
-  public final TextView tvModeCalendar;
-
-  @NonNull
-  public final TextView tvModeClock;
-
-  @NonNull
-  public final TextView tvModeHadith;
-
-  @NonNull
-  public final TextView tvModeSchedule;
-
-  @NonNull
-  public final TextView tvMosqueName;
-
-  private ActivityMainBinding(@NonNull ConstraintLayout rootView, @NonNull TextView btnSettings,
-      @NonNull FrameLayout fragmentContainer, @NonNull LinearLayout headerBar,
-      @NonNull LinearLayout hintBar, @NonNull TextView tvModeCalendar,
-      @NonNull TextView tvModeClock, @NonNull TextView tvModeHadith,
-      @NonNull TextView tvModeSchedule, @NonNull TextView tvMosqueName) {
+  private ActivityMainBinding(@NonNull FrameLayout rootView, @NonNull WebView mainWebView) {
     this.rootView = rootView;
-    this.btnSettings = btnSettings;
-    this.fragmentContainer = fragmentContainer;
-    this.headerBar = headerBar;
-    this.hintBar = hintBar;
-    this.tvModeCalendar = tvModeCalendar;
-    this.tvModeClock = tvModeClock;
-    this.tvModeHadith = tvModeHadith;
-    this.tvModeSchedule = tvModeSchedule;
-    this.tvMosqueName = tvMosqueName;
+    this.mainWebView = mainWebView;
   }
 
   @Override
   @NonNull
-  public ConstraintLayout getRoot() {
+  public FrameLayout getRoot() {
     return rootView;
   }
 
@@ -92,63 +54,13 @@ public final class ActivityMainBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.btnSettings;
-      TextView btnSettings = ViewBindings.findChildViewById(rootView, id);
-      if (btnSettings == null) {
+      id = R.id.mainWebView;
+      WebView mainWebView = ViewBindings.findChildViewById(rootView, id);
+      if (mainWebView == null) {
         break missingId;
       }
 
-      id = R.id.fragmentContainer;
-      FrameLayout fragmentContainer = ViewBindings.findChildViewById(rootView, id);
-      if (fragmentContainer == null) {
-        break missingId;
-      }
-
-      id = R.id.headerBar;
-      LinearLayout headerBar = ViewBindings.findChildViewById(rootView, id);
-      if (headerBar == null) {
-        break missingId;
-      }
-
-      id = R.id.hintBar;
-      LinearLayout hintBar = ViewBindings.findChildViewById(rootView, id);
-      if (hintBar == null) {
-        break missingId;
-      }
-
-      id = R.id.tvModeCalendar;
-      TextView tvModeCalendar = ViewBindings.findChildViewById(rootView, id);
-      if (tvModeCalendar == null) {
-        break missingId;
-      }
-
-      id = R.id.tvModeClock;
-      TextView tvModeClock = ViewBindings.findChildViewById(rootView, id);
-      if (tvModeClock == null) {
-        break missingId;
-      }
-
-      id = R.id.tvModeHadith;
-      TextView tvModeHadith = ViewBindings.findChildViewById(rootView, id);
-      if (tvModeHadith == null) {
-        break missingId;
-      }
-
-      id = R.id.tvModeSchedule;
-      TextView tvModeSchedule = ViewBindings.findChildViewById(rootView, id);
-      if (tvModeSchedule == null) {
-        break missingId;
-      }
-
-      id = R.id.tvMosqueName;
-      TextView tvMosqueName = ViewBindings.findChildViewById(rootView, id);
-      if (tvMosqueName == null) {
-        break missingId;
-      }
-
-      return new ActivityMainBinding((ConstraintLayout) rootView, btnSettings, fragmentContainer,
-          headerBar, hintBar, tvModeCalendar, tvModeClock, tvModeHadith, tvModeSchedule,
-          tvMosqueName);
+      return new ActivityMainBinding((FrameLayout) rootView, mainWebView);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

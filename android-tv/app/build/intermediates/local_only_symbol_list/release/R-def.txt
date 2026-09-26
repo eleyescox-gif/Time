@@ -24,7 +24,6 @@ id btnHanafi
 id btnSaveLocation
 id btnSaveOffsets
 id btnScreensaverHelp
-id btnSettings
 id btnShafii
 id cardAsr
 id cardDhuhr
@@ -39,9 +38,7 @@ id etIshaOffset
 id etLatitude
 id etLongitude
 id etMaghribOffset
-id fragmentContainer
-id headerBar
-id hintBar
+id mainWebView
 id sectionBigClock
 id sectionMosqueHeader
 id sectionPrayersRow
@@ -80,11 +77,6 @@ id tvIshaName
 id tvMaghribAzan
 id tvMaghribJamaat
 id tvMaghribName
-id tvModeCalendar
-id tvModeClock
-id tvModeHadith
-id tvModeSchedule
-id tvMosqueName
 id tvScheduleDate
 id tvScheduleMosqueName
 id tvSettingsStatus

@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:2:1-135:12
-INJECTED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:2:1-135:12
-INJECTED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:2:1-135:12
-INJECTED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:2:1-135:12
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:2:1-130:12
+INJECTED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:2:1-130:12
+INJECTED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:2:1-130:12
+INJECTED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:2:1-130:12
 MERGED from [androidx.databinding:viewbinding:8.1.2] C:\Users\QC\.gradle\caches\transforms-3\c736d2a51330934de35f38ab47b2c884\transformed\jetified-viewbinding-8.1.2\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.work:work-runtime-ktx:2.9.0] C:\Users\QC\.gradle\caches\transforms-3\6bda60431619a6ea4249a6f948132673\transformed\work-runtime-ktx-2.9.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.work:work-runtime:2.9.0] C:\Users\QC\.gradle\caches\transforms-3\cb22652d305cb4a4a25116c678845d9c\transformed\work-runtime-2.9.0\AndroidManifest.xml:17:1-145:12
@@ -114,30 +114,30 @@ ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app
 	android:name
 		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:24:22-74
 uses-permission#android.permission.USE_EXACT_ALARM
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:29:5-74
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:27:5-74
 	android:name
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:29:22-71
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:27:22-71
 uses-permission#android.permission.SCHEDULE_EXACT_ALARM
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:31:5-32:38
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:28:5-29:38
 	android:maxSdkVersion
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:32:9-35
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:29:9-35
 	android:name
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:31:22-76
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:28:22-76
 uses-feature#android.software.leanback
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:32:5-34:36
+	android:required
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:34:9-33
+	android:name
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:33:9-49
+uses-feature#android.hardware.touchscreen
 ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:36:5-38:36
 	android:required
 		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:38:9-33
 	android:name
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:37:9-49
-uses-feature#android.hardware.touchscreen
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:41:5-43:36
-	android:required
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:43:9-33
-	android:name
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:42:9-52
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:37:9-52
 application
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:45:5-133:19
-INJECTED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:45:5-133:19
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:40:5-128:19
+INJECTED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:40:5-128:19
 MERGED from [androidx.work:work-runtime:2.9.0] C:\Users\QC\.gradle\caches\transforms-3\cb22652d305cb4a4a25116c678845d9c\transformed\work-runtime-2.9.0\AndroidManifest.xml:28:5-143:19
 MERGED from [androidx.work:work-runtime:2.9.0] C:\Users\QC\.gradle\caches\transforms-3\cb22652d305cb4a4a25116c678845d9c\transformed\work-runtime-2.9.0\AndroidManifest.xml:28:5-143:19
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\QC\.gradle\caches\transforms-3\b07c208b6db9a8d3b3e4f9ab7334fb16\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
@@ -163,137 +163,139 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\QC\.gradle\caches\
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.12.0] C:\Users\QC\.gradle\caches\transforms-3\c3074531d01ac9ab8cfdf2481696a09e\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
 	android:supportsRtl
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:51:9-36
-	android:label
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:49:9-41
-	android:roundIcon
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:50:9-50
-	android:icon
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:48:9-45
-	android:allowBackup
 		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:46:9-36
+	android:label
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:44:9-41
+	android:hardwareAccelerated
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:49:9-43
+	android:roundIcon
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:45:9-50
+	android:largeHeap
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:50:9-33
+	android:icon
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:43:9-45
+	android:allowBackup
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:41:9-36
 	android:banner
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:47:9-42
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:42:9-42
 	android:theme
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:52:9-52
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:47:9-52
 	android:usesCleartextTraffic
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:53:9-44
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:48:9-44
 activity#com.mymasjid.tv.MainActivity
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:56:9-74:20
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:54:9-73:20
 	android:screenOrientation
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:62:13-50
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:60:13-52
 	android:label
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:60:13-45
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:58:13-45
 	android:launchMode
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:61:13-44
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:59:13-44
 	android:exported
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:59:13-36
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:57:13-36
 	android:configChanges
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:58:13-75
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:56:13-113
 	android:name
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:57:13-41
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:55:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LEANBACK_LAUNCHER
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:65:13-68:29
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:63:13-66:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:66:17-69
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:64:17-69
 	android:name
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:66:25-66
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:64:25-66
 category#android.intent.category.LEANBACK_LAUNCHER
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:67:17-86
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:65:17-86
 	android:name
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:67:27-83
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:65:27-83
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:70:13-73:29
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:69:13-72:29
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:72:17-77
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:71:17-77
 	android:name
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:72:27-74
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:71:27-74
 activity#com.mymasjid.tv.SettingsActivity
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:77:9-82:53
-	android:screenOrientation
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:82:13-50
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:76:9-80:58
 	android:parentActivityName
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:81:13-55
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:80:13-55
 	android:label
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:80:13-51
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:79:13-51
 	android:exported
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:79:13-37
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:78:13-37
 	android:name
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:78:13-45
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:77:13-45
 receiver#com.mymasjid.tv.receiver.BootReceiver
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:86:9-96:20
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:84:9-94:20
 	android:enabled
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:88:13-35
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:86:13-35
 	android:exported
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:89:13-36
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:87:13-36
 	android:name
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:87:13-50
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:85:13-50
 intent-filter#action:name:android.intent.action.BOOT_COMPLETED+action:name:android.intent.action.QUICKBOOT_POWERON+action:name:com.htc.intent.action.QUICKBOOT_POWERON
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:90:13-95:29
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:88:13-93:29
 	android:priority
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:90:28-51
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:88:28-51
 action#android.intent.action.BOOT_COMPLETED
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:91:17-79
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:89:17-79
 	android:name
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:91:25-76
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:89:25-76
 action#android.intent.action.QUICKBOOT_POWERON
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:90:17-82
+	android:name
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:90:25-79
+action#com.htc.intent.action.QUICKBOOT_POWERON
 ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:92:17-82
 	android:name
 		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:92:25-79
-action#com.htc.intent.action.QUICKBOOT_POWERON
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:94:17-82
-	android:name
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:94:25-79
 service#com.mymasjid.tv.service.TimeKeeperService
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:100:9-104:56
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:97:9-101:56
 	android:enabled
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:102:13-35
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:99:13-35
 	android:exported
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:103:13-37
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:100:13-37
 	android:foregroundServiceType
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:104:13-53
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:101:13-53
 	android:name
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:101:13-54
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:98:13-54
 receiver#com.mymasjid.tv.notification.NotificationBroadcastReceiver
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:108:9-115:20
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:104:9-111:20
 	android:enabled
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:110:13-35
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:106:13-35
 	android:exported
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:111:13-37
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:107:13-37
 	android:name
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:109:13-71
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:105:13-71
 intent-filter#action:name:com.mymasjid.tv.SHOW_PRE_JAMAAT_BANNER
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:112:13-114:29
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:108:13-110:29
 action#com.mymasjid.tv.SHOW_PRE_JAMAAT_BANNER
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:113:17-81
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:109:17-81
 	android:name
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:113:25-78
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:109:25-78
 service#com.mymasjid.tv.service.MasjidScreensaver
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:119:9-131:19
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:114:9-126:19
 	android:label
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:122:13-54
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:117:13-54
 	android:exported
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:121:13-36
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:116:13-36
 	android:permission
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:123:13-71
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:118:13-71
 	android:name
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:120:13-54
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:115:13-54
 intent-filter#action:name:android.service.dreams.DreamService+category:name:android.intent.category.DEFAULT
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:124:13-127:29
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:119:13-122:29
 action#android.service.dreams.DreamService
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:125:17-78
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:120:17-78
 	android:name
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:125:25-75
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:120:25-75
 category#android.intent.category.DEFAULT
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:126:17-76
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:121:17-76
 	android:name
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:126:27-73
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:121:27-73
 meta-data#android.service.dream
-ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:128:13-130:55
+ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:123:13-125:55
 	android:resource
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:130:17-52
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:125:17-52
 	android:name
-		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:129:17-53
+		ADDED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml:124:17-53
 uses-sdk
 INJECTED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app\src\main\AndroidManifest.xml
