@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Screensaver Layout — Feature 9 -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_dark"
+    android:gravity="center"
+    android:padding="40dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@color/gold"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:id="@+id/tvSsDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="--/--/----"
+        android:textColor="@color/text_secondary"
+        android:textSize="18sp"
+        android:layout_marginBottom="32dp" />
+
+    <!-- 5 Prayer Times in a grid -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="5"
+        android:useDefaultMargins="true">
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_columnWeight="1" android:orientation="vertical" android:gravity="center">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="ফজর" android:textColor="@color/text_secondary" android:textSize="16sp" />
+            <TextView android:id="@+id/tvSsFajr" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="--:--"
+                android:textColor="@color/gold" android:textSize="24sp" android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_columnWeight="1" android:orientation="vertical" android:gravity="center">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="যোহর" android:textColor="@color/text_secondary" android:textSize="16sp" />
+            <TextView android:id="@+id/tvSsDhuhr" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="--:--"
+                android:textColor="@color/gold" android:textSize="24sp" android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_columnWeight="1" android:orientation="vertical" android:gravity="center">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="আসর" android:textColor="@color/text_secondary" android:textSize="16sp" />
+            <TextView android:id="@+id/tvSsAsr" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="--:--"
+                android:textColor="@color/gold" android:textSize="24sp" android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_columnWeight="1" android:orientation="vertical" android:gravity="center">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="মাগরিব" android:textColor="@color/text_secondary" android:textSize="16sp" />
+            <TextView android:id="@+id/tvSsMaghrib" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="--:--"
+                android:textColor="@color/gold" android:textSize="24sp" android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_columnWeight="1" android:orientation="vertical" android:gravity="center">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="এশা" android:textColor="@color/text_secondary" android:textSize="16sp" />
+            <TextView android:id="@+id/tvSsIsha" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="--:--"
+                android:textColor="@color/gold" android:textSize="24sp" android:textStyle="bold" />
+        </LinearLayout>
+
+    </GridLayout>
+
+</LinearLayout>

@@ -1,0 +1,19 @@
+<lint-module
+    format="1"
+    dir="C:\Users\QC\.gemini\antigravity\scratch\mosque-display\android-tv\app"
+    name=":app"
+    type="APP"
+    maven="MyMasjidTV:app:"
+    agpVersion="8.1.2"
+    buildFolder="build"
+    bootClassPath="C:\Users\QC\AppData\Local\Android\Sdk\platforms\android-34\android.jar;C:\Users\QC\AppData\Local\Android\Sdk\build-tools\33.0.1\core-lambda-stubs.jar"
+    javaSourceLevel="17"
+    compileTarget="android-34"
+    neverShrinking="true">
+  <lintOptions
+      abortOnError="true"
+      absolutePaths="true"
+      checkReleaseBuilds="true"
+      explainIssues="true"/>
+  <variant name="release"/>
+</lint-module>

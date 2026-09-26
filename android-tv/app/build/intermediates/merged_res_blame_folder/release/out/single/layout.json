@@ -1,0 +1,34 @@
+[
+    {
+        "merged": "com.mymasjid.tv.app-mergeReleaseResources-3:/layout/view_pre_jamaat_banner.xml",
+        "source": "com.mymasjid.tv.app-main-5:/layout/view_pre_jamaat_banner.xml"
+    },
+    {
+        "merged": "com.mymasjid.tv.app-mergeReleaseResources-3:/layout/fragment_prayer_schedule.xml",
+        "source": "com.mymasjid.tv.app-main-5:/layout/fragment_prayer_schedule.xml"
+    },
+    {
+        "merged": "com.mymasjid.tv.app-mergeReleaseResources-3:/layout/activity_main.xml",
+        "source": "com.mymasjid.tv.app-main-5:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.mymasjid.tv.app-mergeReleaseResources-3:/layout/fragment_calendar.xml",
+        "source": "com.mymasjid.tv.app-main-5:/layout/fragment_calendar.xml"
+    },
+    {
+        "merged": "com.mymasjid.tv.app-mergeReleaseResources-3:/layout/fragment_clock.xml",
+        "source": "com.mymasjid.tv.app-main-5:/layout/fragment_clock.xml"
+    },
+    {
+        "merged": "com.mymasjid.tv.app-mergeReleaseResources-3:/layout/fragment_hadith.xml",
+        "source": "com.mymasjid.tv.app-main-5:/layout/fragment_hadith.xml"
+    },
+    {
+        "merged": "com.mymasjid.tv.app-mergeReleaseResources-3:/layout/activity_settings.xml",
+        "source": "com.mymasjid.tv.app-main-5:/layout/activity_settings.xml"
+    },
+    {
+        "merged": "com.mymasjid.tv.app-mergeReleaseResources-3:/layout/screensaver_layout.xml",
+        "source": "com.mymasjid.tv.app-main-5:/layout/screensaver_layout.xml"
+    }
+]

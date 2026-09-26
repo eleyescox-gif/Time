@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Digital Clock Fragment Layout — Feature 8: Mode 1 -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_primary"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/tvClockMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00"
+        android:textColor="@color/text_primary"
+        android:textSize="120sp"
+        android:fontFamily="monospace"
+        android:textStyle="bold"
+        android:letterSpacing="0.05" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tvClockSeconds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":00"
+            android:textColor="@color/gold"
+            android:textSize="48sp"
+            android:fontFamily="monospace" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="100dp"
+        android:layout_height="2dp"
+        android:background="@color/gold"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/tvClockDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="সোমবার, ১ জানুয়ারি ২০২৫"
+        android:textColor="@color/text_secondary"
+        android:textSize="28sp" />
+
+</LinearLayout>
