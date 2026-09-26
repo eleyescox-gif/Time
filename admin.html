@@ -852,38 +852,11 @@
         <div class="section-header">
           <div>
             <h2>🎨 ডিসপ্লে, থিম ও মসজিদ তথ্য</h2>
-            <p>স্ক্রিনের দিক (রোটেশন), রঙের থিম, ফন্ট সাইজ, মসজিদের পরিচিতি ও ব্যাকআপ নিয়ন্ত্রণ করুন</p>
+            <p>রঙের থিম, ফন্ট সাইজ, মসজিদের পরিচিতি ও ব্যাকআপ নিয়ন্ত্রণ করুন</p>
           </div>
         </div>
 
-        <!-- 1. SCREEN ROTATION -->
-        <div class="form-group" style="margin-bottom: 24px;">
-          <label>🖥️ স্ক্রিন রোটেশন (Screen Rotation):</label>
-          <div class="rotate-grid">
-            <div class="rotate-card selected" id="rot-0" onclick="selectRotation('0')">
-              <span class="rotate-icon">🖥️</span>
-              <strong>০° ল্যান্ডস্কেপ</strong>
-              <span class="field-hint">সাধারণ টিভি ও মনিটর</span>
-            </div>
-            <div class="rotate-card" id="rot-90" onclick="selectRotation('90')">
-              <span class="rotate-icon">📱</span>
-              <strong>৯০° পোর্ট্রেট (খাড়া)</strong>
-              <span class="field-hint">উল্লম্ব বা ভার্টিক্যাল টিভি</span>
-            </div>
-            <div class="rotate-card" id="rot-180" onclick="selectRotation('180')">
-              <span class="rotate-icon">🔄</span>
-              <strong>১৮০° উল্টানো</strong>
-              <span class="field-hint">সিলিং মাউন্ট টিভি</span>
-            </div>
-            <div class="rotate-card" id="rot-270" onclick="selectRotation('270')">
-              <span class="rotate-icon">📲</span>
-              <strong>২৭০° পোর্ট্রেট বিপরীত</strong>
-              <span class="field-hint">বিপরীত খাড়া টিভি</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 2. THEME SELECTION -->
+        <!-- 1. THEME SELECTION -->
         <div class="form-group" style="margin-bottom: 24px;">
           <label>🎨 থিম নির্বাচন (Color Themes):</label>
           <div class="theme-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
@@ -1230,7 +1203,7 @@
         }
       });
       s.theme = currentTheme;
-      s.screenRotate = currentRotation;
+      s.screenRotate = '0';
       s.logoUrl = currentLogoUrl;
       s.bgArchUrl = currentArchUrl;
       var elFs = document.getElementById('fontSizeScale');
@@ -1364,14 +1337,7 @@
     }
 
     function selectRotation(deg) {
-      currentRotation = deg;
-      ['0', '90', '180', '270'].forEach(function(d) {
-        var el = document.getElementById('rot-' + d);
-        if (el) el.classList.remove('selected');
-      });
-      var sel = document.getElementById('rot-' + deg);
-      if (sel) sel.classList.add('selected');
-      broadcastLiveUpdate();
+      currentRotation = '0';
     }
 
     // ── FONT SIZE SCALER FUNCTIONS ──

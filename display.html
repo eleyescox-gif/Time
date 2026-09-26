@@ -131,21 +131,6 @@
       color: #ffffff;
     }
 
-    body.rotate-90 #screenWrapper {
-      transform: rotate(90deg);
-      width: 100vh; height: 100vw;
-      position: absolute;
-      top: calc((100vh - 100vw) / 2);
-      left: calc((100vw - 100vh) / 2);
-    }
-    body.rotate-180 #screenWrapper { transform: rotate(180deg); }
-    body.rotate-270 #screenWrapper {
-      transform: rotate(270deg);
-      width: 100vh; height: 100vw;
-      position: absolute;
-      top: calc((100vh - 100vw) / 2);
-      left: calc((100vw - 100vh) / 2);
-    }
 
     :root {
       --font-scale: 1;
@@ -3082,9 +3067,6 @@
         <button class="btn-sm" onclick="cycleTheme()" id="themeBtn" title="থিম পরিবর্তন">
           🎨 থিম
         </button>
-        <button class="btn-sm" onclick="cycleRotation()" id="rotateBtn" title="স্ক্রিন ঘোরান">
-          🔄 <span id="rotateBtnLabel">০°</span>
-        </button>
         <button class="btn-sm" onclick="toggleFullscreen()" title="F11">
           ⛶ Full
         </button>
@@ -3310,15 +3292,11 @@
     }
 
     function applyScreenRotation() {
-      var rot = CONFIG.screenRotate || '0';
+      // Rotation transforms removed: natural layout based on screen aspect ratio
       document.body.classList.remove('rotate-90', 'rotate-180', 'rotate-270');
-      if (rot === '90') document.body.classList.add('rotate-90');
-      else if (rot === '180') document.body.classList.add('rotate-180');
-      else if (rot === '270') document.body.classList.add('rotate-270');
       var isPortrait = false;
       if (CONFIG.layoutMode === 'portrait') isPortrait = true;
       else if (CONFIG.layoutMode === 'landscape') isPortrait = false;
-      else if (rot === '90' || rot === '270') isPortrait = true;
       else isPortrait = (window.innerHeight > window.innerWidth);
       if (isPortrait) document.body.classList.add('is-portrait');
       else document.body.classList.remove('is-portrait');
@@ -3341,6 +3319,8 @@
         CONFIG.lat = 21.8355;
         CONFIG.lng = 92.0780;
         CONFIG.location = 'চকরিয়া, কক্সবাজার';
+        CONFIG.screenRotate = '0';
+        document.body.classList.remove('rotate-90', 'rotate-180', 'rotate-270');
 
         // Apply dynamic font scale (default 1)
         var fontScale = CONFIG.fontSizeScale || '1';
@@ -3887,30 +3867,8 @@
       else if (document.exitFullscreen) document.exitFullscreen();
     }
 
-    var ROTATE_STEPS = ['0', '90', '180', '270'];
-    var ROTATE_LABELS = ['০°', '৯০°', '১৮০°', '২৭০°'];
-
-    function cycleRotation() {
-      var cur = CONFIG.screenRotate || '0';
-      var idx = ROTATE_STEPS.indexOf(cur);
-      var next = ROTATE_STEPS[(idx + 1) % ROTATE_STEPS.length];
-      CONFIG.screenRotate = next;
-      // Save to localStorage so admin stays in sync
-      try {
-        var saved = JSON.parse(localStorage.getItem('mosqueSettings') || '{}');
-        saved.screenRotate = next;
-        localStorage.setItem('mosqueSettings', JSON.stringify(saved));
-      } catch(e) {}
-      applyScreenRotation();
-      updateRotateLabel();
-    }
-
-    function updateRotateLabel() {
-      var lbl = document.getElementById('rotateBtnLabel');
-      if (!lbl) return;
-      var idx = ROTATE_STEPS.indexOf(CONFIG.screenRotate || '0');
-      lbl.textContent = ROTATE_LABELS[idx >= 0 ? idx : 0];
-    }
+    function cycleRotation() {}
+    function updateRotateLabel() {}
 
     // Real-time sync
     try {
