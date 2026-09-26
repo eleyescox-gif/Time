@@ -322,15 +322,18 @@
       height: 100%;
     }
 
-    /* TOP HEADER: Centered Bismillah on top, Mosque Brand on Left & Clean Date on Right */
+    /* TOP HEADER: Centered Bismillah, Mosque Brand & Address with Date on Right */
     .pro-header {
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      text-align: center;
       width: 100%;
       flex-shrink: 0;
       padding-bottom: 4px;
-      gap: 2px;
+      gap: clamp(2px, 0.4vh, 6px);
+      position: relative;
     }
 
     .header-top-bismillah {
@@ -339,17 +342,17 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding-top: 1px;
-      margin-bottom: 8px;
+      padding-top: 2px;
+      margin-bottom: 2px;
     }
 
     .header-bismillah {
       font-family: 'Amiri', serif;
-      font-size: clamp(16px, 1.8vw, 25px);
+      font-size: clamp(20px, 2.2vw, 32px);
       color: #f7c844;
       opacity: 0.98;
-      letter-spacing: 1.2px;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.85), 0 0 16px rgba(247, 200, 68, 0.45);
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.9), 0 0 18px rgba(247, 200, 68, 0.5);
       line-height: 1.15;
       text-align: center;
     }
@@ -357,10 +360,10 @@
     .header-main-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       width: 100%;
-      gap: 16px;
-      margin-top: 4px;
+      position: relative;
+      margin-top: 1px;
     }
 
     .header-left-spacer {
@@ -372,25 +375,25 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: flex-start;
-      text-align: left;
-      gap: clamp(12px, 1.6vw, 22px);
-      flex: 1 1 auto;
-      min-width: 0;
-      padding-left: 2px;
+      justify-content: center;
+      text-align: center;
+      gap: clamp(14px, 1.8vw, 24px);
+      margin: 0 auto;
+      padding-left: 0;
+      max-width: calc(100% - clamp(200px, 22vw, 340px));
     }
 
     .mosque-brand-block {
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: flex-start;
-      gap: clamp(12px, 1.6vw, 22px);
+      justify-content: center;
+      gap: clamp(14px, 1.8vw, 24px);
     }
 
     .mosque-header-logo {
-      width: clamp(54px, 5.6vw, 84px);
-      height: clamp(54px, 5.6vw, 84px);
+      width: clamp(56px, 5.8vw, 86px);
+      height: clamp(56px, 5.8vw, 86px);
       border-radius: 50%;
       object-fit: contain;
       background: #ffffff;
@@ -405,47 +408,52 @@
     .mosque-brand-titles {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      text-align: left;
+      align-items: center;
+      text-align: center;
       min-width: 0;
-      gap: 2px;
-      padding-top: 4px;
+      gap: 3px;
+      padding-top: 2px;
     }
 
     .mosque-title-bn {
       font-family: 'Hind Siliguri', sans-serif;
-      font-size: clamp(32px, 4.4vw, 58px);
+      font-size: clamp(32px, 4.4vw, 56px);
       font-weight: 900;
       color: #f7c844;
-      line-height: 1.12;
+      line-height: 1.15;
       letter-spacing: 0.6px;
       text-shadow: 0 3px 18px rgba(0,0,0,0.95), 0 0 32px rgba(247, 200, 68, 0.45);
       margin: 0;
+      text-align: center;
       white-space: nowrap;
     }
 
     .mosque-title-en {
       font-family: 'Hind Siliguri', 'Outfit', sans-serif;
-      font-size: clamp(14px, 1.4vw, 19px);
-      font-weight: 600;
+      font-size: clamp(15px, 1.6vw, 22px);
+      font-weight: 700;
       letter-spacing: 0.6px;
-      color: #e2e8f0;
+      color: #cbd5e1;
       opacity: 0.95;
-      margin-top: 2px;
+      margin-top: 1px;
       text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+      text-align: center;
       white-space: nowrap;
     }
 
-    /* Header Right Block: Professional Box for Arabic and English Dates */
+    /* Header Right Block: Professional Box for Arabic and English Dates placed on right */
     .header-right-block {
-      flex: 0 0 auto;
-      margin-left: auto;
+      position: absolute;
+      right: clamp(10px, 1.6vw, 24px);
+      top: 50%;
+      transform: translateY(-50%);
       min-width: 0;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
       justify-content: center;
-      padding-left: 12px;
+      padding-left: 0;
+      z-index: 5;
     }
 
     .header-date-badge {
@@ -1197,6 +1205,10 @@
     .is-portrait .header-right-block,
     body.rotate-90 .header-right-block,
     body.rotate-270 .header-right-block {
+      position: static !important;
+      transform: none !important;
+      right: auto !important;
+      top: auto !important;
       margin-left: 0 !important;
       padding-left: 0 !important;
       width: 100% !important;
@@ -1746,6 +1758,7 @@
         text-align: center !important;
         gap: clamp(6px, 1vh, 12px) !important;
         width: 100% !important;
+        max-width: 100% !important;
         padding-left: 0 !important;
       }
       .mosque-header-logo {
@@ -1781,6 +1794,10 @@
         text-align: center !important;
       }
       .header-right-block {
+        position: static !important;
+        transform: none !important;
+        right: auto !important;
+        top: auto !important;
         margin-left: 0 !important;
         padding-left: 0 !important;
         width: 100% !important;
