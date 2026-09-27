@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>মসজিদ কন্ট্রোল প্যানেল | Mosque Admin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0A1628;
+      --card: #112240;
+      --card-inner: #0B192E;
+      --border: #1E3A5F;
+      --gold: #D4AF37;
+      --gold-hover: #E5C158;
+      --green: #00E676;
+      --red: #FF5252;
+      --text: #F0F4FF;
+      --text-muted: #8892B0;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Hind Siliguri', 'Segoe UI', Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--card);
+      border-bottom: 1.5px solid var(--border);
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+
+    .hdr-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: rgba(212,175,55,0.15);
+      border: 1.5px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 24px;
+    }
+
+    .brand-text h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-text p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .hdr-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #03140C;
+    }
+    .btn-gold:hover {
+      background: var(--gold-hover);
+      box-shadow: 0 0 16px rgba(212,175,55,0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .btn-danger {
+      background: rgba(255,82,82,0.15);
+      border: 1px solid rgba(255,82,82,0.3);
+      color: #FF8A80;
+    }
+    .btn-danger:hover {
+      background: var(--red);
+      color: #FFFFFF;
+    }
+
+    /* ── MAIN CONTAINER ── */
+    .container {
+      max-width: 1100px;
+      width: 100%;
+      margin: 24px auto;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      flex: 1;
+    }
+
+    /* ── TABS ── */
+    .tabs-nav {
+      display: flex;
+      gap: 8px;
+      background: var(--card);
+      padding: 6px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px 14px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 13.5px;
+      font-weight: 600;
+      font-family: inherit;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .tab-btn.active {
+      background: rgba(212,175,55,0.15);
+      color: var(--gold);
+      border: 1px solid rgba(212,175,55,0.3);
+    }
+
+    /* ── TAB CONTENT ── */
+    .tab-pane {
+      display: none;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    }
+
+    .section-header {
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-header h2 {
+      font-size: 17px;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-header p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Form Fields */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .field-hint {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      background: var(--card-inner);
+      border: 1.5px solid var(--border);
+      color: #FFFFFF;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 10px rgba(212,175,55,0.25);
+    }
+
+    textarea {
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    /* 12-Hour Time Picker with AM/PM Switch */
+    .time-input-12h-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .time-input-12h-wrap input {
+      flex: 1;
+      min-width: 0;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .ampm-pill-group {
+      display: inline-flex;
+      align-items: center;
+      background: var(--card-inner);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 2px;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+
+    .ampm-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .ampm-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .ampm-btn.active {
+      background: var(--gold);
+      color: #000000;
+      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
+    }
+
+    /* Logo Upload Box */
+    .logo-uploader {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: var(--card-inner);
+      padding: 16px;
+      border-radius: 12px;
+      border: 1.5px dashed var(--border);
+    }
+
+    .logo-preview-box {
+      width: 80px;
+      height: 80px;
+      border-radius: 12px;
+      background: rgba(212,175,55,0.1);
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .logo-preview-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .logo-preview-box svg {
+      width: 44px;
+      height: 44px;
+      fill: var(--gold);
+    }
+
+    .logo-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Quick City Buttons */
+    .city-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .city-chip {
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .city-chip:hover, .city-chip.selected {
+      background: rgba(212,175,55,0.15);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* Theme Picker Cards */
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .theme-card {
+      background: var(--card-inner);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .theme-card:hover { border-color: var(--gold); }
+    .theme-card.selected {
+      border-color: var(--green);
+      box-shadow: 0 0 16px rgba(0,230,118,0.3);
+      background: rgba(0,230,118,0.06);
+    }
+
+    .theme-preview {
+      height: 48px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .preview-emerald {
+      background: radial-gradient(circle, #0d3829, #061c14);
+      color: #00E676;
+      border: 1px solid #D4AF37;
+    }
+
+    .preview-navy {
+      background: radial-gradient(circle, #0c2540, #061527);
+      color: #00D2FF;
+      border: 1px solid #CBA135;
+    }
+
+    .preview-obsidian {
+      background: radial-gradient(circle, #1c1d22, #050608);
+      color: #FFB300;
+      border: 1px solid #FFB300;
+    }
+
+    /* Rotation Selector Cards */
+    .rotate-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .rotate-card {
+      background: var(--card-inner);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .rotate-card:hover { border-color: var(--gold); }
+    .rotate-card.selected {
+      border-color: var(--gold);
+      background: rgba(212,175,55,0.12);
+      box-shadow: 0 0 12px rgba(212,175,55,0.25);
+    }
+
+    .rotate-icon {
+      font-size: 24px;
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #032415;
+      border: 1.5px solid var(--green);
+      color: #FFFFFF;
+      padding: 14px 22px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      gap: 10px;
+      z-index: 1000;
+      animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes toastIn {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Sticky Save Bar */
+    .save-bar {
+      position: sticky;
+      bottom: 0;
+      background: rgba(17, 34, 64, 0.95);
+      backdrop-filter: blur(12px);
+      border-top: 1.5px solid var(--border);
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      box-shadow: 0 -6px 20px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="hdr-left">
+      <div class="brand-icon">🕌</div>
+      <div class="brand-text">
+        <h1>মসজিদ ডিসপ্লে কন্ট্রোল প্যানেল</h1>
+        <p>Mosque Digital Display Configuration Dashboard</p>
+      </div>
+    </div>
+    <div class="hdr-actions">
+      <a href="MyMasjidTV_INSTALL.apk" download class="btn btn-outline" style="border-color:#10b981; color:#a7f3d0;" title="স্মার্ট টিভি বা মোবাইলের জন্য সরাসরি এপিকে ডাউনলোড করুন">
+        <span>📥 TV App (APK) ডাউনলোড</span>
+      </a>
+      <a href="display.html" class="btn btn-outline">
+        <span>📺 Display খুলুন</span>
+      </a>
+      <button onclick="saveSettings()" class="btn btn-gold">
+        <span>💾 সেভ করুন</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- NAVIGATION TABS (4 CLEAN & FOCUSED TABS) -->
+    <nav class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab('tab-prayer')">⏱️ জামাতের সময়</button>
+      <button class="tab-btn" onclick="switchTab('tab-announcement')">📢 নোটিশ ও বার্তা</button>
+      <button class="tab-btn" onclick="switchTab('tab-calendar')">🌙 হিজরি ও ক্যালেন্ডার</button>
+      <button class="tab-btn" onclick="switchTab('tab-display')">🎨 ডিসপ্লে ও সেটিংস</button>
+    </nav>
+
+    <!-- TAB 1: PRAYER & JAMAAT (DEFAULT ACTIVE) -->
+    <div id="tab-prayer" class="tab-pane active">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>⏱️ আজান, জামাত ও নামাজের সময়সূচি</h2>
+            <p>প্রতিটি ওয়াক্তের আজান ও জামাতের সময় নির্ধারণ করুন (১২ ঘণ্টা ফরম্যাটে লিখুন, পাশে AM / PM বেছে নিন; আজানে 'auto' লিখলে চকরিয়া সূর্য অনুযায়ী স্বয়ংক্রিয় নির্ধারণ হবে)</p>
+          </div>
+        </div>
+        <div class="form-grid">
+          <!-- ফজর -->
+          <div class="form-group">
+            <label>📢 ফজর আজান</label>
+            <div class="time-input-12h-wrap">
+              <input id="fajrAzan" placeholder="auto" maxlength="8">
+              <div class="ampm-pill-group" data-for="fajrAzan">
+                <button type="button" class="ampm-btn active" data-val="AM" onclick="setAmpm('fajrAzan','AM')">AM</button>
+                <button type="button" class="ampm-btn" data-val="PM" onclick="setAmpm('fajrAzan','PM')">PM</button>
+              </div>
+            </div>
+            <span class="field-hint">'auto' দিলে সূর্য অনুযায়ী আজান সময় বসবে</span>
+          </div>
+          <div class="form-group">
+            <label>🕌 ফজর জামাত</label>
+            <div class="time-input-12h-wrap">
+              <input id="fajrJm" placeholder="05:30" maxlength="8">
+              <div class="ampm-pill-group" data-for="fajrJm">
+                <button type="button" class="ampm-btn active" data-val="AM" onclick="setAmpm('fajrJm','AM')">AM</button>
+                <button type="button" class="ampm-btn" data-val="PM" onclick="setAmpm('fajrJm','PM')">PM</button>
+              </div>
+            </div>
+            <span class="field-hint">মসজিদের জামাতের নির্ধারিত সময়</span>
+          </div>
+
+          <!-- যোহর -->
+          <div class="form-group">
+            <label>📢 যোহর আজান</label>
+            <div class="time-input-12h-wrap">
+              <input id="dhuhrAzan" placeholder="auto" maxlength="8">
+              <div class="ampm-pill-group" data-for="dhuhrAzan">
+                <button type="button" class="ampm-btn" data-val="AM" onclick="setAmpm('dhuhrAzan','AM')">AM</button>
+                <button type="button" class="ampm-btn active" data-val="PM" onclick="setAmpm('dhuhrAzan','PM')">PM</button>
+              </div>
+            </div>
+            <span class="field-hint">'auto' দিলে সূর্য অনুযায়ী আজান সময় বসবে</span>
+          </div>
+          <div class="form-group">
+            <label>🕌 যোহর জামাত (শনি - বৃহস্পতি)</label>
+            <div class="time-input-12h-wrap">
+              <input id="dhuhrJm" placeholder="01:30" maxlength="8">
+              <div class="ampm-pill-group" data-for="dhuhrJm">
+                <button type="button" class="ampm-btn" data-val="AM" onclick="setAmpm('dhuhrJm','AM')">AM</button>
+                <button type="button" class="ampm-btn active" data-val="PM" onclick="setAmpm('dhuhrJm','PM')">PM</button>
+              </div>
+            </div>
+            <span class="field-hint">মসজিদের জামাতের নির্ধারিত সময়</span>
+          </div>
+
+          <!-- আসর -->
+          <div class="form-group">
+            <label>📢 আসর আজান</label>
+            <div class="time-input-12h-wrap">
+              <input id="asrAzan" placeholder="auto" maxlength="8">
+              <div class="ampm-pill-group" data-for="asrAzan">
+                <button type="button" class="ampm-btn" data-val="AM" onclick="setAmpm('asrAzan','AM')">AM</button>
+                <button type="button" class="ampm-btn active" data-val="PM" onclick="setAmpm('asrAzan','PM')">PM</button>
+              </div>
+            </div>
+            <span class="field-hint">'auto' দিলে সূর্য অনুযায়ী আজান সময় বসবে</span>
+          </div>
+          <div class="form-group">
+            <label>🕌 আসর জামাত</label>
+            <div class="time-input-12h-wrap">
+              <input id="asrJm" placeholder="04:30" maxlength="8">
+              <div class="ampm-pill-group" data-for="asrJm">
+                <button type="button" class="ampm-btn" data-val="AM" onclick="setAmpm('asrJm','AM')">AM</button>
+                <button type="button" class="ampm-btn active" data-val="PM" onclick="setAmpm('asrJm','PM')">PM</button>
+              </div>
+            </div>
+            <span class="field-hint">মসজিদের জামাতের নির্ধারিত সময়</span>
+          </div>
+
+          <!-- মাগরিব -->
+          <div class="form-group">
+            <label>📢 মাগরিব আজান</label>
+            <div class="time-input-12h-wrap">
+              <input id="maghribAzan" placeholder="auto" maxlength="8">
+              <div class="ampm-pill-group" data-for="maghribAzan">
+                <button type="button" class="ampm-btn" data-val="AM" onclick="setAmpm('maghribAzan','AM')">AM</button>
+                <button type="button" class="ampm-btn active" data-val="PM" onclick="setAmpm('maghribAzan','PM')">PM</button>
+              </div>
+            </div>
+            <span class="field-hint">'auto' দিলে সূর্য অনুযায়ী আজান সময় বসবে</span>
+          </div>
+          <div class="form-group">
+            <label>🕌 মাগরিব জামাত</label>
+            <div class="time-input-12h-wrap">
+              <input id="maghribJm" placeholder="auto" maxlength="8">
+              <div class="ampm-pill-group" data-for="maghribJm">
+                <button type="button" class="ampm-btn" data-val="AM" onclick="setAmpm('maghribJm','AM')">AM</button>
+                <button type="button" class="ampm-btn active" data-val="PM" onclick="setAmpm('maghribJm','PM')">PM</button>
+              </div>
+            </div>
+            <span class="field-hint">'auto' লিখলে আজানের সাথেই স্বয়ংক্রিয়ভাবে কাউন্ট হবে</span>
+          </div>
+
+          <!-- এশা -->
+          <div class="form-group">
+            <label>📢 এশা আজান</label>
+            <div class="time-input-12h-wrap">
+              <input id="ishaAzan" placeholder="auto" maxlength="8">
+              <div class="ampm-pill-group" data-for="ishaAzan">
+                <button type="button" class="ampm-btn" data-val="AM" onclick="setAmpm('ishaAzan','AM')">AM</button>
+                <button type="button" class="ampm-btn active" data-val="PM" onclick="setAmpm('ishaAzan','PM')">PM</button>
+              </div>
+            </div>
+            <span class="field-hint">'auto' দিলে সূর্য অনুযায়ী আজান সময় বসবে</span>
+          </div>
+          <div class="form-group">
+            <label>🕌 এশা জামাত</label>
+            <div class="time-input-12h-wrap">
+              <input id="ishaJm" placeholder="08:00" maxlength="8">
+              <div class="ampm-pill-group" data-for="ishaJm">
+                <button type="button" class="ampm-btn" data-val="AM" onclick="setAmpm('ishaJm','AM')">AM</button>
+                <button type="button" class="ampm-btn active" data-val="PM" onclick="setAmpm('ishaJm','PM')">PM</button>
+              </div>
+            </div>
+            <span class="field-hint">মসজিদের জামাতের নির্ধারিত সময়</span>
+          </div>
+
+          <!-- জুমু'আ -->
+          <div class="form-group">
+            <label>📖 জুমু'আ খুতবার সময় (শুক্রবার)</label>
+            <div class="time-input-12h-wrap">
+              <input id="jummahKhutbah" placeholder="01:00" maxlength="8">
+              <div class="ampm-pill-group" data-for="jummahKhutbah">
+                <button type="button" class="ampm-btn" data-val="AM" onclick="setAmpm('jummahKhutbah','AM')">AM</button>
+                <button type="button" class="ampm-btn active" data-val="PM" onclick="setAmpm('jummahKhutbah','PM')">PM</button>
+              </div>
+            </div>
+            <span class="field-hint">শুক্রবার খুতবা শুরুর সময়</span>
+          </div>
+          <div class="form-group">
+            <label>🕌 জুমু'আ জামাতের সময় (শুক্রবার)</label>
+            <div class="time-input-12h-wrap">
+              <input id="jummahJamaat" placeholder="01:30" maxlength="8">
+              <div class="ampm-pill-group" data-for="jummahJamaat">
+                <button type="button" class="ampm-btn" data-val="AM" onclick="setAmpm('jummahJamaat','AM')">AM</button>
+                <button type="button" class="ampm-btn active" data-val="PM" onclick="setAmpm('jummahJamaat','PM')">PM</button>
+              </div>
+            </div>
+            <span class="field-hint">শুক্রবার জুমু'আ নামাজের জামাত</span>
+          </div>
+        </div>
+
+        <!-- Live Jamaat Countdown Controller -->
+        <div class="settings-card" style="margin-top: 24px;">
+          <div class="card-header">
+            <div class="card-icon">⏱️</div>
+            <div>
+              <h3>জামাত ৫-মিনিট কাউন্টডাউন ও প্রগ্রেস লাইন</h3>
+              <p>জামাতের ৫ মিনিট আগে স্বয়ংক্রিয়ভাবে ডিসপ্লে স্ক্রিনে ঘড়ি চালু হয় এবং প্রগ্রেস লাইনটি সংকুচিত হয়ে কমে যায়</p>
+            </div>
+          </div>
+          <div style="background: rgba(0,0,0,0.25); border-radius: 12px; padding: 18px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+              <div>
+                <strong style="color:var(--gold); font-size:15px;">⏱️ ডিসপ্লেতে ৫ মিনিট কাউন্টডাউন টেস্ট করুন</strong>
+                <p style="font-size:12px; color:var(--text-muted); margin-top:2px;">জামাত সময়ের অপেক্ষা না করে এখনই ডিসপ্লে স্ক্রিনে ৫ মিনিটের কাউন্টডাউন ও কমে যাওয়া লাইনটি পরীক্ষা করুন।</p>
+              </div>
+              <div style="display:flex; gap:10px;">
+                <button type="button" class="btn btn-gold" onclick="triggerTestCountdown(300)">
+                  <span>▶️ ৫ মিনিট টেস্ট শুরু করুন</span>
+                </button>
+                <button type="button" class="btn btn-outline" onclick="stopTestCountdown()">
+                  <span>⏹️ টেস্ট বন্ধ করুন</span>
+                </button>
+              </div>
+            </div>
+            <div style="font-size:12px; color:#a7f3d0; background:rgba(16,185,129,0.1); border-left:3px solid #10b981; padding:8px 12px; border-radius:4px;">
+              💡 <strong>কীভাবে কাজ করে:</strong> প্রতিদিন প্রতি ওয়াক্তের জামাতের নির্ধারিত সময়ের ঠিক ৫ মিনিট আগে স্বয়ংক্রিয়ভাবে ডিসপ্লে স্ক্রিনে ঘড়ি ও লাইনটি চালু হয়ে ০৫:০০ থেকে কমে ০০:০০ হবে।
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Salat Screen Mode Controller (জামাত চলাকালীন ৫ মিনিট ফুল স্ক্রিন সালাত মোড) -->
+        <div class="settings-card" style="margin-top: 24px;">
+          <div class="card-header">
+            <div class="card-icon">🕌</div>
+            <div>
+              <h3>জামাত চলাকালীন ৫ মিনিট "সালাত" স্ক্রিন</h3>
+              <p>জামাত শুরু হলে টানা ৫ মিনিট ডিসপ্লেতে অন্য কিছু থাকবে না, শুধু বড় করে "সালাত" লিখা থাকবে। ৫ মিনিট পর স্বয়ংক্রিয়ভাবে স্বাভাবিক ডিসপ্লে ফিরে আসবে।</p>
+            </div>
+          </div>
+          <div style="background: rgba(0,0,0,0.25); border-radius: 12px; padding: 18px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+              <div>
+                <strong style="color:var(--gold); font-size:15px;">🕌 ৫ মিনিট "সালাত" স্ক্রিন টেস্ট করুন</strong>
+                <p style="font-size:12px; color:var(--text-muted); margin-top:2px;">জামাত চলাকালীন ডিসপ্লেতে বড় অক্ষরে "সালাত" স্ক্রিনটি কেমন দেখাবে তা এখনই পরীক্ষা করতে পারেন।</p>
+              </div>
+              <div style="display:flex; gap:10px;">
+                <button type="button" class="btn btn-gold" onclick="triggerSalatModeTest(300)">
+                  <span>▶️ সালাত স্ক্রিন টেস্ট চালু</span>
+                </button>
+                <button type="button" class="btn btn-outline" onclick="stopSalatModeTest()">
+                  <span>⏹️ সালাত স্ক্রিন বন্ধ করুন</span>
+                </button>
+              </div>
+            </div>
+            <div style="font-size:12px; color:#93c5fd; background:rgba(59,130,246,0.1); border-left:3px solid #3b82f6; padding:8px 12px; border-radius:4px;">
+              💡 <strong>স্বয়ংক্রিয় নিয়ম:</strong> প্রতিদিন ফজর, যোহর/জুমা, আসর, মাগরিব ও এশার জামাত শুরু হওয়ার সাথে সাথে স্ক্রিন সম্পূর্ণ ব্ল্যাকআউট হয়ে শুধু বড় করে "সালাত" ভেসে উঠবে এবং ৫ মিনিট পর নিজে থেকেই স্বাভাবিক হয়ে যাবে।
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: ANNOUNCEMENTS & TICKER -->
+    <div id="tab-announcement" class="tab-pane">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>📢 স্ক্রলিং নোটিশ ও বার্তা</h2>
+            <p>ডিসপ্লে স্ক্রিনের নিচে চলমান ঘোষণা, হাদিস বা বিশেষ বার্তা নির্ধারণ করুন</p>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label>টিকার বার্তা (Ticker Message)</label>
+            <textarea id="ticker" rows="3" placeholder="নামাজের সময় মোবাইল ফোন বন্ধ বা সাইলেন্ট রাখুন। মসজিদে শান্ত থাকুন।"></textarea>
+            <span class="field-hint">আপনি এখানে হাদিস, জরুরি নোটিশ বা জুমার ঘোষণা লিখতে পারেন। ডিসপ্লেতে সাথে সাথে আপডেট হবে।</span>
+            
+            <!-- Quick Preset Chips -->
+            <div style="margin-top: 14px;">
+              <span style="font-size: 12.5px; color: var(--gold); font-weight: 700; margin-bottom: 8px; display: block;">⚡ দ্রুত যুক্ত করতে ক্লিক করুন (Quick Presets):</span>
+              <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <button type="button" class="btn btn-outline" style="font-size: 12px; padding: 6px 12px;" onclick="addTickerPreset('📵 নামাজের সময় মোবাইল ফোন বন্ধ বা সাইলেন্ট রাখুন।')">📵 মোবাইল সাইলেন্ট</button>
+                <button type="button" class="btn btn-outline" style="font-size: 12px; padding: 6px 12px;" onclick="addTickerPreset('🕌 কাতার সোজা করুন এবং ফাঁকা জায়গা পূরণ করুন।')">🕌 কাতার সোজা করুন</button>
+                <button type="button" class="btn btn-outline" style="font-size: 12px; padding: 6px 12px;" onclick="addTickerPreset('✨ পবিত্র জুমার বয়ান ও খুতবা দুপুর ১:০০ টায় শুরু হবে।')">✨ জুমার বয়ান</button>
+                <button type="button" class="btn btn-outline" style="font-size: 12px; padding: 6px 12px;" onclick="addTickerPreset('💰 মসজিদের সার্বিক উন্নয়নে মুক্তহস্তে দান করুন।')">💰 মসজিদে দান</button>
+                <button type="button" class="btn btn-outline" style="font-size: 12px; padding: 6px 12px;" onclick="addTickerPreset('الصَّلَاةُ عِمَادُ الدِّينِ (নামাজ দ্বীনের স্তম্ভ)')">📖 হাদিস বাণী</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: HIJRI & CALENDAR -->
+    <div id="tab-calendar" class="tab-pane">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>🌙 হিজরি তারিখ ও সেহরি-ইফতার সমন্বয়</h2>
+            <p>চাঁদ দেখার ভিত্তিতে তারিখ সমন্বয় ও সেহরি-ইফতার প্রদর্শন নিয়ন্ত্রণ করুন</p>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>হিজরি তারিখ সমন্বয় (চাঁদ দেখা অনুযায়ী)</label>
+            <select id="hijriOffset">
+              <option value="-2">-২ দিন কম</option>
+              <option value="-1">-১ দিন কম</option>
+              <option value="0" selected>স্বাভাবিক (০ দিন)</option>
+              <option value="1">+১ দিন বেশি</option>
+              <option value="2">+২ দিন বেশি</option>
+            </select>
+            <div style="display:flex; gap:8px; margin-top:10px;">
+              <button type="button" class="btn btn-outline" style="font-size:12px; padding:6px 12px;" onclick="setHijriOffset(-1)">-১ দিন</button>
+              <button type="button" class="btn btn-outline" style="font-size:12px; padding:6px 12px;" onclick="setHijriOffset(0)">স্বাভাবিক (০)</button>
+              <button type="button" class="btn btn-outline" style="font-size:12px; padding:6px 12px;" onclick="setHijriOffset(1)">+১ দিন</button>
+            </div>
+            <span class="field-hint">নতুন চাঁদ দেখা গেলে এই বাটন বা ড্রপডাউন দিয়ে সহজেই তারিখ মেলানো যায়</span>
+          </div>
+          <div class="form-group">
+            <label>সেহরি ও ইফতার সময় প্রদর্শন (রমজান / নফল রোজা)</label>
+            <select id="showFasting">
+              <option value="true" selected>চালু (অন) - সেহরি ও ইফতার সময় দেখান</option>
+              <option value="false">বন্ধ (অফ) - সেহরি ও ইফতার সময় লুকান</option>
+            </select>
+            <span class="field-hint">প্রতিদিনের সেহরি শেষ ও ইফতার সময় ডিসপ্লের নিচে দেখাবে</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: DISPLAY, THEME, MOSQUE INFO & SETTINGS -->
+    <div id="tab-display" class="tab-pane">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>🎨 ডিসপ্লে, থিম ও মসজিদ তথ্য</h2>
+            <p>রঙের থিম, ফন্ট সাইজ, মসজিদের পরিচিতি ও ব্যাকআপ নিয়ন্ত্রণ করুন</p>
+          </div>
+        </div>
+
+        <!-- 1. THEME SELECTION -->
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label>🎨 থিম নির্বাচন (Color Themes):</label>
+          <div class="theme-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+            <div class="theme-card selected" id="theme-navy" onclick="selectTheme('navy')">
+              <div class="theme-preview" style="background:#061a24; color:#fde047;">Royal Navy</div>
+              <strong style="font-size:13px;">🌌 রয়্যাল নেভি ও গোল্ড</strong>
+              <span class="field-hint">গভীর নীল ব্যাকগ্রাউন্ড ও সোনালী আভা</span>
+            </div>
+            <div class="theme-card" id="theme-burgundy" onclick="selectTheme('burgundy')">
+              <div class="theme-preview" style="background:#4a060a; color:#fde047;">Royal Burgundy</div>
+              <strong style="font-size:13px;">🍷 রয়্যাল বার্গান্ডি ও গোল্ড</strong>
+              <span class="field-hint">গভীর লাল মারুন ও সোনালী আভা</span>
+            </div>
+            <div class="theme-card" id="theme-emerald" onclick="selectTheme('emerald')">
+              <div class="theme-preview preview-emerald" style="background:#032014; color:#fde047;">Royal Emerald</div>
+              <strong style="font-size:13px;">🌿 রয়েল এমারেল্ড ও গোল্ড</strong>
+              <span class="field-hint">ঐতিহ্যবাহী ইসলামিক সবুজ ও সোনালী</span>
+            </div>
+            <div class="theme-card" id="theme-slate" onclick="selectTheme('slate')">
+              <div class="theme-preview" style="background:#090e17; color:#38bdf8;">Modern Slate</div>
+              <strong style="font-size:13px;">🖤 মডার্ন স্লেট / অবসিডিয়ান</strong>
+              <span class="field-hint">অ্যানেক্স ব্ল্যাক ও শীতল সায়ান বৈসাদৃশ্য</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. FONT SIZE SCALER -->
+        <div class="settings-card" style="margin-bottom: 24px; border: 1.5px solid var(--gold); border-radius: 12px; background: var(--card-inner); padding: 18px;">
+          <div class="card-header" style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+            <div class="card-icon" style="font-size:26px;">🔤</div>
+            <div>
+              <h3 style="color:var(--gold); font-size:16px;">নামাজের কার্ডের ফন্ট সাইজ সমন্বয় (Font Scaler)</h3>
+              <p style="color:var(--text-muted); font-size:12px;">টিভি স্ক্রিনের দূরত্ব অনুযায়ী লেখার আকার সমন্বয় করুন (ডিসপ্লেতে সাথে সাথে পরিবর্তিত হবে)।</p>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:14px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+              <span style="font-weight:600; color:var(--text); font-size:14px;">ফন্ট স্কেল: <strong id="fontSizeScaleLabel" style="color:var(--gold); font-size:17px;">১০০%</strong></span>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button type="button" class="btn btn-outline" style="padding:5px 10px; font-size:12px;" onclick="setFontSizeScale(85)">ছোট (৮৫%)</button>
+                <button type="button" class="btn btn-outline" style="padding:5px 10px; font-size:12px;" onclick="setFontSizeScale(100)">স্বাভাবিক (১০০%)</button>
+                <button type="button" class="btn btn-outline" style="padding:5px 10px; font-size:12px;" onclick="setFontSizeScale(115)">বড় (১১৫%)</button>
+                <button type="button" class="btn btn-outline" style="padding:5px 10px; font-size:12px;" onclick="setFontSizeScale(130)">অতি বড় (১৩০%)</button>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; gap:14px;">
+              <span style="font-size:12px; color:var(--text-muted);">৮০%</span>
+              <input type="range" id="fontSizeScale" min="80" max="140" value="100" step="5" oninput="onFontSizeSliderChange(this.value)" style="flex:1; cursor:pointer; height:8px; accent-color:var(--gold);">
+              <span style="font-size:12px; color:var(--text-muted);">১৪০%</span>
+            </div>
+            <!-- LIVE PREVIEW BOX IN ADMIN -->
+            <div style="margin-top:8px;">
+              <label style="font-size:12px; font-weight:700; color:var(--gold); margin-bottom:6px; display:block;">👁️ প্রিভিউ:</label>
+              <div id="livePillPreview" style="max-width:380px; background:linear-gradient(180deg,#f8fafc 0%,#e2e8f0 100%); color:#0f172a; border-radius:12px; padding:10px 20px; display:flex; align-items:center; justify-content:center; gap:12px; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
+                <span id="prevName" style="font-family:'Hind Siliguri',sans-serif; font-size:24px; font-weight:800; color:#0f172a;">ফজর</span>
+                <span id="prevSep" style="font-size:22px; font-weight:600; opacity:0.5; color:#0f172a;">-</span>
+                <span id="prevTime" style="font-family:'Outfit','Cinzel',sans-serif; font-size:26px; font-weight:800; color:#0f172a;">4:26</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. MOSQUE INFO & LOGO -->
+        <div class="settings-card" style="margin-bottom: 24px; padding: 18px;">
+          <div class="card-header" style="margin-bottom: 14px;">
+            <div class="card-icon">🏛️</div>
+            <div>
+              <h3>মসজিদের পরিচিতি ও লোগো</h3>
+              <p>স্ক্রিনের শীর্ষে প্রদর্শিত নাম, ঠিকানা ও নিজস্ব লোগো ছবি</p>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>বাংলা নাম (Mosque Name)</label>
+              <input id="nameBn" placeholder="পূর্ব মোহাজের পাড়া জামে মসজিদ">
+            </div>
+            <div class="form-group">
+              <label>ঠিকানা / অবস্থান (Address)</label>
+              <input id="nameEn" placeholder="বরইতলী, চকরিয়া, কক্সবাজার।">
+            </div>
+            <div class="form-group">
+              <label>আরবি ক্যালিগ্রাফি নাম</label>
+              <input id="nameAr" style="font-family:'Amiri',serif; direction:rtl;" placeholder="مسجد النور">
+            </div>
+            <div class="form-group">
+              <label>মসজিদের লোগো ছবি (Mosque Logo)</label>
+              <div style="display:flex; gap:10px; align-items:center;">
+                <label class="btn btn-outline" style="cursor:pointer; font-size:13px; padding:8px 14px; background:rgba(212,175,55,0.1); border-color:var(--gold);">
+                  <span>📁 লোগো নির্বাচন করুন</span>
+                  <input type="file" id="logoInput" accept="image/*" onchange="handleLogoUpload(event)" style="display:none;">
+                </label>
+                <button type="button" onclick="removeLogo()" class="btn btn-danger" id="removeLogoBtn" style="display:none; font-size:12px; padding:7px 12px;">🗑️ লোগো মুছুন</button>
+              </div>
+              <div id="logoPreviewContainer" style="margin-top:10px; display:flex; align-items:center; gap:12px;">
+                <img id="logoPreviewImg" style="display:none; width:70px; height:70px; border-radius:50%; object-fit:contain; background:#ffffff; border:2px solid var(--gold); padding:2px; box-shadow:0 3px 10px rgba(0,0,0,0.5);" alt="Logo">
+                <svg id="logoDefaultSvg" style="display:none;"></svg>
+                <span style="font-size:12px; color:var(--text-muted);">স্ক্রিনের শীর্ষে নামের পাশে গোল লোগো হিসেবে প্রদর্শিত হবে।</span>
+              </div>
+            </div>
+
+            <!-- ডিসপ্লে ব্যাকগ্রাউন্ড ছবি / ওয়ালপেপার আপলোড অপশন -->
+            <div class="form-group" style="grid-column: 1 / -1; margin-top: 10px; padding-top: 14px; border-top: 1px dashed rgba(255,255,255,0.15);">
+              <label style="font-size:14px; color:var(--gold); font-weight:700;">🖼️ ডিসপ্লে ব্যাকগ্রাউন্ড ছবি / ওয়ালপেপার (Display Background Picture)</label>
+              <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">টিভি বা মনিটরের ব্যাকগ্রাউন্ডে পুরো স্ক্রিন জুড়ে মসজিদ বা যেকোনো কাস্টম ছবি প্রদর্শনের জন্য আপলোড করুন।</p>
+              
+              <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+                <label class="btn btn-outline" style="cursor:pointer; font-size:13px; padding:8px 14px; background:rgba(16,185,129,0.12); border-color:#10b981; color:#10b981;">
+                  <span>📁 ব্যাকগ্রাউন্ড ছবি নির্বাচন করুন</span>
+                  <input type="file" id="archInput" accept="image/*" onchange="handleArchUpload(event)" style="display:none;">
+                </label>
+                <button type="button" onclick="removeArch()" class="btn btn-danger" id="removeArchBtn" style="display:none; font-size:12px; padding:7px 12px;">🗑️ ছবি মুছুন</button>
+              </div>
+
+              <div id="archPreviewContainer" style="margin-top:12px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+                <img id="archPreviewImg" style="display:none; max-width:200px; max-height:110px; border-radius:8px; object-fit:cover; border:2px solid var(--gold); box-shadow:0 4px 14px rgba(0,0,0,0.6);" alt="Background Preview">
+                <svg id="archDefaultIcon" style="display:none;"></svg>
+                
+                <div style="flex:1; min-width:220px;">
+                  <label style="font-size:12px; color:var(--text-secondary); display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span>ছবি দৃশ্যমানতা / স্বচ্ছতা (Opacity):</span>
+                    <strong id="bgOpacityLabel" style="color:var(--gold); font-size:13px;">৪৫%</strong>
+                  </label>
+                  <input type="range" id="bgOpacity" min="10" max="95" value="45" style="width:100%; accent-color:var(--gold);" oninput="onBgOpacityChange(this.value)">
+                  <span style="font-size:11px; color:var(--text-muted);">লেখা সহজে পড়ার সুবিধার্থে ৩০% - ৫০% রাখা সবচেয়ে ভালো।</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. BACKUP & RESTORE -->
+        <div class="settings-card" style="margin-bottom: 24px; padding: 18px;">
+          <div class="card-header" style="margin-bottom: 14px;">
+            <div class="card-icon">💾</div>
+            <div>
+              <h3>ব্যাকআপ ও রিস্টোর</h3>
+              <p>আপনার সমস্ত সেটিংস ফাইলে ব্যাকআপ রাখুন বা রিস্টোর করুন</p>
+            </div>
+          </div>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <button type="button" onclick="exportJSON()" class="btn btn-outline">
+              <span>📥 ব্যাকআপ ডাউনলোড (JSON)</span>
+            </button>
+            <label class="btn btn-outline" style="cursor:pointer;">
+              <span>📤 ব্যাকআপ রিস্টোর</span>
+              <input type="file" id="importFileInput" accept=".json" onchange="importJSON(event)" style="display:none;">
+            </label>
+            <button type="button" onclick="resetDefaults()" class="btn btn-outline" style="color:var(--red); border-color:rgba(255,82,82,0.3);">
+              <span>🔄 ফ্যাক্টরি রিসেট</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 6. COLLAPSIBLE ADVANCED SETTINGS -->
+        <details style="background: rgba(0,0,0,0.25); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; margin-top: 14px;">
+          <summary style="cursor:pointer; color:var(--text-muted); font-size:13px; font-weight:700;">
+            ⚙️ উন্নত সময় ও অবস্থান সেটিংস (Advanced Settings)
+          </summary>
+          <div class="form-grid" style="margin-top: 14px;">
+            <div class="form-group">
+              <label>মূল ঘড়ির ফরম্যাট</label>
+              <select id="clockFormat">
+                <option value="12" selected>১২ ঘণ্টা ফরম্যাট</option>
+                <option value="24">২৪ ঘণ্টা ফরম্যাট</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>AM / PM ভাষা</label>
+              <select id="ampmMode">
+                <option value="en" selected>ইংরেজি (AM / PM)</option>
+                <option value="bn_natural">বাংলা (সকাল/দুপুর/রাত)</option>
+                <option value="hide">লুকান</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>ওয়াক্ত কার্ড সময় ফরম্যাট</label>
+              <select id="cardTimeFormat">
+                <option value="12" selected>১২ ঘণ্টা ফরম্যাট</option>
+                <option value="24">২৪ ঘণ্টা ফরম্যাট</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>আজানের সময় প্রদর্শন</label>
+              <select id="showAzanTime">
+                <option value="true" selected>চালু</option>
+                <option value="false">বন্ধ</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>আজান অ্যালার্ট ব্যানার</label>
+              <select id="showAzanAlert">
+                <option value="true" selected>চালু</option>
+                <option value="false">বন্ধ</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>কার্ড বিন্যাস (Layout)</label>
+              <select id="layoutMode">
+                <option value="auto" selected>স্বয়ংক্রিয়</option>
+                <option value="landscape">ল্যান্ডস্কেপ</option>
+                <option value="portrait">পোর্ট্রেট</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>আসরের মাযহাব</label>
+              <select id="asrMadhab">
+                <option value="hanafi" selected>হানাফি (বাংলাদেশ স্ট্যান্ডার্ড)</option>
+                <option value="shafii">শাফেয়ী</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>অক্ষাংশ / দ্রাঘিমাংশ (স্থায়ীভাবে নির্ধারিত)</label>
+              <div style="display:flex; gap:6px;">
+                <input id="lat" value="21.8355" readonly style="opacity:0.8;">
+                <input id="lng" value="92.0780" readonly style="opacity:0.8;">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>অবস্থান টেক্সট</label>
+              <input id="location" value="চকরিয়া, কক্সবাজার" readonly style="opacity:0.8;">
+            </div>
+            <div class="form-group" style="display:none;">
+              <input id="utc" value="6" readonly>
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- STICKY SAVE BAR WITH LIVE SYNC INDICATOR -->
+  <div class="save-bar">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #10b981; box-shadow: 0 0 10px #10b981;"></span>
+      <span style="font-size: 13px; color: #a7f3d0; font-weight: 600;">রিয়েল-টাইম লাইভ সিঙ্ক সক্রিয় • পরিবর্তন সাথে সাথে ডিসপ্লে স্ক্রিনে আপডেট হবে</span>
+    </div>
+    <div style="display: flex; gap: 12px;">
+      <a href="display.html" class="btn btn-outline">
+        <span>📺 ডিসপ্লে প্রিভিউ</span>
+      </a>
+      <button onclick="saveSettings()" class="btn btn-gold">
+        <span>💾 সেভ করুন</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast">
+    <span>✅ সফলভাবে সেভ হয়েছে! ডিসপ্লে পেজ তাৎক্ষণিক আপডেট হয়েছে।</span>
+  </div>
+
+  <script>
+    var currentTheme = 'navy';
+    var currentRotation = '0';
+    var currentLogoUrl = '';
+    var currentArchUrl = '';
+
+    var FIELDS = [
+      'nameAr', 'nameBn', 'nameEn', 'location',
+      'lat', 'lng', 'asrMadhab',
+      'fajrAzan', 'fajrJm', 'dhuhrAzan', 'dhuhrJm', 'asrAzan', 'asrJm', 'maghribAzan', 'maghribJm', 'ishaAzan', 'ishaJm',
+      'jummahKhutbah', 'jummahJamaat',
+      'hijriOffset', 'showFasting',
+      'ticker', 'clockFormat', 'ampmMode', 'cardTimeFormat',
+      'showAzanTime', 'showAzanAlert',
+      'layoutMode', 'fontSizeScale', 'bgOpacity'
+    ];
+
+    function toBnNum(num) {
+      return String(num).replace(/[0-9]/g, function(w){ return '০১২৩৪৫৬৭৮৯'[+w]; });
+    }
+
+    // ══ 12-HOUR TIME & AM/PM LOGIC FOR PRAYER TIMES ══
+    var PRAYER_FIELDS = [
+      'fajrAzan', 'fajrJm', 
+      'dhuhrAzan', 'dhuhrJm', 
+      'asrAzan', 'asrJm', 
+      'maghribAzan', 'maghribJm', 
+      'ishaAzan', 'ishaJm', 
+      'jummahKhutbah', 'jummahJamaat'
+    ];
+    var ampmState = {
+      fajrAzan: 'AM',
+      fajrJm: 'AM',
+      dhuhrAzan: 'PM',
+      dhuhrJm: 'PM',
+      asrAzan: 'PM',
+      asrJm: 'PM',
+      maghribAzan: 'PM',
+      maghribJm: 'PM',
+      ishaAzan: 'PM',
+      ishaJm: 'PM',
+      jummahKhutbah: 'PM',
+      jummahJamaat: 'PM'
+    };
+
+    function setAmpm(fieldId, val) {
+      ampmState[fieldId] = val;
+      var group = document.querySelector('.ampm-pill-group[data-for="' + fieldId + '"]');
+      if (group) {
+        group.querySelectorAll('.ampm-btn').forEach(function(b) {
+          if (b.getAttribute('data-val') === val) b.classList.add('active');
+          else b.classList.remove('active');
+        });
+      }
+      broadcastLiveUpdate();
+    }
+
+    function addTickerPreset(text) {
+      var el = document.getElementById('ticker');
+      if (!el) return;
+      var cur = el.value.trim();
+      if (!cur) {
+        el.value = text;
+      } else if (cur.indexOf(text) === -1) {
+        el.value = cur + ' ✶ ' + text;
+      }
+      broadcastLiveUpdate();
+      showToast('📢 নোটিশ বার্তা আপডেট হয়েছে!');
+    }
+
+    function setHijriOffset(num) {
+      var el = document.getElementById('hijriOffset');
+      if (!el) return;
+      el.value = String(num);
+      broadcastLiveUpdate();
+      showToast('🌙 হিজরি তারিখ সমন্বয় করা হয়েছে (' + (num > 0 ? '+' + num : num) + ' দিন)');
+    }
+
+    function getCurrentFormSettings() {
+      var s = JSON.parse(localStorage.getItem('mosqueSettings') || '{}');
+      FIELDS.forEach(function(k) {
+        var el = document.getElementById(k);
+        if (el) {
+          var val = el.value.trim();
+          if (PRAYER_FIELDS.indexOf(k) !== -1) {
+            var ampm = ampmState[k] || (k.indexOf('fajr') !== -1 ? 'AM' : 'PM');
+            s[k] = to24Hour(val, ampm);
+          } else {
+            s[k] = val;
+          }
+        }
+      });
+      s.theme = currentTheme;
+      s.screenRotate = '0';
+      s.logoUrl = currentLogoUrl;
+      s.bgArchUrl = currentArchUrl;
+      var elFs = document.getElementById('fontSizeScale');
+      if (elFs) s.fontSizeScale = elFs.value;
+      var elBgOp = document.getElementById('bgOpacity');
+      if (elBgOp) s.bgOpacity = elBgOp.value;
+
+      // Always keep permanent coordinates locked
+      s.lat = 21.8355;
+      s.lng = 92.0780;
+      s.location = 'চকরিয়া, কক্সবাজার';
+      return s;
+    }
+
+    var liveBroadcastTimer = null;
+    function broadcastLiveUpdate() {
+      clearTimeout(liveBroadcastTimer);
+      liveBroadcastTimer = setTimeout(function() {
+        var s = getCurrentFormSettings();
+        try {
+          localStorage.setItem('mosqueSettings', JSON.stringify(s));
+        } catch(e) {}
+        try {
+          var bc = new BroadcastChannel('mosque_channel');
+          bc.postMessage({ type: 'UPDATE_SETTINGS', settings: s });
+        } catch(e) {}
+
+        // Instant network SSE sync via backend POST
+        fetch('/api/settings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(s)
+        }).catch(function(){});
+      }, 30);
+    }
+
+    function to12Hour(timeStr, fieldKey) {
+      var isFajr = (fieldKey && fieldKey.indexOf('fajr') !== -1);
+      if (!timeStr || timeStr === '' || timeStr.toLowerCase() === 'auto') {
+        return { time: (timeStr && timeStr.toLowerCase() === 'auto' ? 'auto' : ''), ampm: (isFajr ? 'AM' : 'PM') };
+      }
+      var s = String(timeStr).trim();
+      var detectedAmpm = null;
+      if (/pm/i.test(s)) detectedAmpm = 'PM';
+      else if (/am/i.test(s)) detectedAmpm = 'AM';
+      s = s.replace(/am|pm/gi, '').trim();
+      if (s.indexOf(':') === -1 && s.indexOf('.') !== -1) s = s.replace('.', ':');
+      else if (s.indexOf(':') === -1 && s.indexOf('.') === -1 && s.length >= 3) {
+        s = s.slice(0, -2) + ':' + s.slice(-2);
+      }
+      var parts = s.split(':');
+      if (parts.length < 2) {
+        return { time: s, ampm: detectedAmpm || (isFajr ? 'AM' : 'PM') };
+      }
+      var h = parseInt(parts[0], 10);
+      var m = parseInt(parts[1], 10);
+      if (isNaN(h) || isNaN(m)) {
+        return { time: s, ampm: detectedAmpm || (isFajr ? 'AM' : 'PM') };
+      }
+      var ampm = detectedAmpm;
+      if (!ampm) {
+        if (h >= 12) {
+          ampm = 'PM';
+          if (h > 12) h -= 12;
+        } else if (h === 0) {
+          ampm = 'AM';
+          h = 12;
+        } else {
+          ampm = isFajr ? 'AM' : 'PM';
+        }
+      } else {
+        if (h > 12) h -= 12;
+        else if (h === 0) h = 12;
+      }
+      var hStr = String(h).padStart(2, '0');
+      var mStr = String(m).padStart(2, '0');
+      return { time: hStr + ':' + mStr, ampm: ampm };
+    }
+
+    function to24Hour(val, ampm) {
+      if (!val || val === '' || val.toLowerCase() === 'auto') return (val && val.toLowerCase() === 'auto' ? 'auto' : '');
+      var s = String(val).trim();
+      if (/pm/i.test(s)) { ampm = 'PM'; s = s.replace(/pm/gi, '').trim(); }
+      else if (/am/i.test(s)) { ampm = 'AM'; s = s.replace(/am/gi, '').trim(); }
+      if (s.indexOf(':') === -1 && s.indexOf('.') !== -1) s = s.replace('.', ':');
+      else if (s.indexOf(':') === -1 && s.indexOf('.') === -1 && s.length >= 3) {
+        s = s.slice(0, -2) + ':' + s.slice(-2);
+      }
+      var parts = s.split(':');
+      if (parts.length < 2) return val;
+      var h = parseInt(parts[0], 10);
+      var m = parseInt(parts[1], 10);
+      if (isNaN(h) || isNaN(m)) return val;
+
+      if (ampm === 'PM') {
+        if (h < 12) h += 12;
+      } else if (ampm === 'AM') {
+        if (h === 12) h = 0;
+      }
+      return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+    }
+
+    function normalizePrayerInput(fieldId) {
+      var el = document.getElementById(fieldId);
+      if (!el) return;
+      var raw = el.value.trim();
+      if (!raw || raw.toLowerCase() === 'auto') return;
+      var parsed = to12Hour(raw, fieldId);
+      el.value = parsed.time;
+      setAmpm(fieldId, parsed.ampm);
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
+      
+      var target = document.getElementById(tabId);
+      if (target) target.classList.add('active');
+      if (event && event.currentTarget) event.currentTarget.classList.add('active');
+    }
+
+    function selectTheme(themeName) {
+      currentTheme = themeName;
+      ['navy', 'burgundy', 'emerald', 'slate'].forEach(function(t) {
+        var el = document.getElementById('theme-' + t);
+        if (el) el.classList.remove('selected');
+      });
+      var sel = document.getElementById('theme-' + themeName);
+      if (sel) sel.classList.add('selected');
+      broadcastLiveUpdate();
+    }
+
+    function selectRotation(deg) {
+      currentRotation = '0';
+    }
+
+    // ── FONT SIZE SCALER FUNCTIONS ──
+    function onFontSizeSliderChange(val) {
+      var num = parseInt(val) || 100;
+      var lbl = document.getElementById('fontSizeScaleLabel');
+      if (lbl) lbl.textContent = toBnNum(num) + '%';
+
+      var pName = document.getElementById('prevName');
+      var pSep = document.getElementById('prevSep');
+      var pTime = document.getElementById('prevTime');
+      var ratio = num / 100;
+      if (pName) pName.style.fontSize = Math.round(26 * ratio) + 'px';
+      if (pSep) pSep.style.fontSize = Math.round(24 * ratio) + 'px';
+      if (pTime) pTime.style.fontSize = Math.round(28 * ratio) + 'px';
+
+      // Broadcast live to display screen
+      try {
+        var bc = new BroadcastChannel('mosque_channel');
+        bc.postMessage({ type: 'FONT_SCALE', scale: ratio });
+      } catch(e) {}
+    }
+
+    function setFontSizeScale(val) {
+      var sl = document.getElementById('fontSizeScale');
+      if (sl) {
+        sl.value = val;
+        onFontSizeSliderChange(val);
+      }
+    }
+
+    // Handle Logo Upload with Canvas Compression
+    function handleLogoUpload(event) {
+      var file = event.target.files[0];
+      if (!file) return;
+
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var img = new Image();
+        img.onload = function() {
+          var canvas = document.createElement('canvas');
+          var maxDim = 256;
+          var w = img.width, h = img.height;
+          if (w > maxDim || h > maxDim) {
+            if (w > h) { h = Math.round(h * maxDim / w); w = maxDim; }
+            else { w = Math.round(w * maxDim / h); h = maxDim; }
+          }
+          canvas.width = w;
+          canvas.height = h;
+          var ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          var compressed = canvas.toDataURL('image/png', 0.8);
+          
+          currentLogoUrl = compressed;
+          displayLogoPreview(compressed);
+          broadcastLiveUpdate();
+          showToast('✅ লোগো লোড হয়েছে! ডিসপ্লে স্ক্রিনে সাথে সাথে আপডেট হয়েছে।');
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function displayLogoPreview(url) {
+      var imgEl = document.getElementById('logoPreviewImg');
+      var svgEl = document.getElementById('logoDefaultSvg');
+      var removeBtn = document.getElementById('removeLogoBtn');
+      if (url && url.trim() !== '') {
+        imgEl.src = url;
+        imgEl.style.display = 'block';
+        if (svgEl) svgEl.style.display = 'none';
+        if (removeBtn) removeBtn.style.display = 'inline-flex';
+      } else {
+        imgEl.style.display = 'none';
+        if (svgEl) svgEl.style.display = 'block';
+        if (removeBtn) removeBtn.style.display = 'none';
+      }
+    }
+
+    function removeLogo() {
+      currentLogoUrl = '';
+      displayLogoPreview('');
+      document.getElementById('logoInput').value = '';
+      broadcastLiveUpdate();
+      showToast('🗑️ লোগো মুছে ডিফল্ট রাখা হয়েছে।');
+    }
+
+    // ── ARCH BACKGROUND IMAGE ──
+    function handleArchUpload(event) {
+      var file = event.target.files[0];
+      if (!file || !file.type.startsWith('image/')) {
+        showToast('⚠️ শুধুমাত্র ছবি ফাইল নির্বাচন করুন।');
+        return;
+      }
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var img = new Image();
+        img.onload = function() {
+          var canvas = document.createElement('canvas');
+          var maxW = 1920, maxH = 1080;
+          var w = img.width, h = img.height;
+          if (w > maxW || h > maxH) {
+            var ratio = Math.min(maxW/w, maxH/h);
+            w = Math.round(w * ratio); h = Math.round(h * ratio);
+          }
+          canvas.width = w; canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          var compressed = canvas.toDataURL('image/jpeg', 0.80);
+          currentArchUrl = compressed;
+          displayArchPreview(compressed);
+          broadcastLiveUpdate();
+          showToast('✅ সম্পূর্ণ স্ক্রিন ব্যাকগ্রাউন্ড ছবি লোড হয়েছে!');
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function onBgOpacityChange(val) {
+      var num = parseInt(val) || 45;
+      var lbl = document.getElementById('bgOpacityLabel');
+      if (lbl) lbl.textContent = toBnNum(num) + '%';
+      try {
+        var bc = new BroadcastChannel('mosque_channel');
+        bc.postMessage({ type: 'BG_OPACITY', opacity: num });
+      } catch(e) {}
+    }
+
+    function displayArchPreview(url) {
+      var imgEl = document.getElementById('archPreviewImg');
+      var svgEl = document.getElementById('archDefaultIcon');
+      var removeBtn = document.getElementById('removeArchBtn');
+      if (url && url.trim() !== '') {
+        imgEl.src = url; imgEl.style.display = 'block';
+        if (svgEl) svgEl.style.display = 'none';
+        if (removeBtn) removeBtn.style.display = 'inline-flex';
+      } else {
+        imgEl.style.display = 'none';
+        if (svgEl) svgEl.style.display = 'block';
+        if (removeBtn) removeBtn.style.display = 'none';
+      }
+    }
+
+    function removeArch() {
+      currentArchUrl = '';
+      displayArchPreview('');
+      document.getElementById('archInput').value = '';
+      broadcastLiveUpdate();
+      showToast('🗑️ ব্যাকগ্রাউন্ড ছবি মুছে ডিফল্ট ফিরিয়ে আনা হয়েছে।');
+    }
+
+    function setCity(lat, lng, loc) {
+      document.getElementById('lat').value = '21.8355';
+      document.getElementById('lng').value = '92.0780';
+      document.getElementById('location').value = 'চকরিয়া, কক্সবাজার';
+      showToast('📍 অবস্থান লক করা হয়েছে: চকরিয়া, কক্সবাজার');
+    }
+
+    function detectGPS() {
+      document.getElementById('lat').value = '21.8355';
+      document.getElementById('lng').value = '92.0780';
+      document.getElementById('location').value = 'চকরিয়া, কক্সবাজার';
+      showToast('📍 অবস্থান স্থায়ীভাবে নির্ধারিত: চকরিয়া, কক্সবাজার');
+    }
+
+    function loadSettings() {
+      var s = JSON.parse(localStorage.getItem('mosqueSettings') || '{}');
+
+      // Fetch from server API or local settings.json in offline APK mode
+      var apiEndpoint = (location.protocol === 'file:') ? 'settings.json' : '/api/settings';
+      fetch(apiEndpoint)
+        .then(function(res){ if (res.ok) return res.json(); throw new Error('status ' + res.status); })
+        .then(function(data){
+          if (data && (data.location || data.nameBn || data.fajrJm)) {
+            for (var k in data) {
+              if (data[k] !== undefined && data[k] !== '') s[k] = data[k];
+            }
+            populateForm(s);
+          }
+        }).catch(function(){
+          populateForm(s);
+        });
+
+      populateForm(s);
+    }
+
+    function populateForm(s) {
+      FIELDS.forEach(function(k) {
+        var el = document.getElementById(k);
+        if (el && s[k] !== undefined) {
+          if (PRAYER_FIELDS.indexOf(k) !== -1) {
+            var p = to12Hour(s[k], k);
+            el.value = p.time;
+            setAmpm(k, p.ampm);
+          } else {
+            el.value = s[k];
+          }
+        }
+      });
+
+      // Ensure defaults for prayer fields if empty
+      PRAYER_FIELDS.forEach(function(k) {
+        var el = document.getElementById(k);
+        if (el && (!el.value || el.value.trim() === '')) {
+          if (k === 'maghribJm' || k.indexOf('Azan') !== -1) {
+            el.value = 'auto';
+            setAmpm(k, k.indexOf('fajr') !== -1 ? 'AM' : 'PM');
+          } else {
+            var p = to12Hour(el.placeholder || '', k);
+            if (p.time) {
+              el.value = p.time;
+              setAmpm(k, p.ampm);
+            }
+          }
+        }
+      });
+
+      // Permanent Coordinates Enforced (Lat: 21.8355, Lng: 92.0780, চকরিয়া, কক্সবাজার)
+      var elLat = document.getElementById('lat'); if (elLat) elLat.value = '21.8355';
+      var elLng = document.getElementById('lng'); if (elLng) elLng.value = '92.0780';
+      var elLoc = document.getElementById('location'); if (elLoc) elLoc.value = 'চকরিয়া, কক্সবাজার';
+
+      if (!s.nameBn) {
+        var elBn = document.getElementById('nameBn'); if (elBn) elBn.value = 'নূর জামে মসজিদ';
+      }
+
+      if (s.theme) selectTheme(s.theme);
+      else selectTheme('navy');
+
+      if (s.screenRotate) selectRotation(s.screenRotate);
+      else selectRotation('0');
+
+      currentLogoUrl = s.logoUrl || '';
+      displayLogoPreview(currentLogoUrl);
+
+      currentArchUrl = s.bgArchUrl || '';
+      displayArchPreview(currentArchUrl);
+
+      var fsVal = s.fontSizeScale || '100';
+      var sl = document.getElementById('fontSizeScale');
+      if (sl) sl.value = fsVal;
+      onFontSizeSliderChange(fsVal);
+
+      var bgOpVal = s.bgOpacity !== undefined ? s.bgOpacity : '45';
+      var bgOpEl = document.getElementById('bgOpacity');
+      if (bgOpEl) bgOpEl.value = bgOpVal;
+      var bgOpLbl = document.getElementById('bgOpacityLabel');
+      if (bgOpLbl) bgOpLbl.textContent = toBnNum(bgOpVal) + '%';
+    }
+
+    function saveSettings() {
+      var s = getCurrentFormSettings();
+
+      try {
+        localStorage.setItem('mosqueSettings', JSON.stringify(s));
+      } catch(err) {
+        console.warn('localStorage quota warning:', err);
+      }
+
+      // Persist to settings.json via server API (which triggers SSE broadcast)
+      fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(s)
+      }).then(function(res){
+        return res.json();
+      }).then(function(d){
+        console.log('Saved to server settings.json successfully:', d);
+      }).catch(function(e){
+        console.warn('Could not post to server /api/settings:', e);
+      });
+
+      // Broadcast update to display screen immediately via BroadcastChannel
+      try {
+        var bc = new BroadcastChannel('mosque_channel');
+        bc.postMessage({ type: 'UPDATE_SETTINGS', settings: s });
+      } catch(e) {}
+
+      showToast('✅ সেটিংস সেভ হয়েছে! ডিসপ্লে স্ক্রিন সরাসরি আপডেট হয়েছে।');
+    }
+
+    function showToast(msg) {
+      var t = document.getElementById('toast');
+      t.innerHTML = '<span>' + msg + '</span>';
+      t.style.display = 'inline-flex';
+      setTimeout(function() {
+        t.style.display = 'none';
+      }, 3500);
+    }
+
+    function exportJSON() {
+      var s = localStorage.getItem('mosqueSettings') || '{}';
+      var blob = new Blob([s], { type: 'application/json' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'mosque-settings.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importJSON(e) {
+      var file = e.target.files[0];
+      if (!file) return;
+      var r = new FileReader();
+      r.onload = function(evt) {
+        try {
+          var parsed = JSON.parse(evt.target.result);
+          parsed.lat = 21.8355;
+          parsed.lng = 92.0780;
+          parsed.location = 'চকরিয়া, কক্সবাজার';
+          localStorage.setItem('mosqueSettings', JSON.stringify(parsed));
+          saveSettings();
+          loadSettings();
+          showToast('✅ সেটিংস সফলভাবে ইমপোর্ট হয়েছে!');
+        } catch(err) {
+          alert('ভুল ফাইল ফরম্যাট!');
+        }
+      };
+      r.readAsText(file);
+    }
+
+    function resetDefaults() {
+      if (confirm('আপনি কি সত্যিই সমস্ত সেটিংস ডিফল্ট অবস্থায় ফিরিয়ে নিতে চান?')) {
+        localStorage.removeItem('mosqueSettings');
+        location.reload();
+      }
+    }
+
+    function triggerTestCountdown(sec) {
+      try {
+        var seconds = sec || 300;
+        var bc = new BroadcastChannel('mosque_channel');
+        bc.postMessage({ type: 'START_TEST_COUNTDOWN', seconds: seconds });
+        fetch('/api/broadcast', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'START_TEST_COUNTDOWN', seconds: seconds })
+        }).catch(function(){});
+        showToast('▶️ ডিসপ্লে স্ক্রিনে ৫ মিনিট কাউন্টডাউন টেস্ট শুরু হয়েছে!');
+      } catch(e) {}
+    }
+
+    function stopTestCountdown() {
+      try {
+        var bc = new BroadcastChannel('mosque_channel');
+        bc.postMessage({ type: 'STOP_TEST_COUNTDOWN' });
+        fetch('/api/broadcast', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'STOP_TEST_COUNTDOWN' })
+        }).catch(function(){});
+        showToast('⏹️ টেস্ট কাউন্টডাউন বন্ধ করা হয়েছে।');
+      } catch(e) {}
+    }
+
+    function triggerSalatModeTest(sec) {
+      try {
+        var seconds = sec || 300;
+        var bc = new BroadcastChannel('mosque_channel');
+        bc.postMessage({ type: 'START_SALAT_MODE', seconds: seconds });
+        fetch('/api/broadcast', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'START_SALAT_MODE', seconds: seconds })
+        }).catch(function(){});
+        showToast('🕌 ডিসপ্লেতে ৫ মিনিট "সালাত" স্ক্রিন টেস্ট চালু হয়েছে!');
+      } catch(e) {}
+    }
+
+    function stopSalatModeTest() {
+      try {
+        var bc = new BroadcastChannel('mosque_channel');
+        bc.postMessage({ type: 'STOP_SALAT_MODE' });
+        fetch('/api/broadcast', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'STOP_SALAT_MODE' })
+        }).catch(function(){});
+        showToast('⏹️ সালাত স্ক্রিন বন্ধ করে স্বাভাবিক ডিসপ্লেতে ফিরিয়ে আনা হয়েছে।');
+      } catch(e) {}
+    }
+
+    // Instant Live Update Listeners on all inputs
+    FIELDS.forEach(function(k) {
+      var el = document.getElementById(k);
+      if (el) {
+        el.addEventListener('input', function() { broadcastLiveUpdate(); });
+        el.addEventListener('change', function() { broadcastLiveUpdate(); });
+      }
+    });
+
+    PRAYER_FIELDS.forEach(function(k) {
+      var el = document.getElementById(k);
+      if (el) {
+        el.addEventListener('blur', function() { normalizePrayerInput(k); });
+      }
+    });
+
+    loadSettings();
+  </script>
+</body>
+</html>
