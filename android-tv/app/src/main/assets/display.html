@@ -3439,13 +3439,13 @@
               <div class="cd-col-info">
                 <div class="cd-prayer-title-wrap">
                   <span class="cd-mosque-icon">🕌</span>
-                  <span class="cd-prayer-name-display cd-badge-name" id="cdNextJamaatName">এশা জামাত</span>
+                  <span class="cd-prayer-name-display cd-badge-name" id="cdNextJamaatName">--</span>
                 </div>
                 <div class="cd-info-meta-chips">
                   <div class="cd-meta-chip">
                     <span class="uc-pulse-dot"></span>
                     <span class="cd-chip-label">চলমান:</span>
-                    <span class="cd-chip-val" id="ucCurrentWaqt">এশা</span>
+                    <span class="cd-chip-val" id="ucCurrentWaqt">--</span>
                   </div>
                   <span class="cd-chip-dot">•</span>
                   <div class="cd-meta-chip">
@@ -3454,7 +3454,7 @@
                       <polyline points="12 7 12 12 15 15" stroke-width="2" stroke-linecap="round"/>
                     </svg>
                     <span class="cd-chip-label">জামাত:</span>
-                    <span class="cd-chip-val cd-val-gold" id="cdScheduledJamaatTime">08:30 PM</span>
+                    <span class="cd-chip-val cd-val-gold" id="cdScheduledJamaatTime">--:--</span>
                   </div>
                 </div>
               </div>
@@ -3466,7 +3466,7 @@
                   <span class="cd-status-badge" id="cdStatusBadge">জামাত শুরু হতে বাকি</span>
                 </div>
                 <div class="cd-timer-digits-box">
-                  <span class="cd-timer-digits" id="cdMainTimer">00:04:59</span>
+                  <span class="cd-timer-digits" id="cdMainTimer">--:--:--</span>
                 </div>
               </div>
 
@@ -4100,6 +4100,7 @@
 
     function tick() {
       var bd = getNow();
+      var isFri = (bd.getDay() === 5);
 
       // Giant Real-Time Digital Clock (HH:MM:SS PM)
       var rawH = bd.getHours(), mins = String(bd.getMinutes()).padStart(2,'0');
