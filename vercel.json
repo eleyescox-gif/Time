@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/display.html" },
+    { "source": "/api/settings", "destination": "/settings.json" }
+  ]
+}
