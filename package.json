@@ -1,9 +1,10 @@
-﻿{
+{
   "name": "mosque-display",
   "version": "1.0.0",
   "description": "Digital Mosque Prayer Times Display System",
   "main": "nodeserver.js",
   "scripts": {
+    "build": "echo 'Static build ready'",
     "start": "node nodeserver.js ."
   }
 }
