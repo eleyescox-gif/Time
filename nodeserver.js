@@ -99,12 +99,25 @@ const server = http.createServer((req, res) => {
 
           const merged = Object.assign({}, existing, parsed);
 
-          // Always keep permanent coordinates
           merged.lat = 21.8355;
           merged.lng = 92.0780;
           merged.location = 'চকরিয়া, কক্সবাজার';
+          merged.updatedAt = Date.now();
 
-          fs.writeFile(settingsFile, JSON.stringify(merged, null, 2), 'utf8', (err) => {
+          const jsonStr = JSON.stringify(merged, null, 2);
+
+          // Mirror to public, desktop and android-tv assets
+          try { fs.writeFileSync(path.join(dir, 'public', 'settings.json'), jsonStr, 'utf8'); } catch(e) {}
+          try {
+            const deskPath = 'C:\\Users\\QC\\Desktop\\mosque\\settings.json';
+            if (fs.existsSync(path.dirname(deskPath))) fs.writeFileSync(deskPath, jsonStr, 'utf8');
+          } catch(e) {}
+          try {
+            const assetPath = path.join(dir, 'android-tv', 'app', 'src', 'main', 'assets', 'settings.json');
+            if (fs.existsSync(path.dirname(assetPath))) fs.writeFileSync(assetPath, jsonStr, 'utf8');
+          } catch(e) {}
+
+          fs.writeFile(settingsFile, jsonStr, 'utf8', (err) => {
             if (err) {
               res.writeHead(500, { 'Content-Type': 'application/json' });
               res.end(JSON.stringify({ error: err.message }));

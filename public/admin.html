@@ -1218,6 +1218,7 @@
       s.lat = 21.8355;
       s.lng = 92.0780;
       s.location = 'চকরিয়া, কক্সবাজার';
+      s.updatedAt = Date.now();
       return s;
     }
 
@@ -1508,23 +1509,33 @@
 
     function loadSettings() {
       var s = JSON.parse(localStorage.getItem('mosqueSettings') || '{}');
+      var localTime = Number(s.updatedAt) || 0;
+
+      // Populate form immediately with cached local settings
+      populateForm(s);
 
       // Fetch from server API or local settings.json in offline APK mode
       var apiEndpoint = (location.protocol === 'file:') ? 'settings.json' : '/api/settings';
       fetch(apiEndpoint)
         .then(function(res){ if (res.ok) return res.json(); throw new Error('status ' + res.status); })
         .then(function(data){
-          if (data && (data.location || data.nameBn || data.fajrJm)) {
-            for (var k in data) {
-              if (data[k] !== undefined && data[k] !== '') s[k] = data[k];
+          if (data && typeof data === 'object') {
+            var serverTime = Number(data.updatedAt) || 0;
+            // Only overwrite form if server has NEWER data or if local was empty
+            if (serverTime >= localTime || localTime === 0) {
+              for (var k in data) {
+                if (data[k] !== undefined && data[k] !== '') s[k] = data[k];
+              }
+              s.updatedAt = serverTime || Date.now();
+              try {
+                localStorage.setItem('mosqueSettings', JSON.stringify(s));
+              } catch(e) {}
+              populateForm(s);
             }
-            populateForm(s);
           }
         }).catch(function(){
-          populateForm(s);
+          // Keep current form with local settings
         });
-
-      populateForm(s);
     }
 
     function populateForm(s) {

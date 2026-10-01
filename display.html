@@ -3909,15 +3909,34 @@
 
     function loadSettings(overrideSettings) {
       try {
+        var local = JSON.parse(localStorage.getItem('mosqueSettings') || '{}');
+        var localTime = Number(local.updatedAt) || 0;
+
         if (overrideSettings && typeof overrideSettings === 'object') {
-          for (var k in overrideSettings) {
-            if (overrideSettings[k] !== undefined && overrideSettings[k] !== '') {
-              CONFIG[k] = overrideSettings[k];
+          var serverTime = Number(overrideSettings.updatedAt) || 0;
+          // If server settings are newer or equal, OR if local has no timestamp, adopt server settings
+          if (serverTime >= localTime || localTime === 0) {
+            for (var k in overrideSettings) {
+              if (overrideSettings[k] !== undefined && overrideSettings[k] !== '') {
+                CONFIG[k] = overrideSettings[k];
+              }
+            }
+            CONFIG.updatedAt = serverTime || Date.now();
+            try { localStorage.setItem('mosqueSettings', JSON.stringify(CONFIG)); } catch(e) {}
+          } else {
+            // Local settings are newer: preserve local user edits
+            for (var k in local) {
+              if (local[k] !== undefined && local[k] !== '') {
+                CONFIG[k] = local[k];
+              }
             }
           }
         } else {
-          var s = JSON.parse(localStorage.getItem('mosqueSettings') || '{}');
-          for (var k in s) { if (s[k] !== undefined && s[k] !== '') CONFIG[k] = s[k]; }
+          for (var k in local) {
+            if (local[k] !== undefined && local[k] !== '') {
+              CONFIG[k] = local[k];
+            }
+          }
         }
 
         // Permanently enforce user's location coordinates (Lat: 21.8355, Lng: 92.0780, চকরিয়া, কক্সবাজার)
@@ -4585,26 +4604,10 @@
             build();
             tick();
             syncBottomCardsHeight();
-            try {
-              localStorage.setItem('mosqueSettings', JSON.stringify(CONFIG));
-            } catch(e) {}
           }
         })
         .catch(function() {
-          if (endpoint !== 'settings.json') {
-            fetch('settings.json')
-              .then(function(r) { return r.json(); })
-              .then(function(fallbackSettings) {
-                if (fallbackSettings && typeof fallbackSettings === 'object') {
-                  loadSettings(fallbackSettings);
-                  calc();
-                  build();
-                  tick();
-                  syncBottomCardsHeight();
-                }
-              })
-              .catch(function() {});
-          }
+          // Keep active local configuration when offline or disconnected
         });
     }
 

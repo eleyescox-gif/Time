@@ -34,5 +34,7 @@
   "dhuhrAzan": "auto",
   "asrAzan": "auto",
   "maghribAzan": "auto",
-  "ishaAzan": "auto"
+  "ishaAzan": "auto",
+  "testSync": "verified",
+  "updatedAt": 1790824793140
 }
