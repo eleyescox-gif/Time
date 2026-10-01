@@ -1244,17 +1244,40 @@
        ৬. স্ক্রলিং নোটিশ বার (Ticker Footer)
        ═══════════════════════════════════════════════════════════ */
 
+    .is-portrait #screenWrapper,
+    body.is-portrait #screenWrapper,
+    body.rotate-90 #screenWrapper,
+    body.rotate-270 #screenWrapper {
+      justify-content: flex-start !important;
+    }
+
+    .is-portrait .bg-stars,
+    body.is-portrait .bg-stars,
+    .bg-stars {
+      display: none !important;
+      height: 0 !important;
+      width: 0 !important;
+      position: absolute !important;
+      pointer-events: none !important;
+    }
+
+    .is-portrait .bg-mosque-arch,
+    body.is-portrait .bg-mosque-arch {
+      background-position: center top !important;
+    }
+
     .is-portrait #mainLayout,
     .is-portrait .pro-masjid-layout,
     body.rotate-90 #mainLayout,
     body.rotate-90 .pro-masjid-layout,
     body.rotate-270 #mainLayout,
     body.rotate-270 .pro-masjid-layout {
+      flex: 1 1 auto !important;
       flex-direction: column !important;
       justify-content: flex-start !important;
       align-items: center !important;
-      gap: clamp(6px, 1vh, 12px) !important;
-      padding: clamp(6px, 1vh, 12px) clamp(10px, 1.8vw, 24px) !important;
+      gap: clamp(4px, 0.8vh, 10px) !important;
+      padding: clamp(4px, 0.8vh, 10px) clamp(10px, 1.8vw, 24px) !important;
       height: calc(100% - clamp(34px, 4vh, 44px)) !important;
       box-sizing: border-box !important;
       overflow-y: auto !important;
@@ -1264,12 +1287,17 @@
 
     .is-portrait .main-display-section,
     body.rotate-90 .main-display-section,
-    body.rotate-270 .main-display-section {
-      width: 100% !important;
-      display: flex !important;
-      flex-direction: column !important;
-      align-items: center !important;
-      gap: clamp(6px, 1vh, 12px) !important;
+    body.rotate-270 .main-display-section,
+    body.is-portrait .main-display-section {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+      min-height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      flex: 0 0 0 !important;
+      overflow: hidden !important;
+      pointer-events: none !important;
     }
 
     /* ── ১. শীর্ষ হেডার: বিসমিল্লাহ + মসজিদের নাম + তারিখ ── */
@@ -1932,12 +1960,25 @@
 
     /* ── RESPONSIVE MEDIA QUERY FOR PHYSICAL VERTICAL DISPLAYS ── */
     @media (max-aspect-ratio: 1/1), (orientation: portrait) {
+      #screenWrapper {
+        justify-content: flex-start !important;
+      }
+      .bg-stars {
+        display: none !important;
+        height: 0 !important;
+        position: absolute !important;
+        pointer-events: none !important;
+      }
+      .bg-mosque-arch {
+        background-position: center top !important;
+      }
       #mainLayout, .pro-masjid-layout {
+        flex: 1 1 auto !important;
         flex-direction: column !important;
         justify-content: flex-start !important;
         align-items: center !important;
-        gap: clamp(6px, 1vh, 12px) !important;
-        padding: clamp(6px, 1vh, 12px) clamp(10px, 1.8vw, 24px) !important;
+        gap: clamp(4px, 0.8vh, 10px) !important;
+        padding: clamp(4px, 0.8vh, 10px) clamp(10px, 1.8vw, 24px) !important;
         height: calc(100% - clamp(34px, 4vh, 44px)) !important;
         box-sizing: border-box !important;
         overflow-y: auto !important;
@@ -1945,11 +1986,15 @@
         -webkit-overflow-scrolling: touch;
       }
       .main-display-section {
-        width: 100% !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: clamp(6px, 1vh, 12px) !important;
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        flex: 0 0 0 !important;
+        overflow: hidden !important;
+        pointer-events: none !important;
       }
       .pro-header {
         order: 1 !important;
@@ -2412,15 +2457,30 @@
       html, body {
         font-size: 14px !important;
       }
+      body.is-portrait #screenWrapper,
+      .is-portrait #screenWrapper,
+      #screenWrapper {
+        justify-content: flex-start !important;
+      }
+      .bg-stars {
+        display: none !important;
+        height: 0 !important;
+        position: absolute !important;
+        pointer-events: none !important;
+      }
+      .bg-mosque-arch {
+        background-position: center top !important;
+      }
       body.is-portrait #mainLayout,
       .is-portrait #mainLayout,
       #mainLayout,
       .pro-masjid-layout {
+        flex: 1 1 auto !important;
         flex-direction: column !important;
         justify-content: flex-start !important;
         align-items: center !important;
-        gap: 6px !important;
-        padding: 6px 8px 10px 8px !important;
+        gap: 5px !important;
+        padding: 4px 8px 8px 8px !important;
         height: calc(100% - 36px) !important;
         overflow-y: auto !important;
         overflow-x: hidden !important;
@@ -2430,11 +2490,15 @@
       body.is-portrait .main-display-section,
       .is-portrait .main-display-section,
       .main-display-section {
-        width: 100% !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: 6px !important;
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        flex: 0 0 0 !important;
+        overflow: hidden !important;
+        pointer-events: none !important;
       }
       body.is-portrait .pro-header,
       .is-portrait .pro-header,
@@ -4164,11 +4228,16 @@
           if (badge) layout.appendChild(badge);
           layout.appendChild(cards);
           layout.appendChild(btm);
-          if (mainSec) mainSec.style.display = 'none';
+          if (mainSec) {
+            mainSec.style.setProperty('display', 'none', 'important');
+            if (mainSec.parentNode === layout) {
+              layout.appendChild(mainSec);
+            }
+          }
         } else {
           // Landscape TV: Cards on left, Header/Clock/Bottom inside mainSec on right
           if (mainSec) {
-            mainSec.style.display = '';
+            mainSec.style.removeProperty('display');
             mainSec.appendChild(hdr);
             mainSec.appendChild(clk);
             mainSec.appendChild(btm);
