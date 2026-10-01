@@ -1,0 +1,18 @@
+[
+  {
+    "id": "default",
+    "nameBn": "পূর্ব মোহাজের পাড়া জামে মসজিদ",
+    "location": "চকরিয়া, কক্সবাজার",
+    "district": "coxsbazar",
+    "lat": 21.8355,
+    "lng": 92.0780
+  },
+  {
+    "id": "baitul-mukkaram",
+    "nameBn": "বায়তুল মোকাররম জাতীয় মসজিদ",
+    "location": "পল্টন, ঢাকা",
+    "district": "dhaka",
+    "lat": 23.7258,
+    "lng": 90.4125
+  }
+]

@@ -542,10 +542,13 @@
       </div>
     </div>
     <div class="hdr-actions">
-      <a href="MyMasjidTV_INSTALL.apk" download class="btn btn-outline" style="border-color:#10b981; color:#a7f3d0;" title="স্মার্ট টিভি বা মোবাইলের জন্য সরাসরি এপিকে ডাউনলোড করুন">
-        <span>📥 TV App (APK) ডাউনলোড</span>
+      <a href="portal.html" class="btn btn-outline" style="border-color:var(--gold); color:var(--gold);" title="সকল মসজিদের তালিকা ও নতুন মসজিদ তৈরি">
+        <span>🕌 <span id="hdrMosqueBadge">মসজিদ</span></span>
       </a>
-      <a href="display.html" class="btn btn-outline">
+      <a href="MyMasjidTV_INSTALL.apk" download class="btn btn-outline" style="border-color:#10b981; color:#a7f3d0;" title="স্মার্ট টিভি বা মোবাইলের জন্য সরাসরি এপিকে ডাউনলোড করুন">
+        <span>📥 TV App (APK)</span>
+      </a>
+      <a href="display.html" id="btnDisplayLink" target="_blank" class="btn btn-outline">
         <span>📺 Display খুলুন</span>
       </a>
       <button onclick="saveSettings()" class="btn btn-gold">
@@ -1071,15 +1074,25 @@
               </select>
             </div>
             <div class="form-group">
-              <label>অক্ষাংশ / দ্রাঘিমাংশ (স্থায়ীভাবে নির্ধারিত)</label>
+              <label>জেলা নির্বাচন (স্বয়ংক্রিয় জিপিএস ও সময় সমন্বয়)</label>
+              <select id="districtSelect" onchange="onDistrictChange()">
+                <option value="">-- জেলা সিলেক্ট করুন --</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>অবস্থান / এলাকা নাম (বাংলায়)</label>
+              <input id="location" value="চকরিয়া, কক্সবাজার" placeholder="যেমন: বরইতলী, চকরিয়া, কক্সবাজার">
+            </div>
+            <div class="form-group">
+              <label>অক্ষাংশ / দ্রাঘিমাংশ (Latitude / Longitude)</label>
               <div style="display:flex; gap:6px;">
-                <input id="lat" value="21.8355" readonly style="opacity:0.8;">
-                <input id="lng" value="92.0780" readonly style="opacity:0.8;">
+                <input id="lat" value="21.8355" placeholder="Lat">
+                <input id="lng" value="92.0780" placeholder="Lng">
               </div>
             </div>
             <div class="form-group">
-              <label>অবস্থান টেক্সট</label>
-              <input id="location" value="চকরিয়া, কক্সবাজার" readonly style="opacity:0.8;">
+              <label>এডমিন নিরাপত্তা পিন (৪ সংখ্যার গোপন পিন)</label>
+              <input type="password" id="pin" maxlength="6" placeholder="ঐচ্ছিক পিন কোড">
             </div>
             <div class="form-group" style="display:none;">
               <input id="utc" value="6" readonly>
@@ -1121,7 +1134,7 @@
 
     var FIELDS = [
       'nameAr', 'nameBn', 'nameEn', 'location',
-      'lat', 'lng', 'asrMadhab',
+      'lat', 'lng', 'asrMadhab', 'pin',
       'fajrAzan', 'fajrJm', 'dhuhrAzan', 'dhuhrJm', 'asrAzan', 'asrJm', 'maghribAzan', 'maghribJm', 'ishaAzan', 'ishaJm',
       'jummahKhutbah', 'jummahJamaat',
       'hijriOffset', 'showFasting',
@@ -1129,6 +1142,114 @@
       'showAzanTime', 'showAzanAlert',
       'layoutMode', 'fontSizeScale', 'bgOpacity'
     ];
+
+    function getActiveMosqueId() {
+      var params = new URLSearchParams(window.location.search);
+      var m = params.get('m') || params.get('id');
+      if (!m || m === 'default' || m === 'null') return 'default';
+      return m.toLowerCase().trim().replace(/[^a-z0-9_-]/g, '-').slice(0, 50);
+    }
+    var activeMosqueId = getActiveMosqueId();
+
+    function getStorageKey() {
+      return (activeMosqueId === 'default') ? 'mosqueSettings' : ('mosqueSettings_' + activeMosqueId);
+    }
+
+    var DISTRICTS = [
+      { name: "ঢাকা", en: "Dhaka", lat: 23.8103, lng: 90.4125 },
+      { name: "চট্টগ্রাম", en: "Chattogram", lat: 22.3569, lng: 91.7832 },
+      { name: "কক্সবাজার", en: "Cox's Bazar", lat: 21.4272, lng: 92.0058 },
+      { name: "চকরিয়া (কক্সবাজার)", en: "Chakaria", lat: 21.8355, lng: 92.0780 },
+      { name: "সিলেট", en: "Sylhet", lat: 24.8949, lng: 91.8687 },
+      { name: "রাজশাহী", en: "Rajshahi", lat: 24.3745, lng: 88.6042 },
+      { name: "খুলনা", en: "Khulna", lat: 22.8456, lng: 89.5403 },
+      { name: "বরিশাল", en: "Barishal", lat: 22.7010, lng: 90.3535 },
+      { name: "রংপুর", en: "Rangpur", lat: 25.7439, lng: 89.2752 },
+      { name: "ময়মনসিংহ", en: "Mymensingh", lat: 24.7471, lng: 90.4203 },
+      { name: "কুমিল্লা", en: "Cumilla", lat: 23.4682, lng: 91.1788 },
+      { name: "ব্রাহ্মণবাড়িয়া", en: "Brahmanbaria", lat: 23.9571, lng: 91.1119 },
+      { name: "নোয়াখালী", en: "Noakhali", lat: 22.8696, lng: 91.0998 },
+      { name: "ফেনী", en: "Feni", lat: 23.0186, lng: 91.3966 },
+      { name: "চাঁদপুর", en: "Chandpur", lat: 23.2321, lng: 90.6631 },
+      { name: "লক্ষ্মীপুর", en: "Lakshmipur", lat: 22.9425, lng: 90.8412 },
+      { name: "গাজীপুর", en: "Gazipur", lat: 24.0023, lng: 90.4264 },
+      { name: "নারায়ণগঞ্জ", en: "Narayanganj", lat: 23.6238, lng: 90.5000 },
+      { name: "বগুড়া", en: "Bogura", lat: 24.8465, lng: 89.3777 },
+      { name: "যশোর", en: "Jashore", lat: 23.1664, lng: 89.2081 },
+      { name: "পাবনা", en: "Pabna", lat: 24.0064, lng: 89.2372 },
+      { name: "কুষ্টিয়া", en: "Kushtia", lat: 23.9013, lng: 89.1204 },
+      { name: "দিনাজপুর", en: "Dinajpur", lat: 25.6217, lng: 88.6355 },
+      { name: "ফরিদপুর", en: "Faridpur", lat: 23.6071, lng: 89.8426 },
+      { name: "টাঙ্গাইল", en: "Tangail", lat: 24.2513, lng: 89.9167 },
+      { name: "সিরাজগঞ্জ", en: "Sirajganj", lat: 24.4534, lng: 89.7008 },
+      { name: "নাটোর", en: "Natore", lat: 24.4206, lng: 88.9324 },
+      { name: "হবিগঞ্জ", en: "Habiganj", lat: 24.3750, lng: 91.4167 },
+      { name: "মৌলভীবাজার", en: "Moulvibazar", lat: 24.4829, lng: 91.7774 },
+      { name: "সুনামগঞ্জ", en: "Sunamganj", lat: 25.0658, lng: 91.3957 },
+      { name: "বাগেরহাট", en: "Bagerhat", lat: 22.6516, lng: 89.7859 },
+      { name: "সাতক্ষীরা", en: "Satkhira", lat: 22.7185, lng: 89.0705 },
+      { name: "ঝিনাইদহ", en: "Jhenaidah", lat: 23.5448, lng: 89.1539 },
+      { name: "মাগুরা", en: "Magura", lat: 23.4873, lng: 89.4199 },
+      { name: "নড়াইল", en: "Narail", lat: 23.1725, lng: 89.5127 },
+      { name: "চুয়াডাঙ্গা", en: "Chuadanga", lat: 23.6402, lng: 88.8418 },
+      { name: "মেহেরপুর", en: "Meherpur", lat: 23.7622, lng: 88.6318 },
+      { name: "জয়পুরহাট", en: "Joypurhat", lat: 25.1017, lng: 89.0270 },
+      { name: "নওগাঁ", en: "Naogaon", lat: 24.7936, lng: 88.9318 },
+      { name: "চাঁপাইনবাবগঞ্জ", en: "Chapainawabganj", lat: 24.5965, lng: 88.2775 },
+      { name: "কুড়িগ্রাম", en: "Kurigram", lat: 25.8054, lng: 89.6362 },
+      { name: "লালমনিরহাট", en: "Lalmonirhat", lat: 25.9165, lng: 89.4532 },
+      { name: "গাইবান্ধা", en: "Gaibandha", lat: 25.3288, lng: 89.5408 },
+      { name: "নীলফামারী", en: "Nilphamari", lat: 25.9318, lng: 88.8560 },
+      { name: "পঞ্চগড়", en: "Panchagarh", lat: 26.3411, lng: 88.5542 },
+      { name: "ঠাকুরগাঁও", en: "Thakurgaon", lat: 26.0337, lng: 88.4617 },
+      { name: "জামালপুর", en: "Jamalpur", lat: 24.9375, lng: 89.9378 },
+      { name: "শেরপুর", en: "Sherpur", lat: 25.0205, lng: 90.0153 },
+      { name: "নেত্রকোণা", en: "Netrokona", lat: 24.8709, lng: 90.7279 },
+      { name: "কিশোরগঞ্জ", en: "Kishoreganj", lat: 24.4449, lng: 90.7766 },
+      { name: "মানিকগঞ্জ", en: "Manikganj", lat: 23.8617, lng: 90.0003 },
+      { name: "মুন্সীগঞ্জ", en: "Munshiganj", lat: 23.5422, lng: 90.5305 },
+      { name: "নরসিংদী", en: "Narsingdi", lat: 23.9322, lng: 90.7154 },
+      { name: "রাজবাড়ী", en: "Rajbari", lat: 23.7574, lng: 89.6445 },
+      { name: "মাদারীপুর", en: "Madaripur", lat: 23.1641, lng: 90.1897 },
+      { name: "গোপালগঞ্জ", en: "Gopalganj", lat: 23.0051, lng: 89.8266 },
+      { name: "শরীয়তপুর", en: "Shariatpur", lat: 23.2423, lng: 90.4348 },
+      { name: "বান্দরবান", en: "Bandarban", lat: 22.1953, lng: 92.2184 },
+      { name: "রাঙ্গামাটি", en: "Rangamati", lat: 22.6533, lng: 92.1753 },
+      { name: "খাগড়াছড়ি", en: "Khagrachhari", lat: 23.1193, lng: 91.9847 },
+      { name: "ভোলা", en: "Bhola", lat: 22.6859, lng: 90.6481 },
+      { name: "ঝালকাঠি", en: "Jhalokati", lat: 22.6406, lng: 90.1987 },
+      { name: "পিরোজপুর", en: "Pirojpur", lat: 22.5841, lng: 89.9720 },
+      { name: "পটুয়াখালী", en: "Patuakhali", lat: 22.3596, lng: 90.3299 },
+      { name: "বরগুনা", en: "Barguna", lat: 22.0953, lng: 90.0805 }
+    ];
+
+    function initDistrictSelector() {
+      var sel = document.getElementById('districtSelect');
+      if (!sel) return;
+      sel.innerHTML = '<option value="">-- জেলা সিলেক্ট করুন --</option>';
+      DISTRICTS.forEach(function(d, idx) {
+        var opt = document.createElement('option');
+        opt.value = idx;
+        opt.textContent = d.name + ' (' + d.en + ')';
+        sel.appendChild(opt);
+      });
+    }
+
+    function onDistrictChange() {
+      var sel = document.getElementById('districtSelect');
+      var idx = sel.value;
+      if (idx !== '') {
+        var d = DISTRICTS[idx];
+        var elLat = document.getElementById('lat'); if (elLat) elLat.value = d.lat;
+        var elLng = document.getElementById('lng'); if (elLng) elLng.value = d.lng;
+        var elLoc = document.getElementById('location'); 
+        if (elLoc && (!elLoc.value || elLoc.value.indexOf('চকরিয়া') !== -1 || elLoc.value.indexOf('ঢাকা') !== -1)) {
+          elLoc.value = d.name;
+        }
+        showToast('📍 জেলা নির্বাচিত: ' + d.name + ' (GPS: ' + d.lat + ', ' + d.lng + ')');
+        broadcastLiveUpdate();
+      }
+    }
 
     function toBnNum(num) {
       return String(num).replace(/[0-9]/g, function(w){ return '০১২৩৪৫৬৭৮৯'[+w]; });
@@ -1192,7 +1313,7 @@
     }
 
     function getCurrentFormSettings() {
-      var s = JSON.parse(localStorage.getItem('mosqueSettings') || '{}');
+      var s = JSON.parse(localStorage.getItem(getStorageKey()) || (activeMosqueId === 'default' ? localStorage.getItem('mosqueSettings') : null) || '{}');
       FIELDS.forEach(function(k) {
         var el = document.getElementById(k);
         if (el) {
@@ -1214,10 +1335,10 @@
       var elBgOp = document.getElementById('bgOpacity');
       if (elBgOp) s.bgOpacity = elBgOp.value;
 
-      // Always keep permanent coordinates locked
-      s.lat = 21.8355;
-      s.lng = 92.0780;
-      s.location = 'চকরিয়া, কক্সবাজার';
+      if (!s.lat) s.lat = (activeMosqueId === 'default' ? 21.8355 : 23.8103);
+      if (!s.lng) s.lng = (activeMosqueId === 'default' ? 92.0780 : 90.4125);
+      if (!s.location) s.location = (activeMosqueId === 'default' ? 'চকরিয়া, কক্সবাজার' : 'ঢাকা, বাংলাদেশ');
+      s.mosqueId = activeMosqueId;
       s.updatedAt = Date.now();
       return s;
     }
@@ -1228,15 +1349,19 @@
       liveBroadcastTimer = setTimeout(function() {
         var s = getCurrentFormSettings();
         try {
-          localStorage.setItem('mosqueSettings', JSON.stringify(s));
+          localStorage.setItem(getStorageKey(), JSON.stringify(s));
+          if (activeMosqueId === 'default') {
+            localStorage.setItem('mosqueSettings', JSON.stringify(s));
+          }
         } catch(e) {}
         try {
-          var bc = new BroadcastChannel('mosque_channel');
-          bc.postMessage({ type: 'UPDATE_SETTINGS', settings: s });
+          var bcName = (activeMosqueId === 'default') ? 'mosque_channel' : ('mosque_channel_' + activeMosqueId);
+          var bc = new BroadcastChannel(bcName);
+          bc.postMessage({ type: 'UPDATE_SETTINGS', mosqueId: activeMosqueId, settings: s });
         } catch(e) {}
 
         // Instant network SSE sync via backend POST
-        fetch('/api/settings', {
+        fetch('/api/settings?m=' + encodeURIComponent(activeMosqueId), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(s)
@@ -1508,14 +1633,18 @@
     }
 
     function loadSettings() {
-      var s = JSON.parse(localStorage.getItem('mosqueSettings') || '{}');
+      initDistrictSelector();
+      var s = JSON.parse(localStorage.getItem(getStorageKey()) || (activeMosqueId === 'default' ? localStorage.getItem('mosqueSettings') : null) || '{}');
       var localTime = Number(s.updatedAt) || 0;
 
       // Populate form immediately with cached local settings
       populateForm(s);
 
       // Fetch from server API or local settings.json in offline APK mode
-      var apiEndpoint = (location.protocol === 'file:') ? 'settings.json' : '/api/settings';
+      var apiEndpoint = (location.protocol === 'file:') 
+        ? ((activeMosqueId === 'default') ? 'settings.json' : ('settings_' + activeMosqueId + '.json'))
+        : ('/api/settings?m=' + encodeURIComponent(activeMosqueId));
+
       fetch(apiEndpoint)
         .then(function(res){ if (res.ok) return res.json(); throw new Error('status ' + res.status); })
         .then(function(data){
@@ -1526,9 +1655,13 @@
               for (var k in data) {
                 if (data[k] !== undefined && data[k] !== '') s[k] = data[k];
               }
+              s.mosqueId = activeMosqueId;
               s.updatedAt = serverTime || Date.now();
               try {
-                localStorage.setItem('mosqueSettings', JSON.stringify(s));
+                localStorage.setItem(getStorageKey(), JSON.stringify(s));
+                if (activeMosqueId === 'default') {
+                  localStorage.setItem('mosqueSettings', JSON.stringify(s));
+                }
               } catch(e) {}
               populateForm(s);
             }
@@ -1569,13 +1702,27 @@
         }
       });
 
-      // Permanent Coordinates Enforced (Lat: 21.8355, Lng: 92.0780, চকরিয়া, কক্সবাজার)
-      var elLat = document.getElementById('lat'); if (elLat) elLat.value = '21.8355';
-      var elLng = document.getElementById('lng'); if (elLng) elLng.value = '92.0780';
-      var elLoc = document.getElementById('location'); if (elLoc) elLoc.value = 'চকরিয়া, কক্সবাজার';
+      var elLat = document.getElementById('lat'); 
+      if (elLat) elLat.value = s.lat || (activeMosqueId === 'default' ? '21.8355' : '23.8103');
+      var elLng = document.getElementById('lng'); 
+      if (elLng) elLng.value = s.lng || (activeMosqueId === 'default' ? '92.0780' : '90.4125');
+      var elLoc = document.getElementById('location'); 
+      if (elLoc) elLoc.value = s.location || (activeMosqueId === 'default' ? 'চকরিয়া, কক্সবাজার' : 'ঢাকা, বাংলাদেশ');
 
       if (!s.nameBn) {
-        var elBn = document.getElementById('nameBn'); if (elBn) elBn.value = 'নূর জামে মসজিদ';
+        var elBn = document.getElementById('nameBn'); 
+        if (elBn) elBn.value = (activeMosqueId === 'default' ? 'পূর্ব মোহাজের পাড়া জামে মসজিদ' : 'জামে মসজিদ');
+      }
+
+      // Update header badge and display button link
+      var badgeEl = document.getElementById('hdrMosqueBadge');
+      if (badgeEl) {
+        var title = s.nameBn || (activeMosqueId === 'default' ? 'পূর্ব মোহাজের পাড়া' : activeMosqueId);
+        badgeEl.textContent = title.slice(0, 16) + ' (' + activeMosqueId + ') ▾';
+      }
+      var dBtn = document.getElementById('btnDisplayLink');
+      if (dBtn) {
+        dBtn.href = 'display.html?m=' + encodeURIComponent(activeMosqueId);
       }
 
       if (s.theme) selectTheme(s.theme);
@@ -1604,33 +1751,47 @@
 
     function saveSettings() {
       var s = getCurrentFormSettings();
+      s.mosqueId = activeMosqueId;
+      s.updatedAt = Date.now();
 
       try {
-        localStorage.setItem('mosqueSettings', JSON.stringify(s));
+        localStorage.setItem(getStorageKey(), JSON.stringify(s));
+        if (activeMosqueId === 'default') {
+          localStorage.setItem('mosqueSettings', JSON.stringify(s));
+        }
       } catch(err) {
         console.warn('localStorage quota warning:', err);
       }
 
-      // Persist to settings.json via server API (which triggers SSE broadcast)
-      fetch('/api/settings', {
+      // Persist to server API with mosque query
+      fetch('/api/settings?m=' + encodeURIComponent(activeMosqueId), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(s)
       }).then(function(res){
         return res.json();
       }).then(function(d){
-        console.log('Saved to server settings.json successfully:', d);
+        if (d && d.error) {
+          alert('❌ ত্রুটি: ' + d.error);
+        } else {
+          console.log('Saved to server settings successfully:', d);
+        }
       }).catch(function(e){
         console.warn('Could not post to server /api/settings:', e);
       });
 
       // Broadcast update to display screen immediately via BroadcastChannel
       try {
-        var bc = new BroadcastChannel('mosque_channel');
-        bc.postMessage({ type: 'UPDATE_SETTINGS', settings: s });
+        var bcName = (activeMosqueId === 'default') ? 'mosque_channel' : ('mosque_channel_' + activeMosqueId);
+        var bc = new BroadcastChannel(bcName);
+        bc.postMessage({ type: 'UPDATE_SETTINGS', mosqueId: activeMosqueId, settings: s });
+        if (activeMosqueId === 'default') {
+          var bcDef = new BroadcastChannel('mosque_channel');
+          bcDef.postMessage({ type: 'UPDATE_SETTINGS', settings: s });
+        }
       } catch(e) {}
 
-      showToast('✅ সেটিংস সেভ হয়েছে! ডিসপ্লে স্ক্রিন সরাসরি আপডেট হয়েছে।');
+      showToast('✅ সফলভাবে সেভ হয়েছে! (' + (s.nameBn || activeMosqueId) + ' ডিসপ্লে আপডেট হয়েছে)');
     }
 
     function showToast(msg) {

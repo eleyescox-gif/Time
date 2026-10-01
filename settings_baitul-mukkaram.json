@@ -1,0 +1,23 @@
+{
+  "mosqueId": "baitul-mukkaram",
+  "nameBn": "বায়তুল মোকাররম জাতীয় মসজিদ",
+  "nameEn": "Paltan, Dhaka, Bangladesh",
+  "nameAr": "مسجد بيت المكرم",
+  "location": "পল্টন, ঢাকা",
+  "district": "dhaka",
+  "lat": 23.7258,
+  "lng": 90.4125,
+  "utc": 6,
+  "asrMadhab": "hanafi",
+  "theme": "navy",
+  "clockFormat": "12",
+  "fajrJm": "05:15",
+  "dhuhrJm": "13:15",
+  "asrJm": "16:45",
+  "maghribJm": "auto",
+  "ishaJm": "20:00",
+  "jummahKhutbah": "12:45",
+  "jummahJamaat": "13:30",
+  "pin": "1234",
+  "updatedAt": 1790850451095
+}

@@ -3582,7 +3582,10 @@
         <button class="btn-sm" onclick="toggleFullscreen()" title="F11">
           ⛶ Full
         </button>
-        <a href="admin.html" class="btn-sm" id="btnAdminLink">
+        <a href="portal.html" class="btn-sm" id="btnPortalLink" title="সকল মসজিদ ও নতুন মসজিদ পোর্টাল" style="text-decoration:none;">
+          🕌 পোর্টাল
+        </a>
+        <a href="admin.html" class="btn-sm" id="btnAdminLink" style="text-decoration:none;">
           ⚙ Admin
         </a>
       </div>
@@ -3590,6 +3593,31 @@
   </div>
 
   <script>
+    // ── Multi-Mosque Context Helper ──
+    function getActiveMosqueId() {
+      try {
+        var params = new URLSearchParams(window.location.search);
+        var m = params.get('m') || params.get('mosque') || params.get('id');
+        if (m && m.trim()) {
+          var clean = m.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '');
+          if (clean) {
+            try { localStorage.setItem('lastActiveMosqueId', clean); } catch(e) {}
+            return clean;
+          }
+        }
+      } catch(e) {}
+      try {
+        var last = localStorage.getItem('lastActiveMosqueId');
+        if (last && last.trim()) return last.trim();
+      } catch(e) {}
+      return 'default';
+    }
+    var activeMosqueId = getActiveMosqueId();
+
+    function getStorageKey() {
+      return (activeMosqueId === 'default') ? 'mosqueSettings' : ('mosqueSettings_' + activeMosqueId);
+    }
+
     // ── CONFIG ──
     var CONFIG = {
       lat: 21.8355, lng: 92.0780, utc: 6,
@@ -3909,7 +3937,11 @@
 
     function loadSettings(overrideSettings) {
       try {
-        var local = JSON.parse(localStorage.getItem('mosqueSettings') || '{}');
+        var storageKey = getStorageKey();
+        var local = JSON.parse(localStorage.getItem(storageKey) || '{}');
+        if (activeMosqueId === 'default' && (!local || Object.keys(local).length === 0)) {
+          local = JSON.parse(localStorage.getItem('mosqueSettings') || '{}');
+        }
         var localTime = Number(local.updatedAt) || 0;
 
         if (overrideSettings && typeof overrideSettings === 'object') {
@@ -3922,7 +3954,10 @@
               }
             }
             CONFIG.updatedAt = serverTime || Date.now();
-            try { localStorage.setItem('mosqueSettings', JSON.stringify(CONFIG)); } catch(e) {}
+            try { localStorage.setItem(storageKey, JSON.stringify(CONFIG)); } catch(e) {}
+            if (activeMosqueId === 'default') {
+              try { localStorage.setItem('mosqueSettings', JSON.stringify(CONFIG)); } catch(e) {}
+            }
           } else {
             // Local settings are newer: preserve local user edits
             for (var k in local) {
@@ -3939,12 +3974,25 @@
           }
         }
 
-        // Permanently enforce user's location coordinates (Lat: 21.8355, Lng: 92.0780, চকরিয়া, কক্সবাজার)
-        CONFIG.lat = 21.8355;
-        CONFIG.lng = 92.0780;
-        CONFIG.location = 'চকরিয়া, কক্সবাজার';
+        // Location coordinates and defaults
+        if (activeMosqueId === 'default') {
+          CONFIG.lat = 21.8355;
+          CONFIG.lng = 92.0780;
+          if (!CONFIG.location) CONFIG.location = 'চকরিয়া, কক্সবাজার';
+          if (!CONFIG.nameBn) CONFIG.nameBn = 'পূর্ব মোহাজের পাড়া জামে মসজিদ';
+        } else {
+          CONFIG.lat = parseFloat(CONFIG.lat) || 23.8103;
+          CONFIG.lng = parseFloat(CONFIG.lng) || 90.4125;
+          if (!CONFIG.location) CONFIG.location = 'বাংলাদেশ';
+        }
         CONFIG.screenRotate = '0';
         document.body.classList.remove('rotate-90', 'rotate-180', 'rotate-270');
+
+        // Dynamic Admin & Portal link
+        var btnAdmin = document.getElementById('btnAdminLink');
+        if (btnAdmin) {
+          btnAdmin.href = 'admin.html' + (activeMosqueId !== 'default' ? ('?m=' + encodeURIComponent(activeMosqueId)) : '');
+        }
 
         // Apply dynamic font scale (default 1)
         var fontScale = CONFIG.fontSizeScale || '1';
@@ -4463,10 +4511,11 @@
     function cycleRotation() {}
     function updateRotateLabel() {}
 
-    // Real-time sync
+    // Real-time sync isolated by active mosque
     try {
-      var bc = new BroadcastChannel('mosque_channel');
-      bc.onmessage = function(ev) {
+      var bcName = (activeMosqueId === 'default') ? 'mosque_channel' : ('mosque_channel_' + activeMosqueId);
+      var bc = new BroadcastChannel(bcName);
+      function handleBcMsg(ev) {
         if (ev && ev.data) {
           if (ev.data.type === 'FONT_SCALE') {
             var rawScale = ev.data.scale || '1';
@@ -4517,18 +4566,27 @@
             build();
             tick();
             syncBottomCardsHeight();
-            try { localStorage.setItem('mosqueSettings', JSON.stringify(CONFIG)); } catch(e) {}
+            try {
+              localStorage.setItem(getStorageKey(), JSON.stringify(CONFIG));
+              if (activeMosqueId === 'default') localStorage.setItem('mosqueSettings', JSON.stringify(CONFIG));
+            } catch(e) {}
             return;
           }
         }
         try { loadSettings(); calc(); build(); tick(); } catch(e){}
-      };
+      }
+      bc.onmessage = handleBcMsg;
+      if (activeMosqueId === 'default') {
+        var bcLegacy = new BroadcastChannel('mosque_channel');
+        bcLegacy.onmessage = handleBcMsg;
+      }
     } catch(e) {}
 
     // Real-Time Server-Sent Events (SSE) Stream for Instant Multi-Device Sync
     try {
       if (window.EventSource) {
-        var sse = new EventSource('/api/events');
+        var sseUrl = '/api/events' + (activeMosqueId !== 'default' ? ('?m=' + encodeURIComponent(activeMosqueId)) : '');
+        var sse = new EventSource(sseUrl);
         sse.onmessage = function(ev) {
           try {
             var data = JSON.parse(ev.data);
@@ -4538,7 +4596,10 @@
               build();
               tick();
               syncBottomCardsHeight();
-              try { localStorage.setItem('mosqueSettings', JSON.stringify(CONFIG)); } catch(e) {}
+              try {
+                localStorage.setItem(getStorageKey(), JSON.stringify(CONFIG));
+                if (activeMosqueId === 'default') localStorage.setItem('mosqueSettings', JSON.stringify(CONFIG));
+              } catch(e) {}
             }
             if (data && data.type === 'START_SALAT_MODE') {
               window.TEST_SALAT_MODE_SEC = data.seconds || 300;
@@ -4591,7 +4652,12 @@
     });
 
     function fetchServerSettings() {
-      var endpoint = (window.location.protocol === 'file:') ? 'settings.json' : '/api/settings';
+      var endpoint;
+      if (window.location.protocol === 'file:') {
+        endpoint = (activeMosqueId === 'default') ? 'settings.json' : ('settings_' + activeMosqueId + '.json');
+      } else {
+        endpoint = '/api/settings?m=' + encodeURIComponent(activeMosqueId);
+      }
       fetch(endpoint)
         .then(function(res) {
           if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -4623,8 +4689,10 @@
       } catch(e) {}
     }
 
-    window.addEventListener('storage', function() {
-      try { loadSettings(); calc(); build(); tick(); syncBottomCardsHeight(); } catch(e){}
+    window.addEventListener('storage', function(e) {
+      if (!e.key || e.key === getStorageKey() || e.key === 'mosqueSettings') {
+        try { loadSettings(); calc(); build(); tick(); syncBottomCardsHeight(); } catch(e){}
+      }
     });
     window.addEventListener('resize', function() {
       applyScreenRotation();

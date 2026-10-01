@@ -10,6 +10,7 @@ const files = [
   'index.html',
   'display.html',
   'admin.html',
+  'portal.html',
   'settings.json',
   'logo.png',
   'bg_display.jpg',

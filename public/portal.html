@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>স্মার্ট মসজিদ ডিজিটাল ডিসপ্লে | মাল্টি-মসজিদ পোর্টাল</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Amiri:wght@700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    :root {
+      --bg: #070d18;
+      --card-bg: rgba(15, 27, 48, 0.85);
+      --gold: #f5c542;
+      --gold-light: #fef08a;
+      --emerald: #10b981;
+      --border: rgba(245, 197, 66, 0.25);
+      --border-light: rgba(255, 255, 255, 0.08);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Hind Siliguri', sans-serif;
+      background: radial-gradient(circle at 50% 0%, #112240 0%, #070d18 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      padding: 24px 20px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: rgba(7, 13, 24, 0.8);
+      backdrop-filter: blur(10px);
+    }
+    .header-logo {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 8px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      background: #000;
+      padding: 4px;
+    }
+    h1 {
+      font-size: 26px;
+      color: var(--gold);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 30px 20px 60px;
+      flex: 1;
+      width: 100%;
+    }
+    .grid-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 20px;
+    }
+    @media (max-width: 850px) {
+      .grid-layout { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 26px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      backdrop-filter: blur(12px);
+    }
+    .card-title {
+      font-size: 20px;
+      color: var(--gold);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 12px;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 14.5px;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s;
+    }
+    input:focus, select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 10px rgba(245, 197, 66, 0.3);
+    }
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 13px 20px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      border: none;
+      font-family: inherit;
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, #d4af37, #f5c542);
+      color: #070d18;
+      box-shadow: 0 4px 15px rgba(245, 197, 66, 0.3);
+    }
+    .btn-gold:hover {
+      background: linear-gradient(135deg, #f5c542, #fef08a);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(245, 197, 66, 0.4);
+    }
+    .btn-outline {
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover {
+      background: rgba(245, 197, 66, 0.15);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .btn-sm {
+      padding: 7px 12px;
+      font-size: 12.5px;
+      border-radius: 6px;
+      width: auto;
+    }
+    /* Directory list */
+    .mosque-list {
+      max-height: 380px;
+      overflow-y: auto;
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-right: 4px;
+    }
+    .mosque-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      transition: all 0.2s;
+    }
+    .mosque-item:hover {
+      border-color: var(--gold);
+      background: rgba(245, 197, 66, 0.05);
+    }
+    .m-info h4 {
+      font-size: 15px;
+      color: #f1f5f9;
+      font-weight: 600;
+    }
+    .m-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .m-actions {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-box {
+      background: #0f1c32;
+      border: 2px solid var(--gold);
+      border-radius: 20px;
+      max-width: 550px;
+      width: 100%;
+      padding: 28px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+      text-align: center;
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes popIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .link-box {
+      background: #060b14;
+      border: 1px dashed var(--gold);
+      border-radius: 10px;
+      padding: 12px;
+      margin: 14px 0;
+      text-align: left;
+    }
+    .link-label {
+      font-size: 12px;
+      color: var(--gold);
+      font-weight: 600;
+    }
+    .link-val {
+      font-size: 13.5px;
+      color: #38bdf8;
+      word-break: break-all;
+      margin: 4px 0 8px;
+    }
+    .qr-container {
+      display: flex;
+      justify-content: center;
+      margin: 16px 0;
+      background: #fff;
+      padding: 12px;
+      border-radius: 12px;
+      width: 180px;
+      height: 180px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #10b981;
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 14px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      display: none;
+      z-index: 2000;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-light);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="logo.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
+    <h1>🕌 স্মার্ট মসজিদ ডিজিটাল ডিসপ্লে প্ল্যাটফর্ম</h1>
+    <p class="subtitle">যেকোনো মসজিদের জন্য স্বতন্ত্র ডিজিটাল নামাজের সময়সূচি ও রিমোট নিয়ন্ত্রণ ব্যবস্থা</p>
+  </header>
+
+  <div class="container">
+    
+    <!-- Top Action Bar -->
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; background:rgba(245,197,66,0.1); border:1px solid var(--border); padding:16px 20px; border-radius:14px; margin-bottom:24px;">
+      <div>
+        <h3 style="color:var(--gold); font-size:16px;">📺 চলমান লাইভ মসজিদ ডিসপ্লে (চকরিয়া, কক্সবাজার)</h3>
+        <p style="font-size:12.5px; color:var(--text-muted);">পূর্ব মোহাজের পাড়া জামে মসজিদ (ডিফল্ট সিস্টেম)</p>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <a href="display.html" class="btn btn-gold btn-sm" target="_blank">📺 ডিসপ্লে দেখুন</a>
+        <a href="admin.html" class="btn btn-outline btn-sm" target="_blank">⚙️ এডমিন প্যানেল</a>
+        <a href="MyMasjidTV_INSTALL.apk" class="btn btn-outline btn-sm" download>📥 অ্যান্ড্রয়েড টিভি APK</a>
+      </div>
+    </div>
+
+    <div class="grid-layout">
+      
+      <!-- CARD 1: REGISTER NEW MOSQUE -->
+      <div class="card">
+        <h2 class="card-title">➕ নতুন মসজিদ যুক্ত করুন</h2>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:18px;">আপনার মসজিদের তথ্য দিয়ে ১ ক্লিকেই সম্পূর্ণ নিজস্ব ডিজিটাল ডিসপ্লে ও মোবাইল কন্ট্রোল লিংক তৈরি করুন।</p>
+        
+        <form id="createMosqueForm" onsubmit="handleCreateMosque(event)">
+          <div class="form-group">
+            <label>মসজিদের নাম (বাংলায়) *</label>
+            <input type="text" id="mNameBn" placeholder="যেমন: বায়তুল আমান জামে মসজিদ" required oninput="autoGenerateSlug()">
+          </div>
+
+          <div class="form-group">
+            <label>মসজিদের নাম (ইংরেজি)</label>
+            <input type="text" id="mNameEn" placeholder="e.g. Baitul Aman Jame Masjid">
+          </div>
+
+          <div class="row-2">
+            <div class="form-group">
+              <label>জেলা নির্বাচন করুন *</label>
+              <select id="mDistrict" required onchange="handleDistrictChange()">
+                <option value="">-- জেলা সিলেক্ট করুন --</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>উপজেলা / এলাকা</label>
+              <input type="text" id="mArea" placeholder="যেমন: ধানমন্ডি, ঢাকা">
+            </div>
+          </div>
+
+          <div class="row-2">
+            <div class="form-group">
+              <label>মসজিদ আইডি / কোড (URL Slug) *</label>
+              <input type="text" id="mSlug" placeholder="যেমন: baitul-aman" required pattern="[a-zA-Z0-9_-]+" title="শুধুমাত্র ইংরেজি অক্ষর, সংখ্যা ও হাইফেন">
+            </div>
+            <div class="form-group">
+              <label>এডমিন পিন (৪ সংখ্যার গোপন কোড) *</label>
+              <input type="password" id="mPin" maxlength="6" placeholder="যেমন: 1234" required>
+            </div>
+          </div>
+
+          <!-- Hidden GPS fields updated by district -->
+          <input type="hidden" id="mLat" value="23.8103">
+          <input type="hidden" id="mLng" value="90.4125">
+
+          <button type="submit" class="btn btn-gold" style="margin-top:10px;">
+            <span>🚀 মসজিদ তৈরি করুন ও লিংক নিন</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- CARD 2: DIRECTORY OF REGISTERED MOSQUES -->
+      <div class="card">
+        <h2 class="card-title">🔍 সকল মসজিদ ও ইনস্ট্যান্ট লিংক</h2>
+        <div class="form-group" style="margin-top:4px;">
+          <input type="text" id="searchBox" placeholder="মসজিদের নাম বা আইডি দিয়ে খুঁজুন..." oninput="filterMosques()">
+        </div>
+
+        <div class="mosque-list" id="mosqueListEl">
+          <p style="text-align:center; padding:30px; color:var(--text-muted); font-size:13px;">মসজিদের তালিকা লোড হচ্ছে...</p>
+        </div>
+
+        <div style="margin-top:20px; padding:14px; background:rgba(0,0,0,0.25); border-radius:10px; font-size:12.5px; color:var(--text-muted);">
+          💡 <strong style="color:#cbd5e1;">অ্যান্ড্রয়েড টিভিতে ব্যবহারের নিয়ম:</strong> আপনার টিভিতে ব্রাউজার বা MyMasjidTV অ্যাপ দিয়ে ডিসপ্লে লিঙ্কটি খুলুন। স্বয়ংক্রিয়ভাবে রিয়েলটাইম আজান ও কাউন্টডাউন শুরু হয়ে যাবে।
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- SUCCESS MODAL POPUP -->
+  <div class="modal-overlay" id="successModal">
+    <div class="modal-box">
+      <span style="font-size:42px;">🎉</span>
+      <h2 style="color:var(--gold); font-size:22px; margin:8px 0;" id="modalMosqueTitle">মসজিদ সফলভাবে নিবন্ধিত হয়েছে!</h2>
+      <p style="font-size:13px; color:#cbd5e1;">আপনার মসজিদের জন্য প্রস্তুতকৃত ইউনিক লিঙ্ক ও কিউআর কোড নিচে দেওয়া হলো:</p>
+
+      <div class="qr-container" id="qrContainer"></div>
+
+      <div class="link-box">
+        <div class="link-label">📺 টিভি ডিসপ্লে লিংক:</div>
+        <div class="link-val" id="modalDisplayLink">-</div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-gold btn-sm" onclick="copyLink('modalDisplayLink')">📋 ডিসপ্লে লিংক কপি</button>
+          <a href="#" id="modalDisplayBtn" target="_blank" class="btn btn-outline btn-sm">📺 সরাসরি ওপেন</a>
+        </div>
+      </div>
+
+      <div class="link-box">
+        <div class="link-label">⚙️ মোবাইল এডমিন লিংক (পাসওয়ার্ড সুরক্ষিত):</div>
+        <div class="link-val" id="modalAdminLink">-</div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-gold btn-sm" onclick="copyLink('modalAdminLink')">📋 এডমিন লিংক কপি</button>
+          <a href="#" id="modalAdminBtn" target="_blank" class="btn btn-outline btn-sm">⚙️ এডমিন ওপেন</a>
+        </div>
+      </div>
+
+      <button class="btn btn-outline" style="margin-top:14px;" onclick="closeModal()">বন্ধ করুন</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">📋 লিংক কপি করা হয়েছে!</div>
+
+  <footer>
+    <p>স্মার্ট মসজিদ ডিজিটাল ডিসপ্লে সিস্টেম &copy; ২০২৬ | উন্মুক্ত ইসলামিক প্রযুক্তি প্ল্যাটফর্ম</p>
+  </footer>
+
+  <script>
+    // 64 Districts of Bangladesh with Pre-Computed GPS Coordinates
+    var DISTRICTS = [
+      { name: "ঢাকা", en: "Dhaka", lat: 23.8103, lng: 90.4125 },
+      { name: "চট্টগ্রাম", en: "Chattogram", lat: 22.3569, lng: 91.7832 },
+      { name: "কক্সবাজার", en: "Cox's Bazar", lat: 21.4272, lng: 92.0058 },
+      { name: "চকরিয়া (কক্সবাজার)", en: "Chakaria, Cox's Bazar", lat: 21.8355, lng: 92.0780 },
+      { name: "সিলেট", en: "Sylhet", lat: 24.8949, lng: 91.8687 },
+      { name: "রাজশাহী", en: "Rajshahi", lat: 24.3745, lng: 88.6042 },
+      { name: "খুলনা", en: "Khulna", lat: 22.8456, lng: 89.5403 },
+      { name: "বরিশাল", en: "Barishal", lat: 22.7010, lng: 90.3535 },
+      { name: "রংপুর", en: "Rangpur", lat: 25.7439, lng: 89.2752 },
+      { name: "ময়মনসিংহ", en: "Mymensingh", lat: 24.7471, lng: 90.4203 },
+      { name: "কুমিল্লা", en: "Cumilla", lat: 23.4682, lng: 91.1788 },
+      { name: "ব্রাহ্মণবাড়িয়া", en: "Brahmanbaria", lat: 23.9571, lng: 91.1119 },
+      { name: "নোয়াখালী", en: "Noakhali", lat: 22.8696, lng: 91.0998 },
+      { name: "ফেনী", en: "Feni", lat: 23.0186, lng: 91.3966 },
+      { name: "চাঁদপুর", en: "Chandpur", lat: 23.2321, lng: 90.6631 },
+      { name: "লক্ষ্মীপুর", en: "Lakshmipur", lat: 22.9425, lng: 90.8412 },
+      { name: "গাজীপুর", en: "Gazipur", lat: 24.0023, lng: 90.4264 },
+      { name: "নারায়ণগঞ্জ", en: "Narayanganj", lat: 23.6238, lng: 90.5000 },
+      { name: "বগুড়া", en: "Bogura", lat: 24.8465, lng: 89.3777 },
+      { name: "যশোর", en: "Jashore", lat: 23.1664, lng: 89.2081 },
+      { name: "পাবনা", en: "Pabna", lat: 24.0064, lng: 89.2372 },
+      { name: "কুষ্টিয়া", en: "Kushtia", lat: 23.9013, lng: 89.1204 },
+      { name: "দিনাজপুর", en: "Dinajpur", lat: 25.6217, lng: 88.6355 },
+      { name: "ফরিদপুর", en: "Faridpur", lat: 23.6071, lng: 89.8426 },
+      { name: "টাঙ্গাইল", en: "Tangail", lat: 24.2513, lng: 89.9167 },
+      { name: "সিরাজগঞ্জ", en: "Sirajganj", lat: 24.4534, lng: 89.7008 },
+      { name: "নাটোর", en: "Natore", lat: 24.4206, lng: 88.9324 },
+      { name: "হবিগঞ্জ", en: "Habiganj", lat: 24.3750, lng: 91.4167 },
+      { name: "মৌলভীবাজার", en: "Moulvibazar", lat: 24.4829, lng: 91.7774 },
+      { name: "সুনামগঞ্জ", en: "Sunamganj", lat: 25.0658, lng: 91.3957 },
+      { name: "বাগেরহাট", en: "Bagerhat", lat: 22.6516, lng: 89.7859 },
+      { name: "সাতক্ষীরা", en: "Satkhira", lat: 22.7185, lng: 89.0705 },
+      { name: "ঝিনাইদহ", en: "Jhenaidah", lat: 23.5448, lng: 89.1539 },
+      { name: "মাগুরা", en: "Magura", lat: 23.4873, lng: 89.4199 },
+      { name: "নড়াইল", en: "Narail", lat: 23.1725, lng: 89.5127 },
+      { name: "চুয়াডাঙ্গা", en: "Chuadanga", lat: 23.6402, lng: 88.8418 },
+      { name: "মেহেরপুর", en: "Meherpur", lat: 23.7622, lng: 88.6318 },
+      { name: "জয়পুরহাট", en: "Joypurhat", lat: 25.1017, lng: 89.0270 },
+      { name: "নওগাঁ", en: "Naogaon", lat: 24.7936, lng: 88.9318 },
+      { name: "চাঁপাইনবাবগঞ্জ", en: "Chapainawabganj", lat: 24.5965, lng: 88.2775 },
+      { name: "কুড়িগ্রাম", en: "Kurigram", lat: 25.8054, lng: 89.6362 },
+      { name: "লালমনিরহাট", en: "Lalmonirhat", lat: 25.9165, lng: 89.4532 },
+      { name: "গাইবান্ধা", en: "Gaibandha", lat: 25.3288, lng: 89.5408 },
+      { name: "নীলফামারী", en: "Nilphamari", lat: 25.9318, lng: 88.8560 },
+      { name: "পঞ্চগড়", en: "Panchagarh", lat: 26.3411, lng: 88.5542 },
+      { name: "ঠাকুরগাঁও", en: "Thakurgaon", lat: 26.0337, lng: 88.4617 },
+      { name: "জামালপুর", en: "Jamalpur", lat: 24.9375, lng: 89.9378 },
+      { name: "শেরপুর", en: "Sherpur", lat: 25.0205, lng: 90.0153 },
+      { name: "নেত্রকোণা", en: "Netrokona", lat: 24.8709, lng: 90.7279 },
+      { name: "কিশোরগঞ্জ", en: "Kishoreganj", lat: 24.4449, lng: 90.7766 },
+      { name: "মানিকগঞ্জ", en: "Manikganj", lat: 23.8617, lng: 90.0003 },
+      { name: "মুন্সীগঞ্জ", en: "Munshiganj", lat: 23.5422, lng: 90.5305 },
+      { name: "নরসিংদী", en: "Narsingdi", lat: 23.9322, lng: 90.7154 },
+      { name: "রাজবাড়ী", en: "Rajbari", lat: 23.7574, lng: 89.6445 },
+      { name: "মাদারীপুর", en: "Madaripur", lat: 23.1641, lng: 90.1897 },
+      { name: "গোপালগঞ্জ", en: "Gopalganj", lat: 23.0051, lng: 89.8266 },
+      { name: "শরীয়তপুর", en: "Shariatpur", lat: 23.2423, lng: 90.4348 },
+      { name: "বান্দরবান", en: "Bandarban", lat: 22.1953, lng: 92.2184 },
+      { name: "রাঙ্গামাটি", en: "Rangamati", lat: 22.6533, lng: 92.1753 },
+      { name: "খাগড়াছড়ি", en: "Khagrachhari", lat: 23.1193, lng: 91.9847 },
+      { name: "ভোলা", en: "Bhola", lat: 22.6859, lng: 90.6481 },
+      { name: "ঝালকাঠি", en: "Jhalokati", lat: 22.6406, lng: 90.1987 },
+      { name: "পিরোজপুর", en: "Pirojpur", lat: 22.5841, lng: 89.9720 },
+      { name: "পটুয়াখালী", en: "Patuakhali", lat: 22.3596, lng: 90.3299 },
+      { name: "বরগুনা", en: "Barguna", lat: 22.0953, lng: 90.0805 }
+    ];
+
+    var allMosques = [];
+
+    // Initialize Page
+    window.addEventListener('DOMContentLoaded', function() {
+      populateDistricts();
+      loadMosques();
+    });
+
+    function populateDistricts() {
+      var sel = document.getElementById('mDistrict');
+      DISTRICTS.forEach(function(d, idx) {
+        var opt = document.createElement('option');
+        opt.value = idx;
+        opt.textContent = d.name + ' (' + d.en + ')';
+        sel.appendChild(opt);
+      });
+    }
+
+    function handleDistrictChange() {
+      var sel = document.getElementById('mDistrict');
+      var idx = sel.value;
+      if (idx !== '') {
+        var d = DISTRICTS[idx];
+        document.getElementById('mLat').value = d.lat;
+        document.getElementById('mLng').value = d.lng;
+        var areaEl = document.getElementById('mArea');
+        if (!areaEl.value) {
+          areaEl.value = d.name;
+        }
+      }
+    }
+
+    function autoGenerateSlug() {
+      var name = document.getElementById('mNameBn').value.trim();
+      var slugEl = document.getElementById('mSlug');
+      if (name && (!slugEl.value || slugEl.dataset.autogen === 'true')) {
+        var engName = document.getElementById('mNameEn').value.trim();
+        var base = engName || 'masjid-' + Math.floor(100 + Math.random() * 900);
+        var slug = base.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').slice(0, 30);
+        slugEl.value = slug;
+        slugEl.dataset.autogen = 'true';
+      }
+    }
+
+    function loadMosques() {
+      var listEl = document.getElementById('mosqueListEl');
+      fetch('/api/settings?action=list')
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          if (data && data.mosques && data.mosques.length) {
+            allMosques = data.mosques;
+            renderMosqueList(allMosques);
+          } else {
+            renderFallbackList();
+          }
+        })
+        .catch(function() {
+          renderFallbackList();
+        });
+    }
+
+    function renderFallbackList() {
+      allMosques = [
+        { id: 'default', nameBn: 'পূর্ব মোহাজের পাড়া জামে মসজিদ', location: 'চকরিয়া, কক্সবাজার' }
+      ];
+      renderMosqueList(allMosques);
+    }
+
+    function renderMosqueList(list) {
+      var listEl = document.getElementById('mosqueListEl');
+      listEl.innerHTML = '';
+      if (!list.length) {
+        listEl.innerHTML = '<p style="text-align:center; padding:20px; color:var(--text-muted);">কোনো মসজিদ পাওয়া যায়নি</p>';
+        return;
+      }
+      list.forEach(function(m) {
+        var item = document.createElement('div');
+        item.className = 'mosque-item';
+        var dLink = 'display.html?m=' + m.id;
+        var aLink = 'admin.html?m=' + m.id;
+        item.innerHTML = 
+          '<div class="m-info">' +
+            '<h4>🕌 ' + (m.nameBn || 'জামে মসজিদ') + '</h4>' +
+            '<p>📍 ' + (m.location || 'বাংলাদেশ') + ' &bull; <span style="color:#38bdf8;">আইডি: ' + m.id + '</span></p>' +
+          '</div>' +
+          '<div class="m-actions">' +
+            '<a href="' + dLink + '" target="_blank" class="btn btn-gold btn-sm">📺 ডিসপ্লে</a>' +
+            '<a href="' + aLink + '" target="_blank" class="btn btn-outline btn-sm">⚙️ এডমিন</a>' +
+          '</div>';
+        listEl.appendChild(item);
+      });
+    }
+
+    function filterMosques() {
+      var q = document.getElementById('searchBox').value.toLowerCase().trim();
+      var filtered = allMosques.filter(function(m) {
+        return (m.nameBn && m.nameBn.toLowerCase().indexOf(q) !== -1) ||
+               (m.id && m.id.toLowerCase().indexOf(q) !== -1) ||
+               (m.location && m.location.toLowerCase().indexOf(q) !== -1);
+      });
+      renderMosqueList(filtered);
+    }
+
+    function handleCreateMosque(e) {
+      e.preventDefault();
+      var nameBn = document.getElementById('mNameBn').value.trim();
+      var nameEn = document.getElementById('mNameEn').value.trim();
+      var area = document.getElementById('mArea').value.trim();
+      var slug = document.getElementById('mSlug').value.trim().toLowerCase();
+      var pin = document.getElementById('mPin').value.trim();
+      var lat = parseFloat(document.getElementById('mLat').value) || 23.8103;
+      var lng = parseFloat(document.getElementById('mLng').value) || 90.4125;
+
+      var sel = document.getElementById('mDistrict');
+      var distObj = DISTRICTS[sel.value] || { name: 'ঢাকা' };
+      var fullLocation = area ? (area + ', ' + distObj.name) : distObj.name;
+
+      var newSettings = {
+        mosqueId: slug,
+        nameBn: nameBn,
+        nameEn: nameEn || fullLocation,
+        nameAr: 'مسجد النور',
+        location: fullLocation,
+        lat: lat,
+        lng: lng,
+        pin: pin,
+        updatedAt: Date.now()
+      };
+
+      // Save locally
+      try {
+        localStorage.setItem('mosqueSettings_' + slug, JSON.stringify(newSettings));
+      } catch(err) {}
+
+      // Save via API
+      fetch('/api/settings?m=' + slug, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newSettings)
+      })
+      .then(function(res) { return res.json(); })
+      .then(function(resData) {
+        showSuccessModal(slug, nameBn);
+        loadMosques();
+      })
+      .catch(function() {
+        // Fallback for offline mode
+        showSuccessModal(slug, nameBn);
+        loadMosques();
+      });
+    }
+
+    function showSuccessModal(slug, name) {
+      document.getElementById('modalMosqueTitle').textContent = name + ' প্রস্তুত!';
+      var origin = window.location.origin + window.location.pathname.replace('portal.html', '');
+      if (origin.endsWith('/')) origin = origin.slice(0, -1);
+      
+      var displayUrl = origin + '/display.html?m=' + slug;
+      var adminUrl = origin + '/admin.html?m=' + slug;
+
+      document.getElementById('modalDisplayLink').textContent = displayUrl;
+      document.getElementById('modalAdminLink').textContent = adminUrl;
+
+      document.getElementById('modalDisplayBtn').href = displayUrl;
+      document.getElementById('modalAdminBtn').href = adminUrl;
+
+      // Generate QR Code
+      var qrBox = document.getElementById('qrContainer');
+      qrBox.innerHTML = '';
+      try {
+        new QRCode(qrBox, {
+          text: displayUrl,
+          width: 156,
+          height: 156,
+          colorDark: "#070d18",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.M
+        });
+      } catch(e) {}
+
+      document.getElementById('successModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('successModal').style.display = 'none';
+    }
+
+    function copyLink(elementId) {
+      var text = document.getElementById(elementId).textContent;
+      navigator.clipboard.writeText(text).then(function() {
+        showToast('📋 লিঙ্ক ক্লিপবোর্ডে কপি করা হয়েছে!');
+      });
+    }
+
+    function showToast(msg) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.display = 'block';
+      setTimeout(function() { t.style.display = 'none'; }, 3000);
+    }
+  </script>
+</body>
+</html>

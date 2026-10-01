@@ -68,21 +68,59 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // API endpoint for persistent settings
-  if (urlPath === '/api/settings') {
-    const settingsFile = path.join(dir, 'settings.json');
+  // API endpoint for persistent settings (Multi-Tenant)
+  if (urlPath === '/api/settings' || urlPath === '/api/mosques') {
+    const parsedUrl = new URL(req.url, 'http://localhost');
+    const action = parsedUrl.searchParams.get('action');
+
+    // List all mosques
+    if (urlPath === '/api/mosques' || action === 'list') {
+      let list = [{ id: 'default', nameBn: 'পূর্ব মোহাজের পাড়া জামে মসজিদ', location: 'চকরিয়া, কক্সবাজার' }];
+      try {
+        const regFile = path.join(dir, 'mosque_registry.json');
+        if (fs.existsSync(regFile)) list = JSON.parse(fs.readFileSync(regFile, 'utf8'));
+      } catch(e) {}
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ success: true, mosques: list }));
+      return;
+    }
+
+    let rawId = parsedUrl.searchParams.get('m') || parsedUrl.searchParams.get('id');
+    const mId = (rawId && rawId !== 'default' && rawId !== 'null') 
+      ? String(rawId).toLowerCase().trim().replace(/[^a-z0-9_-]/g, '-').slice(0, 50) 
+      : 'default';
+
+    const settingsFile = (mId === 'default') 
+      ? path.join(dir, 'settings.json') 
+      : path.join(dir, `settings_${mId}.json`);
+
     if (req.method === 'GET') {
       fs.readFile(settingsFile, 'utf8', (err, data) => {
         if (err) {
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end('{}');
+          // If custom mosque file doesn't exist, generate template from default
+          let fallback = {};
+          try {
+            fallback = JSON.parse(fs.readFileSync(path.join(dir, 'settings.json'), 'utf8'));
+          } catch(e) {}
+          if (mId !== 'default') {
+            fallback.mosqueId = mId;
+            fallback.nameBn = 'নতুন জামে মসজিদ';
+            fallback.nameEn = 'New Jame Masjid';
+            fallback.location = 'ঢাকা, বাংলাদেশ';
+            fallback.lat = 23.8103;
+            fallback.lng = 90.4125;
+            fallback.updatedAt = 0;
+          }
+          res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+          res.end(JSON.stringify(fallback));
         } else {
-          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
           res.end(data);
         }
       });
       return;
     }
+
     if (req.method === 'POST') {
       let body = '';
       req.on('data', chunk => body += chunk);
@@ -94,46 +132,81 @@ const server = http.createServer((req, res) => {
           try {
             if (fs.existsSync(settingsFile)) {
               existing = JSON.parse(fs.readFileSync(settingsFile, 'utf8'));
+            } else if (mId === 'default' && fs.existsSync(path.join(dir, 'settings.json'))) {
+              existing = JSON.parse(fs.readFileSync(path.join(dir, 'settings.json'), 'utf8'));
             }
           } catch(e) {}
 
-          const merged = Object.assign({}, existing, parsed);
+          // PIN validation
+          if (existing.pin && existing.pin.trim() !== '') {
+            const clientPin = String(parsed.pin || parsed.adminPin || '').trim();
+            if (clientPin !== String(existing.pin).trim()) {
+              res.writeHead(401, { 'Content-Type': 'application/json; charset=utf-8' });
+              res.end(JSON.stringify({ error: 'ভুল এডমিন পিন কোড!', invalidPin: true }));
+              return;
+            }
+          }
 
-          merged.lat = 21.8355;
-          merged.lng = 92.0780;
-          merged.location = 'চকরিয়া, কক্সবাজার';
+          const merged = Object.assign({}, existing, parsed);
+          merged.mosqueId = mId;
           merged.updatedAt = Date.now();
+
+          if (mId === 'default') {
+            if (!merged.lat) merged.lat = 21.8355;
+            if (!merged.lng) merged.lng = 92.0780;
+            if (!merged.location) merged.location = 'চকরিয়া, কক্সবাজার';
+          } else {
+            if (!merged.lat) merged.lat = 23.8103;
+            if (!merged.lng) merged.lng = 90.4125;
+            if (!merged.location) merged.location = 'ঢাকা, বাংলাদেশ';
+          }
 
           const jsonStr = JSON.stringify(merged, null, 2);
 
-          // Mirror to public, desktop and android-tv assets
-          try { fs.writeFileSync(path.join(dir, 'public', 'settings.json'), jsonStr, 'utf8'); } catch(e) {}
-          try {
-            const deskPath = 'C:\\Users\\QC\\Desktop\\mosque\\settings.json';
-            if (fs.existsSync(path.dirname(deskPath))) fs.writeFileSync(deskPath, jsonStr, 'utf8');
-          } catch(e) {}
-          try {
-            const assetPath = path.join(dir, 'android-tv', 'app', 'src', 'main', 'assets', 'settings.json');
-            if (fs.existsSync(path.dirname(assetPath))) fs.writeFileSync(assetPath, jsonStr, 'utf8');
-          } catch(e) {}
-
+          // Write settings for this mosque
           fs.writeFile(settingsFile, jsonStr, 'utf8', (err) => {
             if (err) {
-              res.writeHead(500, { 'Content-Type': 'application/json' });
+              res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
               res.end(JSON.stringify({ error: err.message }));
-            } else {
-              res.writeHead(200, { 'Content-Type': 'application/json' });
-              res.end(JSON.stringify({ success: true, settings: merged }));
-
-              // Real-time broadcast to all connected displays
-              const msg = `data: ${JSON.stringify({ type: 'UPDATE_SETTINGS', settings: merged })}\n\n`;
-              sseClients.forEach(client => {
-                try { client.write(msg); } catch(e) { sseClients.delete(client); }
-              });
+              return;
             }
+
+            // Mirror if default mosque
+            if (mId === 'default') {
+              try { fs.writeFileSync(path.join(dir, 'public', 'settings.json'), jsonStr, 'utf8'); } catch(e) {}
+              try {
+                const deskPath = 'C:\\Users\\QC\\Desktop\\mosque\\settings.json';
+                if (fs.existsSync(path.dirname(deskPath))) fs.writeFileSync(deskPath, jsonStr, 'utf8');
+              } catch(e) {}
+              try {
+                const assetPath = path.join(dir, 'android-tv', 'app', 'src', 'main', 'assets', 'settings.json');
+                if (fs.existsSync(path.dirname(assetPath))) fs.writeFileSync(assetPath, jsonStr, 'utf8');
+              } catch(e) {}
+            }
+
+            // Update Registry
+            try {
+              const regFile = path.join(dir, 'mosque_registry.json');
+              let list = [{ id: 'default', nameBn: 'পূর্ব মোহাজের পাড়া জামে মসজিদ', location: 'চকরিয়া, কক্সবাজার' }];
+              if (fs.existsSync(regFile)) list = JSON.parse(fs.readFileSync(regFile, 'utf8'));
+              const idx = list.findIndex(item => item.id === mId);
+              const entry = { id: mId, nameBn: merged.nameBn || 'জামে মসজিদ', location: merged.location || 'বাংলাদেশ', updatedAt: merged.updatedAt };
+              if (idx >= 0) list[idx] = entry; else list.push(entry);
+              fs.writeFileSync(regFile, JSON.stringify(list, null, 2), 'utf8');
+              try { fs.writeFileSync(path.join(dir, 'public', 'mosque_registry.json'), JSON.stringify(list, null, 2), 'utf8'); } catch(e) {}
+            } catch(e) {}
+
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({ success: true, mosqueId: mId, settings: merged }));
+
+            // Real-time broadcast
+            const msg = `data: ${JSON.stringify({ type: 'UPDATE_SETTINGS', mosqueId: mId, settings: merged })}\n\n`;
+            sseClients.forEach(client => {
+              try { client.write(msg); } catch(e) { sseClients.delete(client); }
+            });
           });
         } catch (e) {
-          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
           res.end(JSON.stringify({ error: 'Invalid JSON' }));
         }
       });

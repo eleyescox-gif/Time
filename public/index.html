@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="refresh" content="0; url=display.html">
   <title>মসজিদ ডিসপ্লে | Mosque Prayer Times</title>
   <script>
-    window.location.replace("display.html");
+    var target = "display.html" + (window.location.search || "");
+    window.location.replace(target);
   </script>
 </head>
 <body style="background:#0a0a0a; color:#f7c844; font-family:sans-serif; display:flex; align-items:center; justify-content:center; height:100vh; margin:0;">
-  <p>লোড হচ্ছে... <a href="display.html" style="color:#38bdf8;">এখানে ক্লিক করুন</a></p>
+  <p>লোড হচ্ছে... <a href="display.html" id="redirLink" style="color:#38bdf8;">এখানে ক্লিক করুন</a></p>
+  <script>
+    document.getElementById('redirLink').href = "display.html" + (window.location.search || "");
+  </script>
 </body>
 </html>
