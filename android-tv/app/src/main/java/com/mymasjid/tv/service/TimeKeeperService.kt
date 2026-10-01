@@ -70,6 +70,21 @@ class TimeKeeperService : Service() {
         }
     }
 
+    private val screenReceiver = object : android.content.BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val action = intent?.action ?: return
+            if (action == Intent.ACTION_SCREEN_ON || action == Intent.ACTION_USER_PRESENT) {
+                Log.i(TAG, "Screen ON / TV Standby Wakeup: $action")
+                if (context != null && PrefsManager.isBootAutoStart(context)) {
+                    if (!com.mymasjid.tv.MainActivity.isActivityVisible) {
+                        Log.i(TAG, "MainActivity is in background, auto-landing to foreground...")
+                        com.mymasjid.tv.receiver.BootReceiver.launchMainActivity(context)
+                    }
+                }
+            }
+        }
+    }
+
     // ── Lifecycle ──────────────────────────────────────────────────────────
 
     override fun onCreate() {
@@ -80,6 +95,17 @@ class TimeKeeperService : Service() {
 
         // Power outage recovery: RTC-based time restore
         recoverTimeAfterOutage()
+
+        // TV Standby Wakeup (Screen ON) Listener
+        try {
+            val screenFilter = android.content.IntentFilter().apply {
+                addAction(Intent.ACTION_SCREEN_ON)
+                addAction(Intent.ACTION_USER_PRESENT)
+            }
+            registerReceiver(screenReceiver, screenFilter)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to register screenReceiver: ${e.message}")
+        }
 
         // NTP sync শুরু করো
         handler.post(syncRunnable)
@@ -94,6 +120,11 @@ class TimeKeeperService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         isRunning = false
+        try {
+            unregisterReceiver(screenReceiver)
+        } catch (e: Exception) {
+            // Ignore
+        }
         handler.removeCallbacks(syncRunnable)
         executor.shutdown()
         Log.i(TAG, "TimeKeeperService stopped")

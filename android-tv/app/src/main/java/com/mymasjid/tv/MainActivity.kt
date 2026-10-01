@@ -37,6 +37,11 @@ import com.mymasjid.tv.utils.PrefsManager
  */
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        @Volatile
+        var isActivityVisible: Boolean = false
+    }
+
     private lateinit var webView: WebView
     private var lastBackPressTime: Long = 0
     private val BACK_PRESS_THRESHOLD = 2000L // ২ সেকেন্ডের মধ্যে ডাবল ব্যাক
@@ -49,6 +54,18 @@ class MainActivity : AppCompatActivity() {
 
         // স্ক্রিন যেন কখনোই অফ না হয় (TV ও মোবাইলের জন্য অত্যাবশ্যকীয়)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
+        // টিভি পাওয়ার অন বা ওয়েকআপে অটো-ডিসপ্লে স্ক্রিন অন ও আনলক করা
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(true)
+            setTurnScreenOn(true)
+        } else {
+            @Suppress("DEPRECATION")
+            window.addFlags(
+                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+                WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+            )
+        }
 
         // নচ এবং পাঞ্চ-হোল স্ক্রিনে ফুলস্ক্রিন ডিসপ্লে (Android 9+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -191,13 +208,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        isActivityVisible = true
         enableImmersiveFullscreen()
         webView.onResume()
     }
 
     override fun onPause() {
         super.onPause()
+        isActivityVisible = false
         webView.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        isActivityVisible = false
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

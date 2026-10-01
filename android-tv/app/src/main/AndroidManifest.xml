@@ -11,6 +11,9 @@
 
     <!-- Feature 3: Boot auto-start — TV restart হলে app auto launch -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.QUICKBOOT_POWERON" />
+    <uses-permission android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
 
     <!-- Feature 4: Pre-Jamaat overlay notification -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
@@ -57,7 +60,10 @@
             android:exported="true"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:screenOrientation="unspecified">
+            android:screenOrientation="unspecified"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:showForAllUsers="true">
 
             <!-- TV launcher intent (Android TV / Google TV home screen) -->
             <intent-filter>
@@ -70,6 +76,13 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!-- Kiosk / Dedicated TV Home Launcher (Option to auto-land directly on TV Boot as Home App) -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
         <!-- ═══════════════ SETTINGS ACTIVITY ═══════════════ -->
@@ -80,16 +93,21 @@
             android:parentActivityName=".MainActivity" />
 
         <!-- ═══════════════ FEATURE 3: BOOT RECEIVER ═══════════════ -->
-        <!-- TV restart বা পাওয়ার অন হলে অটো-স্টার্ট -->
+        <!-- TV restart বা পাওয়ার অন হলে অটো-স্টার্ট ও অটো ল্যান্ডিং -->
         <receiver
             android:name=".receiver.BootReceiver"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true"
+            android:directBootAware="true">
             <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-                <!-- China TV brands এর জন্য extra boot action -->
                 <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.REBOOT" />
+                <action android:name="android.media.tv.action.INITIALIZE_PROGRAMS" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
 
