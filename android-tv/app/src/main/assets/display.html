@@ -516,8 +516,22 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      margin-top: clamp(3px, 0.6vh, 7px);
+      margin-top: clamp(6px, 1vh, 12px);
       z-index: 5;
+    }
+
+    /* ═══ ROYAL ISLAMIC CHAMFERED DATE PLAQUE ═══ */
+    .header-date-badge-outer {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px;
+      background: linear-gradient(135deg, #fde047 0%, #ca8a04 28%, #f7c844 55%, #854d0e 80%, #fde047 100%);
+      clip-path: polygon(14px 0, calc(100% - 14px) 0, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0 calc(100% - 14px), 0 14px);
+      filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 16px rgba(247, 200, 68, 0.35));
+      flex-shrink: 0;
+      transition: all 0.3s ease;
     }
 
     .header-date-badge {
@@ -525,14 +539,23 @@
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      gap: clamp(10px, 1.4vw, 20px);
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.90) 0%, rgba(30, 41, 59, 0.82) 100%);
-      border: 1.5px solid rgba(247, 200, 68, 0.35);
-      border-radius: 999px;
-      padding: clamp(3px, 0.5vh, 6px) clamp(16px, 2vw, 28px);
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45), 0 0 14px rgba(247, 200, 68, 0.15);
-      backdrop-filter: blur(14px);
+      gap: clamp(14px, 1.8vw, 26px);
+      background: linear-gradient(180deg, rgba(13, 21, 38, 0.96) 0%, rgba(9, 14, 26, 0.98) 100%);
+      clip-path: polygon(13px 0, calc(100% - 13px) 0, 100% 13px, 100% calc(100% - 13px), calc(100% - 13px) 100%, 13px 100%, 0 calc(100% - 13px), 0 13px);
+      padding: clamp(7px, 1.1vh, 13px) clamp(24px, 2.8vw, 44px);
+      position: relative;
+      backdrop-filter: blur(16px);
       flex-shrink: 0;
+    }
+
+    /* Inner Decorative Dashed Accent Ring */
+    .header-date-badge::before {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border: 1px dashed rgba(247, 200, 68, 0.32);
+      clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+      pointer-events: none;
     }
 
     .h-date-greg {
@@ -545,19 +568,37 @@
 
     .h-date-bn {
       font-family: 'Hind Siliguri', sans-serif;
-      font-size: clamp(14px, 1.4vw, 20px);
+      font-size: clamp(18px, 1.9vw, 25px);
       font-weight: 800;
       color: #fde047;
-      text-shadow: 0 0 12px rgba(253, 224, 71, 0.45);
+      text-shadow: 0 0 16px rgba(253, 224, 71, 0.5), 0 2px 8px rgba(0, 0, 0, 0.85);
       line-height: 1.2;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.4px;
     }
 
+    /* Illuminated Islamic Star Separator */
     .h-date-sep {
-      width: 1.5px;
-      height: 16px;
-      background: rgba(247, 200, 68, 0.6);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
       margin: 0;
+      flex-shrink: 0;
+    }
+
+    .h-date-sep-bar {
+      display: block;
+      width: 1.5px;
+      height: clamp(15px, 2vh, 22px);
+      background: linear-gradient(to bottom, transparent, rgba(247, 200, 68, 0.85), transparent);
+    }
+
+    .h-date-sep-gem {
+      color: #fde047;
+      font-size: clamp(12px, 1.3vw, 16px);
+      line-height: 1;
+      transform: translateY(-0.5px);
+      filter: drop-shadow(0 0 6px rgba(253, 224, 71, 0.85));
     }
 
     .h-date-hijri {
@@ -570,12 +611,12 @@
 
     .h-date-hijri-val {
       font-family: 'Hind Siliguri', sans-serif;
-      font-size: clamp(13px, 1.3vw, 18px);
+      font-size: clamp(17px, 1.8vw, 23px);
       font-weight: 800;
       color: #38bdf8;
-      text-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+      text-shadow: 0 0 16px rgba(56, 189, 248, 0.45), 0 2px 8px rgba(0, 0, 0, 0.85);
       line-height: 1.2;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.4px;
     }
 
     /* Bottom Ticker Bangla Date Badge */
@@ -1361,6 +1402,19 @@
       margin-top: 2px !important;
     }
 
+    .is-portrait .header-date-badge-outer,
+    body.rotate-90 .header-date-badge-outer,
+    body.rotate-270 .header-date-badge-outer {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 1.8px !important;
+      background: linear-gradient(135deg, #fde047 0%, #ca8a04 28%, #f7c844 55%, #854d0e 80%, #fde047 100%) !important;
+      clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px), 0 12px) !important;
+      filter: drop-shadow(0 6px 20px rgba(0,0,0,0.65)) drop-shadow(0 0 14px rgba(247,200,68,0.3)) !important;
+      margin: 4px auto 0 auto !important;
+    }
+
     .is-portrait .header-date-badge,
     body.rotate-90 .header-date-badge,
     body.rotate-270 .header-date-badge {
@@ -1368,12 +1422,25 @@
       flex-direction: row !important;
       align-items: center !important;
       justify-content: center !important;
-      gap: clamp(10px, 1.8vw, 20px) !important;
-      padding: clamp(4px, 0.6vh, 7px) clamp(16px, 2.5vw, 30px) !important;
-      border-radius: 999px !important;
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 41, 59, 0.80) 100%) !important;
-      border: 1px solid rgba(247, 200, 68, 0.3) !important;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.4) !important;
+      gap: clamp(12px, 2vw, 22px) !important;
+      padding: clamp(6px, 0.9vh, 10px) clamp(18px, 3vw, 34px) !important;
+      border-radius: 0 !important;
+      clip-path: polygon(11px 0, calc(100% - 11px) 0, 100% 11px, 100% calc(100% - 11px), calc(100% - 11px) 100%, 11px 100%, 0 calc(100% - 11px), 0 11px) !important;
+      background: linear-gradient(180deg, rgba(13, 21, 38, 0.96) 0%, rgba(9, 14, 26, 0.98) 100%) !important;
+      border: none !important;
+      box-shadow: none !important;
+      position: relative !important;
+    }
+
+    .is-portrait .header-date-badge::before,
+    body.rotate-90 .header-date-badge::before,
+    body.rotate-270 .header-date-badge::before {
+      content: '' !important;
+      position: absolute !important;
+      inset: 2.5px !important;
+      border: 1px dashed rgba(247, 200, 68, 0.3) !important;
+      clip-path: polygon(9px 0, calc(100% - 9px) 0, 100% 9px, 100% calc(100% - 9px), calc(100% - 9px) 100%, 9px 100%, 0 calc(100% - 9px), 0 9px) !important;
+      pointer-events: none !important;
     }
 
     .is-portrait .h-date-greg,
@@ -1385,10 +1452,27 @@
     .is-portrait .h-date-sep,
     body.rotate-90 .h-date-sep,
     body.rotate-270 .h-date-sep {
-      width: 1px !important;
-      height: 18px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
       margin: 0 !important;
-      background: rgba(247, 200, 68, 0.6) !important;
+    }
+
+    .is-portrait .h-date-sep-bar,
+    body.rotate-90 .h-date-sep-bar,
+    body.rotate-270 .h-date-sep-bar {
+      display: block !important;
+      width: 1px !important;
+      height: 16px !important;
+      background: linear-gradient(to bottom, transparent, rgba(247, 200, 68, 0.8), transparent) !important;
+    }
+
+    .is-portrait .h-date-sep-gem,
+    body.rotate-90 .h-date-sep-gem,
+    body.rotate-270 .h-date-sep-gem {
+      color: #fde047 !important;
+      font-size: 13px !important;
+      filter: drop-shadow(0 0 5px rgba(253, 224, 71, 0.8)) !important;
     }
 
     .is-portrait .h-date-hijri,
@@ -1400,17 +1484,19 @@
     .is-portrait .h-date-bn,
     body.rotate-90 .h-date-bn,
     body.rotate-270 .h-date-bn {
-      font-size: clamp(14px, 1.8vw, 21px) !important;
+      font-size: clamp(16px, 2.1vw, 23px) !important;
       color: #fde047 !important;
       font-weight: 800 !important;
+      text-shadow: 0 0 14px rgba(253, 224, 71, 0.45) !important;
     }
 
     .is-portrait .h-date-hijri-val,
     body.rotate-90 .h-date-hijri-val,
     body.rotate-270 .h-date-hijri-val {
-      font-size: clamp(13px, 1.6vw, 19px) !important;
+      font-size: clamp(15px, 1.9vw, 21px) !important;
       color: #38bdf8 !important;
       font-weight: 800 !important;
+      text-shadow: 0 0 14px rgba(56, 189, 248, 0.4) !important;
     }
 
     /* ── ২. দ্বিতীয়: ঘড়ি ও ওয়াক্ত কাউন্টডাউন প্যানেল ── */
@@ -1959,35 +2045,68 @@
         align-items: center !important;
         justify-content: center !important;
       }
+      .header-date-badge-outer {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 1.8px !important;
+        background: linear-gradient(135deg, #fde047 0%, #ca8a04 28%, #f7c844 55%, #854d0e 80%, #fde047 100%) !important;
+        clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px), 0 12px) !important;
+        filter: drop-shadow(0 6px 20px rgba(0,0,0,0.65)) drop-shadow(0 0 14px rgba(247,200,68,0.3)) !important;
+        margin: 3px auto 0 auto !important;
+      }
       .header-date-badge {
         display: inline-flex !important;
         flex-direction: row !important;
         align-items: center !important;
         justify-content: center !important;
-        gap: clamp(10px, 1.8vw, 20px) !important;
-        padding: clamp(4px, 0.6vh, 7px) clamp(16px, 2.5vw, 30px) !important;
-        border-radius: 999px !important;
-        background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 41, 59, 0.80) 100%) !important;
-        border: 1px solid rgba(247, 200, 68, 0.3) !important;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.4) !important;
+        gap: clamp(12px, 2vw, 22px) !important;
+        padding: clamp(6px, 0.9vh, 10px) clamp(18px, 3vw, 34px) !important;
+        border-radius: 0 !important;
+        clip-path: polygon(11px 0, calc(100% - 11px) 0, 100% 11px, 100% calc(100% - 11px), calc(100% - 11px) 100%, 11px 100%, 0 calc(100% - 11px), 0 11px) !important;
+        background: linear-gradient(180deg, rgba(13, 21, 38, 0.96) 0%, rgba(9, 14, 26, 0.98) 100%) !important;
+        border: none !important;
+        box-shadow: none !important;
+        position: relative !important;
+      }
+      .header-date-badge::before {
+        content: '' !important;
+        position: absolute !important;
+        inset: 2.5px !important;
+        border: 1px dashed rgba(247, 200, 68, 0.3) !important;
+        clip-path: polygon(9px 0, calc(100% - 9px) 0, 100% 9px, 100% calc(100% - 9px), calc(100% - 9px) 100%, 9px 100%, 0 calc(100% - 9px), 0 9px) !important;
+        pointer-events: none !important;
       }
       .h-date-greg { width: auto !important; }
       .h-date-hijri { width: auto !important; }
       .h-date-sep {
-        width: 1px !important;
-        height: 18px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
         margin: 0 !important;
-        background: rgba(247, 200, 68, 0.6) !important;
+      }
+      .h-date-sep-bar {
+        display: block !important;
+        width: 1px !important;
+        height: 16px !important;
+        background: linear-gradient(to bottom, transparent, rgba(247, 200, 68, 0.8), transparent) !important;
+      }
+      .h-date-sep-gem {
+        color: #fde047 !important;
+        font-size: 13px !important;
+        filter: drop-shadow(0 0 5px rgba(253, 224, 71, 0.8)) !important;
       }
       .h-date-bn {
-        font-size: clamp(14px, 1.8vw, 21px) !important;
+        font-size: clamp(16px, 2.1vw, 23px) !important;
         color: #fde047 !important;
         font-weight: 800 !important;
+        text-shadow: 0 0 14px rgba(253, 224, 71, 0.45) !important;
       }
       .h-date-hijri-val {
-        font-size: clamp(13px, 1.6vw, 19px) !important;
+        font-size: clamp(15px, 1.9vw, 21px) !important;
         color: #38bdf8 !important;
         font-weight: 800 !important;
+        text-shadow: 0 0 14px rgba(56, 189, 248, 0.4) !important;
       }
       .clock-center-container {
         order: 2 !important;
@@ -2402,26 +2521,68 @@
         justify-content: center !important;
         margin-top: 2px !important;
       }
+      body.is-portrait .header-date-badge-outer,
+      .header-date-badge-outer {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 1.5px !important;
+        background: linear-gradient(135deg, #fde047 0%, #ca8a04 28%, #f7c844 55%, #854d0e 80%, #fde047 100%) !important;
+        clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px) !important;
+        filter: drop-shadow(0 4px 14px rgba(0,0,0,0.6)) drop-shadow(0 0 10px rgba(247,200,68,0.25)) !important;
+        margin: 3px auto 0 auto !important;
+      }
       body.is-portrait .header-date-badge,
       .header-date-badge {
         display: inline-flex !important;
         flex-direction: row !important;
         align-items: center !important;
         justify-content: center !important;
-        gap: 6px !important;
-        padding: 2px 10px !important;
-        border-radius: 999px !important;
-        background: rgba(15, 23, 42, 0.88) !important;
-        border: 1px solid rgba(247, 200, 68, 0.3) !important;
+        gap: 8px !important;
+        padding: 4px 14px !important;
+        border-radius: 0 !important;
+        clip-path: polygon(7px 0, calc(100% - 7px) 0, 100% 7px, 100% calc(100% - 7px), calc(100% - 7px) 100%, 7px 100%, 0 calc(100% - 7px), 0 7px) !important;
+        background: linear-gradient(180deg, rgba(13, 21, 38, 0.96) 0%, rgba(9, 14, 26, 0.98) 100%) !important;
+        border: none !important;
+        box-shadow: none !important;
+        position: relative !important;
       }
       body.is-portrait .h-date-bn,
-      .h-date-bn { font-size: 11.5px !important; color: #fde047 !important; font-weight: 800 !important; }
+      .h-date-bn {
+        font-size: clamp(12.5px, 3.4vw, 15px) !important;
+        color: #fde047 !important;
+        font-weight: 800 !important;
+        text-shadow: 0 0 10px rgba(253, 224, 71, 0.4) !important;
+      }
       body.is-portrait .h-date-greg,
-      .h-date-greg { font-size: 11px !important; }
+      .h-date-greg { font-size: inherit !important; width: auto !important; }
       body.is-portrait .h-date-hijri-val,
-      .h-date-hijri-val { font-size: 11px !important; color: #38bdf8 !important; }
+      .h-date-hijri-val {
+        font-size: clamp(12px, 3.2vw, 14px) !important;
+        color: #38bdf8 !important;
+        font-weight: 800 !important;
+        text-shadow: 0 0 10px rgba(56, 189, 248, 0.4) !important;
+      }
       body.is-portrait .h-date-sep,
-      .h-date-sep { width: 1px !important; height: 12px !important; background: rgba(247,200,68,0.5) !important; }
+      .h-date-sep {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+        margin: 0 !important;
+      }
+      body.is-portrait .h-date-sep-bar,
+      .h-date-sep-bar {
+        display: block !important;
+        width: 1px !important;
+        height: 12px !important;
+        background: linear-gradient(to bottom, transparent, rgba(247, 200, 68, 0.8), transparent) !important;
+      }
+      body.is-portrait .h-date-sep-gem,
+      .h-date-sep-gem {
+        color: #fde047 !important;
+        font-size: 11px !important;
+        filter: drop-shadow(0 0 4px rgba(253, 224, 71, 0.8)) !important;
+      }
 
       /* ── Clock ── */
       body.is-portrait .clock-center-container,
@@ -3531,13 +3692,19 @@
 
           <!-- English (Gregorian) & Arabic (Hijri) Dates: Centered Directly Beneath Name & Address -->
           <div class="header-center-date-row header-right-block">
-            <div class="header-date-badge">
-              <div class="h-date-greg">
-                <span class="h-date-bn" id="dGreg">২৫ সেপ্টেম্বর ২০২৬</span>
-              </div>
-              <div class="h-date-sep"></div>
-              <div class="h-date-hijri">
-                <span class="h-date-hijri-val" id="dHijri">১৪ রবিউস সানি ১৪৪৮ হিজরি</span>
+            <div class="header-date-badge-outer">
+              <div class="header-date-badge">
+                <div class="h-date-greg">
+                  <span class="h-date-bn" id="dGreg">২৫ সেপ্টেম্বর ২০২৬</span>
+                </div>
+                <div class="h-date-sep">
+                  <span class="h-date-sep-bar"></span>
+                  <span class="h-date-sep-gem">✦</span>
+                  <span class="h-date-sep-bar"></span>
+                </div>
+                <div class="h-date-hijri">
+                  <span class="h-date-hijri-val" id="dHijri">১৪ রবিউস সানি ১৪৪৮ হিজরি</span>
+                </div>
               </div>
             </div>
           </div>
