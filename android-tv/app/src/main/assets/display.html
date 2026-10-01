@@ -1237,7 +1237,7 @@
     body.rotate-270 .pro-header {
       order: 1 !important;
       width: 100% !important;
-      max-width: clamp(520px, 94vw, 880px) !important;
+      max-width: min(880px, 100%) !important;
       margin: 0 auto !important;
       flex: 0 0 auto !important;
       display: flex !important;
@@ -1419,7 +1419,7 @@
     body.rotate-270 .clock-center-container {
       order: 2 !important;
       width: 100% !important;
-      max-width: clamp(520px, 94vw, 880px) !important;
+      max-width: min(880px, 100%) !important;
       margin: 0 auto !important;
       flex: 0 0 auto !important;
       display: flex !important;
@@ -1483,7 +1483,7 @@
     body.rotate-270 .pro-countdown-card,
     body.rotate-270 .under-clock-banner {
       width: 100% !important;
-      max-width: clamp(520px, 94vw, 880px) !important;
+      max-width: min(880px, 100%) !important;
       padding: clamp(10px, 1.4vh, 16px) clamp(18px, 2.4vw, 30px) !important;
       border-radius: clamp(14px, 1.8vh, 22px) !important;
       background: rgba(10, 18, 30, 0.68) !important;
@@ -1556,7 +1556,7 @@
     body.rotate-270 .prayer-schedule-badge {
       order: 3 !important;
       width: 100% !important;
-      max-width: clamp(520px, 94vw, 880px) !important;
+      max-width: min(880px, 100%) !important;
       margin: 0 auto !important;
       display: flex !important;
       flex-direction: row !important;
@@ -1610,7 +1610,7 @@
     body.rotate-270 .prayer-cards-column {
       order: 4 !important;
       width: 100% !important;
-      max-width: clamp(520px, 94vw, 880px) !important;
+      max-width: min(880px, 100%) !important;
       margin: 0 auto !important;
       align-self: center !important;
       flex: 0 0 auto !important;
@@ -1733,7 +1733,7 @@
     body.rotate-270 .bottom-meta-row {
       order: 5 !important;
       width: 100% !important;
-      max-width: clamp(520px, 94vw, 880px) !important;
+      max-width: min(880px, 100%) !important;
       margin: 0 auto 8px auto !important;
       align-self: center !important;
       flex: 0 0 auto !important;
@@ -1868,7 +1868,7 @@
       .pro-header {
         order: 1 !important;
         width: 100% !important;
-        max-width: clamp(520px, 94vw, 880px) !important;
+        max-width: min(880px, 100%) !important;
         margin: 0 auto !important;
         flex: 0 0 auto !important;
         display: flex !important;
@@ -1992,7 +1992,7 @@
       .clock-center-container {
         order: 2 !important;
         width: 100% !important;
-        max-width: clamp(520px, 94vw, 880px) !important;
+        max-width: min(880px, 100%) !important;
         margin: 0 auto !important;
         flex: 0 0 auto !important;
         display: flex !important;
@@ -2039,7 +2039,7 @@
       .pro-countdown-card,
       .under-clock-banner {
         width: 100% !important;
-        max-width: clamp(520px, 94vw, 880px) !important;
+        max-width: min(880px, 100%) !important;
         padding: clamp(10px, 1.4vh, 16px) clamp(18px, 2.4vw, 30px) !important;
         border-radius: clamp(14px, 1.8vh, 22px) !important;
         background: rgba(10, 18, 30, 0.68) !important;
@@ -2084,7 +2084,7 @@
       .prayer-schedule-badge {
         order: 3 !important;
         width: 100% !important;
-        max-width: clamp(520px, 94vw, 880px) !important;
+        max-width: min(880px, 100%) !important;
         margin: 0 auto !important;
         display: flex !important;
         flex-direction: row !important;
@@ -2122,7 +2122,7 @@
       .prayer-cards-column {
         order: 4 !important;
         width: 100% !important;
-        max-width: clamp(520px, 94vw, 880px) !important;
+        max-width: min(880px, 100%) !important;
         margin: 0 auto !important;
         align-self: center !important;
         flex: 0 0 auto !important;
@@ -2207,7 +2207,7 @@
       .bottom-meta-row {
         order: 5 !important;
         width: 100% !important;
-        max-width: clamp(520px, 94vw, 880px) !important;
+        max-width: min(880px, 100%) !important;
         margin: 0 auto 8px auto !important;
         align-self: center !important;
         flex: 0 0 auto !important;
@@ -2286,27 +2286,30 @@
     }
 
     /* ══════════════════════════════════════════════════════════════
-       📱 MOBILE PHONE SPECIFIC — max-width: 600px
-       স্মার্টফোনের জন্য সর্বোচ্চ অপ্টিমাইজড লেআউট
+       📱 ULTRA-POLISHED MOBILE PHONE PORTRAIT SPECIFIC (<= 640px)
+       স্মার্টফোনের খাড়া মোডের জন্য নিখুঁত প্রফেশনাল রেসপন্সিভ ডিজাইন
     ══════════════════════════════════════════════════════════════ */
-    @media (max-width: 600px), (max-width: 768px) and (orientation: portrait) {
+    @media (max-width: 640px), (max-width: 820px) and (orientation: portrait) {
       html, body {
         font-size: 14px !important;
-        overflow: hidden !important;
       }
-      /* ── Main layout ── */
-      #mainLayout, .pro-masjid-layout {
+      body.is-portrait #mainLayout,
+      .is-portrait #mainLayout,
+      #mainLayout,
+      .pro-masjid-layout {
         flex-direction: column !important;
         justify-content: flex-start !important;
         align-items: center !important;
         gap: 6px !important;
-        padding: 6px 10px 8px !important;
+        padding: 6px 8px 10px 8px !important;
         height: calc(100% - 36px) !important;
         overflow-y: auto !important;
         overflow-x: hidden !important;
         box-sizing: border-box !important;
         -webkit-overflow-scrolling: touch;
       }
+      body.is-portrait .main-display-section,
+      .is-portrait .main-display-section,
       .main-display-section {
         width: 100% !important;
         display: flex !important;
@@ -2314,103 +2317,129 @@
         align-items: center !important;
         gap: 6px !important;
       }
-
-      /* ── Header ── */
+      body.is-portrait .pro-header,
+      .is-portrait .pro-header,
       .pro-header {
         order: 1 !important;
         width: 100% !important;
-        flex: 0 0 auto !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
+        max-width: 100% !important;
         gap: 2px !important;
         padding: 0 !important;
+        margin: 0 auto !important;
       }
+      body.is-portrait .header-top-bismillah,
       .header-top-bismillah {
         width: 100% !important;
         text-align: center !important;
         padding: 0 !important;
         margin: 0 !important;
       }
+      body.is-portrait .header-bismillah,
       .header-bismillah {
-        font-size: 16px !important;
-        letter-spacing: 1px !important;
+        font-size: 15px !important;
+        letter-spacing: 0.8px !important;
         text-align: center !important;
         color: #f7c844 !important;
         text-shadow: 0 2px 8px rgba(0,0,0,0.9) !important;
       }
+      body.is-portrait .header-main-row,
       .header-main-row {
         flex-direction: column !important;
         align-items: center !important;
-        gap: 3px !important;
+        gap: 2px !important;
         width: 100% !important;
       }
-      .header-brand-container, .header-center-block {
+      body.is-portrait .header-brand-container,
+      body.is-portrait .header-center-block,
+      .header-brand-container,
+      .header-center-block {
         flex-direction: column !important;
         align-items: center !important;
         text-align: center !important;
-        gap: 4px !important;
+        gap: 3px !important;
         width: 100% !important;
+        padding-left: 0 !important;
       }
+      body.is-portrait .mosque-header-logo,
       .mosque-header-logo {
-        width: 48px !important;
-        height: 48px !important;
-        border: 2px solid #f7c844 !important;
+        width: 44px !important;
+        height: 44px !important;
+        border: 1.5px solid #f7c844 !important;
         border-radius: 50% !important;
         flex-shrink: 0 !important;
+        margin: 0 auto 1px auto !important;
       }
+      body.is-portrait .mosque-brand-titles,
       .mosque-brand-titles {
         flex-direction: column !important;
         align-items: center !important;
         text-align: center !important;
         gap: 1px !important;
+        width: 100% !important;
       }
+      body.is-portrait .mosque-title-bn,
       .mosque-title-bn {
-        font-size: 16px !important;
-        font-weight: 900 !important;
+        font-size: clamp(16px, 4.6vw, 22px) !important;
+        font-weight: 800 !important;
         color: #f7c844 !important;
         line-height: 1.2 !important;
         text-align: center !important;
+        margin: 0 !important;
       }
+      body.is-portrait .mosque-title-en,
       .mosque-title-en {
         font-size: 11px !important;
-        color: #e2e8f0 !important;
+        color: #cbd5e1 !important;
         text-align: center !important;
+        margin-top: 1px !important;
       }
+      body.is-portrait .header-right-block,
       .header-right-block {
         position: static !important;
         transform: none !important;
         width: 100% !important;
         display: flex !important;
         justify-content: center !important;
+        margin-top: 2px !important;
       }
+      body.is-portrait .header-date-badge,
       .header-date-badge {
         display: inline-flex !important;
         flex-direction: row !important;
         align-items: center !important;
         justify-content: center !important;
-        gap: 8px !important;
-        padding: 3px 14px !important;
+        gap: 6px !important;
+        padding: 2px 10px !important;
         border-radius: 999px !important;
         background: rgba(15, 23, 42, 0.88) !important;
         border: 1px solid rgba(247, 200, 68, 0.3) !important;
       }
-      .h-date-bn { font-size: 12px !important; color: #fde047 !important; font-weight: 800 !important; }
+      body.is-portrait .h-date-bn,
+      .h-date-bn { font-size: 11.5px !important; color: #fde047 !important; font-weight: 800 !important; }
+      body.is-portrait .h-date-greg,
       .h-date-greg { font-size: 11px !important; }
+      body.is-portrait .h-date-hijri-val,
       .h-date-hijri-val { font-size: 11px !important; color: #38bdf8 !important; }
-      .h-date-sep { width: 1px !important; height: 14px !important; background: rgba(247,200,68,0.5) !important; }
+      body.is-portrait .h-date-sep,
+      .h-date-sep { width: 1px !important; height: 12px !important; background: rgba(247,200,68,0.5) !important; }
 
       /* ── Clock ── */
+      body.is-portrait .clock-center-container,
+      .is-portrait .clock-center-container,
       .clock-center-container {
         order: 2 !important;
         width: 100% !important;
+        max-width: 100% !important;
         flex: 0 0 auto !important;
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
-        gap: 4px !important;
+        gap: 3px !important;
         padding: 0 !important;
+        margin: 2px auto !important;
       }
+      body.is-portrait .pro-clock-card,
+      .is-portrait .pro-clock-card,
       .pro-clock-card {
         background: transparent !important;
         border: none !important;
@@ -2419,8 +2448,10 @@
         padding: 0 !important;
         margin: 0 !important;
       }
+      body.is-portrait .pro-clock-digits,
+      .is-portrait .pro-clock-digits,
       .pro-clock-digits {
-        font-size: clamp(32px, 8vw, 46px) !important;
+        font-size: clamp(32px, 9.5vw, 48px) !important;
         letter-spacing: 1px !important;
         line-height: 1 !important;
         color: #ffffff !important;
@@ -2430,11 +2461,13 @@
         justify-content: center !important;
         text-shadow: 0 4px 24px rgba(0,0,0,0.95) !important;
       }
+      body.is-portrait .clk-segment,
       .clk-segment {
         width: auto !important;
         min-width: 1.8ch !important;
         text-align: center !important;
       }
+      body.is-portrait .pro-clock-ampm,
       .pro-clock-ampm {
         font-size: 13px !important;
         color: #f7c844 !important;
@@ -2444,67 +2477,90 @@
       }
 
       /* ── Countdown Panel ── */
-      .pro-countdown-card, .under-clock-banner {
+      body.is-portrait .pro-countdown-card,
+      body.is-portrait .under-clock-banner,
+      .is-portrait .pro-countdown-card,
+      .is-portrait .under-clock-banner,
+      .pro-countdown-card,
+      .under-clock-banner {
         width: 100% !important;
-        padding: 8px 12px !important;
-        border-radius: 14px !important;
+        max-width: 100% !important;
+        padding: 6px 10px !important;
+        border-radius: 12px !important;
         background: rgba(10, 18, 30, 0.75) !important;
         border: none !important;
         box-shadow: 0 6px 20px rgba(0,0,0,0.5) !important;
+        gap: 0 !important;
       }
       .cd-content-grid {
         flex-direction: row !important;
         gap: 8px !important;
       }
-      .cd-prayer-name-display, .cd-badge-name {
-        font-size: 15px !important;
+      body.is-portrait .cd-prayer-name-display,
+      body.is-portrait .cd-badge-name,
+      .cd-prayer-name-display,
+      .cd-badge-name {
+        font-size: 14px !important;
         font-weight: 800 !important;
         color: #fde047 !important;
       }
-      .cd-mosque-icon { font-size: 16px !important; }
-      .cd-info-meta-chips { gap: 5px !important; }
-      .cd-meta-chip { font-size: 11px !important; }
-      .cd-chip-label { font-size: 10px !important; color: #94a3b8 !important; }
-      .cd-chip-val { font-size: 11px !important; }
-      .cd-chip-dot { font-size: 10px !important; }
+      .cd-mosque-icon { font-size: 15px !important; }
+      .cd-info-meta-chips { gap: 4px !important; }
+      .cd-meta-chip { font-size: 10.5px !important; }
+      .cd-chip-label { font-size: 9.5px !important; color: #94a3b8 !important; }
+      .cd-chip-val { font-size: 10.5px !important; }
+      .cd-chip-dot { font-size: 9px !important; }
+      body.is-portrait .cd-timer-digits,
+      .is-portrait .cd-timer-digits,
       .cd-timer-digits {
-        font-size: clamp(20px, 6vw, 30px) !important;
+        font-size: clamp(18px, 5.2vw, 24px) !important;
         letter-spacing: 1px !important;
         color: #38bdf8 !important;
         text-shadow: 0 0 16px rgba(56,189,248,0.65) !important;
       }
-      .cd-status-badge { font-size: 10px !important; }
+      .cd-status-badge { font-size: 9.5px !important; }
 
       /* ── Prayer Schedule Badge ── */
+      body.is-portrait .prayer-schedule-badge,
+      .is-portrait .prayer-schedule-badge,
       .prayer-schedule-badge {
         order: 3 !important;
         width: 100% !important;
+        max-width: 100% !important;
         flex: 0 0 auto !important;
         display: flex !important;
         align-items: center !important;
         gap: 8px !important;
         padding: 2px 0 !important;
+        margin: 2px 0 !important;
       }
-      .psb-text { font-size: 13px !important; font-weight: 800 !important; color: #fde047 !important; }
-      .psb-icon { font-size: 13px !important; }
+      body.is-portrait .psb-text,
+      .psb-text { font-size: 12px !important; font-weight: 800 !important; color: #fde047 !important; }
+      body.is-portrait .psb-icon,
+      .psb-icon { font-size: 12px !important; }
 
       /* ── Prayer Cards ── */
+      body.is-portrait .prayer-cards-column,
+      .is-portrait .prayer-cards-column,
       .prayer-cards-column {
         order: 4 !important;
         width: 100% !important;
+        max-width: 100% !important;
         flex: 0 0 auto !important;
         display: flex !important;
         flex-direction: column !important;
         gap: 5px !important;
         height: auto !important;
       }
+      body.is-portrait .prayer-pill-card,
+      .is-portrait .prayer-pill-card,
       .prayer-pill-card {
         flex: 0 0 auto !important;
         min-height: 44px !important;
         height: auto !important;
         width: 100% !important;
-        padding: 0 12px !important;
-        border-radius: 12px !important;
+        padding: 4px 12px !important;
+        border-radius: 10px !important;
         display: flex !important;
         flex-direction: row !important;
         align-items: center !important;
@@ -2513,60 +2569,108 @@
         border: 1px solid rgba(255,255,255,0.12) !important;
         box-shadow: 0 4px 14px rgba(0,0,0,0.4) !important;
       }
+      body.is-portrait .prayer-pill-card .p-name,
+      .is-portrait .prayer-pill-card .p-name,
       .prayer-pill-card .p-name {
-        font-size: 16px !important;
+        font-size: calc(clamp(16px, 4.6vw, 20px) * var(--font-scale, 1)) !important;
         font-weight: 800 !important;
         color: #fff !important;
         line-height: 1 !important;
       }
+      body.is-portrait .p-card-left .p-azan-sub,
+      .is-portrait .p-card-left .p-azan-sub,
       .p-card-left .p-azan-sub {
-        font-size: 10px !important;
+        font-size: calc(clamp(10px, 2.8vw, 12px) * var(--font-scale, 1)) !important;
         color: #94a3b8 !important;
       }
+      body.is-portrait .prayer-pill-card .p-time,
+      .is-portrait .prayer-pill-card .p-time,
       .prayer-pill-card .p-time {
-        font-size: 18px !important;
+        font-size: calc(clamp(18px, 5.4vw, 24px) * var(--font-scale, 1)) !important;
         font-weight: 900 !important;
         color: #fde047 !important;
         letter-spacing: 0.5px !important;
       }
-      .p-name-ar { font-size: 13px !important; }
+      body.is-portrait .prayer-pill-card.active-card,
+      .prayer-pill-card.active-card {
+        background: linear-gradient(90deg, rgba(16, 185, 129, 0.42) 0%, rgba(15, 23, 42, 0.96) 100%) !important;
+        border: 1.5px solid #10b981 !important;
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.45) !important;
+      }
+      body.is-portrait .prayer-pill-card.active-card .p-name,
+      .prayer-pill-card.active-card .p-name {
+        color: #86efac !important;
+      }
+      body.is-portrait .prayer-pill-card.active-card .p-time,
+      .prayer-pill-card.active-card .p-time {
+        color: #facc15 !important;
+      }
+      .p-name-ar { font-size: 12px !important; }
       .p-sep { display: none !important; }
 
       /* ── Sunrise / Jummah / Day boxes ── */
+      body.is-portrait .bottom-meta-row,
+      .is-portrait .bottom-meta-row,
       .bottom-meta-row {
         order: 5 !important;
         width: 100% !important;
+        max-width: 100% !important;
         display: grid !important;
         grid-template-columns: repeat(3, 1fr) !important;
         gap: 5px !important;
-        height: clamp(48px, 8vh, 64px) !important;
+        height: auto !important;
+        min-height: 48px !important;
         flex: 0 0 auto !important;
-        margin: 0 0 8px 0 !important;
+        margin: 2px 0 6px 0 !important;
       }
+      body.is-portrait .bottom-meta-card,
+      .is-portrait .bottom-meta-card,
       .bottom-meta-card {
-        height: 100% !important;
-        border-radius: 10px !important;
-        padding: 0 8px !important;
+        height: auto !important;
+        min-height: 48px !important;
+        border-radius: 8px !important;
+        padding: 4px 4px !important;
         display: flex !important;
-        flex-direction: row !important;
+        flex-direction: column !important;
         align-items: center !important;
-        justify-content: space-between !important;
+        justify-content: center !important;
         border: none !important;
         backdrop-filter: blur(10px) !important;
       }
-      .meta-card-body, .meta-primary-row {
+      body.is-portrait .meta-card-body,
+      body.is-portrait .meta-primary-row,
+      .meta-card-body,
+      .meta-primary-row {
         width: 100% !important;
         display: flex !important;
-        flex-direction: row !important;
+        flex-direction: column !important;
         align-items: center !important;
-        justify-content: space-between !important;
-        gap: 4px !important;
+        justify-content: center !important;
+        text-align: center !important;
+        gap: 2px !important;
       }
-      .meta-title-label { font-size: 11px !important; font-weight: 800 !important; }
+      body.is-portrait .meta-title-label,
+      .meta-title-label {
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        color: #cbd5e1 !important;
+        text-align: center !important;
+        line-height: 1.1 !important;
+        white-space: nowrap !important;
+      }
+      body.is-portrait .meta-dash,
       .meta-dash { display: none !important; }
-      .meta-main-digits { font-size: 14px !important; font-weight: 900 !important; color: #fde047 !important; }
+      body.is-portrait .meta-main-digits,
+      .meta-main-digits {
+        font-size: 15px !important;
+        font-weight: 900 !important;
+        color: #fde047 !important;
+        text-align: center !important;
+        line-height: 1.1 !important;
+      }
+      body.is-portrait .date-day-solo,
       .date-day-solo {
-        font-size: clamp(11px, 3.5vw, 16px) !important;
+        font-size: 13px !important;
         font-weight: 900 !important;
         color: #fde047 !important;
         text-align: center !important;
@@ -2577,36 +2681,60 @@
       /* ── Salat Screen ── */
       #salatScreen { padding: 12px !important; }
       #salatScreen .salat-title {
-        font-size: clamp(36px, 12vw, 60px) !important;
+        font-size: clamp(32px, 10vw, 54px) !important;
         line-height: 1.1 !important;
       }
 
       /* ── Footer ── */
-      .pro-footer, #bot {
-        height: 32px !important;
-        font-size: 12px !important;
-        padding: 0 10px !important;
+      body.is-portrait .pro-footer,
+      .is-portrait .pro-footer,
+      .pro-footer,
+      #bot {
+        height: 34px !important;
+        font-size: 11.5px !important;
+        padding: 0 8px !important;
       }
-      .bot-bangla-date-badge { font-size: 11px !important; }
-      .tick-text { font-size: 12px !important; }
-      .bot-logo { width: 22px !important; height: 22px !important; }
+      .pro-footer .twrp {
+        overflow: hidden !important;
+        white-space: nowrap !important;
+        padding-right: 6px !important;
+      }
+      .bot-bangla-date-badge {
+        font-size: 10px !important;
+        padding: 1px 6px !important;
+      }
+      .bot-right {
+        gap: 3px !important;
+        flex-shrink: 0 !important;
+      }
+      .bot-right .btn-sm {
+        padding: 2px 6px !important;
+        font-size: 11px !important;
+        height: 24px !important;
+      }
 
       /* ── PWA Install Button ── */
       #pwaInstallBtn {
-        bottom: 40px !important;
-        right: 12px !important;
-        padding: 10px 16px !important;
-        font-size: 13px !important;
+        bottom: 38px !important;
+        right: 10px !important;
+        padding: 8px 12px !important;
+        font-size: 12px !important;
       }
     }
 
     /* ══ Extra small phones (< 380px width) ══ */
     @media (max-width: 380px) {
-      .pro-clock-digits { font-size: 50px !important; }
-      .mosque-title-bn { font-size: 13px !important; }
+      body.is-portrait .pro-clock-digits,
+      .pro-clock-digits { font-size: 32px !important; }
+      body.is-portrait .mosque-title-bn,
+      .mosque-title-bn { font-size: 15px !important; }
+      body.is-portrait .prayer-pill-card .p-name,
       .prayer-pill-card .p-name { font-size: 14px !important; }
-      .prayer-pill-card .p-time { font-size: 15px !important; }
-      .cd-prayer-name-display, .cd-badge-name { font-size: 13px !important; }
+      body.is-portrait .prayer-pill-card .p-time,
+      .prayer-pill-card .p-time { font-size: 17px !important; }
+      body.is-portrait .cd-badge-name,
+      .cd-badge-name { font-size: 12.5px !important; }
+      body.is-portrait .cd-timer-digits,
       .cd-timer-digits { font-size: 18px !important; }
     }
 

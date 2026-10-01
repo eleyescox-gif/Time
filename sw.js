@@ -3,13 +3,17 @@
 // Version: 1.0.0
 // ═══════════════════════════════════════════════════════════════════
 
-const CACHE_NAME = 'mosque-display-v1';
+const CACHE_NAME = 'mosque-display-v3';
 const OFFLINE_URL = '/display.html';
 
 // Files to cache for offline use
 const PRECACHE_URLS = [
+  '/',
+  '/index.html',
   '/display.html',
   '/admin.html',
+  '/portal.html',
+  '/qrcode.min.js',
   '/logo.png',
   '/bg_display.jpg',
   '/manifest.json',

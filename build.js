@@ -17,6 +17,7 @@ const files = [
   'MyMasjidTV_INSTALL.apk',
   'manifest.json',
   'sw.js',
+  'qrcode.min.js',
   'vercel.json'
 ];
 
