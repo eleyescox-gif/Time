@@ -115,6 +115,7 @@ class MainActivity : AppCompatActivity() {
         // মোবাইল ও টিভি স্ক্রিন অপ্টিমাইজেশন
         settings.useWideViewPort = true
         settings.loadWithOverviewMode = true
+        settings.textZoom = 100 // সিস্টেম ফন্ট স্কেলিং ১০০% এ লক রাখা (TV ডিসপ্লে যেন কোনো অবস্থাতেই না ভাঙে)
         settings.setSupportZoom(false)
         settings.builtInZoomControls = false
         settings.displayZoomControls = false
