@@ -91,7 +91,11 @@ class TimeKeeperService : Service() {
         super.onCreate()
         isRunning = true
         createNotificationChannel()
-        startForeground(NOTIF_ID, buildNotification())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(NOTIF_ID, buildNotification(), android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+        } else {
+            startForeground(NOTIF_ID, buildNotification())
+        }
 
         // Power outage recovery: RTC-based time restore
         recoverTimeAfterOutage()

@@ -123,24 +123,41 @@ class MainActivity : AppCompatActivity() {
         // ক্যাশিং স্ট্র্যাটেজি: অফলাইন অগ্রাধিকার
         settings.cacheMode = WebSettings.LOAD_DEFAULT
 
-        settings.setSupportMultipleWindows(true)
-        settings.javaScriptCanOpenWindowsAutomatically = true
+        // সিঙ্গেল উইন্ডো নেভিগেশন (যাতে target="_blank" বা উইন্ডো পপ-আপের কারণে অ্যাপ ক্র্যাশ বা বন্ধ না হয়)
+        settings.setSupportMultipleWindows(false)
+        settings.javaScriptCanOpenWindowsAutomatically = false
 
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 val url = request?.url?.toString() ?: return false
-                if (url.startsWith("file://") || url.contains("localhost")) {
-                    view?.loadUrl(url)
-                    return true
-                }
-                return false
+                return handleNavigation(view, url)
             }
 
             @Suppress("DEPRECATION")
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                if (url != null && (url.startsWith("file://") || url.contains("localhost"))) {
-                    view?.loadUrl(url)
-                    return true
+                if (url == null) return false
+                return handleNavigation(view, url)
+            }
+
+            private fun handleNavigation(view: WebView?, url: String): Boolean {
+                try {
+                    // যদি APK ডাউনলোড লিংক হয় তবে ডাউনলোড হ্যান্ডলার চালু করো
+                    if (url.endsWith(".apk")) {
+                        val downloadIntent = Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url))
+                        downloadIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(downloadIntent)
+                        return true
+                    }
+                    // ডিসপ্লে, এডমিন, পোর্টাল বা যেকোনো লিংক সরাসরি একই ওয়েবভিউতে লোড হবে (কখনোই অ্যাপ বন্ধ হবে না)
+                    if (url.startsWith("file://") ||
+                        url.startsWith("http://") ||
+                        url.startsWith("https://")
+                    ) {
+                        view?.loadUrl(url)
+                        return true
+                    }
+                } catch (e: Exception) {
+                    // Safe fallback
                 }
                 return false
             }
@@ -161,19 +178,39 @@ class MainActivity : AppCompatActivity() {
         }
 
         webView.webChromeClient = object : WebChromeClient() {
-            override fun onCreateWindow(
+            override fun onJsAlert(
                 view: WebView?,
-                isDialog: Boolean,
-                isUserGesture: Boolean,
-                resultMsg: android.os.Message?
+                url: String?,
+                message: String?,
+                result: android.webkit.JsResult?
             ): Boolean {
-                val transport = resultMsg?.obj as? WebView.WebViewTransport
-                if (transport != null) {
-                    transport.webView = view
-                    resultMsg.sendToTarget()
-                    return true
-                }
-                return false
+                if (isFinishing || isDestroyed) return false
+                androidx.appcompat.app.AlertDialog.Builder(this@MainActivity)
+                    .setTitle("মসজিদ ডিজিটাল ডিসপ্লে")
+                    .setMessage(message ?: "")
+                    .setPositiveButton("ঠিক আছে") { _, _ -> result?.confirm() }
+                    .setOnCancelListener { result?.cancel() }
+                    .create()
+                    .show()
+                return true
+            }
+
+            override fun onJsConfirm(
+                view: WebView?,
+                url: String?,
+                message: String?,
+                result: android.webkit.JsResult?
+            ): Boolean {
+                if (isFinishing || isDestroyed) return false
+                androidx.appcompat.app.AlertDialog.Builder(this@MainActivity)
+                    .setTitle("নিশ্চিতকরণ")
+                    .setMessage(message ?: "")
+                    .setPositiveButton("হ্যাঁ") { _, _ -> result?.confirm() }
+                    .setNegativeButton("না") { _, _ -> result?.cancel() }
+                    .setOnCancelListener { result?.cancel() }
+                    .create()
+                    .show()
+                return true
             }
 
             override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {

@@ -301,8 +301,8 @@
         <p style="font-size:12.5px; color:var(--text-muted);">পূর্ব মোহাজের পাড়া জামে মসজিদ (ডিফল্ট সিস্টেম)</p>
       </div>
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <a href="display.html" class="btn btn-gold btn-sm" target="_blank">📺 ডিসপ্লে দেখুন</a>
-        <a href="admin.html" class="btn btn-outline btn-sm" target="_blank">⚙️ এডমিন প্যানেল</a>
+        <a href="display.html" class="btn btn-gold btn-sm">📺 ডিসপ্লে দেখুন</a>
+        <a href="admin.html" class="btn btn-outline btn-sm">⚙️ এডমিন প্যানেল</a>
         <a href="install.html" class="btn btn-outline btn-sm" style="border-color:#10b981; color:#a7f3d0;">📲 টিভি ইনস্টল গাইড</a>
         <a href="MyMasjidTV_INSTALL.apk" class="btn btn-outline btn-sm" download>📥 APK ডাউনলোড</a>
       </div>
@@ -394,7 +394,7 @@
         <div class="link-val" id="modalDisplayLink">-</div>
         <div style="display:flex; gap:8px;">
           <button class="btn btn-gold btn-sm" onclick="copyLink('modalDisplayLink')">📋 ডিসপ্লে লিংক কপি</button>
-          <a href="#" id="modalDisplayBtn" target="_blank" class="btn btn-outline btn-sm">📺 সরাসরি ওপেন</a>
+          <a href="#" id="modalDisplayBtn" class="btn btn-outline btn-sm">📺 সরাসরি ওপেন</a>
         </div>
       </div>
 
@@ -403,7 +403,7 @@
         <div class="link-val" id="modalAdminLink">-</div>
         <div style="display:flex; gap:8px;">
           <button class="btn btn-gold btn-sm" onclick="copyLink('modalAdminLink')">📋 এডমিন লিংক কপি</button>
-          <a href="#" id="modalAdminBtn" target="_blank" class="btn btn-outline btn-sm">⚙️ এডমিন ওপেন</a>
+          <a href="#" id="modalAdminBtn" class="btn btn-outline btn-sm">⚙️ এডমিন ওপেন</a>
         </div>
       </div>
 
@@ -573,8 +573,8 @@
             '<p>📍 ' + (m.location || 'বাংলাদেশ') + ' &bull; <span style="color:#38bdf8;">আইডি: ' + m.id + '</span></p>' +
           '</div>' +
           '<div class="m-actions">' +
-            '<a href="' + dLink + '" target="_blank" class="btn btn-gold btn-sm">📺 ডিসপ্লে</a>' +
-            '<a href="' + aLink + '" target="_blank" class="btn btn-outline btn-sm">⚙️ এডমিন</a>' +
+            '<a href="' + dLink + '" class="btn btn-gold btn-sm">📺 ডিসপ্লে</a>' +
+            '<a href="' + aLink + '" class="btn btn-outline btn-sm">⚙️ এডমিন</a>' +
           '</div>';
         listEl.appendChild(item);
       });
