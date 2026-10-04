@@ -724,62 +724,193 @@
           </div>
         </div>
 
-        <!-- Live Jamaat Countdown Controller -->
-        <div class="settings-card" style="margin-top: 24px;">
+        <!-- ══ 1. COX'S BAZAR PERMANENT CALENDAR SELECTION ══ -->
+        <div class="settings-card" style="margin-top: 24px; border: 1.5px solid rgba(212,175,55,0.4);">
           <div class="card-header">
-            <div class="card-icon">⏱️</div>
+            <div class="card-icon">📅</div>
             <div>
-              <h3>জামাত ৫-মিনিট কাউন্টডাউন ও প্রগ্রেস লাইন</h3>
-              <p>জামাতের ৫ মিনিট আগে স্বয়ংক্রিয়ভাবে ডিসপ্লে স্ক্রিনে ঘড়ি চালু হয় এবং প্রগ্রেস লাইনটি সংকুচিত হয়ে কমে যায়</p>
+              <h3>কক্সবাজার স্থায়ী নামাজ ক্যালেন্ডার (Cox's Bazar 365-Day Schedule)</h3>
+              <p>ইসলামিক ফাউন্ডেশন বাংলাদেশ কর্তৃক বরইতলী, চকরিয়া ও কক্সবাজার জেলার জন্য অনুমোদিত ৩৬৫ দিনের স্থায়ী সময়সূচি</p>
             </div>
           </div>
           <div style="background: rgba(0,0,0,0.25); border-radius: 12px; padding: 18px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px;">
-            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
-              <div>
-                <strong style="color:var(--gold); font-size:15px;">⏱️ ডিসপ্লেতে ৫ মিনিট কাউন্টডাউন টেস্ট করুন</strong>
-                <p style="font-size:12px; color:var(--text-muted); margin-top:2px;">জামাত সময়ের অপেক্ষা না করে এখনই ডিসপ্লে স্ক্রিনে ৫ মিনিটের কাউন্টডাউন ও কমে যাওয়া লাইনটি পরীক্ষা করুন।</p>
-              </div>
-              <div style="display:flex; gap:10px;">
-                <button type="button" class="btn btn-gold" onclick="triggerTestCountdown(300)">
-                  <span>▶️ ৫ মিনিট টেস্ট শুরু করুন</span>
-                </button>
-                <button type="button" class="btn btn-outline" onclick="stopTestCountdown()">
-                  <span>⏹️ টেস্ট বন্ধ করুন</span>
-                </button>
-              </div>
-            </div>
-            <div style="font-size:12px; color:#a7f3d0; background:rgba(16,185,129,0.1); border-left:3px solid #10b981; padding:8px 12px; border-radius:4px;">
-              💡 <strong>কীভাবে কাজ করে:</strong> প্রতিদিন প্রতি ওয়াক্তের জামাতের নির্ধারিত সময়ের ঠিক ৫ মিনিট আগে স্বয়ংক্রিয়ভাবে ডিসপ্লে স্ক্রিনে ঘড়ি ও লাইনটি চালু হয়ে ০৫:০০ থেকে কমে ০০:০০ হবে।
+            <div class="form-group">
+              <label>স্থায়ী সময়সূচি মোড (Permanent Timetable):</label>
+              <select id="usePermanentTable">
+                <option value="true" selected>চালু (অন) — কক্সবাজার ইসলামিক ফাউন্ডেশন স্থায়ী ক্যালেন্ডার (১০০% নির্ভুল)</option>
+                <option value="false">বন্ধ (অফ) — জিপিএস ভিত্তিক সাধারণ গণনা</option>
+              </select>
+              <span class="field-hint">অন রাখলে কক্সবাজার জেলার সরকারি সময়সূচি নির্ভুলভাবে কাজ করবে। অফলাইনেও কার্যকর।</span>
             </div>
           </div>
         </div>
 
-        <!-- Live Salat Screen Mode Controller (জামাত চলাকালীন ৫ মিনিট ফুল স্ক্রিন সালাত মোড) -->
-        <div class="settings-card" style="margin-top: 24px;">
+        <!-- ══ 2. CIRCULAR SVG IQAMA COUNTDOWN HUD ══ -->
+        <div class="settings-card" style="margin-top: 24px; border: 1.5px solid rgba(245,158,11,0.4);">
           <div class="card-header">
-            <div class="card-icon">🕌</div>
+            <div class="card-icon">⏱️</div>
             <div>
-              <h3>জামাত চলাকালীন ৫ মিনিট "সালাত" স্ক্রিন</h3>
-              <p>জামাত শুরু হলে টানা ৫ মিনিট ডিসপ্লেতে অন্য কিছু থাকবে না, শুধু বড় করে "সালাত" লিখা থাকবে। ৫ মিনিট পর স্বয়ংক্রিয়ভাবে স্বাভাবিক ডিসপ্লে ফিরে আসবে।</p>
+              <h3>সার্কুলার কাউন্টডাউন রিং ও ইকামত সতর্কতা (19vw Circular HUD)</h3>
+              <p>আজান থেকে জামাতের মধ্যবর্তী সময়ে বৃত্তাকার লাক্সারি প্রগ্রেস বার, শেষ ৯০ সেকেন্ডে লাল সতর্কতা এবং শেষ ৬০ সেকেন্ডে মোবাইল নোটিশ</p>
             </div>
           </div>
           <div style="background: rgba(0,0,0,0.25); border-radius: 12px; padding: 18px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px;">
-            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
-              <div>
-                <strong style="color:var(--gold); font-size:15px;">🕌 ৫ মিনিট "সালাত" স্ক্রিন টেস্ট করুন</strong>
-                <p style="font-size:12px; color:var(--text-muted); margin-top:2px;">জামাত চলাকালীন ডিসপ্লেতে বড় অক্ষরে "সালাত" স্ক্রিনটি কেমন দেখাবে তা এখনই পরীক্ষা করতে পারেন।</p>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
+              <div class="form-group">
+                <label>বৃত্তাকার কাউন্টডাউন রিং (Circular Ring):</label>
+                <select id="circularIqamaRing">
+                  <option value="true" selected>চালু (অন) — ১৯vw বৃত্তাকার লাক্সারি গোল্ড রিং</option>
+                  <option value="false">বন্ধ (অফ) — সাধারণ সোজা প্রগ্রেস লাইন</option>
+                </select>
+                <span class="field-hint">ঘড়ির নিচে ১৯vw বৃত্তাকার রিং ও ৬.৮vw স্পষ্ট বড় ডিজিট</span>
               </div>
-              <div style="display:flex; gap:10px;">
-                <button type="button" class="btn btn-gold" onclick="triggerSalatModeTest(300)">
-                  <span>▶️ সালাত স্ক্রিন টেস্ট চালু</span>
+              <div class="form-group">
+                <label>৯০ সেকেন্ড লাল সতর্কতা (90s Red Alert):</label>
+                <select id="ringAlert90Sec">
+                  <option value="true" selected>চালু (অন) — শেষ ৯০ সেকেন্ডে লাল পালস অ্যানিমেশন</option>
+                  <option value="false">বন্ধ (অফ)</option>
+                </select>
+                <span class="field-hint">জামাত অতি সন্নিকটে এলে রিং লাল হয়ে সতর্ক করবে</span>
+              </div>
+              <div class="form-group">
+                <label>৬০ সেকেন্ড মোবাইল নোটিশ (60s Mobile Warning):</label>
+                <select id="ringMobileAlert60Sec">
+                  <option value="true" selected>চালু (অন) — শেষ ৬০ সেকেন্ডে মোবাইল বন্ধের ভাসমান ব্যাজ</option>
+                  <option value="false">বন্ধ (অফ)</option>
+                </select>
+                <span class="field-hint">রিংয়ের নিচে "মোবাইল বন্ধ রাখুন" ভাসমান লাল ব্যাজ</span>
+              </div>
+            </div>
+
+            <!-- Ring Live Test Buttons -->
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.08);">
+              <div>
+                <strong style="color:var(--gold); font-size:14px;">🎯 লাইভ কাউন্টডাউন টেস্ট করুন:</strong>
+                <p style="font-size:12px; color:var(--text-muted); margin-top:2px;">ডিসপ্লে স্ক্রিনে সরাসরি সার্কুলার রিং ও সতর্কতা অ্যানিমেশন পরীক্ষা করুন।</p>
+              </div>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button type="button" class="btn btn-gold" style="padding:6px 14px; font-size:13px;" onclick="triggerTestCountdown(300)">
+                  <span>▶️ ৫ মিনিট টেস্ট</span>
                 </button>
-                <button type="button" class="btn btn-outline" onclick="stopSalatModeTest()">
-                  <span>⏹️ সালাত স্ক্রিন বন্ধ করুন</span>
+                <button type="button" class="btn btn-gold" style="padding:6px 14px; font-size:13px; background:linear-gradient(135deg, #ef4444, #b91c1c); color:#fff; border-color:#ef4444;" onclick="triggerTestCountdown(95)">
+                  <span>🚨 ৯০ ও ৬০ সেকেন্ড টেস্ট</span>
+                </button>
+                <button type="button" class="btn btn-outline" style="padding:6px 14px; font-size:13px;" onclick="stopTestCountdown()">
+                  <span>⏹️ টেস্ট বন্ধ</span>
                 </button>
               </div>
             </div>
-            <div style="font-size:12px; color:#93c5fd; background:rgba(59,130,246,0.1); border-left:3px solid #3b82f6; padding:8px 12px; border-radius:4px;">
-              💡 <strong>স্বয়ংক্রিয় নিয়ম:</strong> প্রতিদিন ফজর, যোহর/জুমা, আসর, মাগরিব ও এশার জামাত শুরু হওয়ার সাথে সাথে স্ক্রিন সম্পূর্ণ ব্ল্যাকআউট হয়ে শুধু বড় করে "সালাত" ভেসে উঠবে এবং ৫ মিনিট পর নিজে থেকেই স্বাভাবিক হয়ে যাবে।
+          </div>
+        </div>
+
+        <!-- ══ 3. SALAT FOCUS BLANK CURTAIN MODE & AUTO WAKE-UP ══ -->
+        <div class="settings-card" style="margin-top: 24px; border: 1.5px solid rgba(139,0,0,0.5);">
+          <div class="card-header">
+            <div class="card-icon">🕌</div>
+            <div>
+              <h3>সালাত ফোকাস / ৫-সেকেন্ড সিনেমাটিক ব্ল্যাক স্ক্রিন (Salat Blank Curtain)</h3>
+              <p>জামাত শুরু হলে মসৃণ ৫-সেকেন্ড কার্টেন নেমে স্ক্রিন অন্ধকার হয়ে যাবে এবং নামাজ শেষ হলে স্বয়ংক্রিয়ভাবে ফিরে আসবে</p>
+            </div>
+          </div>
+          <div style="background: rgba(0,0,0,0.25); border-radius: 12px; padding: 18px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px;">
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
+              <div class="form-group">
+                <label>ব্ল্যাক স্ক্রিন মোড (Salat Blank Mode):</label>
+                <select id="blackScreenEnabled">
+                  <option value="true" selected>চালু (অন) — জামাতের সময় ৫-সেকেন্ড সিনেমাটিক কার্টেন</option>
+                  <option value="false">বন্ধ (অফ) — সবসময় ডিসপ্লে অন থাকবে</option>
+                </select>
+                <span class="field-hint">নামাজ চলাকালীন মুসল্লিদের মনোযোগ অক্ষুণ্ণ রাখতে স্ক্রিন ব্ল্যাকআউট হবে</span>
+              </div>
+              <div class="form-group">
+                <label>কার্টেনে হালকা আবছা ঘড়ি (Dimmed Clock on Curtain):</label>
+                <select id="blackScreenShowsClock">
+                  <option value="true" selected>চালু (অন) — কার্টেনের মাঝে আবছা হালকা ঘড়ি দেখান</option>
+                  <option value="false">বন্ধ (অফ) — সম্পূর্ণ ঘন কালো পর্দা</option>
+                </select>
+                <span class="field-hint">কার্টেনের নিচে একটি মৃদু ও মার্জিত ডিজিটাল ঘড়ি প্রদর্শন করবে</span>
+              </div>
+            </div>
+
+            <!-- Per-Prayer Salat Durations (Auto Wake-up) -->
+            <div style="padding-top:12px; border-top:1px solid rgba(255,255,255,0.08);">
+              <label style="font-weight:700; color:var(--gold); font-size:14px; margin-bottom:8px; display:block;">
+                ⏳ প্রতি ওয়াক্তে জামাত স্থায়িত্ব ও স্বয়ংক্রিয় ওয়েক-আপ (মিনিট):
+              </label>
+              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px;">
+                <div class="form-group" style="margin-bottom:0;">
+                  <span style="font-size:12px; color:var(--text);">ফজর (মিনিট):</span>
+                  <input type="number" id="fajrPrayDuration" min="1" max="60" value="15" style="padding:7px 10px;">
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                  <span style="font-size:12px; color:var(--text);">যোহর (মিনিট):</span>
+                  <input type="number" id="dhuhrPrayDuration" min="1" max="60" value="12" style="padding:7px 10px;">
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                  <span style="font-size:12px; color:var(--text);">আসর (মিনিট):</span>
+                  <input type="number" id="asrPrayDuration" min="1" max="60" value="10" style="padding:7px 10px;">
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                  <span style="font-size:12px; color:var(--text);">মাগরিব (মিনিট):</span>
+                  <input type="number" id="maghribPrayDuration" min="1" max="60" value="8" style="padding:7px 10px;">
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                  <span style="font-size:12px; color:var(--text);">এশা (মিনিট):</span>
+                  <input type="number" id="ishaPrayDuration" min="1" max="60" value="12" style="padding:7px 10px;">
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                  <span style="font-size:12px; color:var(--text);">জুমু'আ (মিনিট):</span>
+                  <input type="number" id="jumaPrayDuration" min="1" max="60" value="20" style="padding:7px 10px;">
+                </div>
+              </div>
+              <span class="field-hint" style="margin-top:6px;">নামাজ শেষ হওয়ার সাথে সাথে ডিসপ্লে স্বয়ংক্রিয়ভাবে স্বাভাবিক স্ক্রিনে ফিরে আসবে। জরুরি প্রয়োজনে রিমোট বা টাচেও পর্দা খোলা যাবে।</span>
+            </div>
+
+            <!-- Curtain Live Test Buttons -->
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.08);">
+              <div>
+                <strong style="color:var(--gold); font-size:14px;">🎬 ৫-সেকেন্ড কার্টেন অ্যানিমেশন টেস্ট:</strong>
+                <p style="font-size:12px; color:var(--text-muted); margin-top:2px;">পর্দা নামা ও স্বয়ংক্রিয়ভাবে ফিরে আসার মসৃণ অ্যানিমেশন পরীক্ষা করুন।</p>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <button type="button" class="btn btn-gold" style="padding:6px 14px; font-size:13px;" onclick="triggerSalatModeTest(20)">
+                  <span>▶️ ২০ সেকেন্ড কার্টেন টেস্ট</span>
+                </button>
+                <button type="button" class="btn btn-outline" style="padding:6px 14px; font-size:13px;" onclick="stopSalatModeTest()">
+                  <span>⏹️ কার্টেন টেস্ট বন্ধ</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ 4. ISLAMIC DAWAH & DUA SLIDESHOW ══ -->
+        <div class="settings-card" style="margin-top: 24px; border: 1.5px solid rgba(16,185,129,0.4);">
+          <div class="card-header">
+            <div class="card-icon">📖</div>
+            <div>
+              <h3>ইসলামিক দাওয়াহ ও মাসনুন দোয়া স্লাইডশো (Islamic Dawah Slideshow)</h3>
+              <p>নামাজের অফ-পিক বা স্ট্যান্ডবাই সময়ে স্বয়ংক্রিয়ভাবে কুরআন ও হাদিসের মাসনুন দোয়ার স্লাইডশো (আরবি + বাংলা অর্থ ও রেফারেন্স)</p>
+            </div>
+          </div>
+          <div style="background: rgba(0,0,0,0.25); border-radius: 12px; padding: 18px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px;">
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
+              <div class="form-group">
+                <label>দাওয়াহ স্লাইডশো চালু রাখুন (Dawah Slideshow):</label>
+                <select id="slideshowEnabled">
+                  <option value="true" selected>চালু (অন) — নামাজের অফ-পিক সময়ে দোয়া স্লাইডশো</option>
+                  <option value="false">বন্ধ (অফ)</option>
+                </select>
+                <span class="field-hint">কাউন্টডাউন চলাকালীন বা জামাতের সময় স্লাইডশো স্বয়ংক্রিয়ভাবে বন্ধ থাকে</span>
+              </div>
+              <div class="form-group">
+                <label>স্লাইড পরিবর্তনের বিরতি (সেকেন্ড):</label>
+                <input type="number" id="slideshowInterval" min="5" max="120" value="15">
+                <span class="field-hint">প্রতিটি দোয়া কত সেকেন্ড ধরে স্ক্রিনে প্রদর্শিত হবে (ডিফল্ট: ১৫ সেকেন্ড)</span>
+              </div>
+            </div>
+            <div style="font-size:12px; color:#a7f3d0; background:rgba(16,185,129,0.1); border-left:3px solid #10b981; padding:8px 12px; border-radius:4px;">
+              💡 <strong>অন্তর্ভুক্ত দোয়া:</strong> সাইয়্যিদুল ইস্তিগফার, সূরা বাক্বারাহ, সূরা আলে-ইমরান, তিরমিযী ও মুসলিমের গুরুত্বপূর্ণ মোনাজাতসমূহ আরবি ক্যালিগ্রাফি ও বিশুদ্ধ বাংলা অনুবাদসহ আবর্তিত হবে।
             </div>
           </div>
         </div>
@@ -889,6 +1020,31 @@
               <strong style="font-size:13px;">🖤 মডার্ন স্লেট / অবসিডিয়ান</strong>
               <span class="field-hint">অ্যানেক্স ব্ল্যাক ও শীতল সায়ান বৈসাদৃশ্য</span>
             </div>
+          </div>
+        </div>
+
+        <!-- 2. SCREEN ROTATION SELECTION -->
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label>🖥️ টিভি স্ক্রিন সফটওয়্যার রোটেশন (Pure CSS Screen Rotation):</label>
+          <div class="rotate-grid">
+            <div class="rotate-card selected" id="rot-0" onclick="selectRotation('0')">
+              <span class="rotate-icon">📺</span>
+              <strong style="font-size:13px;">স্বাভাবিক (Landscape ০°)</strong>
+              <span class="field-hint">সাধারণ অনুভূমিক টিভি স্ক্রিন</span>
+            </div>
+            <div class="rotate-card" id="rot-90" onclick="selectRotation('90')">
+              <span class="rotate-icon">📱</span>
+              <strong style="font-size:13px;">খাড়া ডান (Portrait ৯০°)</strong>
+              <span class="field-hint">টিভি ৯০° ঘড়ির কাঁটার দিকে খাড়া</span>
+            </div>
+            <div class="rotate-card" id="rot-270" onclick="selectRotation('270')">
+              <span class="rotate-icon">📲</span>
+              <strong style="font-size:13px;">খাড়া বাম (Portrait ২৭০°)</strong>
+              <span class="field-hint">টিভি ২৭০° বিপরীতে খাড়া</span>
+            </div>
+          </div>
+          <div class="field-hint" style="margin-top:6px;">
+            💡 টিভি ওএস বা অ্যান্ড্রয়েড সেটিং ছাড়াই ডিসপ্লেকে সরাসরি খাড়া (Portrait) ও আড়াআড়ি (Landscape) রূপান্তর করুন।
           </div>
         </div>
 
@@ -1143,7 +1299,12 @@
       'hijriOffset', 'showFasting',
       'ticker', 'clockFormat', 'ampmMode', 'cardTimeFormat',
       'showAzanTime', 'showAzanAlert',
-      'layoutMode', 'fontSizeScale', 'bgOpacity'
+      'layoutMode', 'fontSizeScale', 'bgOpacity',
+      'usePermanentTable',
+      'blackScreenEnabled', 'blackScreenShowsClock',
+      'fajrPrayDuration', 'dhuhrPrayDuration', 'asrPrayDuration', 'maghribPrayDuration', 'ishaPrayDuration', 'jumaPrayDuration',
+      'circularIqamaRing', 'ringAlert90Sec', 'ringMobileAlert60Sec',
+      'slideshowEnabled', 'slideshowInterval'
     ];
 
     function getActiveMosqueId() {
@@ -1330,7 +1491,7 @@
         }
       });
       s.theme = currentTheme;
-      s.screenRotate = '0';
+      s.screenRotate = currentRotation || '0';
       s.logoUrl = currentLogoUrl;
       s.bgArchUrl = currentArchUrl;
       var elFs = document.getElementById('fontSizeScale');
@@ -1469,7 +1630,15 @@
     }
 
     function selectRotation(deg) {
-      currentRotation = '0';
+      currentRotation = String(deg || '0');
+      ['0', '90', '270'].forEach(function(r) {
+        var el = document.getElementById('rot-' + r);
+        if (el) {
+          if (r === currentRotation) el.classList.add('selected');
+          else el.classList.remove('selected');
+        }
+      });
+      broadcastLiveUpdate();
     }
 
     // ── FONT SIZE SCALER FUNCTIONS ──

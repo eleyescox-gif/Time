@@ -34,6 +34,10 @@
   <!-- ══ Google Fonts ══ -->
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@600;700;800;900&family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 
+  <!-- ══ Offline Data & Dawah Slides ══ -->
+  <script src="coxs-bazar-times.js"></script>
+  <script src="islamic-slides.js"></script>
+
   <!-- ══ Service Worker Registration ══ -->
   <script>
     if ('serviceWorker' in navigator && location.protocol !== 'file:') {
@@ -3711,7 +3715,29 @@
       font-family: 'Amiri', serif;
     }
 
-    /* ══ SALAT MODE OVERLAY: জামাত চলাকালীন ৫ মিনিট ফুল স্ক্রিন সালাত মোড ══ */
+    /* ══ VIRTUAL SOFTWARE SCREEN ROTATION (০°, ৯০°, ২৭০°) ══ */
+    body.rotate-90 {
+      transform: rotate(90deg) !important;
+      transform-origin: center center !important;
+      width: 100vh !important;
+      height: 100vw !important;
+      position: fixed !important;
+      top: calc((100vh - 100vw) / 2) !important;
+      left: calc((100vw - 100vh) / 2) !important;
+      overflow: hidden !important;
+    }
+    body.rotate-270 {
+      transform: rotate(-90deg) !important;
+      transform-origin: center center !important;
+      width: 100vh !important;
+      height: 100vw !important;
+      position: fixed !important;
+      top: calc((100vh - 100vw) / 2) !important;
+      left: calc((100vw - 100vh) / 2) !important;
+      overflow: hidden !important;
+    }
+
+    /* ══ SALAT FOCUS BLANK MODE: ৫-সেকেন্ড সিনেমাটিক মসৃণ কার্টেন ══ */
     .salat-mode-overlay {
       position: fixed;
       top: 0;
@@ -3721,22 +3747,25 @@
       width: 100vw;
       height: 100vh;
       background: #000000 !important;
-      z-index: 9999999 !important;
-      display: none;
+      z-index: 99999999 !important;
+      display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
       text-align: center;
       overflow: hidden;
       user-select: none;
-      cursor: default;
+      cursor: pointer;
       opacity: 0;
+      transform: scaleY(0);
+      transform-origin: top center;
       pointer-events: none;
-      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 5s cubic-bezier(0.16, 1, 0.3, 1), opacity 3s ease-out;
     }
     .salat-mode-overlay.active {
       display: flex !important;
       opacity: 1 !important;
+      transform: scaleY(1) !important;
       pointer-events: auto !important;
     }
     .salat-content {
@@ -3746,20 +3775,62 @@
       justify-content: center;
       width: 100%;
       height: 100%;
+      gap: clamp(8px, 1.8vh, 22px);
+      padding: clamp(14px, 2.5vh, 36px);
+      box-sizing: border-box;
+    }
+    .salat-arabic-sub {
+      font-family: 'Amiri', serif;
+      font-size: clamp(22px, 3.0vw, 50px);
+      color: #dfcdb1;
+      letter-spacing: 2px;
+      line-height: 1.3;
+      text-shadow: 0 0 20px rgba(223, 205, 177, 0.4);
     }
     .salat-text {
-      font-family: 'Hind Siliguri', 'Noto Sans Bengali', -apple-system, sans-serif;
-      font-size: clamp(84px, 16vw, 260px);
+      font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+      font-size: clamp(64px, 13vw, 200px);
       font-weight: 800;
       color: #fce085;
-      letter-spacing: clamp(6px, 1.5vw, 18px);
-      text-align: center;
-      line-height: 1.1;
-      text-shadow: 
-        0 0 35px rgba(252, 224, 133, 0.5),
-        0 0 70px rgba(234, 179, 8, 0.35),
-        0 0 120px rgba(234, 179, 8, 0.2);
+      letter-spacing: clamp(4px, 1.2vw, 16px);
+      line-height: 1.05;
+      text-shadow: 0 0 35px rgba(252, 224, 133, 0.4), 0 0 70px rgba(234, 179, 8, 0.25);
       animation: salatSoftBreathe 4s ease-in-out infinite alternate;
+    }
+    .salat-waqt-name {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(20px, 2.6vw, 44px);
+      font-weight: 700;
+      color: #cbd5e1;
+      letter-spacing: 1px;
+    }
+    .salat-curtain-clock {
+      font-family: 'Cinzel', 'Outfit', sans-serif;
+      font-size: clamp(30px, 4.2vw, 72px);
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.35);
+      letter-spacing: 4px;
+      padding: 6px 24px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .salat-curtain-warning {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(16px, 2.0vw, 34px);
+      font-weight: 600;
+      color: #fca5a5;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      padding: clamp(6px, 1vh, 12px) clamp(16px, 2.5vw, 36px);
+      border-radius: 999px;
+      box-shadow: 0 0 30px rgba(239, 68, 68, 0.25);
+    }
+    .salat-curtain-hint {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(11px, 1.1vw, 17px);
+      color: #64748b;
+      margin-top: clamp(4px, 1vh, 14px);
     }
     @keyframes salatSoftBreathe {
       0% {
@@ -3776,16 +3847,160 @@
     .is-portrait .salat-text,
     body.rotate-90 .salat-text,
     body.rotate-270 .salat-text {
-      font-size: clamp(70px, 18vw, 190px) !important;
-      letter-spacing: clamp(4px, 1.2vw, 12px) !important;
+      font-size: clamp(55px, 15vw, 160px) !important;
+      letter-spacing: clamp(3px, 1vw, 10px) !important;
+    }
+
+    /* ══ CIRCULAR SVG IQAMA COUNTDOWN HUD (১৯vw LUXURY RING) ══ */
+    .iqama-circular-hud {
+      width: clamp(190px, 19vw, 320px);
+      height: clamp(190px, 19vw, 320px);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4px auto;
+      flex-shrink: 0;
+    }
+    .circular-ring-svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg); /* Start at 12 o'clock */
+      overflow: visible;
+      filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.35));
+    }
+    .ring-bg {
+      fill: rgba(10, 18, 30, 0.65);
+      stroke: rgba(255, 255, 255, 0.08);
+      stroke-width: 8;
+    }
+    .ring-bar {
+      fill: none;
+      stroke: url(#goldRingGrad);
+      stroke-width: 8.5;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 1s linear, stroke 0.6s ease;
+    }
+    .iqama-circular-hud.ring-alert-red .circular-ring-svg {
+      filter: drop-shadow(0 0 25px rgba(239, 68, 68, 0.75));
+    }
+    .iqama-circular-hud.ring-alert-red .ring-bar {
+      stroke: url(#redRingGrad) !important;
+      animation: ringDangerPulse 1.2s infinite ease-in-out;
+    }
+    @keyframes ringDangerPulse {
+      0%, 100% { stroke-width: 8.5; opacity: 1; }
+      50% { stroke-width: 11; opacity: 0.85; }
+    }
+    .ring-center-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      pointer-events: none;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    .ring-waqt-label {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(14px, 2.3vw, 32px);
+      font-weight: 700;
+      color: #cbd5e1;
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+    }
+    .ring-digits {
+      font-family: 'Cinzel', 'Outfit', sans-serif;
+      font-size: clamp(34px, 6.8vw, 92px);
+      font-weight: 800;
+      color: #fce085;
+      line-height: 1;
+      letter-spacing: clamp(1px, 0.3vw, 4px);
+      text-shadow: 0 0 25px rgba(245, 158, 11, 0.5);
+      margin: 4px 0;
+    }
+    .ring-status-sub {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(11px, 1.3vw, 19px);
+      font-weight: 600;
+      color: #94a3b8;
+    }
+    .ring-mobile-badge {
+      position: absolute;
+      bottom: -18px;
+      white-space: nowrap;
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(185, 28, 28, 0.95));
+      color: #ffffff;
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(11px, 1.2vw, 17px);
+      font-weight: 700;
+      padding: 4px 16px;
+      border-radius: 999px;
+      box-shadow: 0 4px 20px rgba(239, 68, 68, 0.65);
+      animation: mobileBadgeFloat 2s infinite ease-in-out;
+      z-index: 10;
+    }
+    @keyframes mobileBadgeFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    /* ══ ISLAMIC SLIDESHOW CARD (OFF-PEAK TIME) ══ */
+    .pro-dawah-slideshow {
+      width: 90%;
+      max-width: 780px;
+      border-radius: clamp(12px, 1.6vh, 20px);
+      background: rgba(10, 18, 30, 0.72) !important;
+      border: 1px solid rgba(212, 175, 55, 0.22) !important;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+      padding: clamp(10px, 1.5vh, 18px) clamp(16px, 2.2vw, 30px);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 6px;
+      margin: 6px auto;
+      transition: opacity 0.8s ease-in-out;
+    }
+    .dawah-slide-arabic {
+      font-family: 'Amiri', serif;
+      font-size: clamp(18px, 2.3vw, 36px);
+      color: #fce085;
+      line-height: 1.4;
+      text-shadow: 0 0 16px rgba(252, 224, 133, 0.3);
+    }
+    .dawah-slide-bengali {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(13px, 1.5vw, 22px);
+      color: #e2e8f0;
+      line-height: 1.35;
+    }
+    .dawah-slide-ref {
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(11px, 1.1vw, 15px);
+      color: #94a3b8;
+      font-style: italic;
     }
   </style>
 </head>
 <body data-theme="dark">
-  <!-- ══ SALAT MODE OVERLAY: জামাত চলাকালীন ৫ মিনিট ফুল স্ক্রিন সালাত মোড ══ -->
-  <div id="salatModeOverlay" class="salat-mode-overlay" style="display: none;" title="ক্লিক করলে বন্ধ হবে">
+  <!-- ══ SALAT FOCUS BLANK MODE: ৫-সেকেন্ড সিনেমাটিক মসৃণ কার্টেন ও অটো ওয়েক-আপ ══ -->
+  <div id="salatModeOverlay" class="salat-mode-overlay" title="রিমোটের যেকোনো বাটন বা টাচ করলে পর্দা খুলবে">
     <div class="salat-content">
-      <div class="salat-text">সালাত</div>
+      <div class="salat-arabic-sub">الصَّلَاةُ قَائِمَةٌ — الرَّجَاءُ إِغْلَاقُ الهَاتِفِ</div>
+      <div class="salat-text" id="salatCurtainTitle">সালাত</div>
+      <div class="salat-waqt-name" id="salatCurtainWaqt">জামাত অনুষ্ঠিত হচ্ছে</div>
+      <div class="salat-curtain-clock" id="salatCurtainClock">--:-- --</div>
+      <div class="salat-curtain-warning">📵 অনুগ্রহপূর্বক মোবাইল ফোন বন্ধ বা সম্পূর্ণ সাইলেন্ট রাখুন</div>
+      <div class="salat-curtain-hint">নামাজ শেষে ডিসপ্লে স্বয়ংক্রিয়ভাবে ফিরে আসবে • জরুরি প্রয়োজনে রিমোট চাপুন</div>
     </div>
   </div>
   <div id="screenWrapper" class="theme-navy">
@@ -3932,6 +4147,40 @@
               <span id="nextCountdownText"></span>
               <span class="cd-sep-dash"></span>
             </div>
+          </div>
+
+          <!-- ══ CIRCULAR SVG IQAMA COUNTDOWN HUD (১৯vw LUXURY RING) ══ -->
+          <div class="iqama-circular-hud" id="iqamaCircularHud" style="display: none;">
+            <svg class="circular-ring-svg" viewBox="0 0 200 200">
+              <defs>
+                <linearGradient id="goldRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#f59e0b" />
+                  <stop offset="50%" stop-color="#fbbf24" />
+                  <stop offset="100%" stop-color="#d97706" />
+                </linearGradient>
+                <linearGradient id="redRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#ef4444" />
+                  <stop offset="100%" stop-color="#b91c1c" />
+                </linearGradient>
+              </defs>
+              <circle class="ring-bg" cx="100" cy="100" r="88" />
+              <circle class="ring-bar" id="circularRingBar" cx="100" cy="100" r="88" stroke-dasharray="552.92" stroke-dashoffset="0" />
+            </svg>
+            <div class="ring-center-content">
+              <div class="ring-waqt-label" id="ringWaqtLabel">আসরের জামাত</div>
+              <div class="ring-digits" id="ringDigits">০০:০০</div>
+              <div class="ring-status-sub" id="ringStatusSub">ইকামত বাকি</div>
+            </div>
+            <div class="ring-mobile-badge" id="ringMobileBadge" style="display: none;">
+              <span>📴 জামাত আসন্ন — মোবাইল বন্ধ রাখুন</span>
+            </div>
+          </div>
+
+          <!-- ══ ISLAMIC DAWAH SLIDESHOW CARD (OFF-PEAK TIME) ══ -->
+          <div class="pro-dawah-slideshow" id="proDawahSlideshow" style="display: none;">
+            <div class="dawah-slide-arabic" id="dawahSlideAr"></div>
+            <div class="dawah-slide-bengali" id="dawahSlideBn"></div>
+            <div class="dawah-slide-ref" id="dawahSlideRef"></div>
           </div>
         </div>
 
@@ -4375,12 +4624,28 @@
     }
 
     function applyScreenRotation() {
-      // Rotation transforms removed: natural layout based on screen aspect ratio
       document.body.classList.remove('rotate-90', 'rotate-180', 'rotate-270');
+      var rot = String(CONFIG.screenRotate || '0');
+      var isForcedRotation = false;
+      if (rot === '90') {
+        document.body.classList.add('rotate-90');
+        isForcedRotation = true;
+      } else if (rot === '270') {
+        document.body.classList.add('rotate-270');
+        isForcedRotation = true;
+      }
+
       var isPortrait = false;
-      if (CONFIG.layoutMode === 'portrait') isPortrait = true;
-      else if (CONFIG.layoutMode === 'landscape') isPortrait = false;
-      else isPortrait = (window.innerHeight > window.innerWidth);
+      if (isForcedRotation) {
+        isPortrait = true;
+      } else if (CONFIG.layoutMode === 'portrait') {
+        isPortrait = true;
+      } else if (CONFIG.layoutMode === 'landscape') {
+        isPortrait = false;
+      } else {
+        isPortrait = (window.innerHeight > window.innerWidth);
+      }
+
       if (isPortrait) document.body.classList.add('is-portrait');
       else document.body.classList.remove('is-portrait');
       applyDOMOrientation(isPortrait);
@@ -4508,8 +4773,53 @@
       }
     }
 
+    function getCoxsBazarPrayerTimes(date) {
+      if (typeof JS_TIMES === 'undefined' || !Array.isArray(JS_TIMES)) return null;
+      var m = String(date.getMonth() + 1).padStart(2, '0');
+      var d = String(date.getDate()).padStart(2, '0');
+      var key = m + '-' + d;
+      var row = JS_TIMES.find(function(l) { return l.indexOf(key + '~~~~~') === 0; });
+      if (!row) return null;
+      var parts = row.split('~~~~~')[1].split('|');
+      if (parts.length < 6) return null;
+      return {
+        fajr: parts[0],
+        sunrise: parts[1],
+        dhuhr: parts[2],
+        asr: parts[3],
+        maghrib: parts[4],
+        isha: parts[5],
+        source: 'Coxs-Bazar-Permanent'
+      };
+    }
+
     function calc() {
-      PT = prayerCalc(+CONFIG.lat, +CONFIG.lng, new Date(), +CONFIG.utc, CONFIG.asrMadhab);
+      var now = getNow();
+      var cb = (CONFIG.usePermanentTable !== false && CONFIG.usePermanentTable !== 'false') 
+        ? getCoxsBazarPrayerTimes(now) 
+        : null;
+
+      if (cb) {
+        PT = {
+          fajr: cb.fajr,
+          sunrise: cb.sunrise,
+          dhuhr: cb.dhuhr,
+          asr: cb.asr,
+          maghrib: cb.maghrib,
+          isha: cb.isha,
+          sehriEnd: addMins(cb.fajr, -3),
+          ishraq: addMins(cb.sunrise, 15),
+          iftar: cb.maghrib,
+          sunriseForbiddenEnd: addMins(cb.sunrise, 15),
+          zawalStart: addMins(cb.dhuhr, -10),
+          zawalEnd: cb.dhuhr,
+          sunsetForbiddenStart: addMins(cb.maghrib, -15),
+          source: 'Coxs-Bazar-Permanent'
+        };
+      } else {
+        PT = prayerCalc(+CONFIG.lat, +CONFIG.lng, now, +CONFIG.utc, CONFIG.asrMadhab);
+      }
+
       if (PT) {
         var fmt = CONFIG.cardTimeFormat || CONFIG.clockFormat || '12';
         var sEnd = document.getElementById('sehriVal');
@@ -4617,6 +4927,148 @@
       return toBnNum(String(h).padStart(2,'0')) + ':' + toBnNum(String(m).padStart(2,'0')) + ':' + toBnNum(String(s).padStart(2,'0'));
     }
 
+    // ══ TAWKIT PRO HELPERS: SALAT DURATION, CHIME, 19vw CIRCULAR RING & DAWAH SLIDESHOW ══
+    function getPrayerSalatDurationSec(prayerId, isFriday) {
+      var mins = 12;
+      if (isFriday && prayerId === 'dhuhr') {
+        mins = parseInt(CONFIG.jumaPrayDuration || CONFIG.salatScreenDuration, 10) || 20;
+      } else if (prayerId === 'fajr') {
+        mins = parseInt(CONFIG.fajrPrayDuration || CONFIG.salatScreenDuration, 10) || 15;
+      } else if (prayerId === 'dhuhr') {
+        mins = parseInt(CONFIG.dhuhrPrayDuration || CONFIG.salatScreenDuration, 10) || 12;
+      } else if (prayerId === 'asr') {
+        mins = parseInt(CONFIG.asrPrayDuration || CONFIG.salatScreenDuration, 10) || 10;
+      } else if (prayerId === 'maghrib') {
+        mins = parseInt(CONFIG.maghribPrayDuration || CONFIG.salatScreenDuration, 10) || 8;
+      } else if (prayerId === 'isha') {
+        mins = parseInt(CONFIG.ishaPrayDuration || CONFIG.salatScreenDuration, 10) || 12;
+      } else {
+        mins = parseInt(CONFIG.salatScreenDuration, 10) || 10;
+      }
+      return mins * 60;
+    }
+
+    var chimeHasPlayed = false;
+    function playJamaatChime() {
+      try {
+        var AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        var ctx = new AudioCtx();
+        if (ctx.state === 'suspended') ctx.resume();
+        var now = ctx.currentTime;
+        var notes = [523.25, 659.25, 783.99]; // C5, E5, G5 harmonic chime
+        notes.forEach(function(freq, idx) {
+          var osc = ctx.createOscillator();
+          var gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.16);
+          gain.gain.setValueAtTime(0, now + idx * 0.16);
+          gain.gain.linearRampToValueAtTime(0.28, now + idx * 0.16 + 0.04);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.16 + 1.2);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + idx * 0.16);
+          osc.stop(now + idx * 0.16 + 1.25);
+        });
+      } catch(e) {}
+    }
+
+    function updateCircularIqamaHud(show, totalSec, prayerName) {
+      var hud = document.getElementById('iqamaCircularHud');
+      if (!hud) return;
+      if (!show || CONFIG.circularIqamaRing === false || CONFIG.circularIqamaRing === 'false') {
+        hud.style.display = 'none';
+        return;
+      }
+      hud.style.display = 'flex';
+
+      var maxSec = 300;
+      var cMin = Math.floor(totalSec / 60);
+      var cSec = totalSec % 60;
+      var timeFormatted = String(cMin).padStart(2, '0') + ':' + String(cSec).padStart(2, '0');
+
+      var ringDigits = document.getElementById('ringDigits');
+      if (ringDigits) ringDigits.textContent = timeFormatted;
+
+      var ringWaqt = document.getElementById('ringWaqtLabel');
+      if (ringWaqt) ringWaqt.textContent = (prayerName ? prayerName : 'জামাত') + ' জামাত';
+
+      var ringBar = document.getElementById('circularRingBar');
+      if (ringBar) {
+        var progress = Math.max(0, Math.min(1, totalSec / maxSec));
+        var circumference = 552.92;
+        var offset = circumference * (1 - progress);
+        ringBar.style.strokeDashoffset = offset.toFixed(2);
+      }
+
+      // <= 90s alert red (#BA001F) with pulsing animation
+      if (totalSec <= 90 && CONFIG.ringAlert90Sec !== false && CONFIG.ringAlert90Sec !== 'false') {
+        hud.classList.add('ring-alert-red');
+      } else {
+        hud.classList.remove('ring-alert-red');
+      }
+
+      // <= 60s floating mobile warning badge
+      var mobileBadge = document.getElementById('ringMobileBadge');
+      if (mobileBadge) {
+        if (totalSec <= 60 && CONFIG.ringMobileAlert60Sec !== false && CONFIG.ringMobileAlert60Sec !== 'false') {
+          mobileBadge.style.display = 'block';
+        } else {
+          mobileBadge.style.display = 'none';
+        }
+      }
+    }
+
+    var currentSlideIdx = 0;
+    var slideTimer = 0;
+    function updateDawahSlideshow(show) {
+      var slideBox = document.getElementById('proDawahSlideshow');
+      if (!slideBox) return;
+      if (!show || CONFIG.slideshowEnabled === false || CONFIG.slideshowEnabled === 'false') {
+        slideBox.style.display = 'none';
+        return;
+      }
+      var slides = (typeof ISLAMIC_SLIDES !== 'undefined' && Array.isArray(ISLAMIC_SLIDES) && ISLAMIC_SLIDES.length > 0)
+        ? ISLAMIC_SLIDES
+        : (typeof DEFAULT_ISLAMIC_SLIDES !== 'undefined' ? DEFAULT_ISLAMIC_SLIDES : []);
+      if (!slides || slides.length === 0) {
+        slideBox.style.display = 'none';
+        return;
+      }
+      slideBox.style.display = 'flex';
+
+      var intervalSec = parseInt(CONFIG.slideshowInterval, 10) || 15;
+      slideTimer++;
+      if (slideTimer >= intervalSec || !slideBox.dataset.loaded) {
+        slideTimer = 0;
+        slideBox.dataset.loaded = 'true';
+        slideBox.style.opacity = '0';
+        setTimeout(function() {
+          currentSlideIdx = (currentSlideIdx + 1) % slides.length;
+          var curItem = slides[currentSlideIdx];
+          var arEl = document.getElementById('dawahSlideAr');
+          var bnEl = document.getElementById('dawahSlideBn');
+          var refEl = document.getElementById('dawahSlideRef');
+          if (arEl) arEl.textContent = curItem.ar || '';
+          if (bnEl) bnEl.textContent = curItem.bn || '';
+          if (refEl) refEl.textContent = curItem.ref ? '— ' + curItem.ref : '';
+          slideBox.style.opacity = '1';
+        }, 400);
+      }
+    }
+
+    function dismissSalatOverlay() {
+      var so = document.getElementById('salatModeOverlay');
+      if (so) {
+        so.classList.remove('active');
+        setTimeout(function() {
+          if (!so.classList.contains('active')) so.style.display = 'none';
+        }, 500);
+      }
+      window.TEST_SALAT_MODE_SEC = null;
+      window.MANUAL_DISMISSED_SALAT = true;
+    }
+
     function tick() {
       var bd = getNow();
       var isFri = (bd.getDay() === 5);
@@ -4644,8 +5096,6 @@
       if (ampmEl) ampmEl.textContent = ampm;
 
       // Full Header Date Directly Below Mosque Address:
-      // Gregorian Bengali: "২৬ সেপ্টেম্বর ২০২৬"
-      // Hijri Date: "১৫ রবিউস সানি ১৪৪৮ হিজরি"
       var hijri = getHijriDate(bd, +CONFIG.hijriOffset || 0);
       var bnMonths = ['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
       var dayName = BN_DAYS_FULL[bd.getDay()];
@@ -4702,9 +5152,9 @@
           var pDate = new Date(bd);
           pDate.setHours(parts[0], parts[1], 0, 0);
           var diff = pDate.getTime() - bd.getTime();
-          // If within 5 minutes after Jamaat started, keep it as current
-          var salatDurationMs = (parseInt(CONFIG.salatScreenDuration, 10) || 5) * 60 * 1000;
-          if (diff <= 0 && diff > -salatDurationMs) {
+          // Per-prayer auto-wake duration
+          var pDurationMs = getPrayerSalatDurationSec(item.id, isFri) * 1000;
+          if (diff <= 0 && diff > -pDurationMs) {
             if (diff < bestMs) {
               bestMs = diff;
               bestPrayer = item;
@@ -4724,7 +5174,8 @@
         });
 
         var totalSec = Math.floor(bestMs / 1000);
-        var salatDurationSec = (parseInt(CONFIG.salatScreenDuration, 10) || 5) * 60;
+        var curPrayerId = bestPrayer ? bestPrayer.id : 'fajr';
+        var salatDurationSec = getPrayerSalatDurationSec(curPrayerId, isFri);
 
         // Check if admin triggered a live test countdown
         if (window.TEST_COUNTDOWN_SEC !== undefined && window.TEST_COUNTDOWN_SEC !== null) {
@@ -4744,7 +5195,22 @@
           isSalatTime = true;
           window.TEST_SALAT_MODE_SEC--;
         } else if (totalSec <= 0 && totalSec >= -salatDurationSec) {
-          isSalatTime = true;
+          if (!window.MANUAL_DISMISSED_SALAT) {
+            isSalatTime = true;
+          }
+        } else {
+          // Outside salat time, reset manual dismissal flag
+          window.MANUAL_DISMISSED_SALAT = false;
+        }
+
+        // Play harmonic chime at 0s transition to Jamaat
+        if (totalSec <= 0 && totalSec >= -5) {
+          if (!chimeHasPlayed) {
+            playJamaatChime();
+            chimeHasPlayed = true;
+          }
+        } else if (totalSec > 5) {
+          chimeHasPlayed = false;
         }
 
         // Current Waqt & Next Jamaat for Under-Clock Banner
@@ -4785,13 +5251,25 @@
           ucNextJm.textContent = bestPrayer.bn + ' ' + fmtTime(bestTimeStr, cardFmt);
         }
 
+        var isRingEnabled = (CONFIG.circularIqamaRing !== false && CONFIG.circularIqamaRing !== 'false');
+
         if (totalSec > 0 && totalSec <= 300) {
           // ACTIVE 5-MINUTE COUNTDOWN (300s down to 1s)
-          if (ucBanner) {
-            ucBanner.classList.add('banner-active-cd');
-            if (totalSec <= 60) ucBanner.classList.add('banner-urgent-cd');
-            else ucBanner.classList.remove('banner-urgent-cd');
+          // Circular SVG HUD
+          if (isRingEnabled) {
+            updateCircularIqamaHud(true, totalSec, bestPrayer ? bestPrayer.bn : '');
+            if (ucBanner) ucBanner.style.display = 'none';
+          } else {
+            updateCircularIqamaHud(false, totalSec, '');
+            if (ucBanner) {
+              ucBanner.style.display = 'flex';
+              ucBanner.classList.add('banner-active-cd');
+              if (totalSec <= 60) ucBanner.classList.add('banner-urgent-cd');
+              else ucBanner.classList.remove('banner-urgent-cd');
+            }
           }
+          // Hide off-peak slideshow during active countdown
+          updateDawahSlideshow(false);
 
           var cMin = Math.floor(totalSec / 60);
           var cSec = totalSec % 60;
@@ -4818,8 +5296,11 @@
             }
           }
         } else if (totalSec <= 0 && totalSec >= -salatDurationSec) {
-          // Jamaat has begun (0 to 5 minutes)
+          // Jamaat has begun
+          updateCircularIqamaHud(false, 0, '');
+          updateDawahSlideshow(false);
           if (ucBanner) {
+            ucBanner.style.display = 'flex';
             ucBanner.classList.add('banner-active-cd');
             ucBanner.classList.remove('banner-urgent-cd');
           }
@@ -4828,7 +5309,9 @@
           if (cdBarEl) cdBarEl.style.width = '0%';
         } else {
           // Standby Mode (> 5 minutes before Jamaat): Real-time remaining countdown!
+          updateCircularIqamaHud(false, totalSec, '');
           if (ucBanner) {
+            ucBanner.style.display = 'flex';
             ucBanner.classList.remove('banner-active-cd', 'banner-urgent-cd');
           }
           if (totalSec > 0) {
@@ -4846,6 +5329,9 @@
           }
           if (cdBadgeEl) cdBadgeEl.textContent = 'জামাত শুরু হতে বাকি';
           if (cdBarEl) cdBarEl.style.width = '100%';
+
+          // Dawah slideshow during off-peak standby
+          updateDawahSlideshow(true);
         }
 
         if (bestPrayer && bestTimeStr) {
@@ -4925,10 +5411,22 @@
           }
         }
 
-        // ══ SALAT MODE OVERLAY (জামাত চলাকালীন ৫ মিনিট ফুল স্ক্রিন সালাত মোড) ══
+        // ══ SALAT FOCUS BLANK MODE: ৫-সেকেন্ড মসৃণ কার্টেন ও অটো ওয়েক-আপ ══
         var salatOverlay = document.getElementById('salatModeOverlay');
         if (salatOverlay) {
-          if (isSalatTime) {
+          if (isSalatTime && CONFIG.blackScreenEnabled !== false && CONFIG.blackScreenEnabled !== 'false') {
+            var sTitle = document.getElementById('salatCurtainTitle');
+            if (sTitle) sTitle.textContent = (bestPrayer ? bestPrayer.bn : 'সালাত');
+            var sWaqt = document.getElementById('salatCurtainWaqt');
+            if (sWaqt) sWaqt.textContent = (bestPrayer ? bestPrayer.bn : '') + ' জামাত অনুষ্ঠিত হচ্ছে';
+            var sClock = document.getElementById('salatCurtainClock');
+            if (sClock) {
+              var h12 = bd.getHours() % 12 || 12;
+              var ampm = bd.getHours() >= 12 ? 'PM' : 'AM';
+              sClock.textContent = String(h12).padStart(2, '0') + ':' + String(bd.getMinutes()).padStart(2, '0') + ' ' + ampm;
+              sClock.style.display = (CONFIG.blackScreenShowsClock !== false && CONFIG.blackScreenShowsClock !== 'false') ? 'block' : 'none';
+            }
+
             if (!salatOverlay.classList.contains('active')) {
               salatOverlay.style.display = 'flex';
               void salatOverlay.offsetWidth;
@@ -4941,8 +5439,8 @@
                 if (!salatOverlay.classList.contains('active')) {
                   salatOverlay.style.display = 'none';
                 }
-              }, 500);
-            } else {
+              }, 5000); // 5-second smooth cinematic curtain opening
+            } else if (salatOverlay.style.display !== 'none' && !salatOverlay.classList.contains('active')) {
               salatOverlay.style.display = 'none';
             }
           }
@@ -5079,27 +5577,16 @@
       }
     } catch(e) {}
 
-    // Dismiss test salat mode on click or keyboard
+    // Dismiss salat mode on click/touch or any TV remote keypress
     var salatOverlayEl = document.getElementById('salatModeOverlay');
     if (salatOverlayEl) {
-      salatOverlayEl.addEventListener('click', function() {
-        if (window.TEST_SALAT_MODE_SEC) {
-          window.TEST_SALAT_MODE_SEC = null;
-          salatOverlayEl.classList.remove('active');
-          salatOverlayEl.style.display = 'none';
-        }
-      });
+      salatOverlayEl.addEventListener('click', dismissSalatOverlay);
+      salatOverlayEl.addEventListener('touchstart', dismissSalatOverlay);
     }
     window.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') {
-        if (window.TEST_SALAT_MODE_SEC) {
-          window.TEST_SALAT_MODE_SEC = null;
-          var so = document.getElementById('salatModeOverlay');
-          if (so) {
-            so.classList.remove('active');
-            so.style.display = 'none';
-          }
-        }
+      var so = document.getElementById('salatModeOverlay');
+      if (so && (so.classList.contains('active') || so.style.display !== 'none')) {
+        dismissSalatOverlay();
       }
     });
 

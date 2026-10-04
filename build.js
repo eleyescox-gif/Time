@@ -19,7 +19,9 @@ const files = [
   'manifest.json',
   'sw.js',
   'qrcode.min.js',
-  'vercel.json'
+  'vercel.json',
+  'coxs-bazar-times.js',
+  'islamic-slides.js'
 ];
 
 files.forEach(file => {

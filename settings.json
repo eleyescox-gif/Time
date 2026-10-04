@@ -36,5 +36,19 @@
   "maghribAzan": "auto",
   "ishaAzan": "auto",
   "testSync": "verified",
-  "updatedAt": 1790824793140
+  "updatedAt": 1790824793140,
+  "usePermanentTable": true,
+  "blackScreenEnabled": true,
+  "blackScreenShowsClock": true,
+  "fajrPrayDuration": 15,
+  "dhuhrPrayDuration": 12,
+  "asrPrayDuration": 10,
+  "maghribPrayDuration": 8,
+  "ishaPrayDuration": 12,
+  "jumaPrayDuration": 20,
+  "circularIqamaRing": true,
+  "ringAlert90Sec": true,
+  "ringMobileAlert60Sec": true,
+  "slideshowEnabled": true,
+  "slideshowInterval": 15
 }
