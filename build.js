@@ -12,6 +12,7 @@ const files = [
   'admin.html',
   'portal.html',
   'settings.json',
+  'install.html',
   'logo.png',
   'bg_display.jpg',
   'MyMasjidTV_INSTALL.apk',

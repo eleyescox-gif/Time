@@ -2,6 +2,10 @@
   "outputDirectory": "public",
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/", "destination": "/display.html" }
+    { "source": "/", "destination": "/display.html" },
+    { "source": "/install", "destination": "/install.html" },
+    { "source": "/download", "destination": "/install.html" },
+    { "source": "/app", "destination": "/install.html" },
+    { "source": "/apk", "destination": "/MyMasjidTV_INSTALL.apk" }
   ]
 }
