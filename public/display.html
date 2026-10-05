@@ -34,9 +34,8 @@
   <!-- ══ Google Fonts ══ -->
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@600;700;800;900&family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- ══ Offline Data & Dawah Slides ══ -->
+  <!-- ══ Offline Data ══ -->
   <script src="coxs-bazar-times.js"></script>
-  <script src="islamic-slides.js"></script>
 
   <!-- ══ Service Worker Registration ══ -->
   <script>
@@ -3951,44 +3950,6 @@
       50% { transform: translateY(-4px); }
     }
 
-    /* ══ ISLAMIC SLIDESHOW CARD (OFF-PEAK TIME) ══ */
-    .pro-dawah-slideshow {
-      width: 90%;
-      max-width: 780px;
-      border-radius: clamp(12px, 1.6vh, 20px);
-      background: rgba(10, 18, 30, 0.72) !important;
-      border: 1px solid rgba(212, 175, 55, 0.22) !important;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-      padding: clamp(10px, 1.5vh, 18px) clamp(16px, 2.2vw, 30px);
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      gap: 6px;
-      margin: 6px auto;
-      transition: opacity 0.8s ease-in-out;
-    }
-    .dawah-slide-arabic {
-      font-family: 'Amiri', serif;
-      font-size: clamp(18px, 2.3vw, 36px);
-      color: #fce085;
-      line-height: 1.4;
-      text-shadow: 0 0 16px rgba(252, 224, 133, 0.3);
-    }
-    .dawah-slide-bengali {
-      font-family: 'Hind Siliguri', sans-serif;
-      font-size: clamp(13px, 1.5vw, 22px);
-      color: #e2e8f0;
-      line-height: 1.35;
-    }
-    .dawah-slide-ref {
-      font-family: 'Hind Siliguri', sans-serif;
-      font-size: clamp(11px, 1.1vw, 15px);
-      color: #94a3b8;
-      font-style: italic;
-    }
   </style>
 </head>
 <body data-theme="dark">
@@ -4176,12 +4137,6 @@
             </div>
           </div>
 
-          <!-- ══ ISLAMIC DAWAH SLIDESHOW CARD (OFF-PEAK TIME) ══ -->
-          <div class="pro-dawah-slideshow" id="proDawahSlideshow" style="display: none;">
-            <div class="dawah-slide-arabic" id="dawahSlideAr"></div>
-            <div class="dawah-slide-bengali" id="dawahSlideBn"></div>
-            <div class="dawah-slide-ref" id="dawahSlideRef"></div>
-          </div>
         </div>
 
         <!-- ══ BOTTOM 3 BOXES: SUNRISE, JUMMAH & FRIDAY (CLEAN, ICON-FREE, SYMMETRIC) ══ -->
@@ -5019,44 +4974,6 @@
       }
     }
 
-    var currentSlideIdx = 0;
-    var slideTimer = 0;
-    function updateDawahSlideshow(show) {
-      var slideBox = document.getElementById('proDawahSlideshow');
-      if (!slideBox) return;
-      if (!show || CONFIG.slideshowEnabled === false || CONFIG.slideshowEnabled === 'false') {
-        slideBox.style.display = 'none';
-        return;
-      }
-      var slides = (typeof ISLAMIC_SLIDES !== 'undefined' && Array.isArray(ISLAMIC_SLIDES) && ISLAMIC_SLIDES.length > 0)
-        ? ISLAMIC_SLIDES
-        : (typeof DEFAULT_ISLAMIC_SLIDES !== 'undefined' ? DEFAULT_ISLAMIC_SLIDES : []);
-      if (!slides || slides.length === 0) {
-        slideBox.style.display = 'none';
-        return;
-      }
-      slideBox.style.display = 'flex';
-
-      var intervalSec = parseInt(CONFIG.slideshowInterval, 10) || 15;
-      slideTimer++;
-      if (slideTimer >= intervalSec || !slideBox.dataset.loaded) {
-        slideTimer = 0;
-        slideBox.dataset.loaded = 'true';
-        slideBox.style.opacity = '0';
-        setTimeout(function() {
-          currentSlideIdx = (currentSlideIdx + 1) % slides.length;
-          var curItem = slides[currentSlideIdx];
-          var arEl = document.getElementById('dawahSlideAr');
-          var bnEl = document.getElementById('dawahSlideBn');
-          var refEl = document.getElementById('dawahSlideRef');
-          if (arEl) arEl.textContent = curItem.ar || '';
-          if (bnEl) bnEl.textContent = curItem.bn || '';
-          if (refEl) refEl.textContent = curItem.ref ? '— ' + curItem.ref : '';
-          slideBox.style.opacity = '1';
-        }, 400);
-      }
-    }
-
     function dismissSalatOverlay() {
       var so = document.getElementById('salatModeOverlay');
       if (so) {
@@ -5268,8 +5185,6 @@
               else ucBanner.classList.remove('banner-urgent-cd');
             }
           }
-          // Hide off-peak slideshow during active countdown
-          updateDawahSlideshow(false);
 
           var cMin = Math.floor(totalSec / 60);
           var cSec = totalSec % 60;
@@ -5298,7 +5213,6 @@
         } else if (totalSec <= 0 && totalSec >= -salatDurationSec) {
           // Jamaat has begun
           updateCircularIqamaHud(false, 0, '');
-          updateDawahSlideshow(false);
           if (ucBanner) {
             ucBanner.style.display = 'flex';
             ucBanner.classList.add('banner-active-cd');
@@ -5329,9 +5243,6 @@
           }
           if (cdBadgeEl) cdBadgeEl.textContent = 'জামাত শুরু হতে বাকি';
           if (cdBarEl) cdBarEl.style.width = '100%';
-
-          // Dawah slideshow during off-peak standby
-          updateDawahSlideshow(true);
         }
 
         if (bestPrayer && bestTimeStr) {

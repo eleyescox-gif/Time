@@ -884,36 +884,6 @@
           </div>
         </div>
 
-        <!-- ══ 4. ISLAMIC DAWAH & DUA SLIDESHOW ══ -->
-        <div class="settings-card" style="margin-top: 24px; border: 1.5px solid rgba(16,185,129,0.4);">
-          <div class="card-header">
-            <div class="card-icon">📖</div>
-            <div>
-              <h3>ইসলামিক দাওয়াহ ও মাসনুন দোয়া স্লাইডশো (Islamic Dawah Slideshow)</h3>
-              <p>নামাজের অফ-পিক বা স্ট্যান্ডবাই সময়ে স্বয়ংক্রিয়ভাবে কুরআন ও হাদিসের মাসনুন দোয়ার স্লাইডশো (আরবি + বাংলা অর্থ ও রেফারেন্স)</p>
-            </div>
-          </div>
-          <div style="background: rgba(0,0,0,0.25); border-radius: 12px; padding: 18px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px;">
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
-              <div class="form-group">
-                <label>দাওয়াহ স্লাইডশো চালু রাখুন (Dawah Slideshow):</label>
-                <select id="slideshowEnabled">
-                  <option value="true" selected>চালু (অন) — নামাজের অফ-পিক সময়ে দোয়া স্লাইডশো</option>
-                  <option value="false">বন্ধ (অফ)</option>
-                </select>
-                <span class="field-hint">কাউন্টডাউন চলাকালীন বা জামাতের সময় স্লাইডশো স্বয়ংক্রিয়ভাবে বন্ধ থাকে</span>
-              </div>
-              <div class="form-group">
-                <label>স্লাইড পরিবর্তনের বিরতি (সেকেন্ড):</label>
-                <input type="number" id="slideshowInterval" min="5" max="120" value="15">
-                <span class="field-hint">প্রতিটি দোয়া কত সেকেন্ড ধরে স্ক্রিনে প্রদর্শিত হবে (ডিফল্ট: ১৫ সেকেন্ড)</span>
-              </div>
-            </div>
-            <div style="font-size:12px; color:#a7f3d0; background:rgba(16,185,129,0.1); border-left:3px solid #10b981; padding:8px 12px; border-radius:4px;">
-              💡 <strong>অন্তর্ভুক্ত দোয়া:</strong> সাইয়্যিদুল ইস্তিগফার, সূরা বাক্বারাহ, সূরা আলে-ইমরান, তিরমিযী ও মুসলিমের গুরুত্বপূর্ণ মোনাজাতসমূহ আরবি ক্যালিগ্রাফি ও বিশুদ্ধ বাংলা অনুবাদসহ আবর্তিত হবে।
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -1303,8 +1273,7 @@
       'usePermanentTable',
       'blackScreenEnabled', 'blackScreenShowsClock',
       'fajrPrayDuration', 'dhuhrPrayDuration', 'asrPrayDuration', 'maghribPrayDuration', 'ishaPrayDuration', 'jumaPrayDuration',
-      'circularIqamaRing', 'ringAlert90Sec', 'ringMobileAlert60Sec',
-      'slideshowEnabled', 'slideshowInterval'
+      'circularIqamaRing', 'ringAlert90Sec', 'ringMobileAlert60Sec'
     ];
 
     function getActiveMosqueId() {
