@@ -420,9 +420,17 @@
       align-items: flex-start;
       justify-content: center;
       min-width: 0;
-      flex: 1 1 0;
+      flex: 1 1 auto;
       overflow: visible;
       z-index: 1;
+    }
+
+    .p-name-row {
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(6px, 0.8vw, 14px);
+      overflow: visible;
+      white-space: nowrap;
     }
 
     .prayer-pill-card .p-name {
@@ -464,13 +472,13 @@
       font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
       font-size: calc(clamp(22px, 3.4vh, 42px) * var(--font-scale, 1));
       font-weight: 700 !important;
-      color: rgba(255, 255, 255, 0.45) !important;
+      color: rgba(255, 255, 255, 0.5) !important;
       line-height: 1 !important;
       padding: 0;
-      margin: 0 clamp(4px, 0.6vw, 10px);
+      margin: 0;
       text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
       user-select: none;
-      flex: 0 0 auto;
+      flex-shrink: 0;
       overflow: visible;
     }
 
@@ -478,9 +486,8 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      flex: 1 1 0;
-      min-width: 0;
-      margin-left: 0;
+      flex: 0 0 auto;
+      margin-left: clamp(6px, 1vw, 16px);
       overflow: visible;
       z-index: 1;
     }
@@ -1161,7 +1168,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: clamp(6px, 1vh, 14px) clamp(10px, 1.4vw, 22px);
+      padding: clamp(4px, 0.8vh, 10px) clamp(8px, 1.2vw, 16px);
       border-radius: clamp(12px, 1.6vh, 20px);
       background: linear-gradient(135deg, rgba(13, 27, 44, 0.90) 0%, rgba(7, 16, 28, 0.96) 100%);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12);
@@ -1291,7 +1298,7 @@
 
     .meta-main-digits {
       font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
-      font-size: calc(clamp(24px, 3.6vh, 46px) * var(--font-scale, 1));
+      font-size: calc(clamp(30px, 4.6vh, 58px) * var(--font-scale, 1));
       font-weight: 700 !important;
       color: #fde047 !important;
       letter-spacing: 0.5px;
@@ -1321,11 +1328,11 @@
 
     .date-day-solo {
       font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
-      font-size: calc(clamp(24px, 3.6vh, 46px) * var(--font-scale, 1)) !important;
+      font-size: calc(clamp(30px, 4.6vh, 58px) * var(--font-scale, 1)) !important;
       font-weight: 700 !important;
       color: #38bdf8 !important;
       letter-spacing: 0.5px;
-      line-height: 1.28 !important;
+      line-height: 1.2 !important;
       padding: 1px 0;
       text-shadow: 0 0 18px rgba(56, 189, 248, 0.5), 0 2px 10px rgba(0, 0, 0, 0.9) !important;
       display: inline-block;
@@ -4136,11 +4143,26 @@
 
       <!-- ══ LEFT PANEL: 5 HIGH-CONTRAST FARZ PRAYER PILL CARDS ══ -->
       <aside class="prayer-cards-column" id="prayerCardsCol">
-        <div class="prayer-pill-card" id="card-fajr"><span class="p-name">ফজর</span><span class="p-sep">-</span><span class="p-time">4:26</span></div>
-        <div class="prayer-pill-card" id="card-dhuhr"><span class="p-name">যোহর</span><span class="p-sep">-</span><span class="p-time">11:45</span></div>
-        <div class="prayer-pill-card" id="card-asr"><span class="p-name">আসর</span><span class="p-sep">-</span><span class="p-time">4:05</span></div>
-        <div class="prayer-pill-card" id="card-maghrib"><span class="p-name">মাগরিব</span><span class="p-sep">-</span><span class="p-time">5:46</span></div>
-        <div class="prayer-pill-card active-card" id="card-isha"><span class="p-name">এশা</span><span class="p-sep">-</span><span class="p-time">7:00</span></div>
+        <div class="prayer-pill-card" id="card-fajr">
+          <div class="p-card-left"><div class="p-name-row"><span class="p-name">ফজর</span><span class="p-sep">-</span></div></div>
+          <div class="p-card-right"><span class="p-time">5:30</span></div>
+        </div>
+        <div class="prayer-pill-card" id="card-dhuhr">
+          <div class="p-card-left"><div class="p-name-row"><span class="p-name">যোহর</span><span class="p-sep">-</span></div></div>
+          <div class="p-card-right"><span class="p-time">1:30</span></div>
+        </div>
+        <div class="prayer-pill-card" id="card-asr">
+          <div class="p-card-left"><div class="p-name-row"><span class="p-name">আসর</span><span class="p-sep">-</span></div></div>
+          <div class="p-card-right"><span class="p-time">4:45</span></div>
+        </div>
+        <div class="prayer-pill-card" id="card-maghrib">
+          <div class="p-card-left"><div class="p-name-row"><span class="p-name">মাগরিব</span><span class="p-sep">-</span></div></div>
+          <div class="p-card-right"><span class="p-time">5:41</span></div>
+        </div>
+        <div class="prayer-pill-card active-card" id="card-isha">
+          <div class="p-card-left"><div class="p-name-row"><span class="p-name">এশা</span><span class="p-sep">-</span></div></div>
+          <div class="p-card-right"><span class="p-time">8:30</span></div>
+        </div>
       </aside>
 
       <!-- ══ RIGHT MAIN DISPLAY: BRAND HEADER + GIANT CLOCK + 3 BOTTOM BOXES ══ -->
@@ -4322,8 +4344,6 @@
           <div class="bottom-meta-card card-date" id="boxDate">
             <div class="meta-card-body">
               <div class="meta-primary-row">
-                <span class="meta-title-label">আজ</span>
-                <span class="meta-dash">-</span>
                 <span class="meta-main-digits date-day-solo" id="boxDayName">শনিবার</span>
               </div>
             </div>
@@ -4984,10 +5004,12 @@
         var displayAzan = item.azan ? fmtTime(item.azan, cardFmt) : '';
 
         var html = '<div class="p-card-left">' +
-                   '  <span class="p-name">' + item.bn + '</span>' +
+                   '  <div class="p-name-row">' +
+                   '    <span class="p-name">' + item.bn + '</span>' +
+                   '    <span class="p-sep">-</span>' +
+                   '  </div>' +
                    (showAzan && displayAzan ? '  <span class="p-azan-sub">আজান ' + displayAzan + '</span>' : '') +
                    '</div>' +
-                   '<span class="p-sep">-</span>' +
                    '<div class="p-card-right">' +
                    '  <span class="p-time">' + displayJamaat + '</span>' +
                    '</div>';
@@ -5740,14 +5762,12 @@
           for (var i = 0; i < cards.length; i++) {
             var c = cards[i];
             var left = c.querySelector('.p-card-left');
-            var sep = c.querySelector('.p-sep');
             var right = c.querySelector('.p-card-right');
             if (left && right) {
               var padL = parseFloat(getComputedStyle(c).paddingLeft) || 10;
               var padR = parseFloat(getComputedStyle(c).paddingRight) || 10;
               var availableWidth = c.clientWidth - padL - padR;
-              var sepW = (sep && sep.offsetWidth) ? sep.offsetWidth + 10 : 16;
-              var contentWidth = left.scrollWidth + sepW + right.scrollWidth + 8;
+              var contentWidth = left.scrollWidth + right.scrollWidth + 10;
               if (contentWidth > availableWidth) return true;
               if (left.scrollHeight > c.clientHeight || right.scrollHeight > c.clientHeight) return true;
             }
@@ -5769,13 +5789,13 @@
           apply(targetNameSize, targetTimeSize, targetSubSize);
         }
 
-        // লাল চিহ্ন দেওয়া নিচের ৩টি বক্সের ফন্টও হুবহু নামাজের নামের সমান করা (Exact sync with targetNameSize)
-        fitBottomCards(targetNameSize);
+        // লাল চিহ্ন দেওয়া নিচের ৩টি বক্সের ফন্টও নামাজের সময় সূচীর হুবহু সমান সাইজ করা
+        fitBottomCards(targetNameSize, targetTimeSize);
       } catch(e) {}
     }
 
-    /* নিচের ৩টি বক্সের ফন্ট সাইজ নামাজের নামের হুবহু সমান এবং অটো-ফিট করা */
-    function fitBottomCards(nameSize) {
+    /* নিচের ৩টি বক্সের ফন্ট সাইজ নামাজের সময় সূচীর হুবহু সমান করা */
+    function fitBottomCards(nameSize, timeSize) {
       try {
         var bRow = document.getElementById('bottomMetaBoxes');
         if (!bRow) return;
@@ -5784,60 +5804,66 @@
 
         var labels = bRow.querySelectorAll('.meta-title-label');
         var dashes = bRow.querySelectorAll('.meta-dash');
-        var digits = bRow.querySelectorAll('.meta-main-digits');
+        var digits = bRow.querySelectorAll('.meta-main-digits:not(.date-day-solo)');
         var daySolo = bRow.querySelectorAll('.date-day-solo');
 
-        function applyBottom(sz) {
+        var curN = nameSize;
+        var curT = timeSize;
+
+        function applyBottom(n, t) {
           labels.forEach(function(el) {
-            el.style.setProperty('font-size', sz + 'px', 'important');
+            el.style.setProperty('font-size', n + 'px', 'important');
             el.style.setProperty('line-height', '1.25', 'important');
             el.style.setProperty('font-family', "'Hind Siliguri', 'Noto Sans Bengali', sans-serif", 'important');
             el.style.setProperty('font-weight', '700', 'important');
           });
           dashes.forEach(function(el) {
-            el.style.setProperty('font-size', sz + 'px', 'important');
+            el.style.setProperty('font-size', n + 'px', 'important');
             el.style.setProperty('line-height', '1.2', 'important');
             el.style.setProperty('font-family', "'Hind Siliguri', 'Noto Sans Bengali', sans-serif", 'important');
             el.style.setProperty('font-weight', '700', 'important');
           });
           digits.forEach(function(el) {
-            el.style.setProperty('font-size', sz + 'px', 'important');
+            el.style.setProperty('font-size', t + 'px', 'important');
             el.style.setProperty('line-height', '1.15', 'important');
             el.style.setProperty('font-family', "'Hind Siliguri', 'Noto Sans Bengali', sans-serif", 'important');
             el.style.setProperty('font-weight', '700', 'important');
           });
           daySolo.forEach(function(el) {
-            el.style.setProperty('font-size', sz + 'px', 'important');
-            el.style.setProperty('line-height', '1.25', 'important');
+            el.style.setProperty('font-size', t + 'px', 'important');
+            el.style.setProperty('line-height', '1.2', 'important');
             el.style.setProperty('font-family', "'Hind Siliguri', 'Noto Sans Bengali', sans-serif", 'important');
             el.style.setProperty('font-weight', '700', 'important');
           });
         }
 
-        var curBottomSize = nameSize;
-        applyBottom(curBottomSize);
+        applyBottom(curN, curT);
 
-        // নিচের বক্সগুলোর কোনো অংশ উপচে পড়ছে কি না পরীক্ষা
-        function isBottomOverflowing() {
+        // শুধুমাত্র অনুভূমিকভাবে (horizontally) বক্সের বাইরে চলে গেলে সূক্ষ্ম স্কেল ডাউন হবে
+        function isBottomWidthOverflowing() {
           for (var i = 0; i < bCards.length; i++) {
             var bc = bCards[i];
             var pRow = bc.querySelector('.meta-primary-row');
             if (pRow) {
-              var padL = parseFloat(getComputedStyle(bc).paddingLeft) || 10;
-              var padR = parseFloat(getComputedStyle(bc).paddingRight) || 10;
+              var padL = parseFloat(getComputedStyle(bc).paddingLeft) || 8;
+              var padR = parseFloat(getComputedStyle(bc).paddingRight) || 8;
               var maxW = bc.clientWidth - padL - padR;
-              if (pRow.scrollWidth > maxW + 2) return true;
-              if (pRow.scrollHeight > bc.clientHeight) return true;
+              if (maxW > 50 && pRow.scrollWidth > maxW + 2) return true;
             }
           }
           return false;
         }
 
         var bGuard = 0;
-        while (isBottomOverflowing() && curBottomSize > 16 && bGuard < 30) {
-          curBottomSize -= 1;
+        while (isBottomWidthOverflowing() && (curN > 18 || curT > 22) && bGuard < 25) {
+          if (curT > curN * 1.15) {
+            curT -= 1;
+          } else {
+            curN -= 1;
+            curT -= 1;
+          }
           bGuard++;
-          applyBottom(curBottomSize);
+          applyBottom(curN, curT);
         }
       } catch(e) {}
     }
