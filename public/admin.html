@@ -1059,11 +1059,12 @@
               <label style="font-size:12px; font-weight:700; color:var(--gold); margin-bottom:8px; display:block;">👁️ রিয়েল-টাইম টিভি প্রিভিউ (হিন্দ শিলিগুড়ি বোল্ড):</label>
               <div id="livePillPreview" style="max-width:440px; background:linear-gradient(135deg, rgba(13, 27, 44, 0.95) 0%, rgba(7, 16, 28, 0.98) 100%); color:#ffffff; border-radius:14px; border:1.5px solid rgba(212, 175, 55, 0.45); padding:10px 18px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 8px 24px rgba(0,0,0,0.55); position:relative; overflow:hidden;">
                 <div style="position:absolute; left:0; top:15%; bottom:15%; width:4px; background:#10b981; border-radius:0 4px 4px 0; box-shadow:0 0 10px #10b981;"></div>
-                <div style="display:flex; flex-direction:column; align-items:flex-start; margin-left:6px;">
+                <div style="display:flex; flex-direction:column; align-items:flex-start; margin-left:6px; flex:1 1 0;">
                   <span id="prevName" style="font-family:'Hind Siliguri', sans-serif; font-size:26px; font-weight:700; color:#86efac; line-height:1.25;">মাগরিব</span>
                   <span id="prevAzan" style="font-family:'Hind Siliguri', sans-serif; font-size:12px; font-weight:600; color:#a7f3d0; line-height:1.2;">আজান ৫:৪৫</span>
                 </div>
-                <div style="display:flex; align-items:center;">
+                <span id="prevSep" style="font-family:'Hind Siliguri', sans-serif; font-size:24px; font-weight:700; color:#86efac; flex:0 0 auto; margin:0 10px; line-height:1;">-</span>
+                <div style="display:flex; align-items:center; justify-content:flex-end; flex:1 1 0;">
                   <span id="prevTime" style="font-family:'Hind Siliguri', sans-serif; font-size:32px; font-weight:700; color:#facc15; line-height:1.15; text-shadow:0 0 14px rgba(250, 204, 21, 0.6);">৫:৫০</span>
                 </div>
               </div>
@@ -1634,10 +1635,12 @@
       if (lbl) lbl.textContent = toBnNum(num) + '%';
 
       var pName = document.getElementById('prevName');
+      var pSep = document.getElementById('prevSep');
       var pTime = document.getElementById('prevTime');
       var pAzan = document.getElementById('prevAzan');
       var ratio = num / 100;
       if (pName) pName.style.fontSize = Math.round(26 * ratio) + 'px';
+      if (pSep) pSep.style.fontSize = Math.round(24 * ratio) + 'px';
       if (pTime) pTime.style.fontSize = Math.round(32 * ratio) + 'px';
       if (pAzan) pAzan.style.fontSize = Math.round(12 * Math.max(0.85, Math.min(1.4, ratio))) + 'px';
 
