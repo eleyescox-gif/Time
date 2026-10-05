@@ -3,14 +3,12 @@
     "id": "default",
     "nameBn": "পূর্ব মোহাজের পাড়া জামে মসজিদ",
     "location": "চকরিয়া, কক্সবাজার",
-    "updatedAt": 1791205200093
+    "updatedAt": 1791211873739
   },
   {
     "id": "baitul-mukkaram",
     "nameBn": "বায়তুল মোকাররম জাতীয় মসজিদ",
     "location": "পল্টন, ঢাকা",
-    "district": "dhaka",
-    "lat": 23.7258,
-    "lng": 90.4125
+    "updatedAt": 1791211603780
   }
 ]

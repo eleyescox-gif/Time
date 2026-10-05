@@ -79,9 +79,61 @@
 
     @font-face {
       font-family: 'Hind Siliguri';
-      src: local('Hind Siliguri'), local('Noto Sans Bengali'), local('SolaimanLipi'), local('Vrinda'), local('Kalpurush');
-      font-weight: 400 800;
+      font-style: normal;
+      font-weight: 700;
       font-display: swap;
+      src: url('fonts/HindSiliguri-Bold.ttf') format('truetype'),
+           local('Hind Siliguri Bold'),
+           local('HindSiliguri-Bold'),
+           local('Hind Siliguri'),
+           local('Noto Sans Bengali Bold'),
+           local('Noto Sans Bengali'),
+           local('SolaimanLipi'),
+           local('Kalpurush'),
+           url('https://fonts.gstatic.com/s/hindsiliguri/v14/ijwOs5juQtsyLLR5jN4cxBEoRCf_4uE.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'Hind Siliguri';
+      font-style: normal;
+      font-weight: 800;
+      font-display: swap;
+      src: url('fonts/HindSiliguri-Bold.ttf') format('truetype'),
+           local('Hind Siliguri Bold'),
+           local('HindSiliguri-Bold'),
+           local('Hind Siliguri'),
+           local('Noto Sans Bengali Bold'),
+           local('Noto Sans Bengali'),
+           local('SolaimanLipi'),
+           local('Kalpurush'),
+           url('https://fonts.gstatic.com/s/hindsiliguri/v14/ijwOs5juQtsyLLR5jN4cxBEoRCf_4uE.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'Hind Siliguri';
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src: url('fonts/HindSiliguri-SemiBold.ttf') format('truetype'),
+           local('Hind Siliguri SemiBold'),
+           local('HindSiliguri-SemiBold'),
+           local('Hind Siliguri'),
+           local('Noto Sans Bengali'),
+           local('SolaimanLipi'),
+           local('Kalpurush'),
+           url('https://fonts.gstatic.com/s/hindsiliguri/v14/ijwOs5juQtsyLLR5jN4cxBEoREP-4uE.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'Hind Siliguri';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('fonts/HindSiliguri-Regular.ttf') format('truetype'),
+           local('Hind Siliguri Regular'),
+           local('HindSiliguri-Regular'),
+           local('Hind Siliguri'),
+           local('Noto Sans Bengali'),
+           local('SolaimanLipi'),
+           local('Kalpurush'),
+           url('https://fonts.gstatic.com/s/hindsiliguri/v14/ijwTs5juQtsyLLR5jN4cxBEofJs.ttf') format('truetype');
     }
     @font-face {
       font-family: 'Amiri';
@@ -331,15 +383,31 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
-      color: #0f172a;
-      border-radius: clamp(10px, 1.4vh, 18px);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
-      border: 1.5px solid rgba(255, 255, 255, 0.7);
-      transition: all 0.25s ease;
+      background: linear-gradient(135deg, rgba(13, 27, 44, 0.88) 0%, rgba(7, 16, 28, 0.94) 100%);
+      color: #ffffff;
+      border-radius: clamp(12px, 1.6vh, 20px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12), inset 0 0 16px rgba(212, 175, 55, 0.05);
+      border: 1.5px solid rgba(212, 175, 55, 0.35);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: all 0.3s ease;
       padding: 0 clamp(14px, 1.5vw, 26px);
       box-sizing: border-box;
       overflow: hidden;
+      position: relative;
+    }
+
+    .prayer-pill-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 15%;
+      bottom: 15%;
+      width: 4px;
+      border-radius: 0 4px 4px 0;
+      background: rgba(212, 175, 55, 0.55);
+      box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+      transition: all 0.3s ease;
     }
 
     .prayer-pill-card:last-child {
@@ -353,31 +421,35 @@
       justify-content: center;
       min-width: 0;
       flex: 1 1 auto;
+      z-index: 1;
     }
 
     .prayer-pill-card .p-name {
-      font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+      font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
       font-size: clamp(24px, 3.4vh, 42px);
-      font-weight: 800;
+      font-weight: 700 !important;
+      color: #ffffff !important;
       letter-spacing: 0.5px;
       line-height: 1.15;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
       white-space: nowrap;
     }
 
     .p-card-left .p-azan-sub {
-      font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+      font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
       font-size: clamp(11px, 1.5vh, 16px);
-      font-weight: 600;
-      opacity: 0.82;
-      color: #334155;
+      font-weight: 600 !important;
+      opacity: 0.9;
+      color: #94a3b8 !important;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
       line-height: 1.15;
       margin-top: 2px;
       white-space: nowrap;
     }
 
     .prayer-pill-card.active-card .p-card-left .p-azan-sub {
-      color: #86efac !important;
-      opacity: 0.95;
+      color: #a7f3d0 !important;
+      opacity: 0.98;
     }
 
     .prayer-pill-card .p-sep {
@@ -390,33 +462,44 @@
       justify-content: flex-end;
       flex-shrink: 0;
       margin-left: clamp(8px, 1vw, 16px);
+      z-index: 1;
     }
 
     .prayer-pill-card .p-time {
-      font-family: 'Outfit', 'Cinzel', 'Hind Siliguri', sans-serif;
+      font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
       font-size: clamp(30px, 4.4vh, 54px);
-      font-weight: 900;
+      font-weight: 700 !important;
+      color: #fde047 !important;
       letter-spacing: 0.5px;
       line-height: 1;
+      text-shadow: 0 0 18px rgba(253, 224, 71, 0.5), 0 2px 10px rgba(0, 0, 0, 0.9) !important;
+      font-variant-numeric: tabular-nums;
       white-space: nowrap;
     }
 
-    /* ACTIVE WAQT PILL CARD (Glowing neon emerald/cyan border) */
+    /* ACTIVE WAQT PILL CARD (Glowing royal emerald & gold highlight) */
     .prayer-pill-card.active-card {
-      background: linear-gradient(180deg, #072231 0%, #03141e 100%) !important;
+      background: linear-gradient(135deg, rgba(6, 44, 30, 0.96) 0%, rgba(3, 24, 15, 0.98) 100%) !important;
       border: 2.5px solid #10b981 !important;
-      box-shadow: 0 0 24px rgba(16, 185, 129, 0.65), inset 0 0 12px rgba(16, 185, 129, 0.3) !important;
+      box-shadow: 0 0 32px rgba(16, 185, 129, 0.7), inset 0 0 18px rgba(16, 185, 129, 0.35) !important;
+    }
+    .prayer-pill-card.active-card::before {
+      background: #10b981 !important;
+      box-shadow: 0 0 12px #10b981 !important;
+      top: 10%;
+      bottom: 10%;
+      width: 5px;
     }
     .prayer-pill-card.active-card .p-name {
-      color: #fde047 !important;
-      text-shadow: 0 0 12px rgba(253, 224, 71, 0.45);
+      color: #86efac !important;
+      text-shadow: 0 0 16px rgba(134, 239, 172, 0.65), 0 2px 8px rgba(0, 0, 0, 0.95) !important;
     }
     .prayer-pill-card.active-card .p-sep {
       color: #fde047 !important;
     }
     .prayer-pill-card.active-card .p-time {
-      color: #fde047 !important;
-      text-shadow: 0 0 14px rgba(253, 224, 71, 0.55);
+      color: #facc15 !important;
+      text-shadow: 0 0 26px rgba(250, 204, 21, 0.85), 0 2px 12px rgba(0, 0, 0, 0.95) !important;
     }
 
     /* ── RIGHT MAIN DISPLAY SECTION (70% WIDTH, 3 BALANCED VERTICAL ZONES) ── */
@@ -886,8 +969,8 @@
 
     .cd-val-gold {
       color: #fde047 !important;
-      font-weight: 800 !important;
-      font-family: 'Outfit', 'Hind Siliguri', sans-serif !important;
+      font-weight: 700 !important;
+      font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
     }
 
     .uc-pulse-dot {
@@ -950,11 +1033,11 @@
     }
 
     .cd-timer-digits {
-      font-family: 'Outfit', 'Cinzel', monospace, sans-serif;
+      font-family: 'Hind Siliguri', 'Outfit', sans-serif !important;
       font-size: clamp(28px, 4.2vw, 54px);
-      font-weight: 800;
+      font-weight: 700 !important;
       color: #38bdf8;
-      letter-spacing: clamp(1.5px, 0.2vw, 3px);
+      letter-spacing: clamp(1px, 0.2vw, 2px);
       text-shadow: 0 0 24px rgba(56, 189, 248, 0.7), 0 2px 10px rgba(0,0,0,0.9);
       font-variant-numeric: tabular-nums;
       font-feature-settings: "tnum" 1;
@@ -1122,10 +1205,10 @@
     }
 
     .meta-title-label {
-      font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+      font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
       font-size: 22px;
       font-size: clamp(16px, 2.6vh, 32px);
-      font-weight: 800;
+      font-weight: 700 !important;
       line-height: 1;
       letter-spacing: 0.5px;
       flex-shrink: 0;
@@ -1153,10 +1236,10 @@
     }
 
     .meta-main-digits {
-      font-family: 'Outfit', 'Cinzel', 'Hind Siliguri', sans-serif;
+      font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
       font-size: 28px;
       font-size: clamp(22px, 3.6vh, 46px);
-      font-weight: 900;
+      font-weight: 700 !important;
       color: #ffffff;
       letter-spacing: 0.5px;
       line-height: 1;
@@ -1165,10 +1248,10 @@
     }
 
     .date-hijri-val {
-      font-family: 'Hind Siliguri', 'Outfit', sans-serif !important;
+      font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
       font-size: 22px;
       font-size: clamp(16px, 2.6vh, 32px) !important;
-      font-weight: 800 !important;
+      font-weight: 700 !important;
       color: #ffffff;
       line-height: 1;
       text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
@@ -1862,8 +1945,9 @@
     .is-portrait .prayer-pill-card .p-name,
     body.rotate-90 .prayer-pill-card .p-name,
     body.rotate-270 .prayer-pill-card .p-name {
+      font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
       font-size: calc(clamp(30px, 4.6vw, 48px) * var(--font-scale, 1)) !important;
-      font-weight: 900 !important;
+      font-weight: 700 !important;
       color: #ffffff !important;
       line-height: 1.1 !important;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8) !important;
@@ -1872,9 +1956,10 @@
     .is-portrait .p-card-left .p-azan-sub,
     body.rotate-90 .p-card-left .p-azan-sub,
     body.rotate-270 .p-card-left .p-azan-sub {
+      font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
       font-size: calc(clamp(14px, 2vw, 21px) * var(--font-scale, 1)) !important;
       color: #94a3b8 !important;
-      font-weight: 700 !important;
+      font-weight: 600 !important;
       line-height: 1.1 !important;
     }
 
@@ -1889,8 +1974,9 @@
     .is-portrait .prayer-pill-card .p-time,
     body.rotate-90 .prayer-pill-card .p-time,
     body.rotate-270 .prayer-pill-card .p-time {
+      font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
       font-size: calc(clamp(38px, 5.8vw, 60px) * var(--font-scale, 1)) !important;
-      font-weight: 900 !important;
+      font-weight: 700 !important;
       color: #fde047 !important;
       line-height: 1 !important;
       letter-spacing: 0.8px !important;
@@ -2430,8 +2516,9 @@
         justify-content: flex-end !important;
       }
       .prayer-pill-card .p-time {
+        font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
         font-size: calc(clamp(38px, 5.8vw, 60px) * var(--font-scale, 1)) !important;
-        font-weight: 900 !important;
+        font-weight: 700 !important;
         color: #fde047 !important;
         line-height: 1 !important;
         letter-spacing: 0.8px !important;
@@ -2501,9 +2588,10 @@
         gap: clamp(6px, 1vw, 12px) !important;
       }
       .meta-title-label {
+        font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
         font-size: calc(clamp(16px, 2.3vw, 25px) * var(--font-scale, 1)) !important;
         color: #ffffff !important;
-        font-weight: 800 !important;
+        font-weight: 700 !important;
         line-height: 1 !important;
         text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8) !important;
       }
@@ -2511,9 +2599,10 @@
         display: none !important;
       }
       .meta-main-digits {
+        font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
         font-size: calc(clamp(22px, 3.4vw, 38px) * var(--font-scale, 1)) !important;
         color: #fde047 !important;
-        font-weight: 900 !important;
+        font-weight: 700 !important;
         line-height: 1 !important;
         letter-spacing: 0.5px !important;
         text-shadow: 0 0 16px rgba(253, 224, 71, 0.45), 0 2px 10px rgba(0,0,0,0.9) !important;
@@ -2898,8 +2987,9 @@
       body.is-portrait .prayer-pill-card .p-time,
       .is-portrait .prayer-pill-card .p-time,
       .prayer-pill-card .p-time {
+        font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
         font-size: calc(clamp(18px, 5.4vw, 24px) * var(--font-scale, 1)) !important;
-        font-weight: 900 !important;
+        font-weight: 700 !important;
         color: #fde047 !important;
         letter-spacing: 0.5px !important;
       }
@@ -5553,13 +5643,19 @@
             if (pn) {
               pn.style.setProperty('font-size', n + 'px', 'important');
               pn.style.setProperty('line-height', '1.15', 'important');
+              pn.style.setProperty('font-family', "'Hind Siliguri', 'Noto Sans Bengali', sans-serif", 'important');
+              pn.style.setProperty('font-weight', '700', 'important');
             }
             if (pt) {
               pt.style.setProperty('font-size', t + 'px', 'important');
               pt.style.setProperty('line-height', '1', 'important');
+              pt.style.setProperty('font-family', "'Hind Siliguri', 'Noto Sans Bengali', sans-serif", 'important');
+              pt.style.setProperty('font-weight', '700', 'important');
             }
             if (pa) {
               pa.style.setProperty('font-size', s + 'px', 'important');
+              pa.style.setProperty('font-family', "'Hind Siliguri', 'Noto Sans Bengali', sans-serif", 'important');
+              pa.style.setProperty('font-weight', '600', 'important');
             }
           }
         }

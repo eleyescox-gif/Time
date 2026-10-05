@@ -32,4 +32,14 @@ files.forEach(file => {
   }
 });
 
+// Copy fonts directory
+const fontsSrc = path.join(__dirname, 'fonts');
+const fontsDest = path.join(pub, 'fonts');
+if (fs.existsSync(fontsSrc)) {
+  if (!fs.existsSync(fontsDest)) fs.mkdirSync(fontsDest, { recursive: true });
+  fs.readdirSync(fontsSrc).forEach(f => {
+    fs.copyFileSync(path.join(fontsSrc, f), path.join(fontsDest, f));
+  });
+}
+
 console.log('Public build folder prepared successfully with all assets for Vercel.');
