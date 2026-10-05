@@ -1019,36 +1019,53 @@
         </div>
 
         <!-- 3. FONT SIZE SCALER -->
+        <!-- 3. FONT SIZE SCALER & AUTO-FIT CUSTOMIZATION -->
         <div class="settings-card" style="margin-bottom: 24px; border: 1.5px solid var(--gold); border-radius: 12px; background: var(--card-inner); padding: 18px;">
           <div class="card-header" style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
             <div class="card-icon" style="font-size:26px;">🔤</div>
             <div>
-              <h3 style="color:var(--gold); font-size:16px;">নামাজের কার্ডের ফন্ট সাইজ সমন্বয় (Font Scaler)</h3>
-              <p style="color:var(--text-muted); font-size:12px;">টিভি স্ক্রিনের দূরত্ব অনুযায়ী লেখার আকার সমন্বয় করুন (ডিসপ্লেতে সাথে সাথে পরিবর্তিত হবে)।</p>
+              <h3 style="color:var(--gold); font-size:16px;">টিভির ফন্ট সাইজ ও অটো-ফিট নিয়ন্ত্রণ (Font Size & Auto-Fit)</h3>
+              <p style="color:var(--text-muted); font-size:12px;">স্ক্রিনের দূরত্ব ও সাইজ অনুযায়ী আপনার পছন্দমতো ফন্ট বড় করুন। কোনো অংশ কাটা পড়বে না, অটো-ফিট হবে।</p>
             </div>
           </div>
-          <div style="display:flex; flex-direction:column; gap:14px;">
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <!-- Current Scale & Quick Preset Buttons -->
             <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
-              <span style="font-weight:600; color:var(--text); font-size:14px;">ফন্ট স্কেল: <strong id="fontSizeScaleLabel" style="color:var(--gold); font-size:17px;">১০০%</strong></span>
-              <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                <button type="button" class="btn btn-outline" style="padding:5px 10px; font-size:12px;" onclick="setFontSizeScale(85)">ছোট (৮৫%)</button>
-                <button type="button" class="btn btn-outline" style="padding:5px 10px; font-size:12px;" onclick="setFontSizeScale(100)">স্বাভাবিক (১০০%)</button>
-                <button type="button" class="btn btn-outline" style="padding:5px 10px; font-size:12px;" onclick="setFontSizeScale(115)">বড় (১১৫%)</button>
-                <button type="button" class="btn btn-outline" style="padding:5px 10px; font-size:12px;" onclick="setFontSizeScale(130)">অতি বড় (১৩০%)</button>
+              <span style="font-weight:600; color:var(--text); font-size:14px;">ফন্ট স্কেল: <strong id="fontSizeScaleLabel" style="color:var(--gold); font-size:18px;">১০০%</strong></span>
+              <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <button type="button" class="btn btn-outline" style="padding:5px 9px; font-size:12px;" onclick="setFontSizeScale(100)">স্বাভাবিক (১০০%)</button>
+                <button type="button" class="btn btn-outline" style="padding:5px 9px; font-size:12px;" onclick="setFontSizeScale(120)">বড় (১২০%)</button>
+                <button type="button" class="btn btn-outline" style="padding:5px 9px; font-size:12px;" onclick="setFontSizeScale(140)">বেশ বড় (১৪০%)</button>
+                <button type="button" class="btn btn-outline" style="padding:5px 9px; font-size:12px;" onclick="setFontSizeScale(160)">অনেক বড় (১৬০%)</button>
+                <button type="button" class="btn btn-outline" style="padding:5px 9px; font-size:12px;" onclick="setFontSizeScale(180)">জাম্বো (১৮০%)</button>
+                <button type="button" class="btn btn-outline" style="padding:5px 9px; font-size:12px;" onclick="setFontSizeScale(200)">সর্বোচ্চ (২০০%)</button>
               </div>
             </div>
+
+            <!-- Fine-Tuning Slider: 80% to 200% -->
             <div style="display:flex; align-items:center; gap:14px;">
               <span style="font-size:12px; color:var(--text-muted);">৮০%</span>
-              <input type="range" id="fontSizeScale" min="80" max="140" value="100" step="5" oninput="onFontSizeSliderChange(this.value)" style="flex:1; cursor:pointer; height:8px; accent-color:var(--gold);">
-              <span style="font-size:12px; color:var(--text-muted);">১৪০%</span>
+              <input type="range" id="fontSizeScale" min="80" max="200" value="100" step="5" oninput="onFontSizeSliderChange(this.value)" style="flex:1; cursor:pointer; height:8px; accent-color:var(--gold);">
+              <span style="font-size:12px; color:var(--text-muted);">২০০%</span>
             </div>
-            <!-- LIVE PREVIEW BOX IN ADMIN -->
-            <div style="margin-top:8px;">
-              <label style="font-size:12px; font-weight:700; color:var(--gold); margin-bottom:6px; display:block;">👁️ প্রিভিউ:</label>
-              <div id="livePillPreview" style="max-width:380px; background:linear-gradient(180deg,#f8fafc 0%,#e2e8f0 100%); color:#0f172a; border-radius:12px; padding:10px 20px; display:flex; align-items:center; justify-content:center; gap:12px; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
-                <span id="prevName" style="font-family:'Hind Siliguri',sans-serif; font-size:24px; font-weight:800; color:#0f172a;">ফজর</span>
-                <span id="prevSep" style="font-size:22px; font-weight:600; opacity:0.5; color:#0f172a;">-</span>
-                <span id="prevTime" style="font-family:'Outfit','Cinzel',sans-serif; font-size:26px; font-weight:800; color:#0f172a;">4:26</span>
+
+            <!-- Auto-Fit Mode & Layout Safety Badge -->
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; background:rgba(16, 185, 129, 0.1); border:1px solid rgba(16, 185, 129, 0.35); border-radius:8px; padding:8px 12px;">
+              <span style="font-size:12px; color:#86efac; font-weight:600;">🛡️ স্মার্ট অটো-ফিট সক্রিয়: ফন্ট যত বড়ই করুন, কোনো অংশ স্ক্রিনে বা বক্সে কাটা পড়বে না।</span>
+            </div>
+
+            <!-- LIVE PREVIEW BOX IN ADMIN (Royal Frosted Glass & Hind Siliguri Bold) -->
+            <div style="margin-top:6px;">
+              <label style="font-size:12px; font-weight:700; color:var(--gold); margin-bottom:8px; display:block;">👁️ রিয়েল-টাইম টিভি প্রিভিউ (হিন্দ শিলিগুড়ি বোল্ড):</label>
+              <div id="livePillPreview" style="max-width:440px; background:linear-gradient(135deg, rgba(13, 27, 44, 0.95) 0%, rgba(7, 16, 28, 0.98) 100%); color:#ffffff; border-radius:14px; border:1.5px solid rgba(212, 175, 55, 0.45); padding:10px 18px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 8px 24px rgba(0,0,0,0.55); position:relative; overflow:hidden;">
+                <div style="position:absolute; left:0; top:15%; bottom:15%; width:4px; background:#10b981; border-radius:0 4px 4px 0; box-shadow:0 0 10px #10b981;"></div>
+                <div style="display:flex; flex-direction:column; align-items:flex-start; margin-left:6px;">
+                  <span id="prevName" style="font-family:'Hind Siliguri', sans-serif; font-size:26px; font-weight:700; color:#86efac; line-height:1.25;">মাগরিব</span>
+                  <span id="prevAzan" style="font-family:'Hind Siliguri', sans-serif; font-size:12px; font-weight:600; color:#a7f3d0; line-height:1.2;">আজান ৫:৪৫</span>
+                </div>
+                <div style="display:flex; align-items:center;">
+                  <span id="prevTime" style="font-family:'Hind Siliguri', sans-serif; font-size:32px; font-weight:700; color:#facc15; line-height:1.15; text-shadow:0 0 14px rgba(250, 204, 21, 0.6);">৫:৫০</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1617,18 +1634,19 @@
       if (lbl) lbl.textContent = toBnNum(num) + '%';
 
       var pName = document.getElementById('prevName');
-      var pSep = document.getElementById('prevSep');
       var pTime = document.getElementById('prevTime');
+      var pAzan = document.getElementById('prevAzan');
       var ratio = num / 100;
       if (pName) pName.style.fontSize = Math.round(26 * ratio) + 'px';
-      if (pSep) pSep.style.fontSize = Math.round(24 * ratio) + 'px';
-      if (pTime) pTime.style.fontSize = Math.round(28 * ratio) + 'px';
+      if (pTime) pTime.style.fontSize = Math.round(32 * ratio) + 'px';
+      if (pAzan) pAzan.style.fontSize = Math.round(12 * Math.max(0.85, Math.min(1.4, ratio))) + 'px';
 
       // Broadcast live to display screen
       try {
         var bc = new BroadcastChannel('mosque_channel');
-        bc.postMessage({ type: 'FONT_SCALE', scale: ratio });
+        bc.postMessage({ type: 'FONT_SCALE', scale: ratio, raw: num });
       } catch(e) {}
+      broadcastLiveUpdate();
     }
 
     function setFontSizeScale(val) {
