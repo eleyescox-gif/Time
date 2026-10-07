@@ -21,7 +21,9 @@ const files = [
   'qrcode.min.js',
   'vercel.json',
   'coxs-bazar-times.js',
-  'islamic-slides.js'
+  'islamic-slides.js',
+  'circle_frame1.png',
+  'circle_frame2.png'
 ];
 
 files.forEach(file => {

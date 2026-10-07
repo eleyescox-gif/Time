@@ -759,10 +759,28 @@
               <div class="form-group">
                 <label>বৃত্তাকার কাউন্টডাউন রিং (Circular Ring):</label>
                 <select id="circularIqamaRing">
-                  <option value="true" selected>চালু (অন) — ১৯vw বৃত্তাকার লাক্সারি গোল্ড রিং</option>
-                  <option value="false">বন্ধ (অফ) — সাধারণ সোজা প্রগ্রেস লাইন</option>
+                  <option value="true" selected>চালু (অন) — Tawkit স্টাইল বৃত্তাকার লাক্সারি গোল্ড রিং</option>
+                  <option value="false">বন্ধ (অফ) — শুধুমাত্র হরিজন্টাল ব্যানার</option>
                 </select>
-                <span class="field-hint">ঘড়ির নিচে ১৯vw বৃত্তাকার রিং ও ৬.৮vw স্পষ্ট বড় ডিজিট</span>
+                <span class="field-hint">স্ক্রিনের ডানপাশে Tawkit স্টাইলের বৃত্তাকার ডায়াল ভেসে উঠবে</span>
+              </div>
+              <div class="form-group">
+                <label>কাউন্টডাউন সময়কাল (Countdown Duration):</label>
+                <select id="circularCountdownMinutes">
+                  <option value="7" selected>৭ মিনিট (রেফারেন্স স্ট্যান্ডার্ড — নামাজের ঠিক ৭ মিনিট আগে শুরু)</option>
+                  <option value="5">৫ মিনিট</option>
+                  <option value="10">১০ মিনিট</option>
+                  <option value="15">১৫ মিনিট</option>
+                </select>
+                <span class="field-hint">নামাজের সময়ের আগের নির্ধারিত মিনিটেই শুধু সার্কুলার ডায়াল কাউন্টডাউন করবে</span>
+              </div>
+              <div class="form-group">
+                <label>সার্কুলার ডায়াল ফ্রেম (Dial Frame Style):</label>
+                <select id="circularFrameImage">
+                  <option value="circle_frame1.png" selected>ফ্রেম ১ — প্রিমিয়াম মেটালিক বেজেল (circle_frame1.png)</option>
+                  <option value="circle_frame2.png">ফ্রেম ২ — ডিপ ব্ল্যাক ম্যাট বেজেল (circle_frame2.png)</option>
+                </select>
+                <span class="field-hint">ব্যবহারকারীর প্রদত্ত পিএনজি বেজেল ফ্রেম ডায়ালের চারপাশে বসবে</span>
               </div>
               <div class="form-group">
                 <label>৯০ সেকেন্ড লাল সতর্কতা (90s Red Alert):</label>
@@ -778,7 +796,7 @@
                   <option value="true" selected>চালু (অন) — শেষ ৬০ সেকেন্ডে মোবাইল বন্ধের ভাসমান ব্যাজ</option>
                   <option value="false">বন্ধ (অফ)</option>
                 </select>
-                <span class="field-hint">রিংয়ের নিচে "মোবাইল বন্ধ রাখুন" ভাসমান লাল ব্যাজ</span>
+                <span class="field-hint">রিংয়ের নিচে "মোবাইল সাইলেন্ট রাখুন" ভাসমান লাল ব্যাজ</span>
               </div>
             </div>
 
@@ -789,8 +807,8 @@
                 <p style="font-size:12px; color:var(--text-muted); margin-top:2px;">ডিসপ্লে স্ক্রিনে সরাসরি সার্কুলার রিং ও সতর্কতা অ্যানিমেশন পরীক্ষা করুন।</p>
               </div>
               <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                <button type="button" class="btn btn-gold" style="padding:6px 14px; font-size:13px;" onclick="triggerTestCountdown(300)">
-                  <span>▶️ ৫ মিনিট টেস্ট</span>
+                <button type="button" class="btn btn-gold" style="padding:6px 14px; font-size:13px;" onclick="triggerTestCountdown(420)">
+                  <span>▶️ ৭ মিনিট টেস্ট (420s)</span>
                 </button>
                 <button type="button" class="btn btn-gold" style="padding:6px 14px; font-size:13px; background:linear-gradient(135deg, #ef4444, #b91c1c); color:#fff; border-color:#ef4444;" onclick="triggerTestCountdown(95)">
                   <span>🚨 ৯০ ও ৬০ সেকেন্ড টেস্ট</span>
@@ -1087,6 +1105,15 @@
               <input id="nameBn" placeholder="পূর্ব মোহাজের পাড়া জামে মসজিদ">
             </div>
             <div class="form-group">
+              <label>মসজিদের নামের আকার (Mosque Title Size)</label>
+              <select id="mosqueTitleScale">
+                <option value="1.0" selected>স্বাভাবিক বড় (১০০% — টিভি স্ক্রিন অটো-ফিট)</option>
+                <option value="1.15">প্রমিনেন্ট বড় (১১৫% — বোল্ড ও স্পষ্ট)</option>
+                <option value="1.3">অতিরিক্ত বড় (১৩০% — ফুল হেডার ড্রামাটিক)</option>
+              </select>
+              <span class="field-hint">শীর্ষ হেডারে মসজিদের নামটি কতটা বড় ও জাঁকজমকপূর্ণ দেখাবে</span>
+            </div>
+            <div class="form-group">
               <label>ঠিকানা / অবস্থান (Address)</label>
               <input id="nameEn" placeholder="বরইতলী, চকরিয়া, কক্সবাজার।">
             </div>
@@ -1291,7 +1318,7 @@
       'usePermanentTable',
       'blackScreenEnabled', 'blackScreenShowsClock',
       'fajrPrayDuration', 'dhuhrPrayDuration', 'asrPrayDuration', 'maghribPrayDuration', 'ishaPrayDuration', 'jumaPrayDuration',
-      'circularIqamaRing', 'ringAlert90Sec', 'ringMobileAlert60Sec'
+      'circularIqamaRing', 'circularCountdownMinutes', 'circularFrameImage', 'ringAlert90Sec', 'ringMobileAlert60Sec', 'mosqueTitleScale'
     ];
 
     function getActiveMosqueId() {

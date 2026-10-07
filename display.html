@@ -642,33 +642,32 @@
       align-items: center;
       text-align: center;
       min-width: 0;
-      gap: 1px;
+      max-width: 100%;
+      gap: 2px;
     }
 
     .mosque-title-bn {
-      font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
-      font-size: 32px;
-      font-size: clamp(22px, 3.4vh, 44px);
-      font-weight: 900;
-      color: #f7c844;
-      line-height: 1.15;
-      letter-spacing: 0.5px;
-      text-shadow: 0 3px 16px rgba(0,0,0,0.95), 0 0 24px rgba(247, 200, 68, 0.4);
+      font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
+      font-size: clamp(32px, 5.2vh, 66px) !important;
+      font-weight: 900 !important;
+      color: #fde047 !important;
+      line-height: 1.18 !important;
+      letter-spacing: 0.8px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.95), 0 0 30px rgba(253, 224, 71, 0.5) !important;
       margin: 0;
       text-align: center;
       white-space: nowrap;
     }
 
     .mosque-title-en {
-      font-family: 'Hind Siliguri', 'Outfit', sans-serif;
-      font-size: 14px;
-      font-size: clamp(11px, 1.6vh, 18px);
-      font-weight: 700;
+      font-family: 'Hind Siliguri', 'Outfit', sans-serif !important;
+      font-size: clamp(14px, 2.1vh, 24px) !important;
+      font-weight: 700 !important;
       letter-spacing: 0.5px;
-      color: #cbd5e1;
+      color: #cbd5e1 !important;
       opacity: 0.95;
-      margin-top: 1px;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+      margin-top: 2px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.85) !important;
       text-align: center;
       white-space: nowrap;
     }
@@ -4008,45 +4007,76 @@
     }
 
     /* ══ CIRCULAR SVG IQAMA COUNTDOWN HUD (১৯vw LUXURY RING) ══ */
+    /* ══ CIRCULAR SVG IQAMA COUNTDOWN HUD (TAWKIT LUXURY BEZEL DIAL) ══ */
     .iqama-circular-hud {
-      width: clamp(190px, 19vw, 320px);
-      height: clamp(190px, 19vw, 320px);
-      position: relative;
-      display: flex;
+      position: absolute;
+      right: clamp(10px, 2.4vw, 38px);
+      top: 50%;
+      transform: translateY(-50%);
+      width: clamp(190px, 20vw, 290px);
+      height: clamp(190px, 20vw, 290px);
+      background-image: url('circle_frame1.png');
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      border-radius: 50%;
+      display: none; /* Strictly active 7 min prior to Jamaat */
       align-items: center;
       justify-content: center;
-      margin: 4px auto;
-      flex-shrink: 0;
+      z-index: 25;
+      filter: drop-shadow(0 14px 32px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 20px rgba(245, 158, 11, 0.25));
+      box-sizing: border-box;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      animation: hudFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
+    @keyframes hudFadeIn {
+      0% { opacity: 0; transform: translateY(-50%) scale(0.88); }
+      100% { opacity: 1; transform: translateY(-50%) scale(1); }
+    }
+
+    /* In portrait mode, place it centered below the clock */
+    .is-portrait .iqama-circular-hud,
+    body.rotate-90 .iqama-circular-hud,
+    body.rotate-270 .iqama-circular-hud {
+      position: relative !important;
+      right: auto !important;
+      top: auto !important;
+      transform: none !important;
+      margin: clamp(8px, 1.5vh, 16px) auto !important;
+      width: clamp(200px, 46vw, 310px) !important;
+      height: clamp(200px, 46vw, 310px) !important;
+    }
+
     .circular-ring-svg {
-      width: 100%;
-      height: 100%;
+      width: 86%;
+      height: 86%;
       transform: rotate(-90deg); /* Start at 12 o'clock */
       overflow: visible;
-      filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.35));
+      filter: drop-shadow(0 0 14px rgba(245, 158, 11, 0.4));
     }
     .ring-bg {
-      fill: rgba(10, 18, 30, 0.65);
+      fill: transparent;
       stroke: rgba(255, 255, 255, 0.08);
-      stroke-width: 8;
+      stroke-width: 6;
     }
     .ring-bar {
       fill: none;
       stroke: url(#goldRingGrad);
-      stroke-width: 8.5;
+      stroke-width: 7.5;
       stroke-linecap: round;
       transition: stroke-dashoffset 1s linear, stroke 0.6s ease;
     }
     .iqama-circular-hud.ring-alert-red .circular-ring-svg {
-      filter: drop-shadow(0 0 25px rgba(239, 68, 68, 0.75));
+      filter: drop-shadow(0 0 25px rgba(239, 68, 68, 0.85));
     }
     .iqama-circular-hud.ring-alert-red .ring-bar {
       stroke: url(#redRingGrad) !important;
       animation: ringDangerPulse 1.2s infinite ease-in-out;
     }
     @keyframes ringDangerPulse {
-      0%, 100% { stroke-width: 8.5; opacity: 1; }
-      50% { stroke-width: 11; opacity: 0.85; }
+      0%, 100% { stroke-width: 7.5; opacity: 1; }
+      50% { stroke-width: 9.5; opacity: 0.85; }
     }
     .ring-center-content {
       position: absolute;
@@ -4060,47 +4090,52 @@
       justify-content: center;
       text-align: center;
       pointer-events: none;
-      padding: 10px;
+      padding: clamp(14px, 2vw, 24px);
       box-sizing: border-box;
+      gap: 2px;
     }
     .ring-waqt-label {
-      font-family: 'Hind Siliguri', sans-serif;
-      font-size: clamp(14px, 2.3vw, 32px);
-      font-weight: 700;
-      color: #cbd5e1;
+      font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
+      font-size: clamp(13px, 1.5vw, 20px) !important;
+      font-weight: 700 !important;
+      color: #f7c844 !important;
       letter-spacing: 0.5px;
       line-height: 1.2;
+      text-shadow: 0 0 14px rgba(247, 200, 68, 0.5), 0 2px 8px rgba(0, 0, 0, 0.9);
     }
     .ring-digits {
-      font-family: 'Cinzel', 'Outfit', sans-serif;
-      font-size: clamp(34px, 6.8vw, 92px);
-      font-weight: 800;
-      color: #fce085;
-      line-height: 1;
-      letter-spacing: clamp(1px, 0.3vw, 4px);
-      text-shadow: 0 0 25px rgba(245, 158, 11, 0.5);
-      margin: 4px 0;
+      font-family: 'Hind Siliguri', 'Outfit', 'Cinzel', sans-serif !important;
+      font-size: clamp(34px, 4.4vw, 68px) !important;
+      font-weight: 800 !important;
+      color: #fde047 !important;
+      line-height: 1 !important;
+      letter-spacing: 1px;
+      text-shadow: 0 0 26px rgba(253, 224, 71, 0.65), 0 3px 12px rgba(0, 0, 0, 0.95) !important;
+      font-variant-numeric: tabular-nums;
+      margin: 4px 0 2px 0;
     }
     .ring-status-sub {
-      font-family: 'Hind Siliguri', sans-serif;
-      font-size: clamp(11px, 1.3vw, 19px);
-      font-weight: 600;
-      color: #94a3b8;
+      font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
+      font-size: clamp(11px, 1.2vw, 16px) !important;
+      font-weight: 600 !important;
+      color: #cbd5e1 !important;
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
+      letter-spacing: 0.3px;
     }
     .ring-mobile-badge {
       position: absolute;
-      bottom: -18px;
+      bottom: -14px;
       white-space: nowrap;
       background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(185, 28, 28, 0.95));
       color: #ffffff;
       font-family: 'Hind Siliguri', sans-serif;
-      font-size: clamp(11px, 1.2vw, 17px);
+      font-size: clamp(10px, 1.1vw, 15px);
       font-weight: 700;
-      padding: 4px 16px;
+      padding: 3px 14px;
       border-radius: 999px;
-      box-shadow: 0 4px 20px rgba(239, 68, 68, 0.65);
+      box-shadow: 0 4px 20px rgba(239, 68, 68, 0.7);
       animation: mobileBadgeFloat 2s infinite ease-in-out;
-      z-index: 10;
+      z-index: 30;
     }
     @keyframes mobileBadgeFloat {
       0%, 100% { transform: translateY(0); }
@@ -4282,7 +4317,7 @@
             </div>
           </div>
 
-          <!-- ══ CIRCULAR SVG IQAMA COUNTDOWN HUD (১৯vw LUXURY RING) ══ -->
+          <!-- ══ CIRCULAR SVG IQAMA COUNTDOWN HUD (TAWKIT LUXURY BEZEL DIAL) ══ -->
           <div class="iqama-circular-hud" id="iqamaCircularHud" style="display: none;">
             <svg class="circular-ring-svg" viewBox="0 0 200 200">
               <defs>
@@ -4293,19 +4328,20 @@
                 </linearGradient>
                 <linearGradient id="redRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stop-color="#ef4444" />
+                  <stop offset="50%" stop-color="#f87171" />
                   <stop offset="100%" stop-color="#b91c1c" />
                 </linearGradient>
               </defs>
-              <circle class="ring-bg" cx="100" cy="100" r="88" />
-              <circle class="ring-bar" id="circularRingBar" cx="100" cy="100" r="88" stroke-dasharray="552.92" stroke-dashoffset="0" />
+              <circle class="ring-bg" cx="100" cy="100" r="80" />
+              <circle class="ring-bar" id="circularRingBar" cx="100" cy="100" r="80" stroke-dasharray="502.65" stroke-dashoffset="0" />
             </svg>
             <div class="ring-center-content">
-              <div class="ring-waqt-label" id="ringWaqtLabel">আসরের জামাত</div>
-              <div class="ring-digits" id="ringDigits">০০:০০</div>
-              <div class="ring-status-sub" id="ringStatusSub">ইকামত বাকি</div>
+              <div class="ring-waqt-label" id="ringWaqtLabel">পরবর্তী নামাজ</div>
+              <div class="ring-digits" id="ringDigits">০৭:০০</div>
+              <div class="ring-status-sub" id="ringStatusSub">শুরু হতে বাকি</div>
             </div>
             <div class="ring-mobile-badge" id="ringMobileBadge" style="display: none;">
-              <span>📴 জামাত আসন্ন — মোবাইল বন্ধ রাখুন</span>
+              <span>📴 মোবাইল সাইলেন্ট রাখুন</span>
             </div>
           </div>
 
@@ -5102,7 +5138,7 @@
       } catch(e) {}
     }
 
-    function updateCircularIqamaHud(show, totalSec, prayerName) {
+    function updateCircularIqamaHud(show, totalSec, prayerName, maxDurationSec) {
       var hud = document.getElementById('iqamaCircularHud');
       if (!hud) return;
       if (!show || CONFIG.circularIqamaRing === false || CONFIG.circularIqamaRing === 'false') {
@@ -5111,21 +5147,36 @@
       }
       hud.style.display = 'flex';
 
-      var maxSec = 300;
+      // Set circular dial frame image
+      var frameImg = CONFIG.circularFrameImage || 'circle_frame1.png';
+      if (!hud.dataset.loadedFrame || hud.dataset.loadedFrame !== frameImg) {
+        hud.style.backgroundImage = 'url(' + frameImg + ')';
+        hud.dataset.loadedFrame = frameImg;
+      }
+
+      var maxSec = maxDurationSec || 420; // 7 minutes (420s)
       var cMin = Math.floor(totalSec / 60);
       var cSec = totalSec % 60;
       var timeFormatted = String(cMin).padStart(2, '0') + ':' + String(cSec).padStart(2, '0');
+      var bnTimeFormatted = toBnNum(timeFormatted);
 
       var ringDigits = document.getElementById('ringDigits');
-      if (ringDigits) ringDigits.textContent = timeFormatted;
+      if (ringDigits) ringDigits.textContent = bnTimeFormatted;
 
       var ringWaqt = document.getElementById('ringWaqtLabel');
-      if (ringWaqt) ringWaqt.textContent = (prayerName ? prayerName : 'জামাত') + ' জামাত';
+      if (ringWaqt) {
+        ringWaqt.textContent = prayerName ? (prayerName + ' জামাত') : 'পরবর্তী নামাজ';
+      }
+
+      var ringSub = document.getElementById('ringStatusSub');
+      if (ringSub) {
+        ringSub.textContent = (totalSec <= 60) ? 'শীঘ্রই শুরু হবে' : 'শুরু হতে বাকি';
+      }
 
       var ringBar = document.getElementById('circularRingBar');
       if (ringBar) {
         var progress = Math.max(0, Math.min(1, totalSec / maxSec));
-        var circumference = 552.92;
+        var circumference = 502.65; // 2 * pi * 80
         var offset = circumference * (1 - progress);
         ringBar.style.strokeDashoffset = offset.toFixed(2);
       }
@@ -5268,7 +5319,14 @@
         var curPrayerId = bestPrayer ? bestPrayer.id : 'fajr';
         var salatDurationSec = getPrayerSalatDurationSec(curPrayerId, isFri);
 
-        // Check if admin triggered a live test countdown
+        // Check if admin triggered a live test countdown or URL query testCd
+        if (window.TEST_COUNTDOWN_SEC === undefined) {
+          try {
+            var urlParams = new URLSearchParams(window.location.search);
+            var pCd = urlParams.get('testCd');
+            if (pCd) window.TEST_COUNTDOWN_SEC = parseInt(pCd, 10);
+          } catch(e) {}
+        }
         if (window.TEST_COUNTDOWN_SEC !== undefined && window.TEST_COUNTDOWN_SEC !== null) {
           totalSec = window.TEST_COUNTDOWN_SEC;
           if (window.TEST_COUNTDOWN_SEC > 0) {
@@ -5342,37 +5400,40 @@
           ucNextJm.textContent = bestPrayer.bn + ' ' + fmtTime(bestTimeStr, cardFmt);
         }
 
+        var countdownMins = parseInt(CONFIG.circularCountdownMinutes || 7, 10);
+        if (isNaN(countdownMins) || countdownMins <= 0) countdownMins = 7;
+        var countdownThresholdSec = countdownMins * 60; // Default 7 minutes = 420s
         var isRingEnabled = (CONFIG.circularIqamaRing !== false && CONFIG.circularIqamaRing !== 'false');
 
-        if (totalSec > 0 && totalSec <= 300) {
-          // ACTIVE 5-MINUTE COUNTDOWN (300s down to 1s)
-          // Circular SVG HUD
+        if (totalSec > 0 && totalSec <= countdownThresholdSec) {
+          // ACTIVE 7-MINUTE COUNTDOWN (420s down to 1s)
+          // Circular SVG HUD (Tawkit Style on Right Side)
           if (isRingEnabled) {
-            updateCircularIqamaHud(true, totalSec, bestPrayer ? bestPrayer.bn : '');
-            if (ucBanner) ucBanner.style.display = 'none';
+            updateCircularIqamaHud(true, totalSec, bestPrayer ? bestPrayer.bn : '', countdownThresholdSec);
           } else {
-            updateCircularIqamaHud(false, totalSec, '');
-            if (ucBanner) {
-              ucBanner.style.display = 'flex';
-              ucBanner.classList.add('banner-active-cd');
-              if (totalSec <= 60) ucBanner.classList.add('banner-urgent-cd');
-              else ucBanner.classList.remove('banner-urgent-cd');
-            }
+            updateCircularIqamaHud(false, totalSec, '', countdownThresholdSec);
+          }
+
+          if (ucBanner) {
+            ucBanner.style.display = 'flex';
+            ucBanner.classList.add('banner-active-cd');
+            if (totalSec <= 60) ucBanner.classList.add('banner-urgent-cd');
+            else ucBanner.classList.remove('banner-urgent-cd');
           }
 
           var cMin = Math.floor(totalSec / 60);
           var cSec = totalSec % 60;
           var timeFormatted = String(cMin).padStart(2, '0') + ':' + String(cSec).padStart(2, '0');
-          if (cdMainTimerEl) cdMainTimerEl.textContent = timeFormatted;
+          if (cdMainTimerEl) cdMainTimerEl.textContent = toBnNum(timeFormatted);
 
           var cdDigitsLegacy = document.getElementById('cdTimerDigits');
-          if (cdDigitsLegacy) cdDigitsLegacy.textContent = timeFormatted;
+          if (cdDigitsLegacy) cdDigitsLegacy.textContent = toBnNum(timeFormatted);
 
           var cdLabelLegacy = document.getElementById('cdPrayerLabel');
           if (cdLabelLegacy) cdLabelLegacy.textContent = (bestPrayer ? bestPrayer.bn : 'জামাত') + ' বাকি';
 
-          // Shrinking progress line from 100% to 0% over 300 seconds (5 minutes)
-          var shrinkPct = (totalSec / 300) * 100;
+          // Shrinking progress line from 100% to 0% over countdownThresholdSec (7 minutes)
+          var shrinkPct = (totalSec / countdownThresholdSec) * 100;
           if (cdBarEl) {
             cdBarEl.style.width = Math.max(0, Math.min(100, shrinkPct)).toFixed(1) + '%';
           }
@@ -5381,12 +5442,12 @@
             if (totalSec <= 60) {
               cdBadgeEl.textContent = '১ মিনিট বাকি — প্রস্তুত হোন';
             } else {
-              cdBadgeEl.textContent = '৫ মিনিট কাউন্টডাউন';
+              cdBadgeEl.textContent = toBnNum(countdownMins) + ' মিনিট কাউন্টডাউন';
             }
           }
         } else if (totalSec <= 0 && totalSec >= -salatDurationSec) {
           // Jamaat has begun
-          updateCircularIqamaHud(false, 0, '');
+          updateCircularIqamaHud(false, 0, '', countdownThresholdSec);
           if (ucBanner) {
             ucBanner.style.display = 'flex';
             ucBanner.classList.add('banner-active-cd');
@@ -5396,8 +5457,9 @@
           if (cdBadgeEl) cdBadgeEl.textContent = 'সালাত চলছে — মোবাইল বন্ধ রাখুন';
           if (cdBarEl) cdBarEl.style.width = '0%';
         } else {
-          // Standby Mode (> 5 minutes before Jamaat): Real-time remaining countdown!
-          updateCircularIqamaHud(false, totalSec, '');
+          // Standby Mode (> 7 minutes before Jamaat):
+          // Circular HUD is strictly HIDDEN per requirement: "নামাজের সময়ের আগের 7 মিনিট শুধু কাউন্ট করবে"
+          updateCircularIqamaHud(false, totalSec, '', countdownThresholdSec);
           if (ucBanner) {
             ucBanner.style.display = 'flex';
             ucBanner.classList.remove('banner-active-cd', 'banner-urgent-cd');
@@ -5408,9 +5470,9 @@
             var mins = Math.floor(remSec / 60);
             var secs = remSec % 60;
             if (hrs > 0) {
-              if (cdMainTimerEl) cdMainTimerEl.textContent = String(hrs).padStart(2, '0') + ':' + String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+              if (cdMainTimerEl) cdMainTimerEl.textContent = toBnNum(String(hrs).padStart(2, '0') + ':' + String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0'));
             } else {
-              if (cdMainTimerEl) cdMainTimerEl.textContent = String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+              if (cdMainTimerEl) cdMainTimerEl.textContent = toBnNum(String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0'));
             }
           } else {
             if (cdMainTimerEl) cdMainTimerEl.textContent = '--:--';
@@ -5719,9 +5781,9 @@
         if (h < 20 || w < 50) return;
 
         // কার্ডের উচ্চতা ও ইউজারের নির্বাচিত স্কেল অনুযায়ী সর্বোচ্চ বড় ও দৃশ্যমান ফন্ট
-        var targetNameSize = Math.round(Math.max(22, h * 0.40 * scale));
-        var targetTimeSize = Math.round(Math.max(28, h * 0.58 * scale));
-        var targetSubSize = Math.round(Math.max(11, targetNameSize * 0.42));
+        var targetNameSize = Math.round(Math.min(46, Math.max(26, window.innerHeight * 0.038 * scale)));
+        var targetTimeSize = Math.round(Math.min(58, Math.max(32, window.innerHeight * 0.048 * scale)));
+        var targetSubSize = Math.round(Math.max(12, targetNameSize * 0.42));
 
         function apply(n, t, s) {
           for (var i = 0; i < cards.length; i++) {
@@ -5764,12 +5826,11 @@
             var left = c.querySelector('.p-card-left');
             var right = c.querySelector('.p-card-right');
             if (left && right) {
-              var padL = parseFloat(getComputedStyle(c).paddingLeft) || 10;
-              var padR = parseFloat(getComputedStyle(c).paddingRight) || 10;
+              var padL = parseFloat(getComputedStyle(c).paddingLeft) || 12;
+              var padR = parseFloat(getComputedStyle(c).paddingRight) || 12;
               var availableWidth = c.clientWidth - padL - padR;
               var contentWidth = left.scrollWidth + right.scrollWidth + 10;
               if (contentWidth > availableWidth) return true;
-              if (left.scrollHeight > c.clientHeight || right.scrollHeight > c.clientHeight) return true;
             }
           }
           return false;
@@ -5777,14 +5838,14 @@
 
         // অটো-ফিট সেফটি লুপ: যতক্ষণ পর্যন্ত কোনো অংশ উপচে পড়বে, ততক্ষণে ১px করে ধাপে ধাপে অ্যাডজাস্ট হবে
         var guard = 0;
-        while (isAnyCardOverflowing() && (targetNameSize > 18 || targetTimeSize > 24) && guard < 40) {
-          if (targetTimeSize > targetNameSize * 1.15) {
+        while (isAnyCardOverflowing() && (targetNameSize > 20 || targetTimeSize > 26) && guard < 40) {
+          if (targetTimeSize > targetNameSize * 1.18) {
             targetTimeSize -= 1;
           } else {
             targetNameSize -= 1;
             targetTimeSize -= 1;
           }
-          targetSubSize = Math.max(10, Math.round(targetNameSize * 0.42));
+          targetSubSize = Math.max(11, Math.round(targetNameSize * 0.42));
           guard++;
           apply(targetNameSize, targetTimeSize, targetSubSize);
         }
@@ -5873,26 +5934,38 @@
         var bn = document.getElementById('mBn');
         var en = document.getElementById('mEn');
         var isLandscape = window.innerWidth > window.innerHeight;
-        if (bn && bn.parentElement) {
-          var maxW = bn.parentElement.clientWidth;
-          if (maxW > 100) {
-            var size = isLandscape ? Math.min(44, Math.max(22, Math.round(window.innerHeight * 0.034))) : 28;
+        var scale = parseFloat(CONFIG.mosqueTitleScale || 1.0);
+        if (isNaN(scale) || scale <= 0) scale = 1.0;
+
+        if (bn) {
+          var container = bn.closest('.header-main-row') || bn.parentElement;
+          var maxW = container ? container.clientWidth : (window.innerWidth * 0.65);
+          var logoEl = document.getElementById('mCustomLogo');
+          var logoW = (logoEl && logoEl.offsetWidth) ? (logoEl.offsetWidth + 24) : 90;
+          var availW = Math.max(260, maxW - logoW);
+
+          var targetSize = isLandscape 
+            ? Math.round(window.innerHeight * 0.052 * scale) 
+            : Math.round(window.innerWidth * 0.046 * scale);
+          var size = Math.min(68, Math.max(28, targetSize));
+          bn.style.fontSize = size + 'px';
+          while (bn.scrollWidth > availW && size > 22) {
+            size -= 1;
             bn.style.fontSize = size + 'px';
-            while (bn.scrollWidth > maxW && size > 16) {
-              size -= 1;
-              bn.style.fontSize = size + 'px';
-            }
           }
         }
-        if (en && en.parentElement) {
-          var maxWen = en.parentElement.clientWidth;
-          if (maxWen > 100) {
-            var sizeEn = isLandscape ? Math.min(18, Math.max(12, Math.round(window.innerHeight * 0.016))) : 14;
+        if (en) {
+          var containerEn = en.closest('.header-main-row') || en.parentElement;
+          var maxWen = containerEn ? containerEn.clientWidth : (window.innerWidth * 0.65);
+          var availWen = Math.max(220, maxWen - 90);
+          var targetSizeEn = isLandscape 
+            ? Math.round(window.innerHeight * 0.021 * scale) 
+            : Math.round(window.innerWidth * 0.022 * scale);
+          var sizeEn = Math.min(26, Math.max(13, targetSizeEn));
+          en.style.fontSize = sizeEn + 'px';
+          while (en.scrollWidth > availWen && sizeEn > 11) {
+            sizeEn -= 1;
             en.style.fontSize = sizeEn + 'px';
-            while (en.scrollWidth > maxWen && sizeEn > 10) {
-              sizeEn -= 1;
-              en.style.fontSize = sizeEn + 'px';
-            }
           }
         }
       } catch(e) {}
