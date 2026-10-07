@@ -64,15 +64,10 @@
     window.addEventListener('beforeinstallprompt', function(e) {
       e.preventDefault();
       deferredPrompt = e;
-      // Show install button if it exists
-      var btn = document.getElementById('pwaInstallBtn');
-      if (btn) btn.style.display = 'flex';
     });
     window.addEventListener('appinstalled', function() {
       console.log('[PWA] App installed successfully!');
       deferredPrompt = null;
-      var btn = document.getElementById('pwaInstallBtn');
-      if (btn) btn.style.display = 'none';
     });
   </script>
   <style>
@@ -321,26 +316,9 @@
       background: radial-gradient(circle at 60% 45%, rgba(6, 26, 36, 0.35) 0%, rgba(2, 10, 16, 0.75) 100%);
     }
 
-    /* ── AZAN ALERT BANNER ── */
+    /* ── AZAN ALERT BANNER - REMOVED PER USER REQUEST ── */
     #alertBanner {
-      display: none;
-      width: 100%;
-      flex-shrink: 0;
-      position: relative;
-      z-index: 999;
-      background: linear-gradient(90deg, #10b981, #d97706, #10b981);
-      background-size: 200% auto;
-      animation: shineBanner 2.5s linear infinite;
-      color: #0f172a;
-      text-align: center;
-      font-size: clamp(13px, 1.4vw, 19px);
-      font-weight: 800;
-      padding: 6px 14px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.6);
-    }
-    @keyframes shineBanner {
-      0% { background-position: 0% center; }
-      100% { background-position: 200% center; }
+      display: none !important;
     }
 
     /* ── PRO MASJID LAYOUT (IMAGE 2 - LEFT CARDS + RIGHT CLOCK/NEXT) ── */
@@ -899,31 +877,11 @@
       align-self: flex-end;
     }
 
-    /* ══ PRO NEXT JAMAAT COUNTDOWN PANEL (BORDERLESS LUXURY HUD) ══ */
+    /* ══ UNDER-CLOCK BANNER - REMOVED PER USER REQUEST ══ */
     .pro-countdown-card,
-    .under-clock-banner {
-      width: auto;
-      min-width: clamp(280px, 32vw, 480px);
-      max-width: 580px;
-      max-height: 14vh;
-      min-height: 0;
-      position: relative;
-      border-radius: clamp(14px, 1.8vh, 22px);
-      background: rgba(10, 18, 30, 0.72) !important;
-      border: 1px solid rgba(255, 255, 255, 0.08) !important;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      padding: clamp(6px, 0.9vh, 12px) clamp(20px, 2.4vw, 36px);
-      transition: all 0.35s ease;
-      overflow: hidden;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      margin: 0 auto;
+    .under-clock-banner,
+    #underClockBanner {
+      display: none !important;
     }
 
     .cd-content-grid {
@@ -3099,12 +3057,9 @@
         height: 24px !important;
       }
 
-      /* ── PWA Install Button ── */
+      /* ── PWA Install Button - REMOVED PER USER REQUEST ── */
       #pwaInstallBtn {
-        bottom: 38px !important;
-        right: 10px !important;
-        padding: 8px 12px !important;
-        font-size: 12px !important;
+        display: none !important;
       }
     }
 
@@ -5329,10 +5284,7 @@
           }
 
           if (ucBanner) {
-            ucBanner.style.display = 'flex';
-            ucBanner.classList.add('banner-active-cd');
-            if (totalSec <= 60) ucBanner.classList.add('banner-urgent-cd');
-            else ucBanner.classList.remove('banner-urgent-cd');
+            ucBanner.style.display = 'none';
           }
 
           var cMin = Math.floor(totalSec / 60);
@@ -5363,9 +5315,7 @@
           // Jamaat has begun
           updateCircularIqamaHud(false, 0, '', countdownThresholdSec);
           if (ucBanner) {
-            ucBanner.style.display = 'flex';
-            ucBanner.classList.add('banner-active-cd');
-            ucBanner.classList.remove('banner-urgent-cd');
+            ucBanner.style.display = 'none';
           }
           if (cdMainTimerEl) cdMainTimerEl.textContent = 'চলছে';
           if (cdBadgeEl) cdBadgeEl.textContent = 'সালাত চলছে — মোবাইল বন্ধ রাখুন';
@@ -5375,8 +5325,7 @@
           // Circular HUD is strictly HIDDEN per requirement: "নামাজের সময়ের আগের 7 মিনিট শুধু কাউন্ট করবে"
           updateCircularIqamaHud(false, totalSec, '', countdownThresholdSec);
           if (ucBanner) {
-            ucBanner.style.display = 'flex';
-            ucBanner.classList.remove('banner-active-cd', 'banner-urgent-cd');
+            ucBanner.style.display = 'none';
           }
           if (totalSec > 0) {
             var hrs = Math.floor(totalSec / 3600);
@@ -5446,21 +5395,7 @@
 
         var banner = document.getElementById('alertBanner');
         if (banner) {
-          if (isAzanNow) {
-            banner.style.display = 'block';
-            banner.innerHTML = '📢 ' + azanPrayerName + ' আজানের সময় হয়েছে — আজানের উত্তর দিন ও নামাজের প্রস্তুতি নিন।';
-          } else if (bestPrayer) {
-            var minsLeft = Math.floor(bestMs / 60000);
-            if (minsLeft <= 3 && bestMs > 0) {
-              banner.style.display = 'block';
-              banner.innerHTML = '📴 ' + bestPrayer.bn + ' জামাতের সময় আসন্ন! মোবাইল সাইলেন্ট করুন ও কাতার সোজা করুন।';
-            } else if (minsLeft <= 10 && bestMs > 0) {
-              banner.style.display = 'block';
-              banner.innerHTML = '🕌 ' + bestPrayer.bn + ' নামাজ আর মাত্র ' + toBnNum(minsLeft) + ' মিনিট পর। নামাজের জন্য প্রস্তুত হোন।';
-            } else {
-              banner.style.display = 'none';
-            }
-          }
+          banner.style.display = 'none';
         }
         var boxSun = document.getElementById('boxSunrise');
         if (boxSun) {
@@ -5934,46 +5869,6 @@
       try { fetchServerSettings(); } catch(e) {}
     }, 4000);
   </script>
-
-  <!-- ══ PWA INSTALL BUTTON (Auto-hidden, shows only on Android/Chrome when installable) ══ -->
-  <div id="pwaInstallBtn" style="
-    display: none;
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 9999;
-    align-items: center;
-    gap: 10px;
-    background: linear-gradient(135deg, #D4AF37, #AA771C);
-    color: #000;
-    border: none;
-    border-radius: 50px;
-    padding: 12px 22px;
-    font-family: 'Hind Siliguri', sans-serif;
-    font-size: 15px;
-    font-weight: 800;
-    cursor: pointer;
-    box-shadow: 0 6px 28px rgba(212,175,55,0.65);
-    animation: pwaGlow 2.5s infinite ease-in-out;
-  " onclick="
-    if (window.deferredPrompt) {
-      window.deferredPrompt.prompt();
-      window.deferredPrompt.userChoice.then(function(res) {
-        if (res.outcome === 'accepted') console.log('[PWA] User accepted install');
-        window.deferredPrompt = null;
-        document.getElementById('pwaInstallBtn').style.display = 'none';
-      });
-    }
-  ">
-    <span style="font-size:20px;">📲</span>
-    <span>অ্যাপ ইনস্টল করুন</span>
-  </div>
-  <style>
-    @keyframes pwaGlow {
-      0%, 100% { box-shadow: 0 6px 28px rgba(212,175,55,0.55); }
-      50% { box-shadow: 0 8px 40px rgba(212,175,55,0.85); }
-    }
-  </style>
 
 </body>
 </html>
