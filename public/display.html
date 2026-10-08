@@ -525,7 +525,7 @@
     /* ZONE 1: TOP HEADER (28% HEIGHT) */
     .pro-header {
       flex: 0 0 28%;
-      max-height: 30%;
+      max-height: 29%;
       min-height: 0;
       display: flex;
       flex-direction: column;
@@ -533,7 +533,8 @@
       justify-content: center;
       text-align: center;
       width: 100%;
-      padding: 0.8vh 1.5vw 0 1.5vw;
+      padding: 0;
+      margin: 0;
       box-sizing: border-box;
       overflow: hidden;
       position: relative;
@@ -544,28 +545,53 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: center;
-      gap: clamp(16px, 2.4vw, 40px);
+      justify-content: space-between;
+      gap: clamp(12px, 1.8vw, 28px);
       width: 100%;
       max-width: 100%;
+      height: 100%;
       box-sizing: border-box;
+      background: linear-gradient(135deg, rgba(13, 27, 44, 0.78) 0%, rgba(6, 14, 25, 0.88) 100%);
+      border: 1.5px solid rgba(247, 200, 68, 0.32);
+      border-radius: clamp(16px, 2vh, 24px);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 
+        0 12px 36px rgba(0, 0, 0, 0.6), 
+        inset 0 1px 0 rgba(255, 255, 255, 0.14), 
+        inset 0 0 25px rgba(247, 200, 68, 0.06);
+      padding: clamp(6px, 0.9vh, 12px) clamp(16px, 2vw, 32px);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
     }
 
-    /* Left Red Circle: 100-120px Circular Logo Badge */
+    .header-content-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border: 1px dashed rgba(247, 200, 68, 0.20);
+      border-radius: clamp(12px, 1.6vh, 20px);
+      pointer-events: none;
+    }
+
+    /* Left: Circular Mosque Logo Badge Container */
     .header-logo-badge-container {
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
+      width: clamp(76px, 10vh, 114px);
+      z-index: 2;
     }
 
     .mosque-header-logo {
-      width: clamp(86px, 11vh, 120px);
-      height: clamp(86px, 11vh, 120px);
-      min-width: 80px;
-      min-height: 80px;
-      max-width: 125px;
-      max-height: 125px;
+      width: clamp(76px, 10vh, 114px);
+      height: clamp(76px, 10vh, 114px);
+      min-width: 70px;
+      min-height: 70px;
+      max-width: 120px;
+      max-height: 120px;
       border-radius: 50%;
       object-fit: contain;
       aspect-ratio: 1 / 1;
@@ -573,15 +599,23 @@
       border: 3.5px solid #f7c844;
       padding: 3px;
       box-shadow: 
-        0 8px 26px rgba(0, 0, 0, 0.85), 
-        0 0 30px rgba(247, 200, 68, 0.5),
+        0 8px 24px rgba(0, 0, 0, 0.85), 
+        0 0 24px rgba(247, 200, 68, 0.5),
         inset 0 0 10px rgba(0, 0, 0, 0.15);
       flex-shrink: 0;
       display: block;
       transition: all 0.3s ease;
     }
 
-    /* Center: 3 Stacked Lines Container */
+    /* Right: Symmetry Balance Spacer (Exact width of Logo for dead-center title text) */
+    .header-balance-spacer {
+      flex-shrink: 0;
+      width: clamp(76px, 10vh, 114px);
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* Center: Mosque Brand Titles */
     .header-text-lines-container,
     .mosque-brand-titles {
       display: flex;
@@ -589,10 +623,10 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      gap: clamp(2px, 0.4vh, 5px);
+      gap: clamp(1px, 0.2vh, 3px);
       min-width: 0;
       flex: 1 1 auto;
-      max-width: calc(100% - 140px);
+      z-index: 2;
     }
 
     .header-top-bismillah {
@@ -606,11 +640,11 @@
 
     .header-bismillah {
       font-family: 'Amiri', 'Traditional Arabic', serif;
-      font-size: clamp(14px, 1.8vh, 24px);
+      font-size: clamp(13px, 1.6vh, 22px);
       color: #f7c844;
       opacity: 0.98;
       letter-spacing: 1.5px;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.9), 0 0 16px rgba(247, 200, 68, 0.45);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 0 14px rgba(247, 200, 68, 0.5);
       line-height: 1.1;
       text-align: center;
     }
@@ -626,14 +660,14 @@
 
     .mosque-title-bn {
       font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
-      font-size: clamp(34px, 5.6vh, 72px) !important;
+      font-size: clamp(28px, 4.4vh, 58px) !important;
       font-weight: 900 !important;
       color: #fde047 !important;
       line-height: 1.15 !important;
       letter-spacing: 0.8px;
       text-shadow: 
-        0 4px 22px rgba(0,0,0,0.95), 
-        0 0 35px rgba(253, 224, 71, 0.65) !important;
+        0 4px 20px rgba(0,0,0,0.95), 
+        0 0 32px rgba(253, 224, 71, 0.65) !important;
       margin: 0;
       text-align: center;
       white-space: nowrap;
@@ -650,13 +684,13 @@
 
     .mosque-title-en {
       font-family: 'Hind Siliguri', 'Outfit', sans-serif !important;
-      font-size: clamp(15px, 2.2vh, 25px) !important;
+      font-size: clamp(13px, 1.8vh, 21px) !important;
       font-weight: 700 !important;
-      letter-spacing: 0.6px;
+      letter-spacing: 0.5px;
       color: #e2e8f0 !important;
-      opacity: 0.98;
+      opacity: 0.95;
       margin: 0;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.9) !important;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.9) !important;
       text-align: center;
       white-space: nowrap;
     }
@@ -668,7 +702,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      margin-top: clamp(2px, 0.3vh, 5px);
+      margin-top: clamp(1px, 0.2vh, 4px);
       z-index: 5;
     }
 
@@ -797,9 +831,10 @@
       max-height: 48%;
       min-height: 0;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
       justify-content: center;
+      gap: clamp(16px, 2.5vw, 40px);
       margin: 0 auto;
       width: 100%;
       box-sizing: border-box;
@@ -807,28 +842,93 @@
       overflow: visible;
     }
 
-    /* ══ CLOCK DISPLAY (Frameless, Majestic, Grand Floating Digits) ══ */
+    /* ══ MAJESTIC CENTRAL CLOCK BROADCAST STAGE CARD ══ */
     .pro-clock-card {
       width: auto;
-      max-width: 100%;
+      max-width: 96%;
+      min-width: min(520px, 88%);
       display: flex;
-      align-items: baseline;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      gap: clamp(6px, 1vw, 14px);
-      padding: 0;
-      margin: 0 0 0.8vh 0;
-      background: transparent !important;
-      border: none !important;
-      border-radius: 0 !important;
-      box-shadow: none !important;
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
+      gap: clamp(8px, 1.2vh, 16px);
+      padding: clamp(14px, 2.2vh, 26px) clamp(28px, 3.8vw, 60px);
+      margin: 0 auto;
+      background: linear-gradient(145deg, rgba(13, 27, 44, 0.78) 0%, rgba(6, 14, 25, 0.88) 100%) !important;
+      border: 1.5px solid rgba(247, 200, 68, 0.32) !important;
+      border-radius: clamp(18px, 2.4vh, 28px) !important;
+      box-shadow: 
+        0 18px 45px rgba(0, 0, 0, 0.65), 
+        inset 0 1px 0 rgba(255, 255, 255, 0.14), 
+        inset 0 0 25px rgba(247, 200, 68, 0.06) !important;
+      backdrop-filter: blur(20px) !important;
+      -webkit-backdrop-filter: blur(20px) !important;
       box-sizing: border-box;
       position: relative;
+      overflow: visible;
+      transition: all 0.3s ease;
     }
 
     .pro-clock-card::before {
-      display: none !important;
+      content: '';
+      position: absolute;
+      inset: 5px;
+      border: 1px dashed rgba(247, 200, 68, 0.20);
+      border-radius: clamp(14px, 2vh, 24px);
+      pointer-events: none;
+    }
+
+    /* Top Islamic Status Ribbon inside Clock Stage */
+    .clock-stage-status-ribbon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(6px, 0.8vw, 12px);
+      padding: clamp(3px, 0.5vh, 6px) clamp(12px, 1.6vw, 22px);
+      background: rgba(15, 23, 42, 0.78);
+      border: 1px solid rgba(247, 200, 68, 0.3);
+      border-radius: 999px;
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: clamp(13px, 1.6vh, 19px);
+      font-weight: 700;
+      color: #cbd5e1;
+      white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+      z-index: 2;
+    }
+
+    .csr-dot {
+      width: clamp(7px, 0.8vw, 9px);
+      height: clamp(7px, 0.8vw, 9px);
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulseGreen 2s infinite;
+      flex-shrink: 0;
+    }
+
+    .csr-text {
+      color: #86efac;
+      font-weight: 700;
+    }
+
+    .csr-sep {
+      color: rgba(247, 200, 68, 0.5);
+    }
+
+    .csr-next {
+      color: #fde047;
+      font-weight: 700;
+    }
+
+    /* Clock Digits & AM/PM Row */
+    .clock-stage-digits-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(8px, 1.2vw, 18px);
+      z-index: 2;
     }
 
     .pro-clock-digits {
@@ -836,24 +936,22 @@
       align-items: baseline;
       justify-content: center;
       font-family: 'Outfit', 'Cinzel', 'Hind Siliguri', sans-serif;
-      font-size: 80px;
-      font-size: clamp(56px, 12vh, 128px);
+      font-size: clamp(52px, 10.5vh, 108px);
       font-weight: 800;
       color: #FFFFFF;
       letter-spacing: clamp(1px, 0.2vw, 3px);
       text-shadow: 
-        0 4px 24px rgba(0, 0, 0, 0.95), 
-        0 8px 45px rgba(0, 0, 0, 0.85), 
-        0 0 32px rgba(255, 255, 255, 0.2);
+        0 4px 20px rgba(0, 0, 0, 0.95), 
+        0 8px 40px rgba(0, 0, 0, 0.85), 
+        0 0 28px rgba(255, 255, 255, 0.2);
       font-variant-numeric: tabular-nums;
       font-feature-settings: "tnum" 1;
       line-height: 0.95;
-      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.8));
     }
 
     .clk-segment {
       display: inline-block;
-      width: 2.12ch;
+      width: 2.1ch;
       text-align: center;
       font-variant-numeric: tabular-nums;
       font-feature-settings: "tnum" 1;
@@ -862,31 +960,35 @@
 
     .clk-colon {
       display: inline-block;
-      width: 0.48ch;
+      width: 0.46ch;
       text-align: center;
-      opacity: 0.90;
+      opacity: 0.92;
       color: #f7c844;
-      text-shadow: 0 0 16px rgba(247, 200, 68, 0.55);
+      text-shadow: 0 0 16px rgba(247, 200, 68, 0.6);
       flex-shrink: 0;
       animation: colonPulse 2s ease-in-out infinite;
     }
 
-    @keyframes colonPulse {
-      0%, 100% { opacity: 0.95; }
-      50% { opacity: 0.45; }
+    .pro-clock-ampm-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(247, 200, 68, 0.18) 0%, rgba(212, 175, 55, 0.08) 100%);
+      border: 1.5px solid rgba(247, 200, 68, 0.45);
+      border-radius: clamp(8px, 1vh, 12px);
+      padding: clamp(4px, 0.7vh, 8px) clamp(8px, 1vw, 14px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), 0 0 14px rgba(247, 200, 68, 0.2);
+      flex-shrink: 0;
     }
 
     .pro-clock-ampm {
       font-family: 'Outfit', 'Hind Siliguri', sans-serif;
-      font-size: 24px;
       font-size: clamp(18px, 2.8vh, 32px);
       font-weight: 800;
-      color: #f7c844;
-      text-shadow: 0 0 16px rgba(247, 200, 68, 0.5), 0 3px 10px rgba(0,0,0,0.85);
+      color: #fde047;
       letter-spacing: 1px;
-      padding-bottom: 0.6vh;
-      margin-left: 0.6vw;
-      align-self: flex-end;
+      line-height: 1;
+      text-shadow: 0 0 14px rgba(253, 224, 71, 0.6);
     }
 
     /* ══ UNDER-CLOCK BANNER - REMOVED PER USER REQUEST ══ */
@@ -1306,6 +1408,25 @@
     .theme-slate .card-date {
       background: linear-gradient(135deg, rgba(56, 189, 248, 0.18) 0%, rgba(15, 23, 42, 0.94) 100%);
       border-color: rgba(56, 189, 248, 0.45);
+    }
+
+    /* THEME SPECIFIC ADAPTATIONS FOR HEADER & CLOCK CARDS */
+    .theme-burgundy .header-content-wrapper,
+    .theme-burgundy .pro-clock-card {
+      background: linear-gradient(145deg, rgba(55, 6, 12, 0.82) 0%, rgba(32, 2, 5, 0.92) 100%) !important;
+      border-color: rgba(245, 158, 11, 0.35) !important;
+    }
+
+    .theme-emerald .header-content-wrapper,
+    .theme-emerald .pro-clock-card {
+      background: linear-gradient(145deg, rgba(3, 37, 23, 0.82) 0%, rgba(1, 18, 10, 0.92) 100%) !important;
+      border-color: rgba(16, 185, 129, 0.38) !important;
+    }
+
+    .theme-slate .header-content-wrapper,
+    .theme-slate .pro-clock-card {
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.82) 0%, rgba(2, 6, 23, 0.92) 100%) !important;
+      border-color: rgba(56, 189, 248, 0.35) !important;
     }
 
     /* ── FOOTER BAR (4.2vh HEIGHT, SINGLE ROW, NO WRAP) ── */
@@ -3893,12 +4014,12 @@
 
     /* ══ CIRCULAR SVG IQAMA COUNTDOWN HUD (TAWKIT LUXURY BEZEL DIAL - NO BLINKING) ══ */
     .iqama-circular-hud {
-      position: absolute;
-      right: clamp(14px, 2.6vw, 44px);
-      top: 50%;
-      transform: translateY(-50%);
-      width: clamp(260px, 24vw, 370px);
-      height: clamp(260px, 24vw, 370px);
+      position: relative;
+      right: auto;
+      top: auto;
+      transform: none;
+      width: clamp(230px, 20vw, 340px);
+      height: clamp(230px, 20vw, 340px);
       background-image: url('circle_frame1.png');
       background-position: center center;
       background-repeat: no-repeat;
@@ -3911,6 +4032,7 @@
       filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.92)) drop-shadow(0 0 25px rgba(245, 158, 11, 0.3));
       box-sizing: border-box;
       animation: none !important; /* NO BLINKING */
+      flex-shrink: 0;
     }
 
     /* In portrait mode, place it centered below the clock */
@@ -4093,7 +4215,7 @@
               <img id="mCustomLogo" src="logo.png" alt="Mosque Logo" class="mosque-header-logo" onerror="if(this.src.indexOf('logo.png')===-1)this.src='logo.png';" />
             </div>
 
-            <!-- Center/Right: 3 Dedicated Lines -->
+            <!-- Center: 3 Dedicated Lines -->
             <div class="header-text-lines-container mosque-brand-titles">
               <!-- Top Subtle Bismillah -->
               <div class="header-top-bismillah">
@@ -4129,6 +4251,9 @@
                 </div>
               </div>
             </div>
+
+            <!-- Right: Symmetry Balance Spacer (Exact width of Logo for dead-center title text) -->
+            <div class="header-balance-spacer" aria-hidden="true"></div>
           </div>
 
           <!-- Hidden compatibility elements for existing JS references -->
@@ -4140,12 +4265,25 @@
 
         <!-- Center: Giant Clock & Next Jamaat Countdown Cards -->
         <div class="clock-center-container">
-          <!-- ══ RED BOX: MAJESTIC CLOCK CARD / PANEL ══ -->
+          <!-- ══ MAJESTIC CENTRAL CLOCK BROADCAST STAGE CARD ══ -->
           <div class="pro-clock-card" id="proClockCard">
-            <div class="pro-clock-digits" id="clk">
-              <span class="clk-segment clk-hh" id="clkHH">07</span><span class="clk-colon">:</span><span class="clk-segment clk-mm" id="clkMM">05</span><span class="clk-colon">:</span><span class="clk-segment clk-ss" id="clkSS">08</span>
+            <!-- Top Islamic Waqt Status Ribbon -->
+            <div class="clock-stage-status-ribbon" id="clockStageRibbon">
+              <span class="csr-dot"></span>
+              <span class="csr-text" id="clockStageWaqtText">চলমান ওয়াক্ত: মাগরিব</span>
+              <span class="csr-sep">•</span>
+              <span class="csr-next" id="clockStageNextText">পরবর্তী জামাত: এশা ৮:৩০</span>
             </div>
-            <span class="pro-clock-ampm" id="clkAmPm">PM</span>
+
+            <!-- Grand Real-Time Digital Digits -->
+            <div class="clock-stage-digits-row">
+              <div class="pro-clock-digits" id="clk">
+                <span class="clk-segment clk-hh" id="clkHH">07</span><span class="clk-colon">:</span><span class="clk-segment clk-mm" id="clkMM">05</span><span class="clk-colon">:</span><span class="clk-segment clk-ss" id="clkSS">08</span>
+              </div>
+              <div class="pro-clock-ampm-badge">
+                <span class="pro-clock-ampm" id="clkAmPm">PM</span>
+              </div>
+            </div>
           </div>
 
           <!-- ══ PRO NEXT JAMAAT COUNTDOWN PANEL (BORDERLESS LUXURY HUD) ══ -->
@@ -4784,15 +4922,18 @@
 
         // Custom Mosque Logo
         var logoEl = document.getElementById('mCustomLogo');
+        var balanceSpacer = document.querySelector('.header-balance-spacer');
         if (logoEl) {
           var targetLogo = (CONFIG.logoUrl && CONFIG.logoUrl.trim() !== '') ? CONFIG.logoUrl : 'logo.png';
           logoEl.src = targetLogo;
           logoEl.style.display = 'block';
+          if (balanceSpacer) balanceSpacer.style.display = 'block';
           logoEl.onerror = function() {
             if (this.src.indexOf('logo.png') === -1) {
               this.src = 'logo.png';
             } else {
               this.style.display = 'none';
+              if (balanceSpacer) balanceSpacer.style.display = 'none';
             }
           };
         }
@@ -5269,7 +5410,17 @@
           ucCurWaqt.textContent = bnWaqtMap[cur] || 'ফজর';
         }
 
+        var csWaqtEl = document.getElementById('clockStageWaqtText');
+        if (csWaqtEl) {
+          csWaqtEl.textContent = 'চলমান ওয়াক্ত: ' + (bnWaqtMap[cur] || 'ফজর');
+        }
+
         var cardFmt = CONFIG.cardTimeFormat || CONFIG.clockFormat || '12';
+
+        var csNextEl = document.getElementById('clockStageNextText');
+        if (csNextEl && bestPrayer && bestTimeStr) {
+          csNextEl.textContent = 'পরবর্তী জামাত: ' + (bestPrayer.bn || 'নামাজ') + ' ' + fmtTime(bestTimeStr, cardFmt);
+        }
 
         // ══ GREEN BOX: PRO NEXT JAMAAT COUNTDOWN PANEL UPDATE ══
         var cdNextNameEl = document.getElementById('cdNextJamaatName');
