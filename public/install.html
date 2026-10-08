@@ -3,475 +3,649 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>স্মার্ট মসজিদ ডিজিটাল ডিসপ্লে | Android TV App Install Guide</title>
+  <title>🕌 MyMasjid TV — ইনস্টলেশন পোর্টাল | Android TV App</title>
   <link rel="icon" type="image/png" href="logo.png">
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Hind+Siliguri:wght@400;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
   <script src="qrcode.min.js"></script>
   <script>if (typeof QRCode === 'undefined') { var s = document.createElement('script'); s.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js'; document.head.appendChild(s); }</script>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap');
     :root {
-      --bg: #070d18;
-      --card-bg: rgba(13, 24, 44, 0.88);
+      --bg: #060d1a;
+      --card: rgba(10, 20, 40, 0.92);
       --gold: #f5c542;
-      --gold-light: #fef08a;
-      --emerald: #10b981;
-      --border: rgba(245, 197, 66, 0.25);
-      --border-light: rgba(255, 255, 255, 0.1);
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
+      --gold-d: #d4af37;
+      --green: #10b981;
+      --blue: #38bdf8;
+      --red: #ef4444;
+      --border: rgba(245,197,66,0.22);
+      --border2: rgba(255,255,255,0.1);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Hind Siliguri', sans-serif;
-      background: radial-gradient(circle at 50% 0%, #112646 0%, #060e1a 100%);
+      font-family: 'Hind Siliguri', 'Outfit', sans-serif;
+      background: var(--bg);
+      background-image:
+        radial-gradient(ellipse at 50% -20%, rgba(16,56,110,0.55) 0%, transparent 60%),
+        radial-gradient(ellipse at 90% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 50%);
       color: var(--text);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      user-select: none;
     }
+
+    /* ── HEADER ── */
     header {
-      padding: 24px 20px 18px;
-      text-align: center;
+      background: rgba(4,10,22,0.95);
       border-bottom: 1px solid var(--border);
-      background: rgba(6, 14, 26, 0.85);
-      backdrop-filter: blur(12px);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(14px);
     }
-    .header-logo {
-      width: 68px;
-      height: 68px;
-      margin-bottom: 8px;
+    .hdr-logo {
+      width: 52px; height: 52px;
       border-radius: 50%;
-      border: 2.5px solid var(--gold);
-      background: #ffffff;
+      border: 2px solid var(--gold);
+      background: #fff;
       padding: 3px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.5), 0 0 20px rgba(245,197,66,0.35);
+      object-fit: contain;
+      box-shadow: 0 0 18px rgba(245,197,66,0.35);
     }
-    h1 {
-      font-size: clamp(24px, 4vw, 34px);
-      color: var(--gold);
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.8);
-    }
-    .subtitle {
-      font-size: 15px;
-      color: var(--text-muted);
-      margin-top: 6px;
-    }
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 32px 20px 60px;
-      flex: 1;
-      width: 100%;
-    }
-    
-    /* ══ HERO DOWNLOAD BANNER ══ */
-    .hero-download-card {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, rgba(13, 24, 44, 0.95) 100%);
-      border: 2px solid #10b981;
-      border-radius: 20px;
-      padding: 32px 28px;
+    .hdr-text h1 { font-size: 22px; color: var(--gold); font-weight: 800; line-height: 1.2; }
+    .hdr-text p { font-size: 13px; color: var(--muted); }
+
+    .wrap { max-width: 980px; margin: 0 auto; padding: 32px 20px 72px; }
+
+    /* ── HERO DOWNLOAD CARD ── */
+    .hero {
+      background: linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(10,20,40,0.98) 100%);
+      border: 2px solid var(--green);
+      border-radius: 22px;
+      padding: 36px 32px 28px;
       text-align: center;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 30px rgba(16, 185, 129, 0.25);
-      margin-bottom: 34px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.6), 0 0 40px rgba(16,185,129,0.2);
+      margin-bottom: 36px;
       position: relative;
       overflow: hidden;
     }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: #10b981;
-      color: #062a1b;
-      font-size: 13px;
-      font-weight: 800;
-      padding: 4px 14px;
-      border-radius: 50px;
-      margin-bottom: 14px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .hero-title {
-      font-size: clamp(22px, 3.2vw, 32px);
-      color: #ffffff;
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-    .hero-desc {
-      font-size: 15px;
-      color: #cbd5e1;
-      max-width: 650px;
-      margin: 0 auto 24px;
-      line-height: 1.6;
-    }
-    .download-actions {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      margin-bottom: 20px;
-    }
-    .btn-main-download {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      color: #ffffff;
-      font-size: 18px;
-      font-weight: 800;
-      padding: 14px 34px;
-      border-radius: 12px;
-      text-decoration: none;
-      box-shadow: 0 6px 24px rgba(16, 185, 129, 0.45);
-      transition: all 0.25s ease;
-      border: 1px solid rgba(255,255,255,0.3);
-    }
-    .btn-main-download:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(16, 185, 129, 0.65);
-      background: linear-gradient(135deg, #34d399 0%, #059669 100%);
-    }
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid var(--border);
-      color: var(--gold-light);
-      font-size: 15px;
-      font-weight: 700;
-      padding: 14px 24px;
-      border-radius: 12px;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-    .btn-secondary:hover {
-      background: rgba(245, 197, 66, 0.15);
-      border-color: var(--gold);
-    }
-    .apk-meta-info {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 18px;
-      font-size: 13px;
-      color: #94a3b8;
-    }
-    .meta-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .meta-tag span {
-      color: #f1f5f9;
-      font-weight: 700;
-    }
-
-    /* ══ 3 INSTALLATION METHODS GRID ══ */
-    .grid-methods {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 22px;
-      margin-bottom: 34px;
-    }
-    .method-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-      display: flex;
-      flex-direction: column;
-    }
-    .method-icon {
-      font-size: 32px;
-      margin-bottom: 12px;
-    }
-    .method-card h3 {
-      font-size: 18px;
-      color: var(--gold);
-      margin-bottom: 8px;
-      font-weight: 800;
-    }
-    .method-card p {
-      font-size: 14px;
-      color: #94a3b8;
-      line-height: 1.5;
-      margin-bottom: 14px;
-    }
-    .method-steps {
-      list-style: none;
-      padding: 0;
-      margin-top: auto;
-    }
-    .method-steps li {
-      position: relative;
-      padding-left: 24px;
-      margin-bottom: 10px;
-      font-size: 13.5px;
-      color: #cbd5e1;
-      line-height: 1.4;
-    }
-    .method-steps li::before {
-      content: '✓';
+    .hero::before {
+      content: '';
       position: absolute;
-      left: 0;
-      color: #10b981;
-      font-weight: 800;
+      top: -60px; left: 50%; transform: translateX(-50%);
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(16,185,129,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .badge-new {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--green); color: #062a1b;
+      font-size: 12px; font-weight: 800; padding: 4px 14px;
+      border-radius: 50px; margin-bottom: 16px; letter-spacing: 1px;
+    }
+    .hero h2 { font-size: clamp(20px,3vw,30px); font-weight: 800; margin-bottom: 12px; line-height: 1.3; }
+    .hero p { font-size: 15px; color: #cbd5e1; max-width: 640px; margin: 0 auto 26px; line-height: 1.7; }
+
+    .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-bottom: 22px; }
+    .btn-dl {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #fff; font-size: 18px; font-weight: 800;
+      padding: 14px 36px; border-radius: 12px; text-decoration: none;
+      box-shadow: 0 6px 28px rgba(16,185,129,0.5);
+      transition: all 0.25s;
+    }
+    .btn-dl:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(16,185,129,0.65); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.07); border: 1px solid var(--border);
+      color: var(--gold); font-size: 14.5px; font-weight: 700;
+      padding: 12px 22px; border-radius: 12px; text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-outline:hover { background: rgba(245,197,66,0.13); border-color: var(--gold); }
+
+    .apk-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; font-size: 13px; color: var(--muted); }
+    .apk-tags span { font-weight: 700; color: #e2e8f0; }
+
+    /* ── SHORT URL + QR BOX ── */
+    .url-box {
+      background: rgba(6,14,28,0.9);
+      border: 1.5px dashed var(--border);
+      border-radius: 18px;
+      padding: 26px 28px;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px;
+      margin-bottom: 36px;
+    }
+    .url-left { flex: 1; min-width: 240px; }
+    .url-left h4 { font-size: 17px; color: var(--gold); margin-bottom: 8px; font-weight: 800; }
+    .url-left p { font-size: 13px; color: var(--muted); margin-bottom: 14px; line-height: 1.6; }
+    .url-links { display: flex; flex-direction: column; gap: 8px; }
+    .url-pill {
+      display: flex; align-items: center; justify-content: space-between;
+      background: #020811; border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 9px; padding: 9px 14px; gap: 10px;
+    }
+    .url-val { font-family: 'Outfit', monospace; color: var(--blue); font-size: 13.5px; font-weight: 700; word-break: break-all; }
+    .url-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; font-weight: 600; }
+    .copy-btn {
+      background: none; border: 1px solid rgba(56,189,248,0.4); color: var(--blue);
+      padding: 4px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; white-space: nowrap;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .copy-btn:hover { background: rgba(56,189,248,0.15); }
+    .qr-wrap {
+      background: #fff; border-radius: 14px; padding: 12px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
     }
 
-    /* ══ SHORT URL & QR CODE SECTION ══ */
-    .qr-share-box {
-      background: rgba(15, 27, 48, 0.7);
-      border: 1px dashed var(--border);
-      border-radius: 16px;
-      padding: 24px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      margin-bottom: 34px;
+    /* ── INSTALL METHOD TABS ── */
+    .section-title {
+      font-size: 20px; color: var(--gold); font-weight: 800;
+      margin-bottom: 18px; display: flex; align-items: center; gap: 10px;
     }
-    .qr-text {
-      flex: 1;
-      min-width: 250px;
+    .methods-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .mtab {
+      padding: 9px 18px; border-radius: 9px; cursor: pointer; font-size: 14px;
+      font-weight: 700; border: 1.5px solid var(--border2); background: rgba(255,255,255,0.04);
+      color: var(--muted); transition: all 0.2s; font-family: inherit;
     }
-    .qr-text h4 {
-      font-size: 18px;
-      color: var(--gold-light);
-      margin-bottom: 6px;
-      font-weight: 800;
+    .mtab:hover { border-color: var(--gold); color: var(--gold); }
+    .mtab.active { background: rgba(245,197,66,0.15); border-color: var(--gold); color: var(--gold); }
+
+    .method-pane { display: none; }
+    .method-pane.active { display: block; }
+
+    .method-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 10px 36px rgba(0,0,0,0.4);
     }
-    .qr-text p {
-      font-size: 14px;
-      color: #94a3b8;
-      margin-bottom: 12px;
+    .method-card h3 { font-size: 19px; color: #e2e8f0; font-weight: 800; margin-bottom: 16px; }
+    .steps { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .step-item {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.06); position: relative;
     }
-    .url-display-pill {
-      display: inline-flex;
-      align-items: center;
-      background: #020710;
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 8px;
-      padding: 8px 14px;
-      gap: 10px;
-      font-family: 'Outfit', monospace;
-      color: #38bdf8;
-      font-size: 14px;
-      font-weight: 700;
-      word-break: break-all;
+    .step-item:last-child { border-bottom: none; }
+    .step-num {
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 15px;
     }
-    .qr-code-canvas-box {
-      background: #ffffff;
-      padding: 10px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.5);
+    .step-num.green { background: rgba(16,185,129,0.2); color: var(--green); border: 1.5px solid rgba(16,185,129,0.4); }
+    .step-num.gold { background: rgba(245,197,66,0.15); color: var(--gold); border: 1.5px solid rgba(245,197,66,0.3); }
+    .step-num.blue { background: rgba(56,189,248,0.15); color: var(--blue); border: 1.5px solid rgba(56,189,248,0.3); }
+    .step-num.red { background: rgba(239,68,68,0.15); color: var(--red); border: 1.5px solid rgba(239,68,68,0.3); }
+    .step-body strong { color: #f1f5f9; font-weight: 700; font-size: 15px; display: block; margin-bottom: 4px; }
+    .step-body p { color: var(--muted); font-size: 13.5px; line-height: 1.55; }
+    .step-body .code-inline {
+      display: inline-block;
+      background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.3);
+      color: var(--blue); font-family: 'Outfit', monospace; font-size: 13px;
+      padding: 2px 10px; border-radius: 6px; margin: 2px 0; font-weight: 700;
+    }
+    .step-note {
+      background: rgba(245,197,66,0.08); border-left: 3px solid var(--gold);
+      border-radius: 0 8px 8px 0; padding: 8px 14px; margin-top: 8px; font-size: 13px;
+      color: #fde68a; line-height: 1.5;
+    }
+    .step-tip {
+      background: rgba(16,185,129,0.08); border-left: 3px solid var(--green);
+      border-radius: 0 8px 8px 0; padding: 8px 14px; margin-top: 8px; font-size: 13px;
+      color: #a7f3d0; line-height: 1.5;
     }
 
-    /* ══ AUTO-START GUIDE SECTION ══ */
-    .autostart-guide {
-      background: rgba(13, 24, 44, 0.85);
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      border-radius: 16px;
-      padding: 26px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    .method-extra-row {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 18px;
     }
-    .autostart-guide h3 {
-      font-size: 20px;
-      color: #38bdf8;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .mini-card {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border2);
+      border-radius: 12px; padding: 14px 16px;
     }
-    .guide-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      margin-top: 14px;
+    .mini-card-title { font-size: 13px; font-weight: 700; color: #fde047; margin-bottom: 5px; }
+    .mini-card-desc { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+    /* ── AUTOBOOT GUIDE ── */
+    .autoboot {
+      background: rgba(8,20,42,0.92);
+      border: 1px solid rgba(56,189,248,0.3);
+      border-radius: 18px;
+      padding: 28px;
+      margin-top: 36px;
     }
-    @media (max-width: 700px) {
-      .guide-grid { grid-template-columns: 1fr; }
+    .autoboot h3 { font-size: 19px; color: var(--blue); font-weight: 800; margin-bottom: 6px; }
+    .autoboot > p { font-size: 13.5px; color: var(--muted); margin-bottom: 18px; line-height: 1.6; }
+    .autoboot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+    .ab-item {
+      background: rgba(2,8,18,0.7); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px; padding: 15px 16px;
     }
-    .guide-item {
-      background: rgba(2, 8, 18, 0.6);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 10px;
-      padding: 14px 16px;
-    }
-    .guide-item-title {
-      font-size: 14.5px;
-      font-weight: 700;
-      color: #fde047;
-      margin-bottom: 4px;
-    }
-    .guide-item-desc {
-      font-size: 13px;
-      color: #cbd5e1;
-      line-height: 1.4;
-    }
+    .ab-item-title { font-size: 14px; font-weight: 700; color: #fde047; margin-bottom: 6px; }
+    .ab-item-desc { font-size: 13px; color: #cbd5e1; line-height: 1.5; }
 
     footer {
-      text-align: center;
-      padding: 24px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      font-size: 13px;
-      color: #64748b;
-      background: rgba(2, 6, 12, 0.9);
+      text-align: center; padding: 28px 20px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      font-size: 13px; color: #64748b;
     }
     footer a { color: var(--gold); text-decoration: none; }
+
+    .toast-msg {
+      position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%);
+      background: var(--green); color: #fff;
+      padding: 10px 26px; border-radius: 30px; font-weight: 700;
+      font-size: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      display: none; z-index: 9999; white-space: nowrap;
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 26px 18px 22px; }
+      .url-box { padding: 20px 18px; }
+      .method-card { padding: 20px 16px; }
+      .autoboot { padding: 20px 16px; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
   <header>
-    <img src="logo.png" alt="Mosque Logo" class="header-logo" onerror="this.style.display='none'">
-    <h1>স্মার্ট মসজিদ ডিজিটাল ডিসপ্লে</h1>
-    <div class="subtitle">অ্যান্ড্রয়েড টিভি, স্মার্ট মনিটর ও টিভি বক্স অ্যাপ ইনস্টলেশন পোর্টাল</div>
+    <img src="logo.png" alt="Logo" class="hdr-logo" onerror="this.style.display='none'">
+    <div class="hdr-text">
+      <h1>🕌 MyMasjid TV — ইনস্টলেশন পোর্টাল</h1>
+      <p>Android TV · Google TV · TV Box · Mi Box · Android 5.0+</p>
+    </div>
   </header>
 
-  <div class="container">
+  <div class="wrap">
 
-    <!-- HERO DOWNLOAD BOX -->
-    <div class="hero-download-card">
-      <div class="hero-badge">⚡ সর্বশেষ অফিসিয়াল রিলিজ v2.0</div>
-      <h2 class="hero-title">Android TV অ্যাপ (APK) সরাসরি ডাউনলোড করুন</h2>
-      <p class="hero-desc">
-        এই APK-টি যেকোনো Android TV, Google TV, টিভি বক্স বা অ্যান্ড্রয়েড ফোনে সরাসরি ডাউনলোড ও ইনস্টল করা যায়।
-        ১০০% অফলাইনে চলে, ২৪" থেকে ৬৫"+ স্ক্রিনে নিখুঁত রেসপনসিভ এবং টিভি চালু হওয়ামাত্রই নিজে থেকে ফুলস্ক্রিনে চালু হয়।
+    <!-- HERO DOWNLOAD -->
+    <div class="hero">
+      <div class="badge-new">⚡ সর্বশেষ রিলিজ v2.0 — বাগ-ফিক্স + অফলাইন-অপটিমাইজড</div>
+      <h2>Android TV অ্যাপ — সরাসরি ডাউনলোড করুন</h2>
+      <p>
+        ১০০% অফলাইনে চলে • ২৪" থেকে ৮৫"+ স্ক্রিনে নিখুঁত • টিভি চালু হলেই নিজে নিজে ফুলস্ক্রিনে চালু হয়<br>
+        পেনড্রাইভ বা ইন্টারনেট — দুটো উপায়েই ইনস্টল করা যায়
       </p>
-
-      <div class="download-actions">
-        <a href="MyMasjidTV_INSTALL.apk" class="btn-main-download" download="MyMasjidTV_INSTALL.apk" id="directDownloadBtn">
-          📥 APK ডাউনলোড করুন (v2.0)
+      <div class="btn-group">
+        <a id="apkBtn" href="MyMasjidTV_INSTALL.apk" class="btn-dl" download="MyMasjidTV_INSTALL.apk">
+          📥 APK ডাউনলোড করুন (৫.১ MB)
         </a>
-        <a href="display.html" class="btn-secondary">
-          🖥 লাইভ ওয়েব ডিসপ্লে দেখুন
-        </a>
+        <a href="display.html" class="btn-outline">🖥️ লাইভ ওয়েব ডিসপ্লে</a>
+        <a href="portal.html" class="btn-outline">🕌 মসজিদ পোর্টাল</a>
       </div>
-
-      <div class="apk-meta-info">
-        <div class="meta-tag">📦 সাইজ: <span>৪.৮ MB</span></div>
-        <div class="meta-tag">📺 সাপোর্ট: <span>Android TV, Android 7.0 - 14+</span></div>
-        <div class="meta-tag">📶 অফলাইন: <span>১০০% সচল (নেট ছাড়া)</span></div>
-      </div>
-    </div>
-
-    <!-- 3 EASY INSTALLATION METHODS -->
-    <h2 style="font-size: 22px; color: var(--gold); margin-bottom: 16px; font-weight: 800;">
-      🛠 টিভিতে অ্যাপ ইনস্টল করার ৩টি সহজ উপায়
-    </h2>
-
-    <div class="grid-methods">
-      <!-- Method 1: Downloader App (Recommended for Android TV) -->
-      <div class="method-card" style="border-color: rgba(16, 185, 129, 0.4);">
-        <div class="method-icon">🚀</div>
-        <h3 style="color: #6ee7b7;">১. "Downloader" অ্যাপ দিয়ে (সেরা ও দ্রুততম)</h3>
-        <p>Android TV বা Google TV-এর Google Play Store থেকে <strong>Downloader by AFTVnews</strong> অ্যাপ ওপেন করুন।</p>
-        <ul class="method-steps">
-          <li>Downloader অ্যাপের URL বক্সে আমাদের ওয়েবসাইটের লিংকটি লিখুন।</li>
-          <li>সরাসরি <strong>Go</strong> চাপলেই অ্যাপটি ডাউনলোড হয়ে সাথে সাথে ইনস্টল উইন্ডো খুলবে।</li>
-          <li><strong>Install</strong> নির্বাচন করলেই সম্পূর্ণ ইনস্টল সম্পন্ন হবে।</li>
-        </ul>
-      </div>
-
-      <!-- Method 2: TV Web Browser -->
-      <div class="method-card">
-        <div class="method-icon">🌐</div>
-        <h3>২. টিভির যেকোনো ব্রাউজার দিয়ে</h3>
-        <p>টিভির যেকোনো ব্রাউজার (যেমন Chrome, JioPages, TV Bro বা Puffin) ওপেন করুন।</p>
-        <ul class="method-steps">
-          <li>ব্রাউজারে এই ওয়েব পেজে প্রবেশ করুন।</li>
-          <li>উপরে থাকা সবুজ <strong>"APK ডাউনলোড করুন"</strong> বাটনে চাপ দিন।</li>
-          <li>ডাউনলোড সম্পন্ন হলে নোটিফিকেশন থেকে ফাইলটি ওপেন করে <strong>Install</strong> করুন।</li>
-        </ul>
-      </div>
-
-      <!-- Method 3: USB Pendrive -->
-      <div class="method-card">
-        <div class="method-icon">💾</div>
-        <h3>৩. পেনড্রাইভ বা USB ড্রাইভ দিয়ে</h3>
-        <p>কম্পিউটার বা মোবাইল থেকে পেনড্রাইভে ফাইল নিয়ে টিভিতে লাগান।</p>
-        <ul class="method-steps">
-          <li>পেনড্রাইভে <strong>MyMasjidTV_INSTALL.apk</strong> কপি করুন।</li>
-          <li>পেনড্রাইভটি আপনার Android TV / TV Box-এ প্রবেশ করান।</li>
-          <li>টিভির <strong>File Manager</strong> ওপেন করে APK ফাইলটিতে ক্লিক করে ইনস্টল করুন।</li>
-        </ul>
+      <div class="apk-tags">
+        <div>📦 ফাইলের নাম: <span>MyMasjidTV_INSTALL.apk</span></div>
+        <div>📺 Android: <span>5.0+ (API 21+)</span></div>
+        <div>📶 অফলাইন: <span>১০০% কাজ করে</span></div>
+        <div>🔒 সাইজ: <span>~৫.১ MB</span></div>
       </div>
     </div>
 
-    <!-- QR CODE & DIRECT URL BOX -->
-    <div class="qr-share-box">
-      <div class="qr-text">
-        <h4>📲 মোবাইলের ক্যামেরা দিয়ে স্ক্যান করুন</h4>
-        <p>মোবাইল দিয়ে কিউআর কোড স্ক্যান করে APK ফাইলটি সরাসরি ফোনে ডাউনলোড করে নিতে পারেন, অথবা টিভিতে শেয়ার করতে পারেন।</p>
-        <div class="url-display-pill" id="urlDisplay">
-          https://.../MyMasjidTV_INSTALL.apk
-        </div>
-      </div>
-      <div class="qr-code-canvas-box" id="qrcode"></div>
-    </div>
-
-    <!-- AUTO START ON BOOT SETTINGS -->
-    <div class="autostart-guide">
-      <h3>⚙️ টিভি চালু হলেই নিজে নিজে চালু হওয়ার সেটিংস (Boot Auto-Start)</h3>
-      <p style="font-size: 14px; color: #94a3b8; line-height: 1.5;">
-        অ্যাপটি প্রথমবার ইনস্টলের পর নিচের ২টি সহজ অনুমতি দিয়ে রাখলে টিভি পাওয়ার অন হওয়া মাত্র কোনো রিমোট ছাড়াই সরাসরি ফুলস্ক্রিন ডিসপ্লে অন হবে:
-      </p>
-
-      <div class="guide-grid">
-        <div class="guide-item">
-          <div class="guide-item-title">১. Display Over Other Apps অনুমতি</div>
-          <div class="guide-item-desc">
-            টিভির Settings > Apps > Special app access > <strong>Display over other apps</strong>-এ গিয়ে "MyMasjid TV" অন করে দিন।
+    <!-- SHORT URL + QR -->
+    <div class="url-box">
+      <div class="url-left">
+        <h4>📲 শেয়ার করুন বা QR স্ক্যান করুন</h4>
+        <p>মোবাইল বা টিভি ব্রাউজারে সরাসরি URL লিখুন — অথবা QR কোড স্ক্যান করুন।<br>
+        <strong style="color:#fde047;">শর্ট URL:</strong> ডাউনলোড পেজ বা সরাসরি APK লিঙ্ক দুটোই নিচে আছে।</p>
+        <div class="url-links">
+          <div>
+            <div class="url-label">🌐 ইনস্টল পেজ (Vercel)</div>
+            <div class="url-pill">
+              <span class="url-val" id="installPageUrl">লোড হচ্ছে...</span>
+              <button class="copy-btn" onclick="copyUrl('installPageUrl')">📋 কপি</button>
+            </div>
+          </div>
+          <div>
+            <div class="url-label">📥 সরাসরি APK ডাউনলোড লিঙ্ক</div>
+            <div class="url-pill">
+              <span class="url-val" id="apkUrl">লোড হচ্ছে...</span>
+              <button class="copy-btn" onclick="copyUrl('apkUrl')">📋 কপি</button>
+            </div>
           </div>
         </div>
+      </div>
+      <div class="qr-wrap" id="qrCode"></div>
+    </div>
 
-        <div class="guide-item">
-          <div class="guide-item-title">২. কিয়স্ক হোম লঞ্চার হিসেবে সেট করা (ঐচ্ছিক)</div>
-          <div class="guide-item-desc">
-            রিমোটের Home বাটন চেপে "MyMasjid TV" বেছে নিয়ে <strong>Always</strong> সিলেক্ট করুন। বিদ্যুৎ এলে সরাসরি নামাজ চালু হবে।
+    <!-- INSTALL METHODS -->
+    <div class="section-title">🛠 ইনস্টল করার উপায় বেছে নিন</div>
+
+    <div class="methods-tabs">
+      <button class="mtab active" onclick="showMethod('usb', this)">💾 পেনড্রাইভ/USB</button>
+      <button class="mtab" onclick="showMethod('vercel', this)">🌐 ভার্সেল/ওয়েব লিঙ্ক</button>
+      <button class="mtab" onclick="showMethod('downloader', this)">🚀 Downloader অ্যাপ</button>
+      <button class="mtab" onclick="showMethod('browser', this)">🖥️ টিভি ব্রাউজার</button>
+    </div>
+
+    <!-- USB METHOD -->
+    <div id="m-usb" class="method-pane active">
+      <div class="method-card" style="border-color: rgba(245,197,66,0.35);">
+        <h3>💾 পেনড্রাইভ/USB দিয়ে ইনস্টল (যেকোনো টিভিতে কাজ করে)</h3>
+        <ul class="steps">
+          <li class="step-item">
+            <div class="step-num gold">১</div>
+            <div class="step-body">
+              <strong>কম্পিউটারে APK ডাউনলোড করুন</strong>
+              <p>উপরের সবুজ <strong>"APK ডাউনলোড করুন"</strong> বাটনে ক্লিক করুন।<br>
+              ফাইলটি সেভ হবে: <span class="code-inline">MyMasjidTV_INSTALL.apk</span></p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num gold">২</div>
+            <div class="step-body">
+              <strong>পেনড্রাইভে কপি করুন</strong>
+              <p>পেনড্রাইভটি কম্পিউটারে লাগান এবং <span class="code-inline">MyMasjidTV_INSTALL.apk</span> ফাইলটি পেনড্রাইভে কপি করুন।<br>
+              <small style="color:#64748b;">FAT32 বা exFAT ফরম্যাটের পেনড্রাইভ সবচেয়ে ভালো।</small></p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num gold">৩</div>
+            <div class="step-body">
+              <strong>পেনড্রাইভ টিভিতে লাগান</strong>
+              <p>পেনড্রাইভটি Android TV / TV Box-এর <strong>USB পোর্টে</strong> প্রবেশ করান।<br>
+              বেশিরভাগ টিভিতে পেনড্রাইভ লাগালে স্বয়ংক্রিয়ভাবে নোটিফিকেশন আসে।</p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num gold">৪</div>
+            <div class="step-body">
+              <strong>অজানা উৎস থেকে ইনস্টলের অনুমতি দিন (Unknown Sources)</strong>
+              <p>টিভির সেটিংসে যান: <span class="code-inline">Settings → Device Preferences → Security</span><br>
+              <strong>"Unknown Sources"</strong> বা <strong>"Install unknown apps"</strong> চালু করুন।</p>
+              <div class="step-note">⚠️ এটি শুধু একবার করতে হবে। পরবর্তী ইনস্টলে আর লাগবে না।</div>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num gold">৫</div>
+            <div class="step-body">
+              <strong>File Manager খুলুন ও APK ইনস্টল করুন</strong>
+              <p>টিভির হোম স্ক্রিন থেকে <strong>File Manager</strong> / <strong>File Explorer</strong> খুলুন।<br>
+              USB/পেনড্রাইভ ফোল্ডারে গিয়ে <span class="code-inline">MyMasjidTV_INSTALL.apk</span> সিলেক্ট করুন।<br>
+              <strong>"Install"</strong> বাটনে ক্লিক করলেই ইনস্টল সম্পন্ন হবে।</p>
+              <div class="step-tip">✅ Mi Box, Xiaomi TV, Sony TV, TCL, Hisense — সব ব্র্যান্ডে একই পদ্ধতি কাজ করে।</div>
+            </div>
+          </li>
+        </ul>
+
+        <div class="method-extra-row">
+          <div class="mini-card">
+            <div class="mini-card-title">📁 File Manager না থাকলে?</div>
+            <div class="mini-card-desc">Play Store থেকে <strong>X-plore File Manager</strong> বা <strong>FX File Explorer</strong> ইনস্টল করুন — তারপর উপরের ধাপ অনুসরণ করুন।</div>
           </div>
+          <div class="mini-card">
+            <div class="mini-card-title">⚡ পেনড্রাইভে কী রাখবেন?</div>
+            <div class="mini-card-desc">শুধু <span class="code-inline">MyMasjidTV_INSTALL.apk</span> ফাইলটি রাখলেই যথেষ্ট। অন্য কোনো ফাইলের প্রয়োজন নেই।</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VERCEL/WEB METHOD -->
+    <div id="m-vercel" class="method-pane">
+      <div class="method-card" style="border-color: rgba(56,189,248,0.35);">
+        <h3>🌐 ওয়েব লিঙ্ক (Vercel) থেকে টিভিতে ইনস্টল</h3>
+        <ul class="steps">
+          <li class="step-item">
+            <div class="step-num blue">১</div>
+            <div class="step-body">
+              <strong>টিভিতে Downloader অ্যাপ ইনস্টল করুন</strong>
+              <p>Android TV-র Play Store থেকে বিনামূল্যে <strong>Downloader by AFTVnews</strong> ডাউনলোড করুন।</p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num blue">২</div>
+            <div class="step-body">
+              <strong>Downloader অ্যাপ খুলুন এবং URL বক্সে APK লিঙ্ক লিখুন</strong>
+              <p>নিচের URL-টি Downloader-এর URL বক্সে টাইপ করুন:</p>
+              <div class="url-pill" style="margin-top:8px;">
+                <span class="url-val" id="apkUrlVercel">লোড হচ্ছে...</span>
+                <button class="copy-btn" onclick="copyUrl('apkUrlVercel')">📋 কপি</button>
+              </div>
+              <div class="step-note">💡 রিমোট দিয়ে URL টাইপ করা কঠিন হলে মোবাইল থেকে Downloader-এর Code ব্যবহার করুন।</div>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num blue">৩</div>
+            <div class="step-body">
+              <strong>Unknown Sources অনুমতি দিন</strong>
+              <p>Downloader অ্যাপ যখন ইনস্টলের অনুরোধ করবে, তখন <strong>"Settings → Allow from this source"</strong> চালু করুন।</p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num blue">৪</div>
+            <div class="step-body">
+              <strong>Install এবং Open করুন</strong>
+              <p>ডাউনলোড শেষ হলে স্বয়ংক্রিয়ভাবে ইনস্টল উইন্ডো খুলবে। <strong>Install</strong> চাপুন।<br>
+              ইনস্টল সম্পন্ন হলে <strong>Open</strong> চাপলেই অ্যাপ চালু হবে।</p>
+              <div class="step-tip">✅ পরবর্তীতে টিভি চালু করলেই নিজে নিজে নামাজের সময় দেখাবে।</div>
+            </div>
+          </li>
+        </ul>
+
+        <div class="method-extra-row">
+          <div class="mini-card">
+            <div class="mini-card-title">📱 মোবাইল দিয়ে শেয়ার করুন</div>
+            <div class="mini-card-desc">মোবাইলে APK ডাউনলোড করে Bluetooth, Wi-Fi Direct বা ফাইল শেয়ার অ্যাপ দিয়ে টিভিতে পাঠান।</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-title">🔗 শর্ট URL মনে রাখুন</div>
+            <div class="mini-card-desc">ইনস্টল পেজে যেতে: <strong id="shortInstallUrl" style="color:#38bdf8;">লোড হচ্ছে...</strong><br>যেকোনো TV ব্রাউজারে টাইপ করলেই এই পেজ খুলবে।</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOWNLOADER APP METHOD -->
+    <div id="m-downloader" class="method-pane">
+      <div class="method-card" style="border-color: rgba(16,185,129,0.35);">
+        <h3>🚀 Downloader অ্যাপ দিয়ে (সবচেয়ে সহজ পদ্ধতি)</h3>
+        <ul class="steps">
+          <li class="step-item">
+            <div class="step-num green">১</div>
+            <div class="step-body">
+              <strong>Play Store থেকে Downloader ইনস্টল করুন</strong>
+              <p>Android TV-র Play Store খুলুন → <strong>"Downloader"</strong> সার্চ করুন → <strong>Downloader by AFTVnews</strong> ইনস্টল করুন (বিনামূল্যে)।</p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num green">২</div>
+            <div class="step-body">
+              <strong>Unknown Sources চালু করুন</strong>
+              <p>Settings → Apps → <strong>Downloader</strong> → <strong>Install unknown apps → Allow</strong></p>
+              <div class="step-note">⚠️ এই অনুমতি শুধুমাত্র Downloader অ্যাপের জন্য দেওয়াই নিরাপদ।</div>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num green">৩</div>
+            <div class="step-body">
+              <strong>Downloader খুলে URL লিখুন</strong>
+              <p>URL বক্সে টাইপ করুন (Vercel APK লিঙ্ক):</p>
+              <div class="url-pill" style="margin-top:8px;">
+                <span class="url-val" id="apkUrlDl">লোড হচ্ছে...</span>
+                <button class="copy-btn" onclick="copyUrl('apkUrlDl')">📋 কপি</button>
+              </div>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num green">৪</div>
+            <div class="step-body">
+              <strong>GO চাপুন — ডাউনলোড ও ইনস্টল স্বয়ংক্রিয়</strong>
+              <p>GO বাটনে চাপলেই ফাইল ডাউনলোড হবে। শেষ হলে <strong>Install</strong> চাপুন।<br>
+              ইনস্টলের পর অ্যাপটি Delete করতে চাইবে — চাইলে Delete করুন বা না করুন।</p>
+              <div class="step-tip">✅ মোট সময়: ~৩০ সেকেন্ড। এটাই Android TV-তে APK ইনস্টলের সবচেয়ে দ্রুত পদ্ধতি।</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- BROWSER METHOD -->
+    <div id="m-browser" class="method-pane">
+      <div class="method-card" style="border-color: rgba(139,92,246,0.35);">
+        <h3>🖥️ টিভির ব্রাউজার দিয়ে ইনস্টল</h3>
+        <ul class="steps">
+          <li class="step-item">
+            <div class="step-num" style="background:rgba(139,92,246,0.15); color:#a78bfa; border:1.5px solid rgba(139,92,246,0.3);">১</div>
+            <div class="step-body">
+              <strong>টিভিতে ব্রাউজার খুলুন</strong>
+              <p>TV Bro, Puffin TV Browser, JioPages, Chrome for Android TV — যেকোনো ব্রাউজার চলবে।</p>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num" style="background:rgba(139,92,246,0.15); color:#a78bfa; border:1.5px solid rgba(139,92,246,0.3);">২</div>
+            <div class="step-body">
+              <strong>এই পেজে আসুন</strong>
+              <p>ব্রাউজারের অ্যাড্রেস বারে লিখুন:</p>
+              <div class="url-pill" style="margin-top:8px;">
+                <span class="url-val" id="installUrlBrowser">লোড হচ্ছে...</span>
+                <button class="copy-btn" onclick="copyUrl('installUrlBrowser')">📋 কপি</button>
+              </div>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num" style="background:rgba(139,92,246,0.15); color:#a78bfa; border:1.5px solid rgba(139,92,246,0.3);">৩</div>
+            <div class="step-body">
+              <strong>সবুজ "APK ডাউনলোড করুন" বাটনে চাপুন</strong>
+              <p>ব্রাউজার ফাইলটি ডাউনলোড ফোল্ডারে সেভ করবে।</p>
+              <div class="step-note">⚠️ Unknown Sources আগে চালু করে নিন — নইলে ইনস্টল হবে না।</div>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num" style="background:rgba(139,92,246,0.15); color:#a78bfa; border:1.5px solid rgba(139,92,246,0.3);">৪</div>
+            <div class="step-body">
+              <strong>Downloads ফোল্ডার থেকে ইনস্টল করুন</strong>
+              <p>ডাউনলোড নোটিফিকেশনে ক্লিক করুন বা File Manager-এ Downloads ফোল্ডারে যান।<br>
+              <span class="code-inline">MyMasjidTV_INSTALL.apk</span> ওপেন করে <strong>Install</strong> চাপুন।</p>
+              <div class="step-tip">✅ এই পদ্ধতি Samsung Smart TV-এর Tizen Browser ছাড়া সব Android TV-তে কাজ করে।</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- AUTO BOOT GUIDE -->
+    <div class="autoboot">
+      <h3>⚙️ টিভি চালু হলেই নিজে নিজে চালু হবে (Boot Auto-Start)</h3>
+      <p>ইনস্টলের পর একবার নিচের সেটিংসগুলো করুন — তারপর থেকে বিদ্যুৎ বা টিভি অন হলেই কোনো রিমোট ছাড়া নামাজের সময় স্ক্রিনে আসবে:</p>
+      <div class="autoboot-grid">
+        <div class="ab-item">
+          <div class="ab-item-title">১. Display Over Other Apps চালু করুন</div>
+          <div class="ab-item-desc">Settings → Apps → Special app access → <strong>Display over other apps</strong> → MyMasjid TV → Allow</div>
+        </div>
+        <div class="ab-item">
+          <div class="ab-item-title">২. অ্যাপ একবার নিজে হাতে চালু করুন</div>
+          <div class="ab-item-desc">প্রথমবার হাতে চালু করলে পরবর্তীতে বুটের সময় অটোমেটিক চালু হবে।</div>
+        </div>
+        <div class="ab-item">
+          <div class="ab-item-title">৩. হোম লঞ্চার হিসেবে সেট করুন (সেরা পদ্ধতি)</div>
+          <div class="ab-item-desc">রিমোটের <strong>Home</strong> বাটন চাপুন → <strong>MyMasjid TV</strong> বেছে নিন → <strong>Always</strong> সিলেক্ট করুন।</div>
+        </div>
+        <div class="ab-item">
+          <div class="ab-item-title">৪. স্ক্রিন-সেভার বন্ধ করুন</div>
+          <div class="ab-item-desc">Settings → Device Preferences → Screen saver → <strong>Off</strong> করুন — স্ক্রিন কখনো নিভবে না।</div>
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- FOOTER -->
   <footer>
-    <p>স্মার্ট মসজিদ ডিজিটাল ডিসপ্লে সিস্টেম &copy; ২০২৬ | <a href="display.html">ওয়েব ডিসপ্লে</a> | <a href="portal.html">মসজিদ পোর্টাল</a> | <a href="admin.html">অ্যাডমিন প্যানেল</a></p>
+    <p>🕌 স্মার্ট মসজিদ ডিজিটাল ডিসপ্লে সিস্টেম &copy; ২০২৬ &nbsp;|&nbsp;
+    <a href="display.html">লাইভ ডিসপ্লে</a> &nbsp;|&nbsp;
+    <a href="portal.html">মসজিদ পোর্টাল</a> &nbsp;|&nbsp;
+    <a href="admin.html">অ্যাডমিন প্যানেল</a></p>
   </footer>
 
-  <script>
-    // Live APK Download URL generator
-    var currentUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/') + 'MyMasjidTV_INSTALL.apk';
-    var urlPill = document.getElementById('urlDisplay');
-    if (urlPill) urlPill.textContent = currentUrl;
+  <div class="toast-msg" id="toastMsg">📋 লিঙ্ক কপি করা হয়েছে!</div>
 
-    // Generate QR Code
+  <script>
+    // ── URL Generation ──
+    var origin = window.location.origin;
+    var basePath = window.location.pathname.replace(/\/[^\/]*$/, '/');
+    if (basePath.endsWith('install.html')) basePath = basePath.replace('install.html', '');
+    if (basePath === '') basePath = '/';
+
+    var installPageUrl = origin + basePath + 'install.html';
+    var apkUrl = origin + basePath + 'MyMasjidTV_INSTALL.apk';
+
+    // Populate all URL fields
+    ['installPageUrl'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = installPageUrl;
+    });
+    ['apkUrl', 'apkUrlVercel', 'apkUrlDl'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = apkUrl;
+    });
+    ['installUrlBrowser'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = installPageUrl;
+    });
+    var shortEl = document.getElementById('shortInstallUrl');
+    if (shortEl) shortEl.textContent = installPageUrl;
+
+    // APK button href
+    var apkBtn = document.getElementById('apkBtn');
+    if (apkBtn) apkBtn.href = apkUrl;
+
+    // ── QR Code ──
     try {
       if (typeof QRCode !== 'undefined') {
-        new QRCode(document.getElementById('qrcode'), {
-          text: currentUrl,
-          width: 130,
-          height: 130,
-          colorDark: "#070d18",
-          colorLight: "#ffffff",
+        new QRCode(document.getElementById('qrCode'), {
+          text: apkUrl,
+          width: 140, height: 140,
+          colorDark: '#07111f', colorLight: '#ffffff',
           correctLevel: QRCode.CorrectLevel.M
         });
+      } else {
+        setTimeout(function() {
+          try {
+            new QRCode(document.getElementById('qrCode'), {
+              text: apkUrl, width: 140, height: 140,
+              colorDark: '#07111f', colorLight: '#ffffff',
+              correctLevel: QRCode.CorrectLevel.M
+            });
+          } catch(e) {}
+        }, 1200);
       }
-    } catch(e) {
-      console.warn('QR Code generation failed:', e);
+    } catch(e) {}
+
+    // ── Tab Switching ──
+    function showMethod(id, btn) {
+      document.querySelectorAll('.method-pane').forEach(function(p) { p.classList.remove('active'); });
+      document.querySelectorAll('.mtab').forEach(function(b) { b.classList.remove('active'); });
+      document.getElementById('m-' + id).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // ── Copy URL ──
+    function copyUrl(elId) {
+      var el = document.getElementById(elId);
+      if (!el) return;
+      var txt = el.textContent.trim();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(showToast).catch(legacyCopy);
+      } else { legacyCopy(); }
+      function legacyCopy() {
+        var ta = document.createElement('textarea');
+        ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); showToast(); } catch(e) {}
+        document.body.removeChild(ta);
+      }
+    }
+
+    function showToast() {
+      var t = document.getElementById('toastMsg');
+      t.style.display = 'block';
+      setTimeout(function() { t.style.display = 'none'; }, 2500);
     }
   </script>
 </body>
