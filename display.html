@@ -803,7 +803,8 @@
       margin: 0 auto;
       width: 100%;
       box-sizing: border-box;
-      overflow: hidden;
+      position: relative;
+      overflow: visible;
     }
 
     /* ══ CLOCK DISPLAY (Frameless, Majestic, Grand Floating Digits) ══ */
@@ -3893,11 +3894,11 @@
     /* ══ CIRCULAR SVG IQAMA COUNTDOWN HUD (TAWKIT LUXURY BEZEL DIAL - NO BLINKING) ══ */
     .iqama-circular-hud {
       position: absolute;
-      right: clamp(10px, 2.4vw, 38px);
+      right: clamp(14px, 2.6vw, 44px);
       top: 50%;
       transform: translateY(-50%);
-      width: clamp(190px, 20vw, 290px);
-      height: clamp(190px, 20vw, 290px);
+      width: clamp(260px, 24vw, 370px);
+      height: clamp(260px, 24vw, 370px);
       background-image: url('circle_frame1.png');
       background-position: center center;
       background-repeat: no-repeat;
@@ -3907,7 +3908,7 @@
       align-items: center;
       justify-content: center;
       z-index: 25;
-      filter: drop-shadow(0 14px 32px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 20px rgba(245, 158, 11, 0.25));
+      filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.92)) drop-shadow(0 0 25px rgba(245, 158, 11, 0.3));
       box-sizing: border-box;
       animation: none !important; /* NO BLINKING */
     }
@@ -3920,39 +3921,42 @@
       right: auto !important;
       top: auto !important;
       transform: none !important;
-      margin: clamp(8px, 1.5vh, 16px) auto !important;
-      width: clamp(200px, 46vw, 310px) !important;
-      height: clamp(200px, 46vw, 310px) !important;
+      margin: clamp(10px, 2vh, 22px) auto !important;
+      width: clamp(260px, 52vw, 390px) !important;
+      height: clamp(260px, 52vw, 390px) !important;
       animation: none !important;
     }
 
     .circular-ring-svg {
-      width: 86%;
-      height: 86%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       transform: rotate(-90deg); /* Start at 12 o'clock */
       overflow: visible;
-      filter: drop-shadow(0 0 14px rgba(245, 158, 11, 0.4));
+      filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.55));
       animation: none !important;
     }
     .ring-bg {
       fill: transparent;
-      stroke: rgba(255, 255, 255, 0.08);
-      stroke-width: 6;
+      stroke: rgba(255, 255, 255, 0.1);
+      stroke-width: 8;
     }
     .ring-bar {
       fill: none;
       stroke: url(#goldRingGrad);
-      stroke-width: 7.5;
+      stroke-width: 8.5;
       stroke-linecap: round;
       transition: stroke-dashoffset 1s linear;
       animation: none !important;
     }
     .iqama-circular-hud.ring-alert-red .circular-ring-svg {
-      filter: drop-shadow(0 0 25px rgba(239, 68, 68, 0.85));
+      filter: drop-shadow(0 0 28px rgba(239, 68, 68, 0.9));
     }
     .iqama-circular-hud.ring-alert-red .ring-bar {
       stroke: url(#redRingGrad) !important;
-      stroke-width: 7.5 !important;
+      stroke-width: 8.5 !important;
       opacity: 1 !important;
       animation: none !important; /* NO BLINKING */
     }
@@ -3968,36 +3972,36 @@
       justify-content: center;
       text-align: center;
       pointer-events: none;
-      padding: clamp(14px, 2vw, 24px);
+      padding: clamp(16px, 2.2vw, 30px);
       box-sizing: border-box;
-      gap: 2px;
+      gap: 3px;
       animation: none !important;
     }
     .ring-waqt-label {
       font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
-      font-size: clamp(13px, 1.5vw, 20px) !important;
+      font-size: clamp(16px, 1.8vw, 25px) !important;
       font-weight: 700 !important;
       color: #f7c844 !important;
       letter-spacing: 0.5px;
       line-height: 1.2;
-      text-shadow: 0 0 14px rgba(247, 200, 68, 0.5), 0 2px 8px rgba(0, 0, 0, 0.9);
+      text-shadow: 0 0 16px rgba(247, 200, 68, 0.5), 0 2px 8px rgba(0, 0, 0, 0.9);
       animation: none !important;
     }
     .ring-digits {
       font-family: 'Hind Siliguri', 'Outfit', 'Cinzel', sans-serif !important;
-      font-size: clamp(34px, 4.4vw, 68px) !important;
+      font-size: clamp(48px, 5.2vw, 86px) !important;
       font-weight: 800 !important;
       color: #fde047 !important;
       line-height: 1 !important;
-      letter-spacing: 1px;
-      text-shadow: 0 0 26px rgba(253, 224, 71, 0.65), 0 3px 12px rgba(0, 0, 0, 0.95) !important;
+      letter-spacing: 1.5px;
+      text-shadow: 0 0 30px rgba(253, 224, 71, 0.7), 0 3px 12px rgba(0, 0, 0, 0.95) !important;
       font-variant-numeric: tabular-nums;
       margin: 4px 0 2px 0;
       animation: none !important;
     }
     .ring-status-sub {
       font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
-      font-size: clamp(11px, 1.2vw, 16px) !important;
+      font-size: clamp(13px, 1.4vw, 20px) !important;
       font-weight: 600 !important;
       color: #cbd5e1 !important;
       text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
@@ -4006,16 +4010,16 @@
     }
     .ring-mobile-badge {
       position: absolute;
-      bottom: -14px;
+      bottom: -16px;
       white-space: nowrap;
       background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(185, 28, 28, 0.95));
       color: #ffffff;
       font-family: 'Hind Siliguri', sans-serif;
-      font-size: clamp(10px, 1.1vw, 15px);
+      font-size: clamp(12px, 1.2vw, 17px);
       font-weight: 700;
-      padding: 3px 14px;
+      padding: 4px 18px;
       border-radius: 999px;
-      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.5);
+      box-shadow: 0 4px 16px rgba(239, 68, 68, 0.5);
       animation: none !important; /* NO BLINKING */
       z-index: 30;
     }
@@ -4219,8 +4223,8 @@
                   <stop offset="100%" stop-color="#b91c1c" />
                 </linearGradient>
               </defs>
-              <circle class="ring-bg" cx="100" cy="100" r="80" />
-              <circle class="ring-bar" id="circularRingBar" cx="100" cy="100" r="80" stroke-dasharray="502.65" stroke-dashoffset="0" />
+              <circle class="ring-bg" cx="100" cy="100" r="89" />
+              <circle class="ring-bar" id="circularRingBar" cx="100" cy="100" r="89" stroke-dasharray="559.20" stroke-dashoffset="0" />
             </svg>
             <div class="ring-center-content">
               <div class="ring-waqt-label" id="ringWaqtLabel">পরবর্তী নামাজ</div>
@@ -5065,7 +5069,7 @@
       var ringBar = document.getElementById('circularRingBar');
       if (ringBar) {
         var progress = Math.max(0, Math.min(1, totalSec / maxSec));
-        var circumference = 502.65; // 2 * pi * 80
+        var circumference = 559.20; // 2 * pi * 89 (aligns directly along outer metallic dial groove)
         var offset = circumference * (1 - progress);
         ringBar.style.strokeDashoffset = offset.toFixed(2);
       }
