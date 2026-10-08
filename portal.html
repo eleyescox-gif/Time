@@ -156,6 +156,17 @@
       border-color: var(--gold);
       color: var(--gold);
     }
+    .btn-delete {
+      background: rgba(239, 68, 68, 0.12);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+    .btn-delete:hover {
+      background: rgba(239, 68, 68, 0.25);
+      border-color: #ef4444;
+      color: #fca5a5;
+      transform: translateY(-1px);
+    }
     .btn-sm {
       padding: 7px 12px;
       font-size: 12.5px;
@@ -538,6 +549,7 @@
         .then(function(data) {
           if (data && data.mosques && data.mosques.length) {
             allMosques = data.mosques;
+            try { localStorage.setItem('mosque_registry', JSON.stringify(allMosques)); } catch(e) {}
             renderMosqueList(allMosques);
           } else {
             renderFallbackList();
@@ -549,6 +561,17 @@
     }
 
     function renderFallbackList() {
+      try {
+        var localReg = localStorage.getItem('mosque_registry');
+        if (localReg) {
+          var parsed = JSON.parse(localReg);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            allMosques = parsed;
+            renderMosqueList(allMosques);
+            return;
+          }
+        }
+      } catch(e) {}
       allMosques = [
         { id: 'default', nameBn: 'পূর্ব মোহাজের পাড়া জামে মসজিদ', location: 'চকরিয়া, কক্সবাজার' }
       ];
@@ -565,18 +588,68 @@
       list.forEach(function(m) {
         var item = document.createElement('div');
         item.className = 'mosque-item';
-        var dLink = 'display.html?m=' + m.id;
-        var aLink = 'admin.html?m=' + m.id;
+        var dLink = 'display.html?m=' + encodeURIComponent(m.id);
+        var aLink = 'admin.html?m=' + encodeURIComponent(m.id);
+        var isDefault = (m.id === 'default');
+
+        var deleteBtn = isDefault ? '' : 
+          '<button type="button" class="btn btn-delete btn-sm" onclick="confirmDeleteMosque(\'' + m.id + '\', \'' + (m.nameBn || m.id).replace(/'/g, "\\'") + '\')" title="এই অপ্রয়োজনীয় মসজিদটি মুছে ফেলুন">' +
+            '🗑️ মুছুন' +
+          '</button>';
+
+        var badge = isDefault ? '<span style="font-size:11px; background:rgba(212,175,55,0.2); color:var(--gold); border:1px solid rgba(212,175,55,0.4); padding:2px 7px; border-radius:10px; margin-left:6px; font-weight:normal;">মূল মসজিদ</span>' : '';
+
         item.innerHTML = 
           '<div class="m-info">' +
-            '<h4>🕌 ' + (m.nameBn || 'জামে মসজিদ') + '</h4>' +
+            '<h4>🕌 ' + (m.nameBn || 'জামে মসজিদ') + badge + '</h4>' +
             '<p>📍 ' + (m.location || 'বাংলাদেশ') + ' &bull; <span style="color:#38bdf8;">আইডি: ' + m.id + '</span></p>' +
           '</div>' +
           '<div class="m-actions">' +
             '<a href="' + dLink + '" class="btn btn-gold btn-sm">📺 ডিসপ্লে</a>' +
             '<a href="' + aLink + '" class="btn btn-outline btn-sm">⚙️ এডমিন</a>' +
+            deleteBtn +
           '</div>';
         listEl.appendChild(item);
+      });
+    }
+
+    function confirmDeleteMosque(id, name) {
+      if (!id || id === 'default') {
+        alert('মূল মসজিদ (Default Mosque) ডিলেট করা যাবে না!');
+        return;
+      }
+      var confirmed = confirm('⚠️ আপনি কি নিশ্চিত যে "' + name + '" মসজিদটি সম্পূর্ণ মুছে ফেলতে চান?\n\n(এটি মুছে ফেললে এই মসজিদের সমস্ত সেটিংস ও ডাটা স্থায়ীভাবে মুছে যাবে)');
+      if (!confirmed) return;
+
+      fetch('/api/settings?action=delete&m=' + encodeURIComponent(id), {
+        method: 'POST'
+      })
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        if (data && data.error) {
+          alert('❌ ত্রুটি: ' + data.error);
+        } else {
+          try {
+            localStorage.removeItem('mosqueSettings_' + id);
+            var reg = JSON.parse(localStorage.getItem('mosque_registry') || '[]');
+            reg = reg.filter(function(x) { return x.id !== id; });
+            localStorage.setItem('mosque_registry', JSON.stringify(reg));
+          } catch(e) {}
+          showToast('🗑️ "' + name + '" মসজিদটি সফলভাবে মুছে ফেলা হয়েছে!');
+          loadMosques();
+        }
+      })
+      .catch(function() {
+        // Offline deletion
+        try {
+          localStorage.removeItem('mosqueSettings_' + id);
+          allMosques = allMosques.filter(function(x) { return x.id !== id; });
+          localStorage.setItem('mosque_registry', JSON.stringify(allMosques));
+          renderMosqueList(allMosques);
+          showToast('🗑️ মসজিদটি মুছে ফেলা হয়েছে!');
+        } catch(e) {
+          alert('মুছতে সমস্যা হয়েছে: ' + e.message);
+        }
       });
     }
 
@@ -619,6 +692,11 @@
       // Save locally
       try {
         localStorage.setItem('mosqueSettings_' + slug, JSON.stringify(newSettings));
+        var reg = JSON.parse(localStorage.getItem('mosque_registry') || '[]');
+        if (!reg.some(function(x) { return x.id === slug; })) {
+          reg.push({ id: slug, nameBn: nameBn, location: fullLocation, updatedAt: newSettings.updatedAt });
+          localStorage.setItem('mosque_registry', JSON.stringify(reg));
+        }
       } catch(err) {}
 
       // Save via API

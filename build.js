@@ -23,7 +23,8 @@ const files = [
   'coxs-bazar-times.js',
   'islamic-slides.js',
   'circle_frame1.png',
-  'circle_frame2.png'
+  'circle_frame2.png',
+  'mosque_registry.json'
 ];
 
 files.forEach(file => {

@@ -94,6 +94,57 @@ const server = http.createServer((req, res) => {
       ? path.join(dir, 'settings.json') 
       : path.join(dir, `settings_${mId}.json`);
 
+    function handleDeleteMosque(targetId) {
+      if (!targetId || targetId === 'default') {
+        res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ error: 'মূল মসজিদ (Default Mosque) ডিলেট করা যাবে না!' }));
+        return;
+      }
+
+      const targetFile = path.join(dir, `settings_${targetId}.json`);
+      const pubTargetFile = path.join(dir, 'public', `settings_${targetId}.json`);
+
+      try {
+        if (fs.existsSync(targetFile)) {
+          try { fs.unlinkSync(targetFile); } catch(e) {}
+        }
+        if (fs.existsSync(pubTargetFile)) {
+          try { fs.unlinkSync(pubTargetFile); } catch(e) {}
+        }
+
+        // Update Registry
+        const regFile = path.join(dir, 'mosque_registry.json');
+        let list = [{ id: 'default', nameBn: 'পূর্ব মোহাজের পাড়া জামে মসজিদ', location: 'চকরিয়া, কক্সবাজার' }];
+        if (fs.existsSync(regFile)) {
+          list = JSON.parse(fs.readFileSync(regFile, 'utf8'));
+        }
+        list = list.filter(item => item.id !== targetId);
+        fs.writeFileSync(regFile, JSON.stringify(list, null, 2), 'utf8');
+
+        try {
+          fs.writeFileSync(path.join(dir, 'public', 'mosque_registry.json'), JSON.stringify(list, null, 2), 'utf8');
+        } catch(e) {}
+
+        // Broadcast to clients
+        const msg = `data: ${JSON.stringify({ type: 'DELETE_MOSQUE', mosqueId: targetId })}\n\n`;
+        sseClients.forEach(client => {
+          try { client.write(msg); } catch(e) { sseClients.delete(client); }
+        });
+
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ success: true, message: 'মসজিদ সফলভাবে মুছে ফেলা হয়েছে', deletedId: targetId, mosques: list }));
+      } catch (err) {
+        res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ error: 'মসজিদ মুছতে সমস্যা হয়েছে: ' + err.message }));
+      }
+    }
+
+    // Direct DELETE or action=delete
+    if (req.method === 'DELETE' || action === 'delete') {
+      handleDeleteMosque(mId);
+      return;
+    }
+
     if (req.method === 'GET') {
       fs.readFile(settingsFile, 'utf8', (err, data) => {
         if (err) {
@@ -127,6 +178,11 @@ const server = http.createServer((req, res) => {
       req.on('end', () => {
         try {
           const parsed = JSON.parse(body);
+
+          if (parsed && (parsed.action === 'delete' || action === 'delete')) {
+            handleDeleteMosque(parsed.mosqueId || mId);
+            return;
+          }
 
           let existing = {};
           try {

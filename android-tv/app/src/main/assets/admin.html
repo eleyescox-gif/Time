@@ -1472,6 +1472,25 @@
           </div>
         </div>
 
+        <!-- 5b. DANGER ZONE: DELETE MOSQUE (Only for custom mosques) -->
+        <div id="deleteMosqueCard" class="settings-card" style="display:none; margin-bottom: 24px; padding: 20px; border: 1.5px solid rgba(239,68,68,0.5); background: rgba(239,68,68,0.06); border-radius: 14px;">
+          <div class="card-header" style="margin-bottom: 12px; display:flex; align-items:center; gap:12px;">
+            <div class="card-icon" style="background: rgba(239,68,68,0.2); color: #ef4444; width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px;">🗑️</div>
+            <div>
+              <h3 style="color:#ef4444; margin:0; font-size:16px;">মসজিদ মুছে ফেলুন (Delete Mosque)</h3>
+              <p style="color:#fca5a5; margin:3px 0 0; font-size:12.5px;">অপ্রয়োজনীয় বা পরীক্ষামূলক মসজিদ সিস্টেম থেকে সম্পূর্ণ মুছে ফেলতে এই অপশনটি ব্যবহার করুন।</p>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; padding-top:12px; border-top:1px dashed rgba(239,68,68,0.3);">
+            <div style="font-size:12.5px; color:#fca5a5; max-width:550px; line-height:1.5;">
+              ⚠️ <strong>সতর্কতা:</strong> এই মসজিদটি মুছে ফেললে এর ডিসপ্লে লিঙ্ক, সেটিংস ও সমস্ত তথ্য স্থায়ীভাবে মুছে যাবে এবং পূর্বাবস্থায় ফিরিয়ে আনা যাবে না।
+            </div>
+            <button type="button" onclick="deleteCurrentMosque()" class="btn btn-outline" style="background:rgba(239,68,68,0.25); color:#ef4444; border:1px solid #ef4444; font-weight:700; padding:10px 20px; border-radius:8px; cursor:pointer; display:inline-flex; align-items:center; gap:6px; font-size:13.5px; transition:all 0.2s;">
+              🗑️ এই মসজিদটি মুছে ফেলুন
+            </button>
+          </div>
+        </div>
+
         <!-- 6. COLLAPSIBLE ADVANCED SETTINGS -->
         <details style="background: rgba(0,0,0,0.25); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; margin-top: 14px;">
           <summary style="cursor:pointer; color:var(--text-muted); font-size:13px; font-weight:700;">
@@ -2306,6 +2325,11 @@
 
       var azanShow = (s.showAzanTime !== false && s.showAzanTime !== 'false');
       updateAzanSwitchUI(azanShow);
+
+      var delCard = document.getElementById('deleteMosqueCard');
+      if (delCard) {
+        delCard.style.display = (activeMosqueId && activeMosqueId !== 'default') ? 'block' : 'none';
+      }
     }
 
     function saveSettings() {
@@ -2399,6 +2423,45 @@
         localStorage.removeItem('mosqueSettings');
         location.reload();
       }
+    }
+
+    function deleteCurrentMosque() {
+      if (!activeMosqueId || activeMosqueId === 'default') {
+        alert('মূল মসজিদ (Default Mosque) মুছে ফেলা সম্ভব নয়!');
+        return;
+      }
+      var mName = (document.getElementById('nameBn') && document.getElementById('nameBn').value) || activeMosqueId;
+      var confirmed = confirm('⚠️ আপনি কি নিশ্চিত যে "' + mName + '" মসজিদটি সম্পূর্ণ মুছে ফেলতে চান?\n\n(এটি মুছে ফেললে এই মসজিদের সমস্ত সেটিংস ও ডাটা স্থায়ীভাবে মুছে যাবে)');
+      if (!confirmed) return;
+
+      fetch('/api/settings?action=delete&m=' + encodeURIComponent(activeMosqueId), {
+        method: 'POST'
+      })
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        if (data && data.error) {
+          alert('❌ ত্রুটি: ' + data.error);
+        } else {
+          try {
+            localStorage.removeItem(getStorageKey());
+            var reg = JSON.parse(localStorage.getItem('mosque_registry') || '[]');
+            reg = reg.filter(function(x) { return x.id !== activeMosqueId; });
+            localStorage.setItem('mosque_registry', JSON.stringify(reg));
+          } catch(e) {}
+          alert('✅ "' + mName + '" মসজিদটি সফলভাবে মুছে ফেলা হয়েছে!\nপোর্টাল পেজে নিয়ে যাওয়া হচ্ছে...');
+          window.location.href = 'portal.html';
+        }
+      })
+      .catch(function(err) {
+        try {
+          localStorage.removeItem(getStorageKey());
+          var reg = JSON.parse(localStorage.getItem('mosque_registry') || '[]');
+          reg = reg.filter(function(x) { return x.id !== activeMosqueId; });
+          localStorage.setItem('mosque_registry', JSON.stringify(reg));
+        } catch(e) {}
+        alert('✅ মসজিদটি লোকাল মেমোরি থেকে মুছে ফেলা হয়েছে!\nপোর্টাল পেজে নিয়ে যাওয়া হচ্ছে...');
+        window.location.href = 'portal.html';
+      });
     }
 
     function triggerTestCountdown(sec) {
