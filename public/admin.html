@@ -335,6 +335,231 @@
       box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
     }
 
+    /* ══ AZAN MASTER TOGGLE SWITCH & CONTROL STYLES ══ */
+    .azan-master-switch-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(15, 23, 42, 0.85) 100%);
+      border: 1.5px solid rgba(16, 185, 129, 0.45);
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      transition: all 0.3s ease;
+    }
+    .azan-master-switch-card.is-off {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, rgba(15, 23, 42, 0.85) 100%);
+      border-color: rgba(239, 68, 68, 0.4);
+    }
+    .azan-switch-left {
+      flex: 1;
+      min-width: 0;
+    }
+    .azan-switch-badge-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .azan-switch-badge {
+      font-size: 11px;
+      font-weight: 700;
+      color: #cbd5e1;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .azan-switch-state-badge {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 999px;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+    }
+    .azan-switch-state-badge.badge-on {
+      background: rgba(16, 185, 129, 0.25);
+      color: #34d399;
+      border: 1px solid #10b981;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+    }
+    .azan-switch-state-badge.badge-off {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      border: 1px solid #ef4444;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.25);
+    }
+    .azan-switch-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 0 0 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .azan-switch-sub {
+      font-size: 12.5px;
+      color: #94a3b8;
+      line-height: 1.45;
+      margin: 0;
+    }
+    .azan-switch-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    /* iOS/Material Royal Toggle Switch */
+    .royal-toggle {
+      position: relative;
+      display: inline-block;
+      width: 68px;
+      height: 36px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .royal-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+    .royal-slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #334155;
+      border: 2px solid #475569;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 999px;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.4);
+    }
+    .royal-slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 3px;
+      bottom: 3px;
+      background: #94a3b8;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+    .royal-toggle input:checked + .royal-slider {
+      background-color: #059669;
+      border-color: #10b981;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.4), inset 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .royal-toggle input:checked + .royal-slider:before {
+      transform: translateX(32px);
+      background: #ffffff;
+      box-shadow: 0 0 10px rgba(255,255,255,0.8);
+    }
+    .azan-toggle-status-text {
+      font-size: 13px;
+      font-weight: 800;
+      color: #34d399;
+      letter-spacing: 0.5px;
+    }
+    .azan-toggle-status-text.text-off {
+      color: #f87171;
+    }
+
+    /* Quick Auto Pill Button */
+    .btn-pill-auto {
+      background: rgba(245, 197, 66, 0.12);
+      border: 1.5px solid rgba(245, 197, 66, 0.35);
+      color: #fde047;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn-pill-auto:hover {
+      background: var(--gold);
+      color: #000000;
+      box-shadow: 0 2px 8px rgba(245, 197, 66, 0.35);
+      transform: translateY(-1px);
+    }
+
+    /* Master Action Control Bar */
+    .azan-control-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 16px;
+      margin-bottom: 18px;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .azan-control-bar-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .azan-control-bar-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .btn-control-quick {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-control-quick:hover {
+      background: rgba(245, 197, 66, 0.2);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .azan-field-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .azan-visibility-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #34d399;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 2px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Dimmed look when switch is off */
+    .azan-group-disabled {
+      opacity: 0.65;
+    }
+    .azan-group-disabled input {
+      border-color: rgba(255, 255, 255, 0.1) !important;
+      background: rgba(0, 0, 0, 0.2) !important;
+    }
+
     /* Logo Upload Box */
     .logo-uploader {
       display: flex;
@@ -578,18 +803,59 @@
             <p>প্রতিটি ওয়াক্তের আজান ও জামাতের সময় নির্ধারণ করুন (১২ ঘণ্টা ফরম্যাটে লিখুন, পাশে AM / PM বেছে নিন; আজানে 'auto' লিখলে চকরিয়া সূর্য অনুযায়ী স্বয়ংক্রিয় নির্ধারণ হবে)</p>
           </div>
         </div>
+
+        <!-- ══ AZAN TIME DISPLAY MASTER TOGGLE SWITCH ══ -->
+        <div class="azan-master-switch-card" id="azanMasterSwitchCard">
+          <div class="azan-switch-left">
+            <div class="azan-switch-badge-row">
+              <span class="azan-switch-badge">📢 ডিসপ্লে কন্ট্রোল সুইচ</span>
+              <span id="azanSwitchLiveBadge" class="azan-switch-state-badge badge-on">চালু (ON)</span>
+            </div>
+            <h3 class="azan-switch-title">
+              <span>আজানের সময় দেখাবে কিনা</span>
+            </h3>
+            <p class="azan-switch-sub">
+              এই সুইচ চালু থাকলে টিভি ডিসপ্লেতে প্রতিটি ওয়াক্তের নামের নিচে আজানের সময় (যেমন: আজান ৫:১৫) প্রদর্শিত হবে। বন্ধ রাখলে ডিসপ্লেতে আজানের সময় লুকানো থাকবে এবং কেবল ওয়াক্ত ও জামাতের সময় বড় করে দেখাবে।
+            </p>
+          </div>
+          <div class="azan-switch-right">
+            <label class="royal-toggle" title="আজানের সময় প্রদর্শন চালু বা বন্ধ করুন">
+              <input type="checkbox" id="toggleShowAzanTime" onchange="onAzanSwitchChange(this.checked)">
+              <span class="royal-slider"></span>
+            </label>
+            <span id="azanToggleStatusText" class="azan-toggle-status-text">চালু</span>
+          </div>
+        </div>
+
+        <!-- ══ AZAN TIMES CONTROL BAR ══ -->
+        <div class="azan-control-bar" id="azanControlBar">
+          <div class="azan-control-bar-left">
+            <span class="azan-control-bar-title">⚙️ আজানের সময় নিয়ন্ত্রণ:</span>
+            <span class="azan-control-bar-sub">প্রতিটি ওয়াক্তের আজানের সময় নিজের মতো করে লিখুন অথবা সূর্য অনুযায়ী অটো রাখুন।</span>
+          </div>
+          <div class="azan-control-bar-right">
+            <button type="button" class="btn-control-quick" onclick="setAllAzanAuto()" title="সব ওয়াক্তের আজান সূর্য অনুযায়ী স্বয়ংক্রিয় করতে চাপুন">
+              <span>☀️ সকল আজান অটো (সূর্য অনুযায়ী)</span>
+            </button>
+          </div>
+        </div>
+
         <div class="form-grid">
           <!-- ফজর -->
-          <div class="form-group">
-            <label>📢 ফজর আজান</label>
+          <div class="form-group azan-field-group">
+            <div class="azan-field-label-row">
+              <label>📢 ফজর আজান</label>
+              <span class="azan-visibility-badge">📢 ডিসপ্লেতে দৃশ্যমান</span>
+            </div>
             <div class="time-input-12h-wrap">
               <input id="fajrAzan" placeholder="auto" maxlength="8">
               <div class="ampm-pill-group" data-for="fajrAzan">
                 <button type="button" class="ampm-btn active" data-val="AM" onclick="setAmpm('fajrAzan','AM')">AM</button>
                 <button type="button" class="ampm-btn" data-val="PM" onclick="setAmpm('fajrAzan','PM')">PM</button>
               </div>
+              <button type="button" class="btn-pill-auto" onclick="setPrayerAuto('fajrAzan')" title="সূর্য অনুযায়ী স্বয়ংক্রিয় সময় নির্ধারণ">☀️ অটো</button>
             </div>
-            <span class="field-hint">'auto' দিলে সূর্য অনুযায়ী আজান সময় বসবে</span>
+            <span class="field-hint">'auto' দিলে চকরিয়া সূর্য অনুযায়ী আজান বসবে অথবা নির্দিষ্ট সময় লিখুন</span>
           </div>
           <div class="form-group">
             <label>🕌 ফজর জামাত</label>
@@ -604,16 +870,20 @@
           </div>
 
           <!-- যোহর -->
-          <div class="form-group">
-            <label>📢 যোহর আজান</label>
+          <div class="form-group azan-field-group">
+            <div class="azan-field-label-row">
+              <label>📢 যোহর আজান</label>
+              <span class="azan-visibility-badge">📢 ডিসপ্লেতে দৃশ্যমান</span>
+            </div>
             <div class="time-input-12h-wrap">
               <input id="dhuhrAzan" placeholder="auto" maxlength="8">
               <div class="ampm-pill-group" data-for="dhuhrAzan">
                 <button type="button" class="ampm-btn" data-val="AM" onclick="setAmpm('dhuhrAzan','AM')">AM</button>
                 <button type="button" class="ampm-btn active" data-val="PM" onclick="setAmpm('dhuhrAzan','PM')">PM</button>
               </div>
+              <button type="button" class="btn-pill-auto" onclick="setPrayerAuto('dhuhrAzan')" title="সূর্য অনুযায়ী স্বয়ংক্রিয় সময় নির্ধারণ">☀️ অটো</button>
             </div>
-            <span class="field-hint">'auto' দিলে সূর্য অনুযায়ী আজান সময় বসবে</span>
+            <span class="field-hint">'auto' দিলে চকরিয়া সূর্য অনুযায়ী আজান বসবে অথবা নির্দিষ্ট সময় লিখুন</span>
           </div>
           <div class="form-group">
             <label>🕌 যোহর জামাত (শনি - বৃহস্পতি)</label>
@@ -628,16 +898,20 @@
           </div>
 
           <!-- আসর -->
-          <div class="form-group">
-            <label>📢 আসর আজান</label>
+          <div class="form-group azan-field-group">
+            <div class="azan-field-label-row">
+              <label>📢 আসর আজান</label>
+              <span class="azan-visibility-badge">📢 ডিসপ্লেতে দৃশ্যমান</span>
+            </div>
             <div class="time-input-12h-wrap">
               <input id="asrAzan" placeholder="auto" maxlength="8">
               <div class="ampm-pill-group" data-for="asrAzan">
                 <button type="button" class="ampm-btn" data-val="AM" onclick="setAmpm('asrAzan','AM')">AM</button>
                 <button type="button" class="ampm-btn active" data-val="PM" onclick="setAmpm('asrAzan','PM')">PM</button>
               </div>
+              <button type="button" class="btn-pill-auto" onclick="setPrayerAuto('asrAzan')" title="সূর্য অনুযায়ী স্বয়ংক্রিয় সময় নির্ধারণ">☀️ অটো</button>
             </div>
-            <span class="field-hint">'auto' দিলে সূর্য অনুযায়ী আজান সময় বসবে</span>
+            <span class="field-hint">'auto' দিলে চকরিয়া সূর্য অনুযায়ী আজান বসবে অথবা নির্দিষ্ট সময় লিখুন</span>
           </div>
           <div class="form-group">
             <label>🕌 আসর জামাত</label>
@@ -652,16 +926,20 @@
           </div>
 
           <!-- মাগরিব -->
-          <div class="form-group">
-            <label>📢 মাগরিব আজান</label>
+          <div class="form-group azan-field-group">
+            <div class="azan-field-label-row">
+              <label>📢 মাগরিব আজান</label>
+              <span class="azan-visibility-badge">📢 ডিসপ্লেতে দৃশ্যমান</span>
+            </div>
             <div class="time-input-12h-wrap">
               <input id="maghribAzan" placeholder="auto" maxlength="8">
               <div class="ampm-pill-group" data-for="maghribAzan">
                 <button type="button" class="ampm-btn" data-val="AM" onclick="setAmpm('maghribAzan','AM')">AM</button>
                 <button type="button" class="ampm-btn active" data-val="PM" onclick="setAmpm('maghribAzan','PM')">PM</button>
               </div>
+              <button type="button" class="btn-pill-auto" onclick="setPrayerAuto('maghribAzan')" title="সূর্য অনুযায়ী স্বয়ংক্রিয় সময় নির্ধারণ">☀️ অটো</button>
             </div>
-            <span class="field-hint">'auto' দিলে সূর্য অনুযায়ী আজান সময় বসবে</span>
+            <span class="field-hint">'auto' দিলে চকরিয়া সূর্যাস্ত অনুযায়ী আজান বসবে অথবা নির্দিষ্ট সময় লিখুন</span>
           </div>
           <div class="form-group">
             <label>🕌 মাগরিব জামাত</label>
@@ -676,16 +954,20 @@
           </div>
 
           <!-- এশা -->
-          <div class="form-group">
-            <label>📢 এশা আজান</label>
+          <div class="form-group azan-field-group">
+            <div class="azan-field-label-row">
+              <label>📢 এশা আজান</label>
+              <span class="azan-visibility-badge">📢 ডিসপ্লেতে দৃশ্যমান</span>
+            </div>
             <div class="time-input-12h-wrap">
               <input id="ishaAzan" placeholder="auto" maxlength="8">
               <div class="ampm-pill-group" data-for="ishaAzan">
                 <button type="button" class="ampm-btn" data-val="AM" onclick="setAmpm('ishaAzan','AM')">AM</button>
                 <button type="button" class="ampm-btn active" data-val="PM" onclick="setAmpm('ishaAzan','PM')">PM</button>
               </div>
+              <button type="button" class="btn-pill-auto" onclick="setPrayerAuto('ishaAzan')" title="সূর্য অনুযায়ী স্বয়ংক্রিয় সময় নির্ধারণ">☀️ অটো</button>
             </div>
-            <span class="field-hint">'auto' দিলে সূর্য অনুযায়ী আজান সময় বসবে</span>
+            <span class="field-hint">'auto' দিলে চকরিয়া সূর্য অনুযায়ী আজান বসবে অথবা নির্দিষ্ট সময় লিখুন</span>
           </div>
           <div class="form-group">
             <label>🕌 এশা জামাত</label>
@@ -1469,6 +1751,91 @@
       broadcastLiveUpdate();
     }
 
+    /* ══ AZAN MASTER SWITCH & TIME CONTROL LOGIC ══ */
+    function onAzanSwitchChange(checked) {
+      var selShow = document.getElementById('showAzanTime');
+      if (selShow) selShow.value = checked ? 'true' : 'false';
+      updateAzanSwitchUI(checked);
+      broadcastLiveUpdate();
+      saveSettings();
+    }
+
+    function updateAzanSwitchUI(checked) {
+      var card = document.getElementById('azanMasterSwitchCard');
+      var badge = document.getElementById('azanSwitchLiveBadge');
+      var txt = document.getElementById('azanToggleStatusText');
+      var tSwitch = document.getElementById('toggleShowAzanTime');
+      if (tSwitch) tSwitch.checked = checked;
+      var selShow = document.getElementById('showAzanTime');
+      if (selShow) selShow.value = checked ? 'true' : 'false';
+
+      if (checked) {
+        if (card) card.classList.remove('is-off');
+        if (badge) {
+          badge.textContent = 'চালু (ON)';
+          badge.className = 'azan-switch-state-badge badge-on';
+        }
+        if (txt) {
+          txt.textContent = 'চালু';
+          txt.className = 'azan-toggle-status-text';
+        }
+        document.querySelectorAll('.azan-field-group').forEach(function(el) {
+          el.classList.remove('azan-group-disabled');
+          var dBadge = el.querySelector('.azan-visibility-badge');
+          if (dBadge) {
+            dBadge.textContent = '📢 ডিসপ্লেতে দৃশ্যমান';
+            dBadge.style.color = '#34d399';
+          }
+        });
+      } else {
+        if (card) card.classList.add('is-off');
+        if (badge) {
+          badge.textContent = 'বন্ধ (OFF)';
+          badge.className = 'azan-switch-state-badge badge-off';
+        }
+        if (txt) {
+          txt.textContent = 'বন্ধ';
+          txt.className = 'azan-toggle-status-text text-off';
+        }
+        document.querySelectorAll('.azan-field-group').forEach(function(el) {
+          el.classList.add('azan-group-disabled');
+          var dBadge = el.querySelector('.azan-visibility-badge');
+          if (dBadge) {
+            dBadge.textContent = '🔒 ডিসপ্লেতে লুকানো';
+            dBadge.style.color = '#f87171';
+          }
+        });
+      }
+
+      var pAzan = document.getElementById('prevAzan');
+      if (pAzan) pAzan.style.display = checked ? 'block' : 'none';
+      var pSep = document.getElementById('prevSep');
+      if (pSep) pSep.style.display = checked ? 'inline-block' : 'none';
+    }
+
+    function setPrayerAuto(fieldId) {
+      var el = document.getElementById(fieldId);
+      if (!el) return;
+      el.value = 'auto';
+      var isFajr = (fieldId.indexOf('fajr') !== -1);
+      setAmpm(fieldId, isFajr ? 'AM' : 'PM');
+      broadcastLiveUpdate();
+      saveSettings();
+      var bName = (fieldId === 'fajrAzan' ? 'ফজর' : (fieldId === 'dhuhrAzan' ? 'যোহর' : (fieldId === 'asrAzan' ? 'আসর' : (fieldId === 'maghribAzan' ? 'মাগরিব' : 'এশা'))));
+      showToast('☀️ ' + bName + ' আজান সূর্য অনুযায়ী স্বয়ংক্রিয় (Auto) সেট করা হয়েছে!');
+    }
+
+    function setAllAzanAuto() {
+      ['fajrAzan', 'dhuhrAzan', 'asrAzan', 'maghribAzan', 'ishaAzan'].forEach(function(fid) {
+        var el = document.getElementById(fid);
+        if (el) el.value = 'auto';
+        setAmpm(fid, fid.indexOf('fajr') !== -1 ? 'AM' : 'PM');
+      });
+      broadcastLiveUpdate();
+      saveSettings();
+      showToast('☀️ ৫টি ওয়াক্তের আজান সূর্য অনুযায়ী স্বয়ংক্রিয় (Auto) নির্ধারণ করা হয়েছে!');
+    }
+
     function addTickerPreset(text) {
       var el = document.getElementById('ticker');
       if (!el) return;
@@ -1936,6 +2303,9 @@
       if (bgOpEl) bgOpEl.value = bgOpVal;
       var bgOpLbl = document.getElementById('bgOpacityLabel');
       if (bgOpLbl) bgOpLbl.textContent = toBnNum(bgOpVal) + '%';
+
+      var azanShow = (s.showAzanTime !== false && s.showAzanTime !== 'false');
+      updateAzanSwitchUI(azanShow);
     }
 
     function saveSettings() {
@@ -2100,6 +2470,13 @@
         el.addEventListener('blur', function() { normalizePrayerInput(k); });
       }
     });
+
+    var selShowAzan = document.getElementById('showAzanTime');
+    if (selShowAzan) {
+      selShowAzan.addEventListener('change', function() {
+        updateAzanSwitchUI(selShowAzan.value === 'true');
+      });
+    }
 
     loadSettings();
   </script>

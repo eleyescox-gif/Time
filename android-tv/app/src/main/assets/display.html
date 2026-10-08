@@ -4933,7 +4933,7 @@
         var html = '<div class="p-card-left">' +
                    '  <div class="p-name-row">' +
                    '    <span class="p-name">' + item.bn + '</span>' +
-                   '    <span class="p-sep">-</span>' +
+                   (showAzan && displayAzan ? '    <span class="p-sep">-</span>' : '') +
                    '  </div>' +
                    (showAzan && displayAzan ? '  <span class="p-azan-sub">আজান ' + displayAzan + '</span>' : '') +
                    '</div>' +
