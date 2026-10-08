@@ -543,10 +543,10 @@
     .header-main-row,
     .header-content-wrapper {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      gap: clamp(12px, 1.8vw, 28px);
+      justify-content: center;
+      gap: clamp(2px, 0.4vh, 6px);
       width: 100%;
       max-width: 100%;
       height: 100%;
@@ -575,23 +575,55 @@
       pointer-events: none;
     }
 
-    /* Left: Circular Mosque Logo Badge Container */
+    /* Top Subtle Bismillah */
+    .header-top-bismillah {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 0;
+      z-index: 2;
+    }
+
+    .header-bismillah {
+      font-family: 'Amiri', 'Traditional Arabic', serif;
+      font-size: clamp(13px, 1.6vh, 22px);
+      color: #f7c844;
+      opacity: 0.98;
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 0 14px rgba(247, 200, 68, 0.5);
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    /* Center Brand Group: Logo on left, Mosque Name & Address on right */
+    .header-brand-center-group {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(14px, 1.8vw, 26px);
+      width: auto;
+      max-width: 100%;
+      z-index: 2;
+    }
+
+    /* Logo Badge Container (In Red Box Area beside Mosque Name) */
     .header-logo-badge-container {
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: clamp(76px, 10vh, 114px);
-      z-index: 2;
     }
 
     .mosque-header-logo {
-      width: clamp(76px, 10vh, 114px);
-      height: clamp(76px, 10vh, 114px);
-      min-width: 70px;
-      min-height: 70px;
-      max-width: 120px;
-      max-height: 120px;
+      width: clamp(74px, 9.5vh, 108px);
+      height: clamp(74px, 9.5vh, 108px);
+      min-width: 68px;
+      min-height: 68px;
+      max-width: 115px;
+      max-height: 115px;
       border-radius: 50%;
       object-fit: contain;
       aspect-ratio: 1 / 1;
@@ -607,14 +639,6 @@
       transition: all 0.3s ease;
     }
 
-    /* Right: Symmetry Balance Spacer (Exact width of Logo for dead-center title text) */
-    .header-balance-spacer {
-      flex-shrink: 0;
-      width: clamp(76px, 10vh, 114px);
-      visibility: hidden;
-      pointer-events: none;
-    }
-
     /* Center: Mosque Brand Titles */
     .header-text-lines-container,
     .mosque-brand-titles {
@@ -625,31 +649,10 @@
       text-align: center;
       gap: clamp(1px, 0.2vh, 3px);
       min-width: 0;
-      flex: 1 1 auto;
-      z-index: 2;
+      flex: 0 1 auto;
     }
 
-    .header-top-bismillah {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      margin-bottom: 0;
-    }
-
-    .header-bismillah {
-      font-family: 'Amiri', 'Traditional Arabic', serif;
-      font-size: clamp(13px, 1.6vh, 22px);
-      color: #f7c844;
-      opacity: 0.98;
-      letter-spacing: 1.5px;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 0 14px rgba(247, 200, 68, 0.5);
-      line-height: 1.1;
-      text-align: center;
-    }
-
-    /* Line 1: Mosque Name (Grand Bold 900) */
+    /* Line 1: Mosque Name (Grand Bold 900 - EXTRA BIG per user request) */
     .header-line-mosque-name {
       display: flex;
       align-items: center;
@@ -660,14 +663,14 @@
 
     .mosque-title-bn {
       font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif !important;
-      font-size: clamp(28px, 4.4vh, 58px) !important;
+      font-size: clamp(36px, 5.8vh, 76px) !important;
       font-weight: 900 !important;
       color: #fde047 !important;
       line-height: 1.15 !important;
       letter-spacing: 0.8px;
       text-shadow: 
-        0 4px 20px rgba(0,0,0,0.95), 
-        0 0 32px rgba(253, 224, 71, 0.65) !important;
+        0 4px 22px rgba(0,0,0,0.95), 
+        0 0 35px rgba(253, 224, 71, 0.7) !important;
       margin: 0;
       text-align: center;
       white-space: nowrap;
@@ -684,7 +687,7 @@
 
     .mosque-title-en {
       font-family: 'Hind Siliguri', 'Outfit', sans-serif !important;
-      font-size: clamp(13px, 1.8vh, 21px) !important;
+      font-size: clamp(14px, 2vh, 23px) !important;
       font-weight: 700 !important;
       letter-spacing: 0.5px;
       color: #e2e8f0 !important;
@@ -4210,50 +4213,52 @@
         <!-- Header: Mosque Brand (100-120px Logo on Left, 3 Lines in Center: Name, Address, Date) -->
         <header class="pro-header">
           <div class="header-main-row header-content-wrapper">
-            <!-- Left: Large Circular Mosque Logo Badge (100-120px) -->
-            <div class="header-logo-badge-container">
-              <img id="mCustomLogo" src="logo.png" alt="Mosque Logo" class="mosque-header-logo" onerror="if(this.src.indexOf('logo.png')===-1)this.src='logo.png';" />
+            
+            <!-- Top Subtle Bismillah (Centered above brand) -->
+            <div class="header-top-bismillah">
+              <div class="header-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
             </div>
 
-            <!-- Center: 3 Dedicated Lines -->
-            <div class="header-text-lines-container mosque-brand-titles">
-              <!-- Top Subtle Bismillah -->
-              <div class="header-top-bismillah">
-                <div class="header-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+            <!-- Unified Brand Core: Logo on left, Mosque Name & Location on right -->
+            <div class="header-brand-center-group">
+              <!-- Mosque Logo Badge (Beside Name in red box position) -->
+              <div class="header-logo-badge-container">
+                <img id="mCustomLogo" src="logo.png" alt="Mosque Logo" class="mosque-header-logo" onerror="if(this.src.indexOf('logo.png')===-1)this.src='logo.png';" />
               </div>
 
-              <!-- Line 1: Mosque Name (Grand Bold 900) -->
-              <div class="header-line-mosque-name">
-                <h1 class="mosque-title-bn" id="mBn">পূর্ব মোহাজের পাড়া জামে মসজিদ</h1>
-              </div>
+              <!-- Titles: Grand Mosque Name & Address -->
+              <div class="header-text-lines-container mosque-brand-titles">
+                <!-- Line 1: Mosque Name (Grand Bold 900 - Extra Large) -->
+                <div class="header-line-mosque-name">
+                  <h1 class="mosque-title-bn" id="mBn">পূর্ব মোহাজের পাড়া জামে মসজিদ</h1>
+                </div>
 
-              <!-- Line 2: Dedicated Location Box -->
-              <div class="header-line-location">
-                <span class="mosque-title-en" id="mEn">বরইতলী, চকরিয়া, কক্সবাজার।</span>
+                <!-- Line 2: Dedicated Location Box -->
+                <div class="header-line-location">
+                  <span class="mosque-title-en" id="mEn">বরইতলী, চকরিয়া, কক্সবাজার।</span>
+                </div>
               </div>
+            </div>
 
-              <!-- Line 3: Royal Islamic Date Plaque -->
-              <div class="header-center-date-row">
-                <div class="header-date-badge-outer">
-                  <div class="header-date-badge">
-                    <div class="h-date-greg">
-                      <span class="h-date-bn" id="dGreg">২৫ সেপ্টেম্বর ২০২৬</span>
-                    </div>
-                    <div class="h-date-sep">
-                      <span class="h-date-sep-bar"></span>
-                      <span class="h-date-sep-gem">✦</span>
-                      <span class="h-date-sep-bar"></span>
-                    </div>
-                    <div class="h-date-hijri">
-                      <span class="h-date-hijri-val" id="dHijri">১৪ রবিউস সানি ১৪৪৮ হিজরি</span>
-                    </div>
+            <!-- Line 3: Royal Islamic Date Plaque (Centered directly below) -->
+            <div class="header-center-date-row">
+              <div class="header-date-badge-outer">
+                <div class="header-date-badge">
+                  <div class="h-date-greg">
+                    <span class="h-date-bn" id="dGreg">২৫ সেপ্টেম্বর ২০২৬</span>
+                  </div>
+                  <div class="h-date-sep">
+                    <span class="h-date-sep-bar"></span>
+                    <span class="h-date-sep-gem">✦</span>
+                    <span class="h-date-sep-bar"></span>
+                  </div>
+                  <div class="h-date-hijri">
+                    <span class="h-date-hijri-val" id="dHijri">১৪ রবিউস সানি ১৪৪৮ হিজরি</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- Right: Symmetry Balance Spacer (Exact width of Logo for dead-center title text) -->
-            <div class="header-balance-spacer" aria-hidden="true"></div>
           </div>
 
           <!-- Hidden compatibility elements for existing JS references -->
@@ -4922,18 +4927,15 @@
 
         // Custom Mosque Logo
         var logoEl = document.getElementById('mCustomLogo');
-        var balanceSpacer = document.querySelector('.header-balance-spacer');
         if (logoEl) {
           var targetLogo = (CONFIG.logoUrl && CONFIG.logoUrl.trim() !== '') ? CONFIG.logoUrl : 'logo.png';
           logoEl.src = targetLogo;
           logoEl.style.display = 'block';
-          if (balanceSpacer) balanceSpacer.style.display = 'block';
           logoEl.onerror = function() {
             if (this.src.indexOf('logo.png') === -1) {
               this.src = 'logo.png';
             } else {
               this.style.display = 'none';
-              if (balanceSpacer) balanceSpacer.style.display = 'none';
             }
           };
         }
