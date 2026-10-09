@@ -740,18 +740,200 @@
     }
 
     /* Sticky Save Bar */
-    .save-bar {
-      position: sticky;
-      bottom: 0;
-      background: rgba(17, 34, 64, 0.95);
-      backdrop-filter: blur(12px);
-      border-top: 1.5px solid var(--border);
-      padding: 14px 28px;
+    /* ════ MOSQUE SETTINGS & SECURITY ZONE ════ */
+    .mosque-switcher-bar {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-top: auto;
-      box-shadow: 0 -6px 20px rgba(0,0,0,0.3);
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      background: linear-gradient(135deg, rgba(13, 27, 44, 0.95) 0%, rgba(7, 16, 28, 0.98) 100%);
+      border: 1.5px solid rgba(212, 175, 55, 0.35);
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 22px;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.4);
+    }
+    .ms-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .ms-icon {
+      font-size: 30px;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .ms-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .ms-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+    .ms-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .mosque-select-box {
+      background: #020710;
+      border: 1.5px solid rgba(212, 175, 55, 0.4);
+      color: #fde047;
+      font-family: inherit;
+      font-size: 13.5px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 9px;
+      cursor: pointer;
+      outline: none;
+    }
+    .mosque-select-box:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    }
+
+    /* Security Box for Name & Address */
+    .mosque-security-box {
+      background: rgba(8, 16, 30, 0.85);
+      border: 1.5px solid rgba(245, 197, 66, 0.3);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 22px;
+      transition: all 0.3s ease;
+    }
+    .mosque-security-box.unlocked-mode {
+      border-color: rgba(16, 185, 129, 0.55);
+      background: rgba(6, 24, 20, 0.7);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+    }
+    .sec-banner-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.12);
+    }
+    .sec-badge-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .sec-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      width: fit-content;
+    }
+    .sec-status-badge.locked {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+    .sec-status-badge.unlocked {
+      background: rgba(16, 185, 129, 0.18);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.5);
+    }
+    .sec-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .sec-unlock-form {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .sec-pass-input {
+      background: #020710;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: inherit;
+      width: 170px;
+      outline: none;
+    }
+    .sec-pass-input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 8px rgba(212, 175, 55, 0.35);
+    }
+    .sec-btn {
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .sec-unlocked-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .unlocked-msg {
+      font-size: 13px;
+      font-weight: 700;
+      color: #34d399;
+    }
+    .sec-relock-btn {
+      padding: 6px 12px;
+      font-size: 12px;
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+    }
+    .sec-relock-btn:hover {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+    }
+
+    /* Locked input vs Unlocked input */
+    .locked-field {
+      background: rgba(0, 0, 0, 0.4) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.1) !important;
+      color: #94a3b8 !important;
+      cursor: not-allowed !important;
+    }
+    .unlocked-field {
+      background: rgba(6, 24, 20, 0.9) !important;
+      border: 1.5px solid #10b981 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.2) !important;
+      cursor: text !important;
+    }
+    .field-lock-tag {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .tag-locked {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    .tag-unlocked {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
     }
   </style>
 </head>
@@ -767,9 +949,6 @@
       </div>
     </div>
     <div class="hdr-actions">
-      <a href="portal.html" class="btn btn-outline" style="border-color:var(--gold); color:var(--gold);" title="সকল মসজিদের তালিকা ও নতুন মসজিদ তৈরি">
-        <span>🕌 <span id="hdrMosqueBadge">মসজিদ</span></span>
-      </a>
       <a href="install.html" class="btn btn-outline" style="border-color:#38bdf8; color:#bae6fd;" title="অ্যান্ড্রয়েড টিভিতে ইনস্টল করার সম্পূর্ণ নির্দেশিকা">
         <span>📲 ইনস্টল গাইড</span>
       </a>
@@ -786,16 +965,216 @@
   </header>
 
   <div class="container">
-    <!-- NAVIGATION TABS (4 CLEAN & FOCUSED TABS) -->
+    <!-- NAVIGATION TABS -->
     <nav class="tabs-nav">
-      <button class="tab-btn active" onclick="switchTab('tab-prayer')">⏱️ জামাতের সময়</button>
-      <button class="tab-btn" onclick="switchTab('tab-announcement')">📢 নোটিশ ও বার্তা</button>
-      <button class="tab-btn" onclick="switchTab('tab-calendar')">🌙 হিজরি ও ক্যালেন্ডার</button>
-      <button class="tab-btn" onclick="switchTab('tab-display')">🎨 ডিসপ্লে ও সেটিংস</button>
+      <button class="tab-btn active" id="btnTabMosque" onclick="switchTab('tab-mosque', this)">🏛️ মসজিদ সেটিংস</button>
+      <button class="tab-btn" onclick="switchTab('tab-prayer', this)">⏱️ জামাতের সময়</button>
+      <button class="tab-btn" onclick="switchTab('tab-announcement', this)">📢 নোটিশ ও বার্তা</button>
+      <button class="tab-btn" onclick="switchTab('tab-calendar', this)">🌙 হিজরি ও ক্যালেন্ডার</button>
+      <button class="tab-btn" onclick="switchTab('tab-display', this)">🎨 ডিসপ্লে ও সেটিংস</button>
     </nav>
 
-    <!-- TAB 1: PRAYER & JAMAAT (DEFAULT ACTIVE) -->
-    <div id="tab-prayer" class="tab-pane active">
+    <!-- ══ TAB 1: MOSQUE SETTINGS & INFO (🏛️ মসজিদ সেটিংস) ══ -->
+    <div id="tab-mosque" class="tab-pane active">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2>🏛️ মসজিদ পরিচিতি ও সেটিংস</h2>
+            <p>মসজিদের নাম, ঠিকানা, আরবি ক্যালিগ্রাফি, নিজস্ব লোগো, ওয়ালপেপার ও ভৌগোলিক অবস্থান নির্ধারণ করুন</p>
+          </div>
+        </div>
+
+        <!-- 1. ACTIVE MOSQUE & REGISTRY SWITCHER -->
+        <div class="mosque-switcher-bar">
+          <div class="ms-left">
+            <div class="ms-icon">🕌</div>
+            <div>
+              <div class="ms-title">সক্রিয় মসজিদ: <span id="activeMosqueNameDisplay" style="color:var(--gold);">লোড হচ্ছে...</span></div>
+              <div class="ms-subtitle">আইডি: <strong id="hdrMosqueBadge" style="color:#38bdf8;">default</strong> · সমস্ত সেটিংস এই মসজিদে কার্যকর হবে</div>
+            </div>
+          </div>
+          <div class="ms-actions">
+            <label style="font-size:12px; color:var(--text-muted);">মসজিদ পরিবর্তন:</label>
+            <select id="mosqueDropdownSelect" onchange="onMosqueSelectChange(this.value)" class="mosque-select-box">
+              <option value="default">পূর্ব মোহাজের পাড়া জামে মসজিদ (default)</option>
+            </select>
+            <a href="portal.html" class="btn btn-outline" style="border-color:var(--gold); color:var(--gold); font-size:12.5px; padding:7px 12px;" title="সকল মসজিদের তালিকা ও নতুন মসজিদ তৈরি">
+              <span>➕ নতুন মসজিদ / তালিকা</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 2. PASSWORD PROTECTED ZONE: NAME & ADDRESS (পাসওয়ার্ড: 13111998) -->
+        <div class="mosque-security-box" id="mosqueSecurityBox">
+          <div class="sec-banner-header">
+            <div class="sec-badge-row">
+              <span class="sec-status-badge locked" id="secStatusBadge">
+                <span id="secStatusIcon">🔒</span> <span id="secStatusText">সুরক্ষিত জোন (লক করা)</span>
+              </span>
+              <span class="sec-hint">অননুমোদিত পরিবর্তন রোধে নাম ও ঠিকানা লক করা আছে। পরিবর্তন করতে পাসওয়ার্ড প্রদান করুন।</span>
+            </div>
+            <div class="sec-unlock-form" id="secUnlockForm">
+              <input type="password" id="unlockPassInput" placeholder="পাসওয়ার্ড লিখুন..." class="sec-pass-input" onkeydown="if(event.key==='Enter') unlockMosqueFields()">
+              <button type="button" class="btn btn-gold sec-btn" onclick="unlockMosqueFields()">
+                <span>🔓 আনলক করুন</span>
+              </button>
+            </div>
+            <div class="sec-unlocked-row" id="secUnlockedRow" style="display:none;">
+              <span class="unlocked-msg">✅ নাম ও ঠিকানা সম্পাদনার জন্য আনলক হয়েছে</span>
+              <button type="button" class="btn btn-outline sec-relock-btn" onclick="relockMosqueFields()">
+                <span>🔒 পুনরায় লক করুন</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-grid" style="margin-top: 14px;">
+            <div class="form-group">
+              <label style="display:flex; justify-content:space-between; align-items:center;">
+                <span>বাংলা নাম (Mosque Name)</span>
+                <span class="field-lock-tag tag-locked" id="tagLockBn">🔒 সংরক্ষিত</span>
+              </label>
+              <input id="nameBn" placeholder="পূর্ব মোহাজের পাড়া জামে মসজিদ" readonly class="locked-field">
+            </div>
+            <div class="form-group">
+              <label style="display:flex; justify-content:space-between; align-items:center;">
+                <span>ঠিকানা / অবস্থান (Address)</span>
+                <span class="field-lock-tag tag-locked" id="tagLockEn">🔒 সংরক্ষিত</span>
+              </label>
+              <input id="nameEn" placeholder="বরইতলী, চকরিয়া, কক্সবাজার।" readonly class="locked-field">
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. BRANDING, CALLIGRAPHY, TITLE SCALE & LOGO -->
+        <div class="settings-card" style="margin-bottom: 22px; padding: 18px;">
+          <div class="card-header" style="margin-bottom: 14px;">
+            <div class="card-icon">🏛️</div>
+            <div>
+              <h3>ক্যালিগ্রাফি, নামের আকার ও লোগো</h3>
+              <p>স্ক্রিনের শীর্ষে প্রদর্শিত আরবি নাম, অক্ষরের আকার ও মসজিদের নিজস্ব লোগো</p>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>আরবি ক্যালিগ্রাফি নাম</label>
+              <input id="nameAr" style="font-family:'Amiri',serif; direction:rtl;" placeholder="مسجد النোর">
+            </div>
+            <div class="form-group">
+              <label>শীর্ষ হেডারে মসজিদের নামের আকার (Mosque Title Size)</label>
+              <select id="mosqueTitleScale">
+                <option value="1.0" selected>স্বাভাবিক বড় (১০০% — টিভি স্ক্রিন অটো-ফিট)</option>
+                <option value="1.15">প্রমিনেন্ট বড় (১১৫% — বোল্ড ও স্পষ্ট)</option>
+                <option value="1.3">অতিরিক্ত বড় (১৩০% — ফুল হেডার ড্রামাটিক)</option>
+              </select>
+              <span class="field-hint">শীর্ষ হেডারে মসজিদের নামটি কতটা বড় ও জাঁকজমকপূর্ণ দেখাবে</span>
+            </div>
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label>মসজিদের লোগো ছবি (Mosque Logo)</label>
+              <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <label class="btn btn-outline" style="cursor:pointer; font-size:13px; padding:8px 14px; background:rgba(212,175,55,0.1); border-color:var(--gold);">
+                  <span>📁 লোগো নির্বাচন করুন</span>
+                  <input type="file" id="logoInput" accept="image/*" onchange="handleLogoUpload(event)" style="display:none;">
+                </label>
+                <button type="button" onclick="removeLogo()" class="btn btn-danger" id="removeLogoBtn" style="display:none; font-size:12px; padding:7px 12px;">🗑️ লোগো মুছুন</button>
+              </div>
+              <div id="logoPreviewContainer" style="margin-top:10px; display:flex; align-items:center; gap:12px;">
+                <img id="logoPreviewImg" style="display:none; width:70px; height:70px; border-radius:50%; object-fit:contain; background:#ffffff; border:2px solid var(--gold); padding:2px; box-shadow:0 3px 10px rgba(0,0,0,0.5);" alt="Logo">
+                <svg id="logoDefaultSvg" style="display:none;"></svg>
+                <span style="font-size:12px; color:var(--text-muted);">স্ক্রিনের শীর্ষে নামের পাশে গোল লোগো হিসেবে প্রদর্শিত হবে।</span>
+              </div>
+            </div>
+
+            <!-- ডিসপ্লে ব্যাকগ্রাউন্ড ছবি / ওয়ালপেপার আপলোড অপশন -->
+            <div class="form-group" style="grid-column: 1 / -1; margin-top: 10px; padding-top: 14px; border-top: 1px dashed rgba(255,255,255,0.15);">
+              <label style="font-size:14px; color:var(--gold); font-weight:700;">🖼️ ডিসপ্লে ব্যাকগ্রাউন্ড ছবি / ওয়ালপেপার (Display Background Picture)</label>
+              <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">টিভি বা মনিটরের ব্যাকগ্রাউন্ডে পুরো স্ক্রিন জুড়ে মসজিদ বা যেকোনো কাস্টম ছবি প্রদর্শনের জন্য আপলোড করুন।</p>
+              
+              <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+                <label class="btn btn-outline" style="cursor:pointer; font-size:13px; padding:8px 14px; background:rgba(16,185,129,0.12); border-color:#10b981; color:#10b981;">
+                  <span>📁 ব্যাকগ্রাউন্ড ছবি নির্বাচন করুন</span>
+                  <input type="file" id="archInput" accept="image/*" onchange="handleArchUpload(event)" style="display:none;">
+                </label>
+                <button type="button" onclick="removeArch()" class="btn btn-danger" id="removeArchBtn" style="display:none; font-size:12px; padding:7px 12px;">🗑️ ছবি মুছুন</button>
+              </div>
+
+              <div id="archPreviewContainer" style="margin-top:12px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+                <img id="archPreviewImg" style="display:none; max-width:200px; max-height:110px; border-radius:8px; object-fit:cover; border:2px solid var(--gold); box-shadow:0 4px 14px rgba(0,0,0,0.6);" alt="Background Preview">
+                <svg id="archDefaultIcon" style="display:none;"></svg>
+                
+                <div style="flex:1; min-width:220px;">
+                  <label style="font-size:12px; color:var(--text-secondary); display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span>ছবি দৃশ্যমানতা / স্বচ্ছতা (Opacity):</span>
+                    <strong id="bgOpacityLabel" style="color:var(--gold); font-size:13px;">৪৫%</strong>
+                  </label>
+                  <input type="range" id="bgOpacity" min="10" max="95" value="45" style="width:100%; accent-color:var(--gold);" oninput="onBgOpacityChange(this.value)">
+                  <span style="font-size:11px; color:var(--text-muted);">লেখা সহজে পড়ার সুবিধার্থে ৩০% - ৫০% রাখা সবচেয়ে ভালো।</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. LOCATION & GPS COORDINATES -->
+        <div class="settings-card" style="margin-bottom: 22px; padding: 18px;">
+          <div class="card-header" style="margin-bottom: 14px;">
+            <div class="card-icon">📍</div>
+            <div>
+              <h3>ভৌগোলিক অবস্থান ও জিপিএস কোঅর্ডিনেট</h3>
+              <p>সূর্য অনুযায়ী স্বয়ংক্রিয় নামাজের সময় ও নিষিদ্ধ সময়ের সঠিক গণনার জন্য অবস্থান</p>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>জেলা নির্বাচন (স্বয়ংক্রিয় জিপিএস ও সময় সমন্বয়)</label>
+              <select id="districtSelect" onchange="onDistrictChange()">
+                <option value="">-- জেলা সিলেক্ট করুন --</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>অবস্থান / এলাকা নাম (বাংলায়)</label>
+              <input id="location" value="চকরিয়া, কক্সবাজার" placeholder="যেমন: বরইতলী, চকরিয়া, কক্সবাজার">
+            </div>
+            <div class="form-group">
+              <label>অক্ষাংশ ও দ্রাঘিমাংশ (Latitude / Longitude)</label>
+              <div style="display:flex; gap:6px;">
+                <input id="lat" value="21.8355" placeholder="Lat">
+                <input id="lng" value="92.0780" placeholder="Lng">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>আসরের মাযহাব</label>
+              <select id="asrMadhab">
+                <option value="hanafi" selected>হানাফি (বাংলাদেশ স্ট্যান্ডার্ড)</option>
+                <option value="shafii">শাফেয়ী</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. DANGER ZONE: DELETE MOSQUE (Only for custom mosques) -->
+        <div id="deleteMosqueCard" class="settings-card" style="display:none; margin-bottom: 12px; padding: 20px; border: 1.5px solid rgba(239,68,68,0.5); background: rgba(239,68,68,0.06); border-radius: 14px;">
+          <div class="card-header" style="margin-bottom: 12px; display:flex; align-items:center; gap:12px;">
+            <div class="card-icon" style="background: rgba(239,68,68,0.2); color: #ef4444; width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px;">🗑️</div>
+            <div>
+              <h3 style="color:#ef4444; margin:0; font-size:16px;">মসজিদ মুছে ফেলুন (Delete Mosque)</h3>
+              <p style="color:#fca5a5; margin:3px 0 0; font-size:12.5px;">অপ্রয়োজনীয় বা পরীক্ষামূলক মসজিদ সিস্টেম থেকে সম্পূর্ণ মুছে ফেলতে এই অপশনটি ব্যবহার করুন।</p>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; padding-top:12px; border-top:1px dashed rgba(239,68,68,0.3);">
+            <div style="font-size:12.5px; color:#fca5a5; max-width:550px; line-height:1.5;">
+              ⚠️ <strong>সতর্কতা:</strong> এই মসজিদটি মুছে ফেললে এর ডিসপ্লে লিঙ্ক, সেটিংস ও সমস্ত তথ্য স্থায়ীভাবে মুছে যাবে এবং পূর্বাবস্থায় ফিরিয়ে আনা যাবে না।
+            </div>
+            <button type="button" onclick="deleteCurrentMosque()" class="btn btn-outline" style="background:rgba(239,68,68,0.25); color:#ef4444; border:1px solid #ef4444; font-weight:700; padding:10px 20px; border-radius:8px; cursor:pointer; display:inline-flex; align-items:center; gap:6px; font-size:13.5px; transition:all 0.2s;">
+              🗑️ এই মসজিদটি মুছে ফেলুন
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 2: PRAYER & JAMAAT -->
+    <div id="tab-prayer" class="tab-pane">
       <div class="section-card">
         <div class="section-header">
           <div>
@@ -1372,81 +1751,18 @@
           </div>
         </div>
 
-        <!-- 4. MOSQUE INFO & LOGO -->
-        <div class="settings-card" style="margin-bottom: 24px; padding: 18px;">
-          <div class="card-header" style="margin-bottom: 14px;">
-            <div class="card-icon">🏛️</div>
+        <!-- 4. LINK TO MOSQUE SETTINGS TAB -->
+        <div class="settings-card" style="margin-bottom: 24px; padding: 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; background:rgba(212,175,55,0.06); border:1.5px solid rgba(212,175,55,0.25); border-radius:14px;">
+          <div style="display:flex; align-items:center; gap:14px;">
+            <div style="font-size:32px;">🏛️</div>
             <div>
-              <h3>মসজিদের পরিচিতি ও লোগো</h3>
-              <p>স্ক্রিনের শীর্ষে প্রদর্শিত নাম, ঠিকানা ও নিজস্ব লোগো ছবি</p>
+              <h4 style="font-size:15px; color:var(--gold); margin:0; font-weight:700;">মসজিদের পরিচিতি, নাম, ঠিকানা ও লোগো</h4>
+              <p style="font-size:12.5px; color:var(--text-muted); margin:3px 0 0;">মসজিদের সমস্ত পরিচিতি ও পাসওয়ার্ড সুরক্ষিত তথ্য প্রথম ট্যাব "মসজিদ সেটিংস"-এ সাজানো হয়েছে।</p>
             </div>
           </div>
-          <div class="form-grid">
-            <div class="form-group">
-              <label>বাংলা নাম (Mosque Name)</label>
-              <input id="nameBn" placeholder="পূর্ব মোহাজের পাড়া জামে মসজিদ">
-            </div>
-            <div class="form-group">
-              <label>মসজিদের নামের আকার (Mosque Title Size)</label>
-              <select id="mosqueTitleScale">
-                <option value="1.0" selected>স্বাভাবিক বড় (১০০% — টিভি স্ক্রিন অটো-ফিট)</option>
-                <option value="1.15">প্রমিনেন্ট বড় (১১৫% — বোল্ড ও স্পষ্ট)</option>
-                <option value="1.3">অতিরিক্ত বড় (১৩০% — ফুল হেডার ড্রামাটিক)</option>
-              </select>
-              <span class="field-hint">শীর্ষ হেডারে মসজিদের নামটি কতটা বড় ও জাঁকজমকপূর্ণ দেখাবে</span>
-            </div>
-            <div class="form-group">
-              <label>ঠিকানা / অবস্থান (Address)</label>
-              <input id="nameEn" placeholder="বরইতলী, চকরিয়া, কক্সবাজার।">
-            </div>
-            <div class="form-group">
-              <label>আরবি ক্যালিগ্রাফি নাম</label>
-              <input id="nameAr" style="font-family:'Amiri',serif; direction:rtl;" placeholder="مسجد النور">
-            </div>
-            <div class="form-group">
-              <label>মসজিদের লোগো ছবি (Mosque Logo)</label>
-              <div style="display:flex; gap:10px; align-items:center;">
-                <label class="btn btn-outline" style="cursor:pointer; font-size:13px; padding:8px 14px; background:rgba(212,175,55,0.1); border-color:var(--gold);">
-                  <span>📁 লোগো নির্বাচন করুন</span>
-                  <input type="file" id="logoInput" accept="image/*" onchange="handleLogoUpload(event)" style="display:none;">
-                </label>
-                <button type="button" onclick="removeLogo()" class="btn btn-danger" id="removeLogoBtn" style="display:none; font-size:12px; padding:7px 12px;">🗑️ লোগো মুছুন</button>
-              </div>
-              <div id="logoPreviewContainer" style="margin-top:10px; display:flex; align-items:center; gap:12px;">
-                <img id="logoPreviewImg" style="display:none; width:70px; height:70px; border-radius:50%; object-fit:contain; background:#ffffff; border:2px solid var(--gold); padding:2px; box-shadow:0 3px 10px rgba(0,0,0,0.5);" alt="Logo">
-                <svg id="logoDefaultSvg" style="display:none;"></svg>
-                <span style="font-size:12px; color:var(--text-muted);">স্ক্রিনের শীর্ষে নামের পাশে গোল লোগো হিসেবে প্রদর্শিত হবে।</span>
-              </div>
-            </div>
-
-            <!-- ডিসপ্লে ব্যাকগ্রাউন্ড ছবি / ওয়ালপেপার আপলোড অপশন -->
-            <div class="form-group" style="grid-column: 1 / -1; margin-top: 10px; padding-top: 14px; border-top: 1px dashed rgba(255,255,255,0.15);">
-              <label style="font-size:14px; color:var(--gold); font-weight:700;">🖼️ ডিসপ্লে ব্যাকগ্রাউন্ড ছবি / ওয়ালপেপার (Display Background Picture)</label>
-              <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">টিভি বা মনিটরের ব্যাকগ্রাউন্ডে পুরো স্ক্রিন জুড়ে মসজিদ বা যেকোনো কাস্টম ছবি প্রদর্শনের জন্য আপলোড করুন।</p>
-              
-              <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
-                <label class="btn btn-outline" style="cursor:pointer; font-size:13px; padding:8px 14px; background:rgba(16,185,129,0.12); border-color:#10b981; color:#10b981;">
-                  <span>📁 ব্যাকগ্রাউন্ড ছবি নির্বাচন করুন</span>
-                  <input type="file" id="archInput" accept="image/*" onchange="handleArchUpload(event)" style="display:none;">
-                </label>
-                <button type="button" onclick="removeArch()" class="btn btn-danger" id="removeArchBtn" style="display:none; font-size:12px; padding:7px 12px;">🗑️ ছবি মুছুন</button>
-              </div>
-
-              <div id="archPreviewContainer" style="margin-top:12px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
-                <img id="archPreviewImg" style="display:none; max-width:200px; max-height:110px; border-radius:8px; object-fit:cover; border:2px solid var(--gold); box-shadow:0 4px 14px rgba(0,0,0,0.6);" alt="Background Preview">
-                <svg id="archDefaultIcon" style="display:none;"></svg>
-                
-                <div style="flex:1; min-width:220px;">
-                  <label style="font-size:12px; color:var(--text-secondary); display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <span>ছবি দৃশ্যমানতা / স্বচ্ছতা (Opacity):</span>
-                    <strong id="bgOpacityLabel" style="color:var(--gold); font-size:13px;">৪৫%</strong>
-                  </label>
-                  <input type="range" id="bgOpacity" min="10" max="95" value="45" style="width:100%; accent-color:var(--gold);" oninput="onBgOpacityChange(this.value)">
-                  <span style="font-size:11px; color:var(--text-muted);">লেখা সহজে পড়ার সুবিধার্থে ৩০% - ৫০% রাখা সবচেয়ে ভালো।</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <button type="button" onclick="switchTab('tab-mosque', document.getElementById('btnTabMosque'))" class="btn btn-outline" style="border-color:var(--gold); color:var(--gold); font-size:13px; font-weight:700;">
+            <span>🏛️ মসজিদ সেটিংসে যান →</span>
+          </button>
         </div>
 
         <!-- 5. BACKUP & RESTORE -->
@@ -1468,25 +1784,6 @@
             </label>
             <button type="button" onclick="resetDefaults()" class="btn btn-outline" style="color:var(--red); border-color:rgba(255,82,82,0.3);">
               <span>🔄 ফ্যাক্টরি রিসেট</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- 5b. DANGER ZONE: DELETE MOSQUE (Only for custom mosques) -->
-        <div id="deleteMosqueCard" class="settings-card" style="display:none; margin-bottom: 24px; padding: 20px; border: 1.5px solid rgba(239,68,68,0.5); background: rgba(239,68,68,0.06); border-radius: 14px;">
-          <div class="card-header" style="margin-bottom: 12px; display:flex; align-items:center; gap:12px;">
-            <div class="card-icon" style="background: rgba(239,68,68,0.2); color: #ef4444; width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px;">🗑️</div>
-            <div>
-              <h3 style="color:#ef4444; margin:0; font-size:16px;">মসজিদ মুছে ফেলুন (Delete Mosque)</h3>
-              <p style="color:#fca5a5; margin:3px 0 0; font-size:12.5px;">অপ্রয়োজনীয় বা পরীক্ষামূলক মসজিদ সিস্টেম থেকে সম্পূর্ণ মুছে ফেলতে এই অপশনটি ব্যবহার করুন।</p>
-            </div>
-          </div>
-          <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; padding-top:12px; border-top:1px dashed rgba(239,68,68,0.3);">
-            <div style="font-size:12.5px; color:#fca5a5; max-width:550px; line-height:1.5;">
-              ⚠️ <strong>সতর্কতা:</strong> এই মসজিদটি মুছে ফেললে এর ডিসপ্লে লিঙ্ক, সেটিংস ও সমস্ত তথ্য স্থায়ীভাবে মুছে যাবে এবং পূর্বাবস্থায় ফিরিয়ে আনা যাবে না।
-            </div>
-            <button type="button" onclick="deleteCurrentMosque()" class="btn btn-outline" style="background:rgba(239,68,68,0.25); color:#ef4444; border:1px solid #ef4444; font-weight:700; padding:10px 20px; border-radius:8px; cursor:pointer; display:inline-flex; align-items:center; gap:6px; font-size:13.5px; transition:all 0.2s;">
-              🗑️ এই মসজিদটি মুছে ফেলুন
             </button>
           </div>
         </div>
@@ -1540,30 +1837,6 @@
                 <option value="landscape">ল্যান্ডস্কেপ</option>
                 <option value="portrait">পোর্ট্রেট</option>
               </select>
-            </div>
-            <div class="form-group">
-              <label>আসরের মাযহাব</label>
-              <select id="asrMadhab">
-                <option value="hanafi" selected>হানাফি (বাংলাদেশ স্ট্যান্ডার্ড)</option>
-                <option value="shafii">শাফেয়ী</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>জেলা নির্বাচন (স্বয়ংক্রিয় জিপিএস ও সময় সমন্বয়)</label>
-              <select id="districtSelect" onchange="onDistrictChange()">
-                <option value="">-- জেলা সিলেক্ট করুন --</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>অবস্থান / এলাকা নাম (বাংলায়)</label>
-              <input id="location" value="চকরিয়া, কক্সবাজার" placeholder="যেমন: বরইতলী, চকরিয়া, কক্সবাজার">
-            </div>
-            <div class="form-group">
-              <label>অক্ষাংশ / দ্রাঘিমাংশ (Latitude / Longitude)</label>
-              <div style="display:flex; gap:6px;">
-                <input id="lat" value="21.8355" placeholder="Lat">
-                <input id="lng" value="92.0780" placeholder="Lng">
-              </div>
             </div>
             <div class="form-group">
               <label>এডমিন নিরাপত্তা পিন (৪ সংখ্যার গোপন পিন)</label>
@@ -2009,14 +2282,134 @@
       setAmpm(fieldId, parsed.ampm);
     }
 
-    function switchTab(tabId) {
+    function switchTab(tabId, btn) {
       document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
       document.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
       
       var target = document.getElementById(tabId);
       if (target) target.classList.add('active');
-      if (event && event.currentTarget) event.currentTarget.classList.add('active');
+      if (btn) {
+        btn.classList.add('active');
+      } else if (window.event && window.event.currentTarget && window.event.currentTarget.classList) {
+        window.event.currentTarget.classList.add('active');
+      }
     }
+
+    // ══════════════════════════════════════════════════════════════
+    // MOSQUE NAME & ADDRESS PASSWORD PROTECTION (পাসওয়ার্ড: 13111998)
+    // ══════════════════════════════════════════════════════════════
+    var MOSQUE_ADMIN_PASSWORD = '13111998';
+    var isMosqueUnlocked = false;
+    var originalNameBn = '';
+    var originalNameEn = '';
+
+    function unlockMosqueFields() {
+      var passInput = document.getElementById('unlockPassInput');
+      var entered = (passInput ? passInput.value : '').trim();
+      if (!entered) {
+        alert('⚠️ অনুগ্রহ করে পাসওয়ার্ড লিখুন!');
+        if (passInput) passInput.focus();
+        return;
+      }
+      if (entered === MOSQUE_ADMIN_PASSWORD) {
+        isMosqueUnlocked = true;
+        applyMosqueLockState();
+        alert('✅ পাসওয়ার্ড সঠিক! মসজিদের নাম ও ঠিকানা আনলক করা হয়েছে। এখন আপনি এগুলো সম্পাদনা করতে পারবেন।');
+      } else {
+        alert('❌ ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড (13111998) প্রদান করুন।');
+        if (passInput) {
+          passInput.value = '';
+          passInput.focus();
+        }
+      }
+    }
+
+    function relockMosqueFields() {
+      isMosqueUnlocked = false;
+      applyMosqueLockState();
+      var passInput = document.getElementById('unlockPassInput');
+      if (passInput) passInput.value = '';
+      showToast('🔒 মসজিদের নাম ও ঠিকানা পুনরায় লক করা হয়েছে');
+    }
+
+    function applyMosqueLockState() {
+      var bn = document.getElementById('nameBn');
+      var en = document.getElementById('nameEn');
+      var secBox = document.getElementById('mosqueSecurityBox');
+      var statusBadge = document.getElementById('secStatusBadge');
+      var statusIcon = document.getElementById('secStatusIcon');
+      var statusText = document.getElementById('secStatusText');
+      var unlockForm = document.getElementById('secUnlockForm');
+      var unlockedRow = document.getElementById('secUnlockedRow');
+      var tagBn = document.getElementById('tagLockBn');
+      var tagEn = document.getElementById('tagLockEn');
+
+      if (isMosqueUnlocked) {
+        if (bn) { bn.removeAttribute('readonly'); bn.classList.remove('locked-field'); bn.classList.add('unlocked-field'); }
+        if (en) { en.removeAttribute('readonly'); en.classList.remove('locked-field'); en.classList.add('unlocked-field'); }
+        if (secBox) secBox.classList.add('unlocked-mode');
+        if (statusBadge) { statusBadge.className = 'sec-status-badge unlocked'; }
+        if (statusIcon) statusIcon.textContent = '🔓';
+        if (statusText) statusText.textContent = 'আনলকড (সম্পাদনাযোগ্য)';
+        if (unlockForm) unlockForm.style.display = 'none';
+        if (unlockedRow) unlockedRow.style.display = 'flex';
+        if (tagBn) { tagBn.textContent = '🔓 সম্পাদনাযোগ্য'; tagBn.className = 'field-lock-tag tag-unlocked'; }
+        if (tagEn) { tagEn.textContent = '🔓 সম্পাদনাযোগ্য'; tagEn.className = 'field-lock-tag tag-unlocked'; }
+      } else {
+        if (bn) { bn.setAttribute('readonly', 'true'); bn.classList.add('locked-field'); bn.classList.remove('unlocked-field'); }
+        if (en) { en.setAttribute('readonly', 'true'); en.classList.add('locked-field'); en.classList.remove('unlocked-field'); }
+        if (secBox) secBox.classList.remove('unlocked-mode');
+        if (statusBadge) { statusBadge.className = 'sec-status-badge locked'; }
+        if (statusIcon) statusIcon.textContent = '🔒';
+        if (statusText) statusText.textContent = 'সুরক্ষিত জোন (লক করা)';
+        if (unlockForm) unlockForm.style.display = 'flex';
+        if (unlockedRow) unlockedRow.style.display = 'none';
+        if (tagBn) { tagBn.textContent = '🔒 সংরক্ষিত'; tagBn.className = 'field-lock-tag tag-locked'; }
+        if (tagEn) { tagEn.textContent = '🔒 সংরক্ষিত'; tagEn.className = 'field-lock-tag tag-locked'; }
+      }
+    }
+
+    function populateMosqueDropdown() {
+      fetch('/api/mosques')
+        .then(function(res){ return res.json(); })
+        .then(function(list){
+          if (!Array.isArray(list) || !list.length) return;
+          var sel = document.getElementById('mosqueDropdownSelect');
+          if (!sel) return;
+          sel.innerHTML = '';
+          list.forEach(function(m){
+            var opt = document.createElement('option');
+            opt.value = m.id;
+            opt.textContent = (m.name || m.id) + (m.isDefault ? ' (মূল মসজিদ)' : '');
+            if (m.id === activeMosqueId) opt.selected = true;
+            sel.appendChild(opt);
+          });
+        })
+        .catch(function(){
+          try {
+            var reg = JSON.parse(localStorage.getItem('mosque_registry') || '[]');
+            if (Array.isArray(reg) && reg.length) {
+              var sel = document.getElementById('mosqueDropdownSelect');
+              if (!sel) return;
+              sel.innerHTML = '';
+              reg.forEach(function(m){
+                var opt = document.createElement('option');
+                opt.value = m.id;
+                opt.textContent = (m.name || m.id) + (m.isDefault ? ' (মূল মসজিদ)' : '');
+                if (m.id === activeMosqueId) opt.selected = true;
+                sel.appendChild(opt);
+              });
+            }
+          } catch(e){}
+        });
+    }
+
+    function onMosqueSelectChange(mId) {
+      if (mId && mId !== activeMosqueId) {
+        window.location.href = 'admin.html?m=' + encodeURIComponent(mId);
+      }
+    }
+
 
     function selectTheme(themeName) {
       currentTheme = themeName;
@@ -2289,11 +2682,25 @@
         if (elBn) elBn.value = (activeMosqueId === 'default' ? 'পূর্ব মোহাজের পাড়া জামে মসজিদ' : 'জামে মসজিদ');
       }
 
-      // Update header badge and display button link
+      // Initialize original names & lock state
+      var elBnVal = document.getElementById('nameBn') ? document.getElementById('nameBn').value.trim() : '';
+      var elEnVal = document.getElementById('nameEn') ? document.getElementById('nameEn').value.trim() : '';
+      originalNameBn = elBnVal || s.nameBn || (activeMosqueId === 'default' ? 'পূর্ব মোহাজের পাড়া জামে মসজিদ' : 'জামে মসজিদ');
+      originalNameEn = elEnVal || s.nameEn || '';
+      isMosqueUnlocked = false;
+      applyMosqueLockState();
+
+      // Update mosque switcher display
+      var mNameDisp = document.getElementById('activeMosqueNameDisplay');
+      if (mNameDisp) {
+        mNameDisp.textContent = originalNameBn;
+      }
+      populateMosqueDropdown();
+
+      // Update badge and display button link
       var badgeEl = document.getElementById('hdrMosqueBadge');
       if (badgeEl) {
-        var title = s.nameBn || (activeMosqueId === 'default' ? 'পূর্ব মোহাজের পাড়া' : activeMosqueId);
-        badgeEl.textContent = title.slice(0, 16) + ' (' + activeMosqueId + ') ▾';
+        badgeEl.textContent = activeMosqueId;
       }
       var dBtn = document.getElementById('btnDisplayLink');
       if (dBtn) {
@@ -2333,9 +2740,27 @@
     }
 
     function saveSettings() {
+      var curBn = (document.getElementById('nameBn') ? document.getElementById('nameBn').value : '').trim();
+      var curEn = (document.getElementById('nameEn') ? document.getElementById('nameEn').value : '').trim();
+      
+      // 🔐 PASSWORD CHECK: If Mosque Name or Address is modified while locked
+      if ((curBn !== originalNameBn || curEn !== originalNameEn) && !isMosqueUnlocked) {
+        var enteredPass = prompt('🔐 সতর্কীকরণ: মসজিদের নাম বা ঠিকানা পরিবর্তন করার জন্য পাসওয়ার্ড (13111998) প্রবেশ করান:');
+        if (enteredPass !== MOSQUE_ADMIN_PASSWORD) {
+          alert('❌ ভুল পাসওয়ার্ড! মসজিদের নাম ও ঠিকানা পরিবর্তন সেভ করা সম্ভব হয়নি।');
+          if (document.getElementById('nameBn')) document.getElementById('nameBn').value = originalNameBn;
+          if (document.getElementById('nameEn')) document.getElementById('nameEn').value = originalNameEn;
+          return;
+        }
+        isMosqueUnlocked = true;
+        applyMosqueLockState();
+      }
+
       var s = getCurrentFormSettings();
       s.mosqueId = activeMosqueId;
       s.updatedAt = Date.now();
+      originalNameBn = curBn;
+      originalNameEn = curEn;
 
       try {
         localStorage.setItem(getStorageKey(), JSON.stringify(s));
