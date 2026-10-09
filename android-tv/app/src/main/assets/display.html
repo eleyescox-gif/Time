@@ -881,6 +881,29 @@
       pointer-events: none;
     }
 
+    /* ══ ADAPTIVE LAYOUT WHEN CIRCULAR COUNTDOWN HUD IS ACTIVE ══ */
+    .clock-center-container.has-circular-countdown {
+      justify-content: center !important;
+      gap: clamp(14px, 2vw, 36px) !important;
+    }
+
+    .clock-center-container.has-circular-countdown .pro-clock-card {
+      margin: 0 !important;
+      min-width: 0 !important;
+      max-width: 65% !important;
+      padding: clamp(12px, 1.8vh, 24px) clamp(18px, 2.4vw, 42px) !important;
+      flex: 0 1 auto !important;
+    }
+
+    .clock-center-container.has-circular-countdown .pro-clock-digits {
+      font-size: clamp(50px, 11.5vh, 120px) !important;
+    }
+
+    .clock-center-container.has-circular-countdown .iqama-circular-hud {
+      margin: 0 !important;
+      flex-shrink: 0 !important;
+    }
+
     /* Top Islamic Status Ribbon inside Clock Stage */
     .clock-stage-status-ribbon {
       display: inline-flex;
@@ -5181,11 +5204,18 @@
     function updateCircularIqamaHud(show, totalSec, prayerName, maxDurationSec) {
       var hud = document.getElementById('iqamaCircularHud');
       if (!hud) return;
+      var clkContainer = document.querySelector('.clock-center-container');
       if (!show || CONFIG.circularIqamaRing === false || CONFIG.circularIqamaRing === 'false') {
         if (hud.style.display !== 'none') hud.style.display = 'none';
+        if (clkContainer && clkContainer.classList.contains('has-circular-countdown')) {
+          clkContainer.classList.remove('has-circular-countdown');
+        }
         return;
       }
       if (hud.style.display !== 'flex') hud.style.display = 'flex';
+      if (clkContainer && !clkContainer.classList.contains('has-circular-countdown')) {
+        clkContainer.classList.add('has-circular-countdown');
+      }
 
       // Set circular dial frame image
       var frameImg = CONFIG.circularFrameImage || 'circle_frame1.png';
