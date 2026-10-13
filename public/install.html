@@ -309,6 +309,13 @@
               <button class="copy-btn" onclick="copyUrl('apkUrl')">📋 কপি</button>
             </div>
           </div>
+          <div>
+            <div class="url-label">⚡ টিভি রিমোটের শর্ট লিঙ্ক (Downloader এর জন্য)</div>
+            <div class="url-pill">
+              <span class="url-val" id="shortApkUrl" style="color:#10b981; font-weight:800;">লোড হচ্ছে...</span>
+              <button class="copy-btn" onclick="copyUrl('shortApkUrl')">📋 কপি</button>
+            </div>
+          </div>
         </div>
       </div>
       <div class="qr-wrap" id="qrCode"></div>
@@ -465,12 +472,13 @@
           <li class="step-item">
             <div class="step-num green">৩</div>
             <div class="step-body">
-              <strong>Downloader খুলে URL লিখুন</strong>
-              <p>URL বক্সে টাইপ করুন (Vercel APK লিঙ্ক):</p>
+              <strong>Downloader খুলে URL লিখুন (সহজ শর্ট লিঙ্ক)</strong>
+              <p>রিমোট দিয়ে Downloader-এর URL বক্সে টাইপ করুন:</p>
               <div class="url-pill" style="margin-top:8px;">
-                <span class="url-val" id="apkUrlDl">লোড হচ্ছে...</span>
+                <span class="url-val" id="apkUrlDl" style="color:#10b981; font-weight:800;">লোড হচ্ছে...</span>
                 <button class="copy-btn" onclick="copyUrl('apkUrlDl')">📋 কপি</button>
               </div>
+              <div class="step-tip" style="margin-top:8px;">💡 <strong>সহজ টিপস:</strong> রিমোট দিয়ে লম্বা ফাইলের নাম লেখার দরকার নেই! শুধু ডোমেনের পর <span class="code-inline">/apk</span> লিখলেই সরাসরি ইনস্টলার ডাউনলোড শুরু হবে।</div>
             </div>
           </li>
           <li class="step-item">
@@ -574,15 +582,20 @@
 
     var installPageUrl = origin + basePath + 'install.html';
     var apkUrl = origin + basePath + 'MyMasjidTV_INSTALL.apk';
+    var shortApkUrl = origin + (basePath === '/' ? '/apk' : basePath + 'apk');
 
     // Populate all URL fields
     ['installPageUrl'].forEach(function(id) {
       var el = document.getElementById(id);
       if (el) el.textContent = installPageUrl;
     });
-    ['apkUrl', 'apkUrlVercel', 'apkUrlDl'].forEach(function(id) {
+    ['apkUrl', 'apkUrlVercel'].forEach(function(id) {
       var el = document.getElementById(id);
       if (el) el.textContent = apkUrl;
+    });
+    ['shortApkUrl', 'apkUrlDl'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = shortApkUrl;
     });
     ['installUrlBrowser'].forEach(function(id) {
       var el = document.getElementById(id);

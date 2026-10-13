@@ -1,11 +1,32 @@
 {
   "outputDirectory": "public",
   "cleanUrls": true,
+  "headers": [
+    {
+      "source": "/(.*\\.apk)",
+      "headers": [
+        { "key": "Content-Type", "value": "application/vnd.android.package-archive" },
+        { "key": "Content-Disposition", "value": "attachment; filename=\"MyMasjidTV_INSTALL.apk\"" },
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/apk",
+      "headers": [
+        { "key": "Content-Type", "value": "application/vnd.android.package-archive" },
+        { "key": "Content-Disposition", "value": "attachment; filename=\"MyMasjidTV_INSTALL.apk\"" },
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+      ]
+    }
+  ],
   "rewrites": [
     { "source": "/", "destination": "/display.html" },
     { "source": "/install", "destination": "/install.html" },
     { "source": "/download", "destination": "/install.html" },
     { "source": "/app", "destination": "/install.html" },
-    { "source": "/apk", "destination": "/MyMasjidTV_INSTALL.apk" }
+    { "source": "/apk", "destination": "/MyMasjidTV_INSTALL.apk" },
+    { "source": "/app.apk", "destination": "/MyMasjidTV_INSTALL.apk" },
+    { "source": "/MyMasjidTV.apk", "destination": "/MyMasjidTV_INSTALL.apk" },
+    { "source": "/masjid.apk", "destination": "/MyMasjidTV_INSTALL.apk" }
   ]
 }

@@ -15,7 +15,9 @@ const mime = {
   '.ico': 'image/x-icon',
   '.svg': 'image/svg+xml',
   '.woff2': 'font/woff2',
-  '.woff': 'font/woff'
+  '.woff': 'font/woff',
+  '.ttf': 'font/ttf',
+  '.apk': 'application/vnd.android.package-archive'
 };
 
 const sseClients = new Set();
@@ -270,8 +272,13 @@ const server = http.createServer((req, res) => {
     }
   }
 
-  // Static files
-  let fp = path.join(dir, urlPath === '/' ? '/display.html' : urlPath);
+  // Static files & rewrites
+  let effectivePath = urlPath;
+  if (effectivePath === '/') effectivePath = '/display.html';
+  else if (effectivePath === '/install' || effectivePath === '/download' || effectivePath === '/app') effectivePath = '/install.html';
+  else if (effectivePath === '/apk' || effectivePath === '/app.apk' || effectivePath === '/MyMasjidTV.apk') effectivePath = '/MyMasjidTV_INSTALL.apk';
+
+  let fp = path.join(dir, effectivePath);
   fs.readFile(fp, (e, d) => {
     if (e) {
       res.writeHead(404, { 'Content-Type': 'text/plain' });
@@ -280,13 +287,17 @@ const server = http.createServer((req, res) => {
     }
     const ct = mime[path.extname(fp)] || 'text/plain';
     const headers = { 'Content-Type': ct };
+    if (path.extname(fp) === '.apk') {
+      headers['Content-Disposition'] = 'attachment; filename="' + path.basename(fp) + '"';
+      headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+    }
     // Required header for Service Worker to control full scope
-    if (urlPath === '/sw.js') {
+    if (effectivePath === '/sw.js') {
       headers['Service-Worker-Allowed'] = '/';
       headers['Cache-Control'] = 'no-cache';
     }
     // Manifest must not be cached aggressively
-    if (urlPath === '/manifest.json') {
+    if (effectivePath === '/manifest.json') {
       headers['Cache-Control'] = 'no-cache';
     }
     res.writeHead(200, headers);
