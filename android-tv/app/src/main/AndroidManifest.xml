@@ -51,7 +51,8 @@
         android:theme="@style/Theme.MyMasjid.Light"
         android:usesCleartextTraffic="true"
         android:hardwareAccelerated="true"
-        android:largeHeap="true">
+        android:largeHeap="true"
+        android:extractNativeLibs="true">
 
         <!-- ═══════════════ MAIN ACTIVITY ═══════════════ -->
         <!-- Responsive on Mobile (Portrait) & TV (Landscape) without force-rotation -->

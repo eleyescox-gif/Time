@@ -92,7 +92,9 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     private fun configureWebView() {
         webView.setBackgroundColor(Color.parseColor("#0a0a0a"))
-        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+        // SIKO/budget TV fix: LAYER_TYPE_NONE works best on low-RAM (1GB) Android 9 TVs.
+        // HARDWARE layer can cause black screen or WebView crash on Mali-400/450 GPU.
+        webView.setLayerType(View.LAYER_TYPE_NONE, null)
 
         val settings: WebSettings = webView.settings
         settings.javaScriptEnabled = true
@@ -120,14 +122,22 @@ class MainActivity : AppCompatActivity() {
         settings.builtInZoomControls = false
         settings.displayZoomControls = false
 
-        // ক্যাশিং স্ট্র্যাটেজি: অফলাইন অগ্রাধিকার
-        settings.cacheMode = WebSettings.LOAD_DEFAULT
+        // ক্যাশিং স্ট্র্যাটেজি: SIKO/budget TV-তে LOAD_CACHE_ELSE_NETWORK ভালো কাজ করে
+        // LOAD_DEFAULT প্রায়ই slow SIKO TV-তে blank screen দেখায়
+        settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
 
         // সিঙ্গেল উইন্ডো নেভিগেশন (যাতে target="_blank" বা উইন্ডো পপ-আপের কারণে অ্যাপ ক্র্যাশ বা বন্ধ না হয়)
         settings.setSupportMultipleWindows(false)
         settings.javaScriptCanOpenWindowsAutomatically = false
 
         webView.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                // SIKO TV fix: page load শেষে FLAG_KEEP_SCREEN_ON ও fullscreen পুনরায় সেট
+                window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                enableImmersiveFullscreen()
+            }
+
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 val url = request?.url?.toString() ?: return false
                 return handleNavigation(view, url)
@@ -167,16 +177,14 @@ class MainActivity : AppCompatActivity() {
                 request: WebResourceRequest?,
                 error: WebResourceError?
             ) {
-                super.onReceivedError(view, request, error)
-                // যদি নেটওয়ার্ক ফেইল করে তবে অফলাইন অ্যাসেট রিলোড করো
+                // SIKO TV fix: ২ সেকেন্ড পরে offline asset রিলোড করো (immediate reload causes loop)
                 if (request?.isForMainFrame == true) {
-                    webView.post {
-                        webView.loadUrl("file:///android_asset/display.html")
-                    }
+                    webView.postDelayed({
+                        try { webView.loadUrl("file:///android_asset/display.html") } catch (e: Exception) { }
+                    }, 2000L)
                 }
             }
         }
-
         webView.webChromeClient = object : WebChromeClient() {
             override fun onJsAlert(
                 view: WebView?,
